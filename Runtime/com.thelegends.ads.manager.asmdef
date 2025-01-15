@@ -1,0 +1,14 @@
+{
+    "name": "com.thelegends.ads.manager",
+    "rootNamespace": "com.thelegends.ads.manager",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
