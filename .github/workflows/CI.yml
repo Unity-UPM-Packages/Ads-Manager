@@ -23,10 +23,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create upm branch
         uses: RageAgainstThePixel/upm-subtree-split@v1
-      - name: Create upm git tag
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: |
-          git tag $TAG upm
-          git push origin --tags
-        env:
-          TAG: upm/v${{ steps.semantic.outputs.new_release_version }}

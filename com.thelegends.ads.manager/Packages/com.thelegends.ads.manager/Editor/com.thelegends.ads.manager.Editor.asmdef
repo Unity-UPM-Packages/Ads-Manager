@@ -2,7 +2,8 @@
     "name": "com.thelegends.ads.manager.Editor",
     "rootNamespace": "com.thelegends.ads.manager.Editor",
     "references": [
-        "com.thelegends.ads.manager"
+        "com.thelegends.ads.manager",
+        "GoogleMobileAds.Editor"
     ],
     "includePlatforms": [
         "Editor"

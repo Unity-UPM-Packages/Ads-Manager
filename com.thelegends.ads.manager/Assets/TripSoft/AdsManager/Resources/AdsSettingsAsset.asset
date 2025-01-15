@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aac567c99f46af0429a8490c3f245152, type: 3}
+  m_Name: AdsSettingsAsset
+  m_EditorClassIdentifier: 
+  _adsNetworks: 04000000ffffffff
+  appsFlyerDevKey: Qhno4yJY6KHmZp9uS9DRe4
+  appleAppId: 
+  bannerPosition: 2
+  fixBannerSmallSize: 0
+  autoReLoadMax: 3
+  showIRON: 0
+  isIronTest: 0
+  ironAndroidAppKey: 
+  ironIOSAppKey: 
+  ironEnableAdmob: 0
+  ironAdmobAndroidAppID: 
+  ironAdmobIOSAppID: 
+  showMAX: 0
+  isMaxTest: 0
+  maxSdkKey: 
+  maxEnableAdmob: 0
+  maxAdmobAndroidAppID: 
+  maxAdmobIOSAppID: 
+  MAX_Android:
+    bannerIds: []
+    interIds: []
+    rewardIds: []
+    mrecIds: []
+    appOpenIds: []
+  MAX_iOS:
+    bannerIds: []
+    interIds: []
+    rewardIds: []
+    mrecIds: []
+    appOpenIds: []
+  showADMOB: 1
+  isAdmobTest: 0
+  ADMOB_Android:
+    appID: 
+    bannerIds: []
+    interIds: []
+    rewardIds: []
+    mrecIds: []
+    appOpenIds: []
+    interOpenIds: []
+    mrecOpenIds: []
+  ADMOB_IOS:
+    appID: 
+    bannerIds: []
+    interIds: []
+    rewardIds: []
+    mrecIds: []
+    appOpenIds: []
+    interOpenIds: []
+    mrecOpenIds: []
+  ADMOB_Android_Test:
+    appID: 
+    bannerIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/6300978111
+    interIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/1033173712
+    rewardIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/5224354917
+    mrecIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/6300978111
+    appOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/9257395921
+    interOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/1033173712
+    mrecOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/6300978111
+  ADMOB_IOS_Test:
+    appID: 
+    bannerIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2934735716
+    interIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/4411468910
+    rewardIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/1712485313
+    mrecIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2934735716
+    appOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/5575463023
+    interOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/4411468910
+    mrecOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2934735716

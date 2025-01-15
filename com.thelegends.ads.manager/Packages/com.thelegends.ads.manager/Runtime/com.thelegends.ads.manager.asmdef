@@ -1,7 +1,10 @@
 {
     "name": "com.thelegends.ads.manager",
     "rootNamespace": "com.thelegends.ads.manager",
-    "references": [],
+    "references": [
+        "GUID:b9892e19a741c2c4690060e4a6416aca",
+        "GUID:3125b533d9bc33a4794e3332ebe5cc5a"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
