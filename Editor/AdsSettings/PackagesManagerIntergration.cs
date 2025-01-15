@@ -1,0 +1,89 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.PackageManager;
+using UnityEngine;
+
+namespace TheLegends.Base.Ads
+{
+    [ExecuteInEditMode]
+    public class PackagesManagerIntergration : MonoBehaviour
+    {
+        protected static BuildTargetGroup[] targetGroups = new BuildTargetGroup[]
+        {
+            BuildTargetGroup.Android,
+            BuildTargetGroup.iOS
+        };
+
+        public static List<string> GetDefinesList(BuildTargetGroup group)
+        {
+            return new List<string>(PlayerSettings.GetScriptingDefineSymbolsForGroup(group).Split(';'));
+        }
+
+        public static bool IsSymbolEnabled(string defineName)
+        {
+            bool isAndroidEnabled = false;
+            bool isIOSEnabled = false;
+
+            foreach (var group in targetGroups)
+            {
+                var defines = GetDefinesList(group);
+                if (defines.Contains(defineName))
+                {
+                    switch (group)
+                    {
+                        case BuildTargetGroup.Android:
+                            isAndroidEnabled = true;
+                            break;
+                        case BuildTargetGroup.iOS:
+                            isIOSEnabled = true;
+                            break;
+                    }
+                }
+            }
+
+            return isAndroidEnabled && isIOSEnabled;
+        }
+
+        public static void SetSymbolEnabled(string defineName, bool enable)
+        {
+            bool updated = false;
+
+            foreach (var group in targetGroups)
+            {
+                var defines = GetDefinesList(group);
+                if (enable)
+                {
+                    if (!defines.Contains(defineName))
+                    {
+                        defines.Add(defineName);
+                        updated = true;
+                    }
+                }
+                else
+                {
+                    if (defines.Contains(defineName))
+                    {
+                        while (defines.Contains(defineName))
+                        {
+                            defines.Remove(defineName);
+                        }
+
+                        updated = true;
+                    }
+                }
+
+                if (updated)
+                {
+                    string definesString = string.Join(";", defines.ToArray());
+                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, definesString);
+
+                }
+            }
+        }
+    }
+}
+
