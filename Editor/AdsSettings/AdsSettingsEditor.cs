@@ -46,7 +46,7 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        [MenuItem("TheLegends/Ads Settings")]
+        [MenuItem("TripSoft/Ads Settings")]
         public static void OpenInspector()
         {
             if (Instance == null)
