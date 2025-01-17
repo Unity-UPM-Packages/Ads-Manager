@@ -15,9 +15,11 @@ namespace TheLegends.Base.Ads
         private List<AdsNetworkBase> adsNetworks = new List<AdsNetworkBase>();
         // [SerializeField] private AdmobNetworkController admob;
 
-        protected static AdsSettings settingsAds = null;
+        protected AdsSettings settingsAds = null;
 
-        public static AdsSettings SettingsAds
+        public AdsConfigs adsConfigs;
+
+        public AdsSettings SettingsAds
         {
             get
             {
@@ -38,30 +40,28 @@ namespace TheLegends.Base.Ads
             private set => settingsAds = value;
         }
 
-        protected static AdsNetworks DefaultMediation
+        protected AdsNetworks DefaultMediation
         {
             get { return SettingsAds.AdsNetworks.FirstOrDefault(); }
         }
 
-        private static float timePlayToShowAds = 20f;
+        private DateTime lastTimeShowAd = DateTime.Now.AddSeconds(-600);
 
-        private static DateTime lastTimeShowAd = DateTime.Now.AddSeconds(-600);
-
-        public static DateTime LastTimeShowAd
+        public DateTime LastTimeShowAd
         {
             get => lastTimeShowAd;
             set => lastTimeShowAd = value;
         }
 
-        public static bool IsTimeToShowAd
+        public bool IsTimeToShowAd
         {
             get
             {
                 float totalTimePlay = (float)(DateTime.Now - LastTimeShowAd).TotalSeconds;
-                bool canShowAds = Mathf.FloorToInt(totalTimePlay) >= timePlayToShowAds;
+                bool canShowAds = Mathf.FloorToInt(totalTimePlay) >= adsConfigs.timePlayToShowAds;
 
                 LogWarning(
-                    $"Total Time play: {totalTimePlay} - Time to show ads: {timePlayToShowAds} - Can show ads: {canShowAds}");
+                    $"Total Time play: {totalTimePlay} - Time to show ads: {adsConfigs.timePlayToShowAds} - Can show ads: {canShowAds}");
 
                 return canShowAds;
             }
@@ -73,7 +73,7 @@ namespace TheLegends.Base.Ads
             StartCoroutine(DoInit());
         }
 
-        private IEnumerator DoInit()
+        public IEnumerator DoInit()
         {
             if (SettingsAds.AdsNetworks == null || SettingsAds.AdsNetworks.Count == 0)
             {
@@ -181,6 +181,11 @@ namespace TheLegends.Base.Ads
 
         public void ShowAppOpen(string position)
         {
+            if (!IsTimeToShowAd)
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -262,19 +267,13 @@ namespace TheLegends.Base.Ads
         private IEnumerator IEShowAppOpen()
         {
             yield return new WaitForEndOfFrame();
-
-            if (!IsTimeToShowAd)
-            {
-                yield break;
-            }
-
             ShowAppOpen("Pause");
         }
 
 
         #region Common
 
-        public static void SetStatus(AdsType adsType, string adsUnitID, string position, AdsEvents adEvent, AdsNetworks networks)
+        public void SetStatus(AdsType adsType, string adsUnitID, string position, AdsEvents adEvent, AdsNetworks networks)
         {
             string eventName = $"{adsType}_{adEvent.ToString()}_{adsUnitID}";
 
@@ -293,7 +292,7 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public static void LogImpressionData(AdsNetworks network, AdsType adsType, string adsUnitID, object value)
+        public void LogImpressionData(AdsNetworks network, AdsType adsType, string adsUnitID, object value)
         {
             string monetizationNetwork = "";
             double revenue = 0;
@@ -353,22 +352,22 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        public static void Log(string message)
+        public void Log(string message)
         {
             Debug.Log("AdsManager------: " + message);
         }
 
-        public static void LogWarning(string message)
+        public void LogWarning(string message)
         {
             Debug.LogWarning("AdsManager------: " + message);
         }
 
-        public static void LogError(string message)
+        public void LogError(string message)
         {
             Debug.LogError("AdsManager------: " + message);
         }
 
-        public static void LogException(Exception exception)
+        public void LogException(Exception exception)
         {
             Debug.LogException(exception);
         }
@@ -381,4 +380,13 @@ namespace TheLegends.Base.Ads
         UMP,
         ADMOB,
     }
+
+    [System.Serializable]
+    public class AdsConfigs
+    {
+        public bool adInterOnComplete = true;
+        public bool adInterOnStart = true;
+        public float timePlayToShowAds = 20f;
+    }
+
 }

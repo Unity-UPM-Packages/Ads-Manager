@@ -26,7 +26,7 @@ namespace TheLegends.Base.Ads
                 if (status != value)
                 {
                     status = value;
-                    AdsManager.SetStatus(AdsType, adsUnitID, position, value, AdsNetworks);
+                    AdsManager.Instance.SetStatus(AdsType, adsUnitID, position, value, AdsNetworks);
                 }
             }
         }
@@ -57,13 +57,13 @@ namespace TheLegends.Base.Ads
         {
             if (Status == AdsEvents.LoadRequest)
             {
-                AdsManager.LogWarning($"{AdsNetworks}_{AdsType} "  + "is loading --> return");
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} "  + "is loading --> return");
                 return false;
             }
 
             if(Status == AdsEvents.LoadAvailable)
             {
-                AdsManager.LogWarning($"{AdsNetworks}_{AdsType} " + "is ready --> return");
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is ready --> return");
                 return false;
             }
 
@@ -75,7 +75,7 @@ namespace TheLegends.Base.Ads
 
             if (string.IsNullOrEmpty(adsUnitID))
             {
-                AdsManager.LogWarning($"{AdsNetworks}_{AdsType} " + "UnitId NULL or Empty --> return");
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "UnitId NULL or Empty --> return");
                 return false;
             }
 
@@ -96,7 +96,7 @@ namespace TheLegends.Base.Ads
             {
                 adsUnitIDIndex++;
                 reloadCount++;
-                AdsManager.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString() } " + "OnAdsLoadFailed " + adsUnitID + " Error: " + message + " re-trying in " + (5 * reloadCount) + " seconds " + reloadCount + "/" + reloadMax);
+                AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString() } " + "OnAdsLoadFailed " + adsUnitID + " Error: " + message + " re-trying in " + (5 * reloadCount) + " seconds " + reloadCount + "/" + reloadMax);
                 Invoke(nameof(LoadAds), 5 * reloadCount);
             }
         }
@@ -116,7 +116,7 @@ namespace TheLegends.Base.Ads
         {
             Status = AdsEvents.ShowFail;
 
-            AdsManager.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " + "OnAdsShowFailed " + adsUnitID + " Error: " + message);
+            AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " + "OnAdsShowFailed " + adsUnitID + " Error: " + message);
         }
 
 
@@ -134,7 +134,7 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnImpression()
         {
-            AdsManager.Log($"{AdsType} "+ "ad recorded an impression.");
+            AdsManager.Instance.Log($"{AdsType} "+ "ad recorded an impression.");
         }
 
 
