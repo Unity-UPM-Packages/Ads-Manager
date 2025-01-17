@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AppsFlyerSDK;
+using TheLegends.Base.AppsFlyer;
 using TheLegends.Base.Firebase;
 using TheLegends.Base.UnitySingleton;
 using UnityEngine;
-#pragma warning disable CS0219 // Variable is assigned but its value is never used
 
 namespace TheLegends.Base.Ads
 {
@@ -276,6 +277,7 @@ namespace TheLegends.Base.Ads
         public static void SetStatus(AdsType adsType, string adsUnitID, string position, AdsEvents adEvent, AdsNetworks networks)
         {
             string eventName = $"{adsType}_{adEvent.ToString()}_{adsUnitID}";
+
             Log(eventName);
 
             FirebaseManager.Instance.LogEvent(eventName, new Dictionary<string, object>()
@@ -293,38 +295,61 @@ namespace TheLegends.Base.Ads
 
         public static void LogImpressionData(AdsNetworks network, AdsType adsType, string adsUnitID, object value)
         {
-            string ad_network = "";
+            string monetizationNetwork = "";
             double revenue = 0;
             string ad_unit_name = "";
             string ad_format = "";
             string country = "";
-            double lifetime_revenue = 0;
             string currency = "USD";
+            MediationNetwork mediation = MediationNetwork.Custom;
 
             if (value == null)
             {
                 LogWarning("LogImpressionData: " + "data NULL");
             }
 
-#if USE_ADMOB || USE_ADMOB_APPOPEN
+#if USE_ADMOB
             if (value is GoogleMobileAds.Api.AdValue)
             {
                 var impressionData = value as GoogleMobileAds.Api.AdValue;
 
                 if (impressionData != null)
                 {
+                    mediation = MediationNetwork.GoogleAdMob;
+                    monetizationNetwork = "googleadmob";
+                    ad_format = adsType.ToString();
+                    ad_unit_name = adsUnitID;
+                    country = "";
                     //The ad's value in micro-units, where 1,000,000 micro-units equal one unit of the currency.
                     revenue = (double)impressionData.Value / 1000000f;
                     currency = impressionData.CurrencyCode;
 
-#if USE_APPSFLYER && USE_APPSFLYER_CONNECTOR
-                networkType = AppsFlyerAdRevenueMediationNetworkType.AppsFlyerAdRevenueMediationNetworkTypeGoogleAdMob;
-#endif
+
                 }
 
-                Debug.Log("GoogleMobileAds.Api.AdValue: " + impressionData.Value + " Revenue: " + revenue +
-                          " CurrencyCode: " + currency + " Precision: " + impressionData.Precision);
+                Debug.Log("GoogleMobileAds AdValue: " + impressionData.Value + " Revenue: " + revenue + " CurrencyCode: " + currency + " Precision: " + impressionData.Precision);
+
             }
+#endif
+
+#if USE_APPSFLYER
+            AppsFlyerManager.Instance.LogImpression(new Dictionary<string, string>()
+            {
+                { "mediation", mediation.ToString() },
+                { "monetizationNetwork", monetizationNetwork },
+                { "ad_format", ad_format },
+                { "ad_unit_name", ad_unit_name },
+                { "country", country },
+                { "revenue", revenue.ToString() },
+                { "currency", currency },
+            });
+
+            AppsFlyerManager.Instance.LogRevenue(monetizationNetwork, mediation, currency, revenue, new Dictionary<string, string>()
+            {
+                { AdRevenueScheme.AD_UNIT, ad_unit_name },
+                { AdRevenueScheme.AD_TYPE, ad_format },
+                { AdRevenueScheme.COUNTRY, country },
+            });
 #endif
         }
 
