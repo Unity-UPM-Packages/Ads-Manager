@@ -65,7 +65,7 @@ namespace TheLegends.Base.Ads
         {
             if (Status == AdsEvents.ShowSuccess)
             {
-                AdsManager.LogError($"{AdsNetworks}_{AdsType} " + "is showing --> return");
+                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "is showing --> return");
                 return;
             }
 
@@ -78,7 +78,7 @@ namespace TheLegends.Base.Ads
             }
             else
             {
-                AdsManager.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
                 reloadCount = 0;
                 LoadAds();
             }
@@ -87,7 +87,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAdsPaid(AdValue value)
         {
-            AdsManager.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
         }
 
         public void HideAds()
@@ -95,7 +95,7 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             if (Status != AdsEvents.ShowSuccess && Status != AdsEvents.Click)
             {
-                AdsManager.LogError($"{AdsNetworks}_{AdsType} " + " is not showing --> return");
+                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + " is not showing --> return");
                 return;
             }
 
@@ -113,11 +113,11 @@ namespace TheLegends.Base.Ads
         protected virtual void CreateBanner()
         {
 #if USE_ADMOB
-            AdPosition adPosition = AdsManager.SettingsAds.bannerPosition == BannerPos.Top
+            AdPosition adPosition = AdsManager.Instance.SettingsAds.bannerPosition == BannerPos.Top
                 ? AdPosition.Top
                 : AdPosition.Bottom;
 
-            if (AdsManager.SettingsAds.fixBannerSmallSize)
+            if (AdsManager.Instance.SettingsAds.fixBannerSmallSize)
             {
                 _bannerView = new BannerView(adsUnitID.Trim(), AdSize.Banner, adPosition);
             }
@@ -154,7 +154,7 @@ namespace TheLegends.Base.Ads
                 }
                 catch (Exception ex)
                 {
-                    AdsManager.LogException(ex);
+                    AdsManager.Instance.LogException(ex);
                 }
             }
 #endif

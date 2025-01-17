@@ -61,7 +61,7 @@ namespace TheLegends.Base.Ads
                     }
                     catch (Exception ex)
                     {
-                        AdsManager.LogException(ex);
+                        AdsManager.Instance.LogException(ex);
                     }
                 }
 
@@ -73,19 +73,19 @@ namespace TheLegends.Base.Ads
                         // if error is not null, the load request failed.
                         if(error != null)
                         {
-                            AdsManager.LogError($"{AdsNetworks}_{AdsType} " + "failed to load with error : " + error);
+                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "failed to load with error : " + error);
                             OnAppOpenLoadFailed(error);
                             return;
                         }
 
                         if(ad == null)
                         {
-                            AdsManager.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
+                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
                             OnAppOpenLoadFailed(error);
                             return;
                         }
 
-                        AdsManager.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
+                        AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
 
                         _appOpenAd = ad;
 
@@ -113,7 +113,7 @@ namespace TheLegends.Base.Ads
             }
             else
             {
-                AdsManager.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
                 reloadCount = 0;
                 LoadAds();
             }
@@ -142,7 +142,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAdsPaid(AdValue value)
         {
-            AdsManager.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
         }
 
         #endregion

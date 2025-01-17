@@ -40,25 +40,25 @@ namespace TheLegends.Base.Ads
                 {
                     if (initStatus == null)
                     {
-                        AdsManager.LogError("Google Mobile Ads initialization failed.");
+                        AdsManager.Instance.LogError("Google Mobile Ads initialization failed.");
                         return;
                     }
 
                     if (initStatus != null)
                     {
-                        AdsManager.Log($"{TagLog.ADMOB} " + "Mediations checking status...");
+                        AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Mediations checking status...");
                         // If you use mediation, you can check the status of each adapter.
                         var adapterStatusMap = initStatus.getAdapterStatusMap();
                         if (adapterStatusMap != null)
                         {
                             foreach (var item in adapterStatusMap)
                             {
-                                AdsManager.Log($"{TagLog.ADMOB} " + string.Format(" Google Adapter {0} is {1}",
+                                AdsManager.Instance.Log($"{TagLog.ADMOB} " + string.Format(" Google Adapter {0} is {1}",
                                     item.Key,
                                     item.Value.InitializationState));
                             }
                         }
-                        AdsManager.Log($"{TagLog.ADMOB} " + "Mediations checking done.");
+                        AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Mediations checking done.");
 
                         // if (loadOnInitDone)
                         // {
@@ -67,41 +67,41 @@ namespace TheLegends.Base.Ads
                         // }
                     }
 
-                    AdsManager.Log($"{TagLog.ADMOB} " + "Initialize: " + initStatus.ToString());
+                    AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Initialize: " + initStatus.ToString());
 
 #if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
 
                     var platform = Application.platform;
                     var isIOS = platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.OSXPlayer;
 
-                    var isAdmobTest = AdsManager.SettingsAds.isAdmobTest;
+                    var isAdmobTest = AdsManager.Instance.SettingsAds.isAdmobTest;
 
-                    var interIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.SettingsAds.ADMOB_IOS.interIds, AdsManager.SettingsAds.ADMOB_Android.interIds, AdsManager.SettingsAds.ADMOB_IOS_Test.interIds, AdsManager.SettingsAds.ADMOB_Android_Test.interIds);
+                    var interIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.interIds, AdsManager.Instance.SettingsAds.ADMOB_Android.interIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.interIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.interIds);
                     CreateAdController(interIds, interList);
 
-                    var rewardedIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.SettingsAds.ADMOB_IOS.rewardIds, AdsManager.SettingsAds.ADMOB_Android.rewardIds, AdsManager.SettingsAds.ADMOB_IOS_Test.rewardIds, AdsManager.SettingsAds.ADMOB_Android_Test.rewardIds);
+                    var rewardedIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_Android.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.rewardIds);
                     CreateAdController(rewardedIds, rewardedList);
 
-                    var appOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.SettingsAds.ADMOB_IOS.appOpenIds, AdsManager.SettingsAds.ADMOB_Android.appOpenIds, AdsManager.SettingsAds.ADMOB_IOS_Test.appOpenIds, AdsManager.SettingsAds.ADMOB_Android_Test.appOpenIds);
+                    var appOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.appOpenIds);
                     CreateAdController(appOpenIds, appOpenList);
 
-                    var bannerIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.SettingsAds.ADMOB_IOS.bannerIds, AdsManager.SettingsAds.ADMOB_Android.bannerIds, AdsManager.SettingsAds.ADMOB_IOS_Test.bannerIds, AdsManager.SettingsAds.ADMOB_Android_Test.bannerIds);
+                    var bannerIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_Android.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.bannerIds);
                     CreateAdController(bannerIds, bannerList);
 
-                    var mrecIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.SettingsAds.ADMOB_IOS.mrecIds, AdsManager.SettingsAds.ADMOB_Android.mrecIds, AdsManager.SettingsAds.ADMOB_IOS_Test.mrecIds, AdsManager.SettingsAds.ADMOB_Android_Test.mrecIds);
+                    var mrecIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_Android.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.mrecIds);
                     CreateAdController(mrecIds, mrecList);
 
-                    var mrecOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.SettingsAds.ADMOB_IOS.mrecOpenIds, AdsManager.SettingsAds.ADMOB_Android.mrecOpenIds, AdsManager.SettingsAds.ADMOB_IOS_Test.mrecOpenIds, AdsManager.SettingsAds.ADMOB_Android_Test.mrecOpenIds);
+                    var mrecOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.mrecOpenIds);
                     CreateAdController(mrecOpenIds, mrecOpenList);
 
-                    var interOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.SettingsAds.ADMOB_IOS.interOpenIds, AdsManager.SettingsAds.ADMOB_Android.interOpenIds, AdsManager.SettingsAds.ADMOB_IOS_Test.interOpenIds, AdsManager.SettingsAds.ADMOB_Android_Test.interOpenIds);
+                    var interOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.interOpenIds);
                     CreateAdController(interOpenIds, interOpenList);
 #endif
                 });
             }
             else
             {
-                AdsManager.Log($"{TagLog.UMP} " + "UMP ConsentStatus --> " + ConsentInformation.ConsentStatus.ToString() + " CanRequestAds: " + ConsentInformation.CanRequestAds().ToString().ToUpper() + " --> NOT INIT");
+                AdsManager.Instance.Log($"{TagLog.UMP} " + "UMP ConsentStatus --> " + ConsentInformation.ConsentStatus.ToString() + " CanRequestAds: " + ConsentInformation.CanRequestAds().ToString().ToUpper() + " --> NOT INIT");
                 yield return RequestUMP();
             }
         }
@@ -112,7 +112,7 @@ namespace TheLegends.Base.Ads
         {
             if (isChecking)
             {
-                AdsManager.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " CHECKING");
+                AdsManager.Instance.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " CHECKING");
                 yield break;
             }
 
@@ -127,7 +127,7 @@ namespace TheLegends.Base.Ads
                 if (updateError != null)
                 {
                     // Handle the error.
-                    AdsManager.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> " + updateError.Message);
+                    AdsManager.Instance.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> " + updateError.Message);
                     isChecking = false;
                     return;
                 }
@@ -136,12 +136,12 @@ namespace TheLegends.Base.Ads
                 {
                     // Consent has already been gathered or not required.
                     // Return control back to the user.
-                    AdsManager.Log($"{TagLog.UMP} " + "Update " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " -- Consent has already been gathered or not required");
+                    AdsManager.Instance.Log($"{TagLog.UMP} " + "Update " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " -- Consent has already been gathered or not required");
                     isChecking = false;
                     return;
                 }
 
-                AdsManager.Log(ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW ConsentForm If Required");
+                AdsManager.Instance.Log(ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW ConsentForm If Required");
 
                 // If the error is null, the consent information state was updated.
                 // You are now ready to check if a form is available.
@@ -150,13 +150,13 @@ namespace TheLegends.Base.Ads
                     if (formError != null)
                     {
                         // Consent gathering failed.
-                        AdsManager.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> " + formError.Message);
+                        AdsManager.Instance.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> " + formError.Message);
                         return;
                     }
                     else
                     {
                         // Form showing succeeded.
-                        AdsManager.Log($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW SUCCESS");
+                        AdsManager.Instance.Log($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW SUCCESS");
                     }
 
                 });
@@ -177,7 +177,7 @@ namespace TheLegends.Base.Ads
         {
             if (placements.Count <= 0)
             {
-                AdsManager.LogError($"{TagLog.ADMOB} {typeof(T).Name} IDs NULL or Empty --> return");
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {typeof(T).Name} IDs NULL or Empty --> return");
                 return;
             }
 
@@ -193,17 +193,17 @@ namespace TheLegends.Base.Ads
 
         public void OpenAdInspector()
         {
-            AdsManager.Log("Opening ad Inspector.");
+            AdsManager.Instance.Log("Opening ad Inspector.");
             MobileAds.OpenAdInspector((AdInspectorError error) =>
             {
                 // If the operation failed, an error is returned.
                 if (error != null)
                 {
-                    AdsManager.Log("Ad Inspector failed to open with error: " + error);
+                    AdsManager.Instance.Log("Ad Inspector failed to open with error: " + error);
                     return;
                 }
 
-                AdsManager.Log("Ad Inspector opened successfully.");
+                AdsManager.Instance.Log("Ad Inspector opened successfully.");
             });
         }
 
