@@ -21,7 +21,7 @@
     "com.google.ads.mobile": "9.5.0",
     "com.thelegends.firebase.manager": "1.0.1",
     "com.thelegends.unity.patterns": "1.0.0",
-    "com.thelegends.appsflyer.manager": "1.0.9"
+    "com.thelegends.appsflyer.manager": "1.0.0"
   },
   "scopedRegistries": [
     {
