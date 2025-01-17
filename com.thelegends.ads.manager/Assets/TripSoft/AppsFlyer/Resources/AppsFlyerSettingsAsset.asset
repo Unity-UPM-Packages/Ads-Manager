@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   devKey: 
   appID: 
-  getConversionData: 0
-  isDebug: 0
+  getConversionData: 1
+  isDebug: 1

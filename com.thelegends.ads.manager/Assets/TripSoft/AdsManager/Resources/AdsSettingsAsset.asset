@@ -44,7 +44,7 @@ MonoBehaviour:
     mrecIds: []
     appOpenIds: []
   showADMOB: 1
-  isAdmobTest: 0
+  isAdmobTest: 1
   ADMOB_Android:
     appID: 
     bannerIds: []
