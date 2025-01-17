@@ -32,7 +32,6 @@ MonoBehaviour:
     m_Scopes:
     - com.google
     - com.thelegends
-    - appsflyer-unity-plugin
     m_IsDefault: 0
     m_Capabilities: 0
     m_ConfigSource: 4
