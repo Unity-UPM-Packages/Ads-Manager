@@ -275,13 +275,14 @@ namespace TheLegends.Base.Ads
 
         public void SetStatus(AdsType adsType, string adsUnitID, string position, AdsEvents adEvent, AdsNetworks networks)
         {
-            string eventName = $"{adsType}_{adEvent.ToString()}_{adsUnitID}";
+            string eventName = $"{adsType}_{adEvent.ToString()}";
 
             Log(eventName);
 
             FirebaseManager.Instance.LogEvent(eventName, new Dictionary<string, object>()
             {
                 { "network", networks.ToString() },
+                { "type", adsType.ToString() },
                 { "position", position },
                 { "adUnitID", adsUnitID }
             });
