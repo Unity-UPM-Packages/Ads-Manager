@@ -38,6 +38,7 @@ namespace TheLegends.Base.Ads
 
             var deviceScale = MobileAds.Utils.GetDeviceScale();
             var deviceSafeWidth = MobileAds.Utils.GetDeviceSafeWidth();
+            var safeArea = Screen.safeArea;
 
             float adWidth = _bannerView.GetWidthInPixels() / deviceScale;
 
@@ -53,10 +54,6 @@ namespace TheLegends.Base.Ads
                 adHeight = 50;
             }
 
-            var safeArea = Screen.safeArea;
-            float screenSafeHeightPixel = safeArea.height;
-            float screenRatioSafeArea = safeArea.width / safeArea.height;
-
             if (deviceSafeWidth <= 0)
             {
                 deviceSafeWidth = MobileAds.Utils.GetDeviceSafeWidth();
@@ -67,16 +64,9 @@ namespace TheLegends.Base.Ads
                 deviceSafeWidth = 832;
             }
 
-            float adScreenSafeHeight;
-            float adScreenRatio = 0.6f;
-            float adNavigationHeight = 21f;
+            float screenRatioSafeArea = safeArea.width / safeArea.height;
 
-            Vector2 anchorMin = safeArea.position;
-            float bottomHeight = anchorMin.y;
-
-            adScreenSafeHeight = deviceSafeWidth / screenRatioSafeArea;
-            adScreenRatio = adScreenSafeHeight / screenSafeHeightPixel;
-            adNavigationHeight = bottomHeight * adScreenRatio;
+            float adScreenSafeHeight = deviceSafeWidth / screenRatioSafeArea;
 
             int xMax = (int)(deviceSafeWidth - adWidth);
             int yMax = (int)(adScreenSafeHeight - adHeight);
@@ -125,7 +115,59 @@ namespace TheLegends.Base.Ads
                     break;
             }
 
+            Debug.Log("BBBBBB " + newPos);
+
             _bannerView.SetPosition(newPos.x, newPos.y);
+        }
+
+        public void SetAdPosition(MrecPos position, Vector2Int offset)
+        {
+            var adWidth = _bannerView.GetWidthInPixels();
+            var adHeight = _bannerView.GetHeightInPixels();
+            var screenWidth = Screen.width;
+            var screenHeight = Screen.height;
+            var deviceScale = MobileAds.Utils.GetDeviceScale();
+
+            Vector2 targetPosition = Vector2.zero;
+
+            switch (position)
+            {
+                case MrecPos.TopLeft:
+                    targetPosition = new Vector2(0, 0);
+                    break;
+                case MrecPos.Top:
+                    targetPosition = new Vector2((screenWidth/2) - (adWidth/2), 0);
+                    break;
+                case MrecPos.TopRight:
+                    targetPosition = new Vector2(screenWidth - adWidth, 0);
+                    break;
+                case MrecPos.Center:
+                    targetPosition = new Vector2((screenWidth/2) - (adWidth/2), -(screenHeight/2) + (adHeight/2));
+                    break;
+                case MrecPos.CenterLeft:
+                    targetPosition = new Vector2(0, -(screenHeight/2) + (adHeight/2));
+                    break;
+                case MrecPos.CenterRight:
+                    targetPosition = new Vector2(screenWidth - adWidth, -(screenHeight/2) + (adHeight/2));
+                    break;
+                case MrecPos.Bottom:
+                    targetPosition = new Vector2((screenWidth/2) - (adWidth/2), -screenHeight + adHeight);
+                    break;
+                case MrecPos.BottomLeft:
+                    targetPosition = new Vector2(0, -screenHeight + adHeight);
+                    break;
+                case MrecPos.BottomRight:
+                    targetPosition = new Vector2(screenWidth - adWidth, -screenHeight + adHeight);
+                    break;
+                default:
+                    targetPosition = new Vector2(0, 0);
+                    break;
+            }
+
+            // var transformPoint = transform.TransformPoint(targetPosition);
+            // Vector2 worldPosition = Camera.main.WorldToScreenPoint(targetPosition) * deviceScale;
+            // Debug.Log("AAAAAAAAAAAA " + worldPosition);
+            _bannerView.SetPosition((int)targetPosition.x, (int)targetPosition.y);
         }
     }
 }

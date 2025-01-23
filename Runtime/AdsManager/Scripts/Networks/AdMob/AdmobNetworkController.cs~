@@ -271,20 +271,7 @@ namespace TheLegends.Base.Ads
             mrecList[0].HideAds();
         }
 
-        public void LoadNativeOverlay()
-        {
-            nativeOverlayList[0].LoadAds();
-        }
-
-        public void ShowNativeOverlay(string position)
-        {
-            nativeOverlayList[0].ShowAds(position);
-        }
-
-        public void HideNativeOverlay()
-        {
-            nativeOverlayList[0].HideAds();
-        }
+        public
 
 
         public override AdsNetworks GetNetworkType()

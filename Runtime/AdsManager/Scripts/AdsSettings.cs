@@ -115,6 +115,7 @@ namespace TheLegends.Base.Ads
             mrecIds = CreatePlacement("ca-app-pub-3940256099942544/6300978111"),
             interOpenIds = CreatePlacement("ca-app-pub-3940256099942544/1033173712"),
             mrecOpenIds = CreatePlacement("ca-app-pub-3940256099942544/6300978111"),
+            nativeOverlayIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110")
         };
 
         public AdmobUnitID ADMOB_IOS_Test = new AdmobUnitID
@@ -126,6 +127,7 @@ namespace TheLegends.Base.Ads
             mrecIds = CreatePlacement("ca-app-pub-3940256099942544/2934735716"),
             interOpenIds = CreatePlacement("ca-app-pub-3940256099942544/4411468910"),
             mrecOpenIds = CreatePlacement("ca-app-pub-3940256099942544/2934735716"),
+            nativeOverlayIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511")
         };
 
         private static List<Placement> CreatePlacement(string adUnitId)

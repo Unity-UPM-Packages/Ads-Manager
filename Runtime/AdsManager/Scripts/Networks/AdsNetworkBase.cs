@@ -28,6 +28,7 @@ namespace TheLegends.Base.Ads
         public abstract void ShowMrec(MrecPos mrecPosition, Vector2Int offset, string position);
         public abstract void HideMrec();
 
+
         public abstract AdsNetworks GetNetworkType();
     }
 }

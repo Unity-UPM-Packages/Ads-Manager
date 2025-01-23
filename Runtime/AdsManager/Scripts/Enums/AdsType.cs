@@ -12,4 +12,5 @@ public enum AdsType
     AppOpen = 5,
     MrecOpen = 6,
     InterOpen = 7,
+    NativeOverlay = 8,
 }

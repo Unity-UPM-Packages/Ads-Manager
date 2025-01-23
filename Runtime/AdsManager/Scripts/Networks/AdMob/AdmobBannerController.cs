@@ -45,19 +45,22 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            BannerDestroy();
+            if (!IsReady)
+            {
+                BannerDestroy();
 
-            CreateBanner();
+                CreateBanner();
 
-            _bannerView.OnAdClicked += base.OnAdsClick;
-            _bannerView.OnAdPaid += OnAdsPaid;
-            _bannerView.OnAdImpressionRecorded += OnImpression;
-            _bannerView.OnBannerAdLoadFailed += OnBannerLoadFailed;
-            _bannerView.OnBannerAdLoaded += OnBannerLoaded;
+                _bannerView.OnAdClicked += base.OnAdsClick;
+                _bannerView.OnAdPaid += OnAdsPaid;
+                _bannerView.OnAdImpressionRecorded += OnImpression;
+                _bannerView.OnBannerAdLoadFailed += OnBannerLoadFailed;
+                _bannerView.OnBannerAdLoaded += OnBannerLoaded;
 
-            base.LoadAds();
-            AdRequest request = new AdRequest();
-            _bannerView.LoadAd(request);
+                base.LoadAds();
+                AdRequest request = new AdRequest();
+                _bannerView.LoadAd(request);
+            }
 #endif
         }
 
