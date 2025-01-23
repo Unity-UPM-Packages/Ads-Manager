@@ -276,11 +276,11 @@ namespace TheLegends.Base.Ads
 
         public void HideNativeOverlay()
         {
-            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+            var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
             {
-                netWork.HideNativeOverlay();
+                netWork.HideNativeOverly();
             }
         }
 

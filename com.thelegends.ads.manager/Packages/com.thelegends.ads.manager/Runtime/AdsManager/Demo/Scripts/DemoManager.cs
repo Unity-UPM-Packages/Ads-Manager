@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GoogleMobileAds.Api;
 using TheLegends.Base.Ads;
 using TheLegends.Base.AppsFlyer;
 using TheLegends.Base.Firebase;
@@ -22,8 +23,13 @@ public class DemoManager : MonoBehaviour
     public Button loadMrecBtn;
     public Button showMrecBtn;
     public Button hideMrecBtn;
+    public Button loadNativeOverlayBtn;
+    public Button showNativeOverlayBtn;
+    public Button hideNativeOverlayBtn;
     public Button testBtn;
     public Dropdown MrecPosDropdown;
+
+    public Image image;
 
 
     private void OnEnable()
@@ -41,6 +47,9 @@ public class DemoManager : MonoBehaviour
         loadMrecBtn.onClick.AddListener(LoadMrec);
         showMrecBtn.onClick.AddListener(ShowMrec);
         hideMrecBtn.onClick.AddListener(HideMrec);
+        loadNativeOverlayBtn.onClick.AddListener(LoadNativeOverlay);
+        showNativeOverlayBtn.onClick.AddListener(ShowNativeOverlay);
+        hideNativeOverlayBtn.onClick.AddListener(HideNativeOverlay);
         testBtn.onClick.AddListener(Test);
     }
 
@@ -149,15 +158,81 @@ public class DemoManager : MonoBehaviour
         AdsManager.Instance.HideMrec();
     }
 
+    private void LoadNativeOverlay()
+    {
+        AdsManager.Instance.LoadNativeOverlay();
+    }
+
+    private void ShowNativeOverlay()
+    {
+        AdsManager.Instance.ShowNativeOverlay("default");
+    }
+
+
+    private void HideNativeOverlay()
+    {
+        AdsManager.Instance.HideNativeOverlay();
+    }
+
     private void Test()
     {
-        FirebaseManager.Instance.FetchRemoteData(() =>
+        SetAdPosition((MrecPos)MrecPosDropdown.value);
+        // FirebaseManager.Instance.FetchRemoteData(() =>
+        // {
+        //     AdsManager.Instance.adsConfigs.adInterOnComplete = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete);
+        //     AdsManager.Instance.adsConfigs.adInterOnStart = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart);
+        //     AdsManager.Instance.adsConfigs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds);
+        // });
+    }
+
+    public void SetAdPosition(MrecPos position)
+    {
+        var adWidth = image.rectTransform.rect.width;
+        var adHeight = image.rectTransform.rect.height;
+        var screenWidth = Screen.width;
+        var screenHeight = Screen.height;
+        var deviceScale = MobileAds.Utils.GetDeviceScale();
+
+        Vector2 targetPosition = Vector2.zero;
+
+        switch (position)
         {
-;
-            AdsManager.Instance.adsConfigs.adInterOnComplete = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete);
-            AdsManager.Instance.adsConfigs.adInterOnStart = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart);
-            AdsManager.Instance.adsConfigs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds);
-        });
+            case MrecPos.TopLeft:
+                targetPosition = new Vector2(0, 0);
+                break;
+            case MrecPos.Top:
+                targetPosition = new Vector2((screenWidth/2) - (adWidth/2), 0);
+                break;
+            case MrecPos.TopRight:
+                targetPosition = new Vector2(screenWidth - adWidth, 0);
+                break;
+            case MrecPos.Center:
+                targetPosition = new Vector2((screenWidth/2) - (adWidth/2), -(screenHeight/2) + (adHeight/2));
+                break;
+            case MrecPos.CenterLeft:
+                targetPosition = new Vector2(0, -(screenHeight/2) + (adHeight/2));
+                break;
+            case MrecPos.CenterRight:
+                targetPosition = new Vector2(screenWidth - adWidth, -(screenHeight/2) + (adHeight/2));
+                break;
+            case MrecPos.Bottom:
+                targetPosition = new Vector2((screenWidth/2) - (adWidth/2), -screenHeight + adHeight);
+                break;
+            case MrecPos.BottomLeft:
+                targetPosition = new Vector2(0, -screenHeight + adHeight);
+                break;
+            case MrecPos.BottomRight:
+                targetPosition = new Vector2(screenWidth - adWidth, -screenHeight + adHeight);
+                break;
+        }
+
+        // image.rectTransform.anchoredPosition = targetPosition;
+        var transformPoint = image.transform.TransformPoint(targetPosition);
+        var worldPosition = Camera.main.ScreenToWorldPoint(transformPoint);
+        Debug.Log("BBBBBBBBBB " + worldPosition);
+        image.transform.position = worldPosition;
+
+
     }
 
 
