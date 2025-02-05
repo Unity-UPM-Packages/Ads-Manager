@@ -13,7 +13,7 @@ namespace TheLegends.Base.Ads
         public override void LoadAds()
         {
 #if USE_ADMOB
-            if(!IsCanLoadAds())
+            if (!IsCanLoadAds())
             {
                 return;
             }

@@ -98,7 +98,7 @@ namespace TheLegends.Base.Ads
                     var interOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.interOpenIds);
                     CreateAdController(interOpenIds, interOpenList);
 
-                    var nativeOverlayIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeOverlayIds);
+                    var nativeOverlayIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds);
                     CreateAdController(nativeOverlayIds, nativeOverlayList);
 #endif
                 });

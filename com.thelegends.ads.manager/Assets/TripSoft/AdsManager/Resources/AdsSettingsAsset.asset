@@ -55,6 +55,7 @@ MonoBehaviour:
     interOpenIds: []
     mrecOpenIds: []
     nativeOverlayIds: []
+    nativeIds: []
   ADMOB_IOS:
     appID: 
     bannerIds: []
@@ -65,6 +66,7 @@ MonoBehaviour:
     interOpenIds: []
     mrecOpenIds: []
     nativeOverlayIds: []
+    nativeIds: []
   ADMOB_Android_Test:
     appID: 
     bannerIds:
@@ -91,6 +93,9 @@ MonoBehaviour:
     nativeOverlayIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/2247696110
+    nativeIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2247696110
   ADMOB_IOS_Test:
     appID: 
     bannerIds:
@@ -115,5 +120,8 @@ MonoBehaviour:
     - stringIDs:
       - ca-app-pub-3940256099942544/2934735716
     nativeOverlayIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/3986624511
+    nativeIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/3986624511
