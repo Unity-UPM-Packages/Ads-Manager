@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using com.thelegends.ads.manager;
 using GoogleMobileAds.Api;
 using TheLegends.Base.Ads;
 using TheLegends.Base.AppsFlyer;
@@ -28,6 +29,10 @@ public class DemoManager : MonoBehaviour
     public Button hideNativeOverlayBtn;
     public Button testBtn;
     public Dropdown MrecPosDropdown;
+    public Button loadNativeBtn;
+    public Button showNativeBtn;
+    public Button hideNativeBtn;
+    public AdmobNativeController nativeAds;
 
     public Image image;
 
@@ -51,6 +56,9 @@ public class DemoManager : MonoBehaviour
         showNativeOverlayBtn.onClick.AddListener(ShowNativeOverlay);
         hideNativeOverlayBtn.onClick.AddListener(HideNativeOverlay);
         testBtn.onClick.AddListener(Test);
+        loadNativeBtn.onClick.AddListener(LoadNative);
+        showNativeBtn.onClick.AddListener(ShowNative);
+        hideNativeBtn.onClick.AddListener(HideNative);
     }
 
 
@@ -235,6 +243,20 @@ public class DemoManager : MonoBehaviour
 
     }
 
+    public void LoadNative()
+    {
+        nativeAds.LoadAds();
+    }
+
+    public void ShowNative()
+    {
+        nativeAds.ShowAds("Default");
+    }
+
+    public void HideNative()
+    {
+
+    }
 
 
 }
