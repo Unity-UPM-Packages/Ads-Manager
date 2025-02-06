@@ -32,7 +32,8 @@ public class DemoManager : MonoBehaviour
     public Button loadNativeBtn;
     public Button showNativeBtn;
     public Button hideNativeBtn;
-    public AdmobNativeController nativeAds;
+    public AdmobNativeController nativeAdsMrec;
+    public AdmobNativeController nativeAdsBanner;
 
     public Image image;
 
@@ -245,12 +246,13 @@ public class DemoManager : MonoBehaviour
 
     public void LoadNative()
     {
-        nativeAds.LoadAds();
+        nativeAdsMrec.LoadAds();
+        nativeAdsBanner.LoadAds();
     }
 
     public void ShowNative()
     {
-        nativeAds.ShowAds("Default");
+        // nativeAds.ShowAds("Default");
     }
 
     public void HideNative()

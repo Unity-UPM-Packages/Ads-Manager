@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using GoogleMobileAds.Api;
 using TheLegends.Base.Ads;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace com.thelegends.ads.manager
 {
     public class AdmobNativeController : AdsPlacementBase
     {
         private NativeAd _nativeAd;
+
+        [SerializeField]
+        private GameObject container;
 
         [SerializeField]
         private PlacementOrder _order = PlacementOrder.One;
@@ -19,12 +23,40 @@ namespace com.thelegends.ads.manager
         [SerializeField]
         private bool isShowOnLoaded;
 
+        [Space(10)]
+        [Header("Native Components")]
+        [SerializeField]
+        private Image adImage;
+        [SerializeField]
+        private Image callToAction;
+        [SerializeField]
+        private Text callToActionText;
+        [SerializeField]
+        private Image adChoice;
+        [SerializeField]
+        private Image adIcon;
+        [SerializeField]
+        private Text advertiser;
+        [SerializeField]
+        private Text adHeadline;
+        [SerializeField]
+        private Text adBody;
+        [SerializeField]
+        private Text store;
+        [SerializeField]
+        private Image starFilling;
+        [SerializeField]
+        private Text price;
+
+
         public Action onClick = null;
 
 
 
         private void Awake()
         {
+            container.SetActive(false);
+
             position = positionNative;
 
             var platform = Application.platform;
@@ -88,6 +120,9 @@ namespace com.thelegends.ads.manager
             {
                 _nativeAd.OnPaidEvent += OnAdsPaid;
                 Status = AdsEvents.ShowSuccess;
+                FetchData();
+                RegisterGameObjects();
+                container.SetActive(true);
             }
             else
             {
@@ -205,6 +240,101 @@ namespace com.thelegends.ads.manager
 #if USE_ADMOB
             AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, args.AdValue);
 #endif
+        }
+
+        private void FetchData()
+        {
+            if (adImage)
+            {
+                var images = _nativeAd.GetImageTextures();
+                if(images.Count > 0)
+                {
+                    adImage.sprite = Sprite.Create(images[0], new Rect(0, 0, images[0].width, images[0].height), new Vector2(0.5f, 0.5f));
+                }
+
+                _nativeAd.RegisterImageGameObjects(new List<GameObject>{adImage.gameObject});
+            }
+
+            if (callToAction && callToActionText)
+            {
+                callToActionText.text = _nativeAd.GetCallToActionText().ToLower();
+
+                _nativeAd.RegisterCallToActionGameObject(callToAction.gameObject);
+            }
+
+            if (adChoice)
+            {
+                Texture2D choice = _nativeAd.GetAdChoicesLogoTexture();
+                if (choice != null)
+                {
+                    adChoice.sprite = Sprite.Create(choice, new Rect(0, 0, choice.width, choice.height), new Vector2(0.5f, 0.5f));
+                }
+
+                _nativeAd.RegisterAdChoicesLogoGameObject(adChoice.gameObject);
+            }
+
+            if (adIcon)
+            {
+                Texture2D icon = _nativeAd.GetIconTexture();
+                if (icon != null)
+                {
+                    adIcon.sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height), new Vector2(0.5f, 0.5f));
+                }
+
+                _nativeAd.RegisterIconImageGameObject(adIcon.gameObject);
+            }
+
+            if (advertiser)
+            {
+                advertiser.text = _nativeAd.GetAdvertiserText();
+
+                _nativeAd.RegisterAdvertiserTextGameObject(advertiser.gameObject);
+            }
+
+            if (adHeadline)
+            {
+                adHeadline.text = _nativeAd.GetHeadlineText();
+
+                _nativeAd.RegisterHeadlineTextGameObject(adHeadline.gameObject);
+            }
+
+            if (adBody)
+            {
+                adBody.text = _nativeAd.GetBodyText();
+
+                _nativeAd.RegisterBodyTextGameObject(adBody.gameObject);
+            }
+
+            if (store)
+            {
+                store.text = _nativeAd.GetStore();
+
+                _nativeAd.RegisterStoreGameObject(store.gameObject);
+            }
+
+            if (price)
+            {
+                price.text = _nativeAd.GetPrice();
+
+                _nativeAd.RegisterPriceGameObject(price.gameObject);
+            }
+
+            if (starFilling)
+            {
+                double storeStarRating = _nativeAd.GetStarRating();
+
+                if (storeStarRating is double.NaN || storeStarRating <= 0)
+                {
+                    storeStarRating = 4.25;
+                }
+
+                starFilling.fillAmount = (float)(storeStarRating * 0.2f);
+            }
+        }
+
+        private void RegisterGameObjects()
+        {
+
         }
 
     #endregion
