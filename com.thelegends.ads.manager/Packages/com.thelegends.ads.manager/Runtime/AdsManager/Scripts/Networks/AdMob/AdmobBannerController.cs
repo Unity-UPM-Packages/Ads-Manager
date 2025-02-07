@@ -145,7 +145,7 @@ namespace TheLegends.Base.Ads
             base.OnAdsLoadFailed(errorDescription);
         }
 
-        public void BannerDestroy()
+        private void BannerDestroy()
         {
 #if USE_ADMOB
             if (_bannerView != null)

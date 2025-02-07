@@ -60,6 +60,7 @@ public class DemoManager : MonoBehaviour
         loadNativeBtn.onClick.AddListener(LoadNative);
         showNativeBtn.onClick.AddListener(ShowNative);
         hideNativeBtn.onClick.AddListener(HideNative);
+
     }
 
 
@@ -77,26 +78,28 @@ public class DemoManager : MonoBehaviour
 
         var defaultRemoteConfig = new Dictionary<string, object>
         {
-            {"testBool" , false },
-            {"testFloat" , 1.0f },
-            {"testInt" , 2 },
-            {"testString" , "test" },
-            // {"adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete},
-            // {"adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart},
-            // {"timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds}
+            // {"testBool" , false },
+            // {"testFloat" , 1.0f },
+            // {"testInt" , 2 },
+            // {"testString" , "test" },
+            {"adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete},
+            {"adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart},
+            {"timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds},
+            {"adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight}
         };
 
         yield return FirebaseManager.Instance.DoInit(defaultRemoteConfig);
 
         FirebaseManager.Instance.FetchRemoteData(() =>
         {
-            var testBool = FirebaseManager.Instance.RemoteGetValueBoolean("testBool", false);
-            var testFloat = FirebaseManager.Instance.RemoteGetValueFloat("testFloat", 1.0f);
-            var testInt = FirebaseManager.Instance.RemoteGetValueInt("testInt", 2);
-            var testString = FirebaseManager.Instance.RemoteGetValueString("testString", "test");
-            // AdsManager.Instance.adsConfigs.adInterOnComplete = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete);
-            // AdsManager.Instance.adsConfigs.adInterOnStart = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart);
-            // AdsManager.Instance.adsConfigs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds);
+            // var testBool = FirebaseManager.Instance.RemoteGetValueBoolean("testBool", false);
+            // var testFloat = FirebaseManager.Instance.RemoteGetValueFloat("testFloat", 1.0f);
+            // var testInt = FirebaseManager.Instance.RemoteGetValueInt("testInt", 2);
+            // var testString = FirebaseManager.Instance.RemoteGetValueString("testString", "test");
+            AdsManager.Instance.adsConfigs.adInterOnComplete = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete);
+            AdsManager.Instance.adsConfigs.adInterOnStart = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart);
+            AdsManager.Instance.adsConfigs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds);
+            AdsManager.Instance.adsConfigs.adNativeBannerHeight = FirebaseManager.Instance.RemoteGetValueFloat("adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight);
         });
 
         yield return AppsFlyerManager.Instance.DoInit();
@@ -252,12 +255,14 @@ public class DemoManager : MonoBehaviour
 
     public void ShowNative()
     {
-        // nativeAds.ShowAds("Default");
+        nativeAdsMrec.ShowAds("Default");
+        nativeAdsBanner.ShowAds("Default");
     }
 
     public void HideNative()
     {
-
+        nativeAdsMrec.HideAds();
+        nativeAdsBanner.HideAds();
     }
 
 
