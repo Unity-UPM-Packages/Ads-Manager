@@ -757,6 +757,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8287518035259073570, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: adImageCollider
+      value: 
+      objectReference: {fileID: 8829326562269262790}
     - target: {fileID: 8633187899259396203, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_IsActive
       value: 1

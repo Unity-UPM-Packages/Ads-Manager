@@ -20,6 +20,7 @@ namespace com.thelegends.ads.manager
 
         [SerializeField]
         private string positionNative = "default";
+
         [SerializeField]
         private bool isShowOnLoaded;
 
@@ -27,24 +28,37 @@ namespace com.thelegends.ads.manager
         [Header("Native Components")]
         [SerializeField]
         private Image adImage;
+
+        [SerializeField]
+        private BoxCollider adImageCollider;
+
         [SerializeField]
         private Image callToAction;
+
         [SerializeField]
         private Text callToActionText;
+
         [SerializeField]
         private Image adChoice;
+
         [SerializeField]
         private Image adIcon;
+
         [SerializeField]
         private Text advertiser;
+
         [SerializeField]
         private Text adHeadline;
+
         [SerializeField]
         private Text adBody;
+
         [SerializeField]
         private Text store;
+
         [SerializeField]
         private Image starFilling;
+
         [SerializeField]
         private Text price;
 
@@ -52,8 +66,7 @@ namespace com.thelegends.ads.manager
         public Action onClick = null;
 
 
-
-        private void Awake()
+        private void Start()
         {
             container.SetActive(false);
 
@@ -63,16 +76,21 @@ namespace com.thelegends.ads.manager
             var isIOS = platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.OSXPlayer;
             var isAdmobTest = AdsManager.Instance.SettingsAds.isAdmobTest;
 
-            var placementIndex = Mathf.Clamp((int)_order, 1, isIOS ? AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds.Count : AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds.Count) - 1;
+            var placementIndex = Mathf.Clamp((int)_order, 1,
+                isIOS
+                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds.Count
+                    : AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds.Count) - 1;
 
             placement = isAdmobTest
-                ? (isIOS ? AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds[placementIndex] : AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds[placementIndex])
-                : (isIOS ? AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds[placementIndex] : AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds[placementIndex]);
+                ? (isIOS
+                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds[placementIndex]
+                    : AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds[placementIndex])
+                : (isIOS
+                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds[placementIndex]
+                    : AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds[placementIndex]);
 
             Init(placement);
-
         }
-
 
 
         public override void LoadAds()
@@ -108,20 +126,40 @@ namespace com.thelegends.ads.manager
         public override void ShowAds(string showPosition)
         {
 #if USE_ADMOB
+
             if (Status == AdsEvents.ShowSuccess)
             {
                 AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "is showing --> return");
+
                 return;
             }
 
             base.ShowAds(showPosition);
 
+#if UNITY_EDITOR
+            if (Status == AdsEvents.LoadAvailable)
+            {
+                Status = AdsEvents.ShowSuccess;
+                container.SetActive(true);
+
+                if (adImageCollider && AdsManager.Instance.adsConfigs.adNativeBannerHeight > 0)
+                {
+                    adImageCollider.size = new Vector3(adImage.rectTransform.rect.width, AdsManager.Instance.adsConfigs.adNativeBannerHeight, adImageCollider.size.z);
+                }
+            }
+            else
+            {
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+                reloadCount = 0;
+                LoadAds();
+            }
+
+#else
             if (IsReady && Status == AdsEvents.LoadAvailable)
             {
                 _nativeAd.OnPaidEvent += OnAdsPaid;
                 Status = AdsEvents.ShowSuccess;
                 FetchData();
-                RegisterGameObjects();
                 container.SetActive(true);
             }
             else
@@ -130,6 +168,8 @@ namespace com.thelegends.ads.manager
                 reloadCount = 0;
                 LoadAds();
             }
+#endif
+
 #endif
         }
 
@@ -166,24 +206,32 @@ namespace com.thelegends.ads.manager
         private void NativeDestroy()
         {
 #if USE_ADMOB
-            if (_nativeAd != null)
+            try
             {
-                try
+
+                container.SetActive(false);
+
+                if (_nativeAd != null)
                 {
+                    base.OnAdsClosed();
+                    _nativeAd.OnPaidEvent -= OnAdsPaid;
                     _nativeAd.Destroy();
                     _nativeAd = null;
                 }
-                catch (Exception ex)
-                {
-                    AdsManager.Instance.LogException(ex);
-                }
+
             }
+            catch (Exception ex)
+            {
+                AdsManager.Instance.LogException(ex);
+            }
+
 #endif
         }
 
         private void OnNativeLoaded(object sender, NativeAdEventArgs args)
         {
 #if USE_ADMOB
+
             base.OnAdsLoadAvailable();
             NativeDestroy();
 
@@ -230,7 +278,6 @@ namespace com.thelegends.ads.manager
 #if USE_ADMOB
             base.OnImpression();
 #endif
-
         }
 
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -247,12 +294,19 @@ namespace com.thelegends.ads.manager
             if (adImage)
             {
                 var images = _nativeAd.GetImageTextures();
-                if(images.Count > 0)
+
+                if (images.Count > 0)
                 {
-                    adImage.sprite = Sprite.Create(images[0], new Rect(0, 0, images[0].width, images[0].height), new Vector2(0.5f, 0.5f));
+                    adImage.sprite = Sprite.Create(images[0], new Rect(0, 0, images[0].width, images[0].height),
+                        new Vector2(0.5f, 0.5f));
                 }
 
-                _nativeAd.RegisterImageGameObjects(new List<GameObject>{adImage.gameObject});
+                if (adImageCollider && AdsManager.Instance.adsConfigs.adNativeBannerHeight > 0)
+                {
+                    adImageCollider.size = new Vector3(adImage.rectTransform.rect.width, AdsManager.Instance.adsConfigs.adNativeBannerHeight, adImageCollider.size.z);
+                }
+
+                _nativeAd.RegisterImageGameObjects(new List<GameObject> { adImage.gameObject });
             }
 
             if (callToAction && callToActionText)
@@ -265,9 +319,11 @@ namespace com.thelegends.ads.manager
             if (adChoice)
             {
                 Texture2D choice = _nativeAd.GetAdChoicesLogoTexture();
+
                 if (choice != null)
                 {
-                    adChoice.sprite = Sprite.Create(choice, new Rect(0, 0, choice.width, choice.height), new Vector2(0.5f, 0.5f));
+                    adChoice.sprite = Sprite.Create(choice, new Rect(0, 0, choice.width, choice.height),
+                        new Vector2(0.5f, 0.5f));
                 }
 
                 _nativeAd.RegisterAdChoicesLogoGameObject(adChoice.gameObject);
@@ -276,9 +332,11 @@ namespace com.thelegends.ads.manager
             if (adIcon)
             {
                 Texture2D icon = _nativeAd.GetIconTexture();
+
                 if (icon != null)
                 {
-                    adIcon.sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height), new Vector2(0.5f, 0.5f));
+                    adIcon.sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height),
+                        new Vector2(0.5f, 0.5f));
                 }
 
                 _nativeAd.RegisterIconImageGameObject(adIcon.gameObject);
@@ -332,11 +390,21 @@ namespace com.thelegends.ads.manager
             }
         }
 
-        private void RegisterGameObjects()
+        public void HideAds()
         {
+#if UNITY_EDITOR
+            container.SetActive(false);
+            base.OnAdsClosed();
+#else
+            if (_nativeAd != null)
+            {
+                NativeDestroy();
+                base.OnAdsClosed();
+            }
+#endif
 
         }
 
-    #endregion
+        #endregion
     }
 }
