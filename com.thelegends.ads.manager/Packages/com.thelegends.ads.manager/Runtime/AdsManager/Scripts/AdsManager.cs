@@ -67,6 +67,8 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        private InitiationStatus status = InitiationStatus.NotInitialized;
+
 
         public void Init()
         {
@@ -78,9 +80,17 @@ namespace TheLegends.Base.Ads
             if (SettingsAds.AdsNetworks == null || SettingsAds.AdsNetworks.Count == 0)
             {
                 LogError("AdsNetworks NULL or Empty --> return");
-
+                status = InitiationStatus.Failed;
                 yield break;
             }
+
+            if(status == InitiationStatus.Initialized)
+            {
+                LogError("AdsManager already initialized");
+                yield break;
+            }
+
+            status = InitiationStatus.Initializing;
 
             adsNetworks = GetComponentsInChildren<AdsNetworkBase>().ToList();
 
@@ -117,6 +127,8 @@ namespace TheLegends.Base.Ads
                 yield return network.DoInit();
                 yield return new WaitForSeconds(0.25f);
             }
+
+            status = InitiationStatus.Initialized;
         }
 
         private AdsNetworkBase GetNetwork(AdsNetworks network)
@@ -126,6 +138,11 @@ namespace TheLegends.Base.Ads
 
         public void LoadInterstitial()
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -136,6 +153,11 @@ namespace TheLegends.Base.Ads
 
         public void ShowInterstitial(string position)
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             if (!IsTimeToShowAd)
             {
                 return;
@@ -151,6 +173,11 @@ namespace TheLegends.Base.Ads
 
         public void LoadRewarded()
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -161,6 +188,11 @@ namespace TheLegends.Base.Ads
 
         public void ShowRewarded(Action OnRewarded, string position)
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -171,6 +203,11 @@ namespace TheLegends.Base.Ads
 
         public void LoadAppOpen()
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -181,6 +218,11 @@ namespace TheLegends.Base.Ads
 
         public void ShowAppOpen(string position)
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             if (!IsTimeToShowAd)
             {
                 return;
@@ -196,6 +238,11 @@ namespace TheLegends.Base.Ads
 
         public void LoadBanner()
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -206,6 +253,11 @@ namespace TheLegends.Base.Ads
 
         public void ShowBanner(string position)
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -216,6 +268,11 @@ namespace TheLegends.Base.Ads
 
         public void HideBanner()
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -226,6 +283,11 @@ namespace TheLegends.Base.Ads
 
         public void LoadMrec()
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -236,6 +298,11 @@ namespace TheLegends.Base.Ads
 
         public void ShowMrec(MrecPos mrecPosition, Vector2Int offset, string position)
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -246,6 +313,11 @@ namespace TheLegends.Base.Ads
 
         public void HideMrec()
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = GetNetwork(DefaultMediation);
 
             if (netWork != null)
@@ -256,6 +328,11 @@ namespace TheLegends.Base.Ads
 
         public void LoadNativeOverlay()
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
 
             if (netWork != null)
@@ -266,6 +343,11 @@ namespace TheLegends.Base.Ads
 
         public void ShowNativeOverlay(string position)
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
 
             if (netWork != null)
@@ -276,6 +358,11 @@ namespace TheLegends.Base.Ads
 
         public void HideNativeOverlay()
         {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
             var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
 
             if (netWork != null)
@@ -401,6 +488,36 @@ namespace TheLegends.Base.Ads
         public void LogException(Exception exception)
         {
             Debug.LogException(exception);
+        }
+
+        public new bool IsInitialized()
+        {
+            bool isInitialized = false;
+            string message = "";
+
+            switch (status)
+            {
+                case InitiationStatus.Initialized:
+                    isInitialized = true;
+                    break;
+                case InitiationStatus.NotInitialized:
+                    message = "AdsManager is not initialized";
+                    break;
+                case InitiationStatus.Initializing:
+                    message = "AdsManager initializing";
+                    break;
+                case InitiationStatus.Failed:
+                    message = "AdsManager initial failed";
+                    break;
+            }
+
+            if (!isInitialized)
+            {
+                LogError(message);
+            }
+
+            return isInitialized;
+
         }
 
         #endregion
