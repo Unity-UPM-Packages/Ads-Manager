@@ -3173,6 +3173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6660f5aba882f4fae9fe9ef7b10010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  order: 1
   initBtn: {fileID: 292051303}
   loadInterstitialBtn: {fileID: 803781762}
   showInterstitialBtn: {fileID: 655415249}
