@@ -11,22 +11,22 @@ namespace TheLegends.Base.Ads
         public AdsNetworks NetWorkType {get => GetNetworkType();}
         public abstract IEnumerator DoInit();
 
-        public abstract void LoadInterstitial();
-        public abstract void ShowInterstitial(string position);
+        public abstract void LoadInterstitial(PlacementOrder order);
+        public abstract void ShowInterstitial(PlacementOrder order, string position);
 
-        public abstract void LoadRewarded();
-        public abstract void ShowRewarded(Action OnRewarded, string position);
+        public abstract void LoadRewarded(PlacementOrder order);
+        public abstract void ShowRewarded(PlacementOrder order, Action OnRewarded, string position);
 
-        public abstract void LoadAppOpen();
-        public abstract void ShowAppOpen(string position);
+        public abstract void LoadAppOpen(PlacementOrder order);
+        public abstract void ShowAppOpen(PlacementOrder order, string position);
 
-        public abstract void LoadBanner();
-        public abstract void ShowBanner(string position);
-        public abstract void HideBanner();
+        public abstract void LoadBanner(PlacementOrder order);
+        public abstract void ShowBanner(PlacementOrder order, string position);
+        public abstract void HideBanner(PlacementOrder order);
 
-        public abstract void LoadMrec();
-        public abstract void ShowMrec(MrecPos mrecPosition, Vector2Int offset, string position);
-        public abstract void HideMrec();
+        public abstract void LoadMrec(PlacementOrder order);
+        public abstract void ShowMrec(PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position);
+        public abstract void HideMrec(PlacementOrder order);
 
 
         public abstract AdsNetworks GetNetworkType();

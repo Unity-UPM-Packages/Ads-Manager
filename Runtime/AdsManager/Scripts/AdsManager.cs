@@ -136,7 +136,7 @@ namespace TheLegends.Base.Ads
             return adsNetworks.FirstOrDefault(x => x.GetNetworkType() == network);
         }
 
-        public void LoadInterstitial()
+        public void LoadInterstitial(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -147,11 +147,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.LoadInterstitial();
+                netWork.LoadInterstitial(order);
             }
         }
 
-        public void ShowInterstitial(string position)
+        public void ShowInterstitial(PlacementOrder order, string position)
         {
             if (!IsInitialized())
             {
@@ -167,11 +167,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowInterstitial(position);
+                netWork.ShowInterstitial(order, position);
             }
         }
 
-        public void LoadRewarded()
+        public void LoadRewarded(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -182,11 +182,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.LoadRewarded();
+                netWork.LoadRewarded(order);
             }
         }
 
-        public void ShowRewarded(Action OnRewarded, string position)
+        public void ShowRewarded(PlacementOrder order, Action OnRewarded, string position)
         {
             if (!IsInitialized())
             {
@@ -197,11 +197,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowRewarded(OnRewarded, position);
+                netWork.ShowRewarded(order, OnRewarded, position);
             }
         }
 
-        public void LoadAppOpen()
+        public void LoadAppOpen(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -212,11 +212,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.LoadAppOpen();
+                netWork.LoadAppOpen(order);
             }
         }
 
-        public void ShowAppOpen(string position)
+        public void ShowAppOpen(PlacementOrder order, string position)
         {
             if (!IsInitialized())
             {
@@ -232,11 +232,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowAppOpen(position);
+                netWork.ShowAppOpen(order, position);
             }
         }
 
-        public void LoadBanner()
+        public void LoadBanner(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -247,11 +247,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.LoadBanner();
+                netWork.LoadBanner(order);
             }
         }
 
-        public void ShowBanner(string position)
+        public void ShowBanner(PlacementOrder order, string position)
         {
             if (!IsInitialized())
             {
@@ -262,11 +262,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowBanner(position);
+                netWork.ShowBanner(order, position);
             }
         }
 
-        public void HideBanner()
+        public void HideBanner(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -277,11 +277,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.HideBanner();
+                netWork.HideBanner(order);
             }
         }
 
-        public void LoadMrec()
+        public void LoadMrec(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -292,11 +292,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.LoadMrec();
+                netWork.LoadMrec(order);
             }
         }
 
-        public void ShowMrec(MrecPos mrecPosition, Vector2Int offset, string position)
+        public void ShowMrec(PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position)
         {
             if (!IsInitialized())
             {
@@ -307,11 +307,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowMrec(mrecPosition, offset, position);
+                netWork.ShowMrec(order, mrecPosition, offset, position);
             }
         }
 
-        public void HideMrec()
+        public void HideMrec(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -322,11 +322,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.HideMrec();
+                netWork.HideMrec(order);
             }
         }
 
-        public void LoadNativeOverlay()
+        public void LoadNativeOverlay(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -337,11 +337,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.LoadNativeOverlay();
+                netWork.LoadNativeOverlay(order);
             }
         }
 
-        public void ShowNativeOverlay(string position)
+        public void ShowNativeOverlay(PlacementOrder order, string position)
         {
             if (!IsInitialized())
             {
@@ -352,11 +352,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowNativeOverlay(position);
+                netWork.ShowNativeOverlay(order, position);
             }
         }
 
-        public void HideNativeOverlay()
+        public void HideNativeOverlay(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -367,7 +367,7 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.HideNativeOverlay();
+                netWork.HideNativeOverlay(order);
             }
         }
 
@@ -384,7 +384,7 @@ namespace TheLegends.Base.Ads
         private IEnumerator IEShowAppOpen()
         {
             yield return new WaitForEndOfFrame();
-            ShowAppOpen("Pause");
+            ShowAppOpen(PlacementOrder.One ,"Pause");
         }
 
 

@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class DemoManager : MonoBehaviour
 {
+    public PlacementOrder order = PlacementOrder.One;
     public Button initBtn;
     public Button loadInterstitialBtn;
     public Button showInterstitialBtn;
@@ -108,22 +109,22 @@ public class DemoManager : MonoBehaviour
 
     private void LoadInterstitial()
     {
-        AdsManager.Instance.LoadInterstitial();
+        AdsManager.Instance.LoadInterstitial(order);
     }
 
     private void ShowInterstitial()
     {
-        AdsManager.Instance.ShowInterstitial("Default");
+        AdsManager.Instance.ShowInterstitial(order, "Default");
     }
 
     private void Loadrewarded()
     {
-        AdsManager.Instance.LoadRewarded();
+        AdsManager.Instance.LoadRewarded(order);
     }
 
     private void ShowRewarded()
     {
-        AdsManager.Instance.ShowRewarded(() =>
+        AdsManager.Instance.ShowRewarded(order, () =>
         {
             AdsManager.Instance.Log("Rewarded successfully");
         }, "Default");
@@ -132,59 +133,59 @@ public class DemoManager : MonoBehaviour
 
     private void LoadAppOpen()
     {
-        AdsManager.Instance.LoadAppOpen();
+        AdsManager.Instance.LoadAppOpen(order);
     }
 
     private void ShowAppOpen()
     {
-        AdsManager.Instance.ShowAppOpen("Default");
+        AdsManager.Instance.ShowAppOpen(order, "Default");
     }
 
     private void LoadBanner()
     {
-        AdsManager.Instance.LoadBanner();
+        AdsManager.Instance.LoadBanner(order);
     }
 
     private void ShowBanner()
     {
-        AdsManager.Instance.ShowBanner("Default");
+        AdsManager.Instance.ShowBanner(order, "Default");
     }
 
     private void HideBanner()
     {
-        AdsManager.Instance.HideBanner();
+        AdsManager.Instance.HideBanner(order);
     }
 
     private void LoadMrec()
     {
-        AdsManager.Instance.LoadMrec();
+        AdsManager.Instance.LoadMrec(order);
     }
 
     private void ShowMrec()
     {
         var mrecPos = (MrecPos)MrecPosDropdown.value;
-        AdsManager.Instance.ShowMrec(mrecPos, new Vector2Int(0, 0), "Default");
+        AdsManager.Instance.ShowMrec(order, mrecPos, new Vector2Int(0, 0), "Default");
     }
 
     private void HideMrec()
     {
-        AdsManager.Instance.HideMrec();
+        AdsManager.Instance.HideMrec(order);
     }
 
     private void LoadNativeOverlay()
     {
-        AdsManager.Instance.LoadNativeOverlay();
+        AdsManager.Instance.LoadNativeOverlay(order);
     }
 
     private void ShowNativeOverlay()
     {
-        AdsManager.Instance.ShowNativeOverlay("default");
+        AdsManager.Instance.ShowNativeOverlay(order, "default");
     }
 
 
     private void HideNativeOverlay()
     {
-        AdsManager.Instance.HideNativeOverlay();
+        AdsManager.Instance.HideNativeOverlay(order);
     }
 
     private void Test()

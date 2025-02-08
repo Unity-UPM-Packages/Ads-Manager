@@ -211,79 +211,99 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        public override void LoadInterstitial()
+        private int GetPlacementIndex(int order, int listCount)
         {
-            interList[0].LoadAds();
+            return Mathf.Clamp(order, 1, listCount - 1);
         }
 
-        public override void ShowInterstitial(string position)
+        public override void LoadInterstitial(PlacementOrder order)
         {
-            interList[0].ShowAds(position);
+            var placementIndex = GetPlacementIndex((int)order, interList.Count);
+            interList[placementIndex].LoadAds();
         }
 
-        public override void LoadRewarded()
+        public override void ShowInterstitial(PlacementOrder order, string position)
         {
-            rewardedList[0].LoadAds();
+            var placementIndex = GetPlacementIndex((int)order, interList.Count);
+            interList[placementIndex].ShowAds(position);
         }
 
-        public override void ShowRewarded(Action OnRewarded, string position)
+        public override void LoadRewarded(PlacementOrder order)
         {
-            rewardedList[0].ShowAds(OnRewarded, position);
+            var placementIndex = GetPlacementIndex((int)order, rewardedList.Count);
+            rewardedList[placementIndex].LoadAds();
         }
 
-        public override void LoadAppOpen()
+        public override void ShowRewarded(PlacementOrder order, Action OnRewarded, string position)
         {
-            appOpenList[0].LoadAds();
+            var placementIndex = GetPlacementIndex((int)order, rewardedList.Count);
+            rewardedList[placementIndex].ShowAds(OnRewarded, position);
         }
 
-        public override void ShowAppOpen(string position)
+        public override void LoadAppOpen(PlacementOrder order)
         {
-            appOpenList[0].ShowAds(position);
+            var placementIndex = GetPlacementIndex((int)order, appOpenList.Count);
+            appOpenList[placementIndex].LoadAds();
         }
 
-        public override void LoadBanner()
+        public override void ShowAppOpen(PlacementOrder order, string position)
         {
-            bannerList[0].LoadAds();
+            var placementIndex = GetPlacementIndex((int)order, appOpenList.Count);
+            appOpenList[placementIndex].ShowAds(position);
         }
 
-        public override void HideBanner()
+        public override void LoadBanner(PlacementOrder order)
         {
-            bannerList[0].HideAds();
+            var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
+            bannerList[placementIndex].LoadAds();
         }
 
-        public override void ShowBanner(string position)
+        public override void HideBanner(PlacementOrder order)
         {
-            bannerList[0].ShowAds(position);
+            var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
+            bannerList[placementIndex].HideAds();
         }
 
-        public override void LoadMrec()
+        public override void ShowBanner(PlacementOrder order, string position)
         {
-            mrecList[0].LoadAds();
+            var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
+            bannerList[placementIndex].ShowAds(position);
         }
 
-        public override void ShowMrec(MrecPos mrecPosition, Vector2Int offset, string position)
+        public override void LoadMrec(PlacementOrder order)
         {
-            mrecList[0].ShowAds(mrecPosition, offset, position);
+            var placementIndex = GetPlacementIndex((int)order, mrecList.Count);
+            mrecList[placementIndex].LoadAds();
         }
 
-        public override void HideMrec()
+        public override void ShowMrec(PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position)
         {
-            mrecList[0].HideAds();
+            var placementIndex = GetPlacementIndex((int)order, mrecList.Count);
+            mrecList[placementIndex].ShowAds(mrecPosition, offset, position);
         }
 
-        public void LoadNativeOverlay()
+        public override void HideMrec(PlacementOrder order)
         {
-            nativeOverlayList[0].LoadAds();
+            var placementIndex = GetPlacementIndex((int)order, mrecList.Count);
+            mrecList[placementIndex].HideAds();
         }
 
-        public void ShowNativeOverlay(string position)
+        public void LoadNativeOverlay(PlacementOrder order)
         {
-            nativeOverlayList[0].ShowAds(position);
+            var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
+            nativeOverlayList[placementIndex].LoadAds();
         }
 
-        public void HideNativeOverlay()
+        public void ShowNativeOverlay(PlacementOrder order, string position)
         {
-            nativeOverlayList[0].HideAds();
+            var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
+            nativeOverlayList[placementIndex].ShowAds(position);
+        }
+
+        public void HideNativeOverlay(PlacementOrder order)
+        {
+            var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
+            nativeOverlayList[placementIndex].HideAds();
         }
 
 
