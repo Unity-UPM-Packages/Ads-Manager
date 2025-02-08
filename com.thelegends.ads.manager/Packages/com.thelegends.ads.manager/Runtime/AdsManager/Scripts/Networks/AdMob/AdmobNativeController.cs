@@ -6,7 +6,7 @@ using TheLegends.Base.Ads;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace com.thelegends.ads.manager
+namespace TheLegends.Base.Ads
 {
     public class AdmobNativeController : AdsPlacementBase
     {
@@ -21,8 +21,8 @@ namespace com.thelegends.ads.manager
         [SerializeField]
         private string positionNative = "default";
 
-        [SerializeField]
-        private bool isShowOnLoaded;
+        private float timeAutoReload;
+        private bool isCLosedByHide = false;
 
         [Space(10)]
         [Header("Native Components")]
@@ -89,6 +89,8 @@ namespace com.thelegends.ads.manager
                     ? AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds[placementIndex]
                     : AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds[placementIndex]);
 
+            timeAutoReload = AdsManager.Instance.adsConfigs.adNativeTimeReload;
+
             Init(placement);
         }
 
@@ -101,24 +103,24 @@ namespace com.thelegends.ads.manager
                 return;
             }
 
-            if (!IsReady)
-            {
-                NativeDestroy();
-                base.LoadAds();
-                AdLoader adLoader = new AdLoader.Builder(adsUnitID)
-                    .ForNativeAd()
-                    .Build();
-                adLoader.OnNativeAdLoaded += OnNativeLoaded;
-                adLoader.OnAdFailedToLoad += OnNativeLoadFailed;
-                adLoader.OnNativeAdImpression += OnImpression;
-                adLoader.OnNativeAdClicked += OnAdsClick;
-                adLoader.OnNativeAdClosed += OnAdsClose;
-                adLoader.LoadAd(new AdRequest());
+            NativeDestroy();
+            base.LoadAds();
+
+            AdLoader adLoader = new AdLoader.Builder(adsUnitID)
+                .ForNativeAd()
+                .Build();
+
+            adLoader.OnNativeAdLoaded += OnNativeLoaded;
+            adLoader.OnAdFailedToLoad += OnNativeLoadFailed;
+            adLoader.OnNativeAdImpression += OnImpression;
+            adLoader.OnNativeAdClicked += OnAdsClick;
+            adLoader.OnNativeAdClosed += OnAdsClose;
+            adLoader.LoadAd(new AdRequest());
 
 #if UNITY_EDITOR
-                OnNativeLoaded(this, null);
+            OnNativeLoaded(this, null);
 #endif
-            }
+
 #endif
         }
 
@@ -126,6 +128,7 @@ namespace com.thelegends.ads.manager
         public override void ShowAds(string showPosition)
         {
 #if USE_ADMOB
+            position = showPosition;
 
             if (Status == AdsEvents.ShowSuccess)
             {
@@ -141,11 +144,15 @@ namespace com.thelegends.ads.manager
             {
                 Status = AdsEvents.ShowSuccess;
                 container.SetActive(true);
+                isCLosedByHide = false;
 
                 if (adImageCollider && AdsManager.Instance.adsConfigs.adNativeBannerHeight > 0)
                 {
-                    adImageCollider.size = new Vector3(adImage.rectTransform.rect.width, AdsManager.Instance.adsConfigs.adNativeBannerHeight, adImageCollider.size.z);
+                    adImageCollider.size = new Vector3(adImage.rectTransform.rect.width,
+                        AdsManager.Instance.adsConfigs.adNativeBannerHeight, adImageCollider.size.z);
                 }
+
+                DelayReloadAd(timeAutoReload);
             }
             else
             {
@@ -159,8 +166,10 @@ namespace com.thelegends.ads.manager
             {
                 _nativeAd.OnPaidEvent += OnAdsPaid;
                 Status = AdsEvents.ShowSuccess;
+                isCLosedByHide = false;
                 FetchData();
                 container.SetActive(true);
+                DelayReloadAd(timeAutoReload);
             }
             else
             {
@@ -197,7 +206,7 @@ namespace com.thelegends.ads.manager
 #if USE_ADMOB
             return _nativeAd != null;
 #else
-        return false;
+            return false;
 #endif
         }
 
@@ -208,17 +217,16 @@ namespace com.thelegends.ads.manager
 #if USE_ADMOB
             try
             {
-
                 container.SetActive(false);
+
+                CancelReloadAds();
 
                 if (_nativeAd != null)
                 {
-                    base.OnAdsClosed();
                     _nativeAd.OnPaidEvent -= OnAdsPaid;
                     _nativeAd.Destroy();
                     _nativeAd = null;
                 }
-
             }
             catch (Exception ex)
             {
@@ -233,18 +241,21 @@ namespace com.thelegends.ads.manager
 #if USE_ADMOB
 
             base.OnAdsLoadAvailable();
-            NativeDestroy();
 
             if (args != null)
             {
                 _nativeAd = args.nativeAd;
             }
 
-
-            if (isShowOnLoaded)
+            if (isCLosedByHide)
             {
-                ShowAds(position);
+                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "last closed by Hide() --> return");
+
+                return;
             }
+
+            ShowAds(position);
+
 #endif
         }
 
@@ -303,7 +314,8 @@ namespace com.thelegends.ads.manager
 
                 if (adImageCollider && AdsManager.Instance.adsConfigs.adNativeBannerHeight > 0)
                 {
-                    adImageCollider.size = new Vector3(adImage.rectTransform.rect.width, AdsManager.Instance.adsConfigs.adNativeBannerHeight, adImageCollider.size.z);
+                    adImageCollider.size = new Vector3(adImage.rectTransform.rect.width,
+                        AdsManager.Instance.adsConfigs.adNativeBannerHeight, adImageCollider.size.z);
                 }
 
                 _nativeAd.RegisterImageGameObjects(new List<GameObject> { adImage.gameObject });
@@ -392,17 +404,19 @@ namespace com.thelegends.ads.manager
 
         public void HideAds()
         {
-#if UNITY_EDITOR
-            container.SetActive(false);
+            isCLosedByHide = true;
+            NativeDestroy();
             base.OnAdsClosed();
-#else
-            if (_nativeAd != null)
-            {
-                NativeDestroy();
-                base.OnAdsClosed();
-            }
-#endif
+        }
 
+        private void DelayReloadAd(float time)
+        {
+            Invoke(nameof(LoadAds), time);
+        }
+
+        private void CancelReloadAds()
+        {
+            CancelInvoke(nameof(LoadAds));
         }
 
         #endregion

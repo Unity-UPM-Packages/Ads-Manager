@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using com.thelegends.ads.manager;
 using GoogleMobileAds.Api;
 using TheLegends.Base.Ads;
 using TheLegends.Base.AppsFlyer;
@@ -85,7 +84,8 @@ public class DemoManager : MonoBehaviour
             {"adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete},
             {"adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart},
             {"timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds},
-            {"adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight}
+            {"adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight},
+            {"adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload}
         };
 
         yield return FirebaseManager.Instance.DoInit(defaultRemoteConfig);
@@ -100,6 +100,7 @@ public class DemoManager : MonoBehaviour
             AdsManager.Instance.adsConfigs.adInterOnStart = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart);
             AdsManager.Instance.adsConfigs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds);
             AdsManager.Instance.adsConfigs.adNativeBannerHeight = FirebaseManager.Instance.RemoteGetValueFloat("adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight);
+            AdsManager.Instance.adsConfigs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload);
         });
 
         yield return AppsFlyerManager.Instance.DoInit();
