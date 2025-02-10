@@ -4,15 +4,16 @@
     "com.thelegends.appsflyer.manager": "1.0.1",
     "com.thelegends.firebase.manager": "1.0.3",
     "com.thelegends.unity.patterns": "1.0.1",
+    "com.thelegends.unity.ui": "1.0.2",
     "com.unity.ide.rider": "3.0.34",
     "com.unity.ide.visualstudio": "2.0.22",
     "com.unity.mobile.android-logcat": "1.4.4",
     "com.unity.test-framework": "1.1.33",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
+    "com.unity.modules.audio": "1.0.0",
     "com.unity.modules.physics": "1.0.0",
     "com.unity.modules.physics2d": "1.0.0",
-    "com.unity.modules.audio": "1.0.0",
     "com.unity.modules.unitywebrequest": "1.0.0"
   },
   "scopedRegistries": [
@@ -22,6 +23,13 @@
       "scopes": [
         "com.google",
         "com.thelegends"
+      ]
+    },
+    {
+      "name": "OpenUPM",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.annulusgames.lit-motion"
       ]
     }
   ]
