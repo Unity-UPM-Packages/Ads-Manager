@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GoogleMobileAds.Api;
+using TheLegends.Base.UI;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
@@ -112,7 +113,10 @@ namespace TheLegends.Base.Ads
                     if (reward != null)
                     {
                         AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + $"{adsUnitID} " + "claimed");
-                        OnRewarded?.Invoke();
+                        UILoadingController.Show(1f, () =>
+                        {
+                            OnRewarded?.Invoke();
+                        });
                     }
                 });
             }
