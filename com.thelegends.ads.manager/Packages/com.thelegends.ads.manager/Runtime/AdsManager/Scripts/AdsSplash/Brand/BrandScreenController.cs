@@ -77,12 +77,12 @@ namespace TheLegends.Base.Ads
 
         private IEnumerator IEAutoClose(float time)
         {
-            float elapsedtime = 0;
+            float eslapeTime = 0;
 
-            while (elapsedtime < time)
+            while (eslapeTime < time)
             {
-                elapsedtime += Time.deltaTime;
-                autoCloseTxt.text ="AUTO CLOSE AND SHOW LATER IN " + (time - elapsedtime).ToString("#0") + "s";
+                eslapeTime += Time.deltaTime;
+                autoCloseTxt.text ="AUTO CLOSE AND SHOW LATER IN " + (time - eslapeTime).ToString("#0") + "s";
                 yield return null;
             }
 
