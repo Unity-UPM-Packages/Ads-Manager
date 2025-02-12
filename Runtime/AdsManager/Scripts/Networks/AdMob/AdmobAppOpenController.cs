@@ -101,7 +101,7 @@ namespace TheLegends.Base.Ads
         {
             base.ShowAds(showPosition);
 #if USE_ADMOB
-            if (IsReady && Status == AdsEvents.LoadAvailable)
+            if (IsReady && IsAvailable)
             {
                 _appOpenAd.OnAdClicked += base.OnAdsClick;
                 _appOpenAd.OnAdPaid += OnAdsPaid;

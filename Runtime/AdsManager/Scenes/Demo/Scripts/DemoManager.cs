@@ -109,12 +109,12 @@ public class DemoManager : MonoBehaviour
 
     private void LoadInterstitial()
     {
-        AdsManager.Instance.LoadInterstitial(order);
+        AdsManager.Instance.LoadInterstitial(AdsType.InterOpen, order);
     }
 
     private void ShowInterstitial()
     {
-        AdsManager.Instance.ShowInterstitial(order, "Default");
+        AdsManager.Instance.ShowInterstitial(AdsType.InterOpen, order, "Default");
     }
 
     private void Loadrewarded()
@@ -158,18 +158,18 @@ public class DemoManager : MonoBehaviour
 
     private void LoadMrec()
     {
-        AdsManager.Instance.LoadMrec(order);
+        AdsManager.Instance.LoadMrec(AdsType.MrecOpen, order);
     }
 
     private void ShowMrec()
     {
         var mrecPos = (MrecPos)MrecPosDropdown.value;
-        AdsManager.Instance.ShowMrec(order, mrecPos, new Vector2Int(0, 0), "Default");
+        AdsManager.Instance.ShowMrec(AdsType.MrecOpen, order, mrecPos, new Vector2Int(0, 0), "Default");
     }
 
     private void HideMrec()
     {
-        AdsManager.Instance.HideMrec(order);
+        AdsManager.Instance.HideMrec(AdsType.MrecOpen, order);
     }
 
     private void LoadNativeOverlay()
