@@ -33,6 +33,10 @@ namespace TheLegends.Base.Ads
 
         public bool IsReady { get => IsAdsReady(); }
 
+        public abstract bool IsAdsReady();
+
+        public bool IsAvailable { get => IsAdsAvailable(); }
+
         public AdsNetworks AdsNetworks { get => GetAdsNetworks(); }
 
         public AdsType AdsType { get =>  GetAdsType(); }
@@ -45,8 +49,6 @@ namespace TheLegends.Base.Ads
         public abstract AdsNetworks GetAdsNetworks();
 
         public abstract AdsType GetAdsType();
-
-        public abstract bool IsAdsReady();
 
         public virtual void LoadAds()
         {
@@ -61,9 +63,9 @@ namespace TheLegends.Base.Ads
                 return false;
             }
 
-            if(Status == AdsEvents.LoadAvailable)
+            if(IsAvailable)
             {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is ready --> return");
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is available --> return");
                 return false;
             }
 
@@ -86,6 +88,11 @@ namespace TheLegends.Base.Ads
         {
             Status = AdsEvents.LoadAvailable;
             reloadCount = 0;
+        }
+
+        public bool IsAdsAvailable()
+        {
+            return Status == AdsEvents.LoadAvailable;
         }
 
         protected virtual void OnAdsLoadFailed(string message)

@@ -99,7 +99,7 @@ namespace TheLegends.Base.Ads
         {
             base.ShowAds(showPosition);
 #if USE_ADMOB
-            if (IsReady && Status == AdsEvents.LoadAvailable)
+            if (IsReady && IsAvailable)
             {
                 _rewardedAd.OnAdClicked += base.OnAdsClick;
                 _rewardedAd.OnAdPaid += OnAdsPaid;

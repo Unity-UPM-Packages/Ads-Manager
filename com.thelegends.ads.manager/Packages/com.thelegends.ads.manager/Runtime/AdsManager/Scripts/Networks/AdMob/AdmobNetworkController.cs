@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Ump.Api;
 using UnityEngine;
@@ -211,21 +212,63 @@ namespace TheLegends.Base.Ads
             });
         }
 
+        public override bool IsAdsTypeAvailable(AdsType type, PlacementOrder order)
+        {
+            var listPlacement = new List<AdsPlacementBase>();
+
+            switch (type)
+            {
+                case AdsType.Banner:
+                    listPlacement = bannerList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.Interstitial:
+                    listPlacement = interList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.Rewarded:
+                    listPlacement = rewardedList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.Mrec:
+                    listPlacement = mrecList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.AppOpen:
+                    listPlacement = appOpenList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.MrecOpen:
+                    listPlacement = mrecOpenList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.InterOpen:
+                    listPlacement = interOpenList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.NativeOverlay:
+                    listPlacement = nativeOverlayList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.Native:
+                    listPlacement = nativeOverlayList.Cast<AdsPlacementBase>().ToList();
+                    break;
+            }
+
+            var index = GetPlacementIndex((int)order, listPlacement.Count);
+
+            return listPlacement[index].IsAvailable;
+        }
+
         private int GetPlacementIndex(int order, int listCount)
         {
-            return Mathf.Clamp(order, 1, listCount - 1);
+            return Mathf.Clamp(order - 1, 0, listCount - 1);
         }
 
-        public override void LoadInterstitial(PlacementOrder order)
+        public override void LoadInterstitial(AdsType interType, PlacementOrder order)
         {
-            var placementIndex = GetPlacementIndex((int)order, interList.Count);
-            interList[placementIndex].LoadAds();
+            var list = interType == AdsType.InterOpen ? (new List<AdmobInterstitialController>(interOpenList)) : interList;
+            var placementIndex = GetPlacementIndex((int)order, list.Count);
+            list[placementIndex].LoadAds();
         }
 
-        public override void ShowInterstitial(PlacementOrder order, string position)
+        public override void ShowInterstitial(AdsType interType, PlacementOrder order, string position)
         {
-            var placementIndex = GetPlacementIndex((int)order, interList.Count);
-            interList[placementIndex].ShowAds(position);
+            var list = interType == AdsType.InterOpen ? (new List<AdmobInterstitialController>(interOpenList)) : interList;
+            var placementIndex = GetPlacementIndex((int)order, list.Count);
+            list[placementIndex].ShowAds(position);
         }
 
         public override void LoadRewarded(PlacementOrder order)
@@ -270,22 +313,25 @@ namespace TheLegends.Base.Ads
             bannerList[placementIndex].ShowAds(position);
         }
 
-        public override void LoadMrec(PlacementOrder order)
+        public override void LoadMrec(AdsType mrecType, PlacementOrder order)
         {
-            var placementIndex = GetPlacementIndex((int)order, mrecList.Count);
-            mrecList[placementIndex].LoadAds();
+            var list = mrecType == AdsType.MrecOpen ?(new List<AdmobMrecController>(mrecOpenList)) : mrecList;
+            var placementIndex = GetPlacementIndex((int)order, list.Count);
+            list[placementIndex].LoadAds();
         }
 
-        public override void ShowMrec(PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position)
+        public override void ShowMrec(AdsType mrecType, PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position)
         {
-            var placementIndex = GetPlacementIndex((int)order, mrecList.Count);
-            mrecList[placementIndex].ShowAds(mrecPosition, offset, position);
+            var list = mrecType == AdsType.MrecOpen ?(new List<AdmobMrecController>(mrecOpenList)) : mrecList;
+            var placementIndex = GetPlacementIndex((int)order, list.Count);
+            list[placementIndex].ShowAds(mrecPosition, offset, position);
         }
 
-        public override void HideMrec(PlacementOrder order)
+        public override void HideMrec(AdsType mrecType, PlacementOrder order)
         {
-            var placementIndex = GetPlacementIndex((int)order, mrecList.Count);
-            mrecList[placementIndex].HideAds();
+            var list = mrecType == AdsType.MrecOpen ?(new List<AdmobMrecController>(mrecOpenList)) : mrecList;
+            var placementIndex = GetPlacementIndex((int)order, list.Count);
+            list[placementIndex].HideAds();
         }
 
         public void LoadNativeOverlay(PlacementOrder order)

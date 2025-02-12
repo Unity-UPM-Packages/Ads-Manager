@@ -115,7 +115,6 @@ namespace TheLegends.Base.Ads
                     break;
             }
 
-            Debug.Log("BBBBBB " + newPos);
 
             _bannerView.SetPosition(newPos.x, newPos.y);
         }

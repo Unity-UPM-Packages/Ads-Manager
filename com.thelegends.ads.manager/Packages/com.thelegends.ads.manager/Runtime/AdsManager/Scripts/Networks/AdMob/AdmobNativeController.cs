@@ -140,7 +140,7 @@ namespace TheLegends.Base.Ads
             base.ShowAds(showPosition);
 
 #if UNITY_EDITOR
-            if (Status == AdsEvents.LoadAvailable)
+            if (IsAvailable)
             {
                 Status = AdsEvents.ShowSuccess;
                 container.SetActive(true);
@@ -162,7 +162,7 @@ namespace TheLegends.Base.Ads
             }
 
 #else
-            if (IsReady && Status == AdsEvents.LoadAvailable)
+            if (IsReady && IsAvailable)
             {
                 _nativeAd.OnPaidEvent += OnAdsPaid;
                 Status = AdsEvents.ShowSuccess;

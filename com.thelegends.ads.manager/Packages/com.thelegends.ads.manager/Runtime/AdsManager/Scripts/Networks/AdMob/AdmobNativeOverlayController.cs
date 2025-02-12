@@ -102,7 +102,7 @@ namespace TheLegends.Base.Ads
             base.ShowAds(showPosition);
             RenderAd();
 #if USE_ADMOB
-            if (IsReady && Status == AdsEvents.LoadAvailable)
+            if (IsReady && IsAvailable)
             {
                 _nativeOverlayAd.OnAdClicked += base.OnAdsClick;
                 _nativeOverlayAd.OnAdPaid += OnAdsPaid;
@@ -303,8 +303,6 @@ namespace TheLegends.Base.Ads
 
                     break;
             }
-
-            Debug.Log("AAAAAA " + newPos);
 
             _nativeOverlayAd.SetTemplatePosition(newPos.x, newPos.y);
         }

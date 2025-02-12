@@ -136,7 +136,7 @@ namespace TheLegends.Base.Ads
             return adsNetworks.FirstOrDefault(x => x.GetNetworkType() == network);
         }
 
-        public void LoadInterstitial(PlacementOrder order)
+        public void LoadInterstitial(AdsType interType, PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -147,11 +147,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.LoadInterstitial(order);
+                netWork.LoadInterstitial(interType, order);
             }
         }
 
-        public void ShowInterstitial(PlacementOrder order, string position)
+        public void ShowInterstitial(AdsType interType, PlacementOrder order, string position)
         {
             if (!IsInitialized())
             {
@@ -167,7 +167,7 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowInterstitial(order, position);
+                netWork.ShowInterstitial(interType, order, position);
             }
         }
 
@@ -281,7 +281,7 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public void LoadMrec(PlacementOrder order)
+        public void LoadMrec(AdsType mrecType, PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -292,11 +292,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.LoadMrec(order);
+                netWork.LoadMrec(mrecType, order);
             }
         }
 
-        public void ShowMrec(PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position)
+        public void ShowMrec(AdsType mrecType, PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position)
         {
             if (!IsInitialized())
             {
@@ -307,11 +307,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowMrec(order, mrecPosition, offset, position);
+                netWork.ShowMrec(mrecType, order, mrecPosition, offset, position);
             }
         }
 
-        public void HideMrec(PlacementOrder order)
+        public void HideMrec(AdsType mrecType, PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -322,7 +322,7 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.HideMrec(order);
+                netWork.HideMrec(mrecType, order);
             }
         }
 
@@ -369,6 +369,25 @@ namespace TheLegends.Base.Ads
             {
                 netWork.HideNativeOverlay(order);
             }
+        }
+
+        public bool IsAdsTypeAvailable(AdsType adsType, PlacementOrder order)
+        {
+            bool isAvailable = false;
+
+            if (!IsInitialized())
+            {
+                isAvailable = false;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                isAvailable = netWork.IsAdsTypeAvailable(adsType, order);
+            }
+
+            return isAvailable;
         }
 
         private void OnApplicationPause(bool isPaused)
