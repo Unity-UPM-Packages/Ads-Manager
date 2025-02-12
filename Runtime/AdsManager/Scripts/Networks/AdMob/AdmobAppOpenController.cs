@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GoogleMobileAds.Api;
+using TheLegends.Base.UI;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
@@ -137,6 +138,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAppOpenClosed()
         {
+            UILoadingController.Show(1f, null);
             base.OnAdsClosed();
         }
 

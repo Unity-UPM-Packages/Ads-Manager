@@ -94,34 +94,6 @@ namespace TheLegends.Base.Ads
 
             adsNetworks = GetComponentsInChildren<AdsNetworkBase>().ToList();
 
-            // foreach (var network in SettingsAds.AdsNetworks)
-            // {
-            //     TODO more network
-            //      if (network == AdsNetworks.Iron)
-            //      {
-            //          Log("Init " + network);
-            //          instance.iron.Init(IsDebug);
-            //          yield return new WaitForSeconds(0.25f);
-            //      }
-            //      else if (network == AdsNetworks.Max)
-            //      {
-            //          Log("Init " + network);
-            //          instance.max.Init(IsDebug);
-            //          yield return new WaitForSeconds(0.25f);
-            //      }
-            //     if (network == AdsNetworks.Admob)
-            //     {
-            //         Log("Init " + network);
-            //         yield return admob.DoInit();
-            //         yield return new WaitForSeconds(0.25f);
-            //     }
-            //     else
-            //     {
-            //         LogError("Init " + network + " NOT SUPPORT");
-            //         yield return new WaitForSeconds(0.25f);
-            //     }
-            // }
-
             foreach (var network in adsNetworks)
             {
                 yield return network.DoInit();
