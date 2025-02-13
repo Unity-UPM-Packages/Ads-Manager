@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.0...v1.0.1) (2025-02-13)
+
+
+### Bug Fixes
+
+* improve AppOpen OnApplicationPause ([937726d](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/937726de0576e4835e27df0c907580b12c898c1a))
+
 # 1.0.0 (2025-02-13)
 
 
