@@ -41,6 +41,10 @@ namespace TheLegends.Base.Ads
 
         public AdsType AdsType { get =>  GetAdsType(); }
 
+        protected Coroutine loadTimeOutCoroutine;
+
+
+
         public virtual void Init(Placement placement)
         {
             this.Placement = placement;
@@ -53,6 +57,7 @@ namespace TheLegends.Base.Ads
         public virtual void LoadAds()
         {
             Status = AdsEvents.LoadRequest;
+            loadTimeOutCoroutine = StartCoroutine(HandleTimeOut());
         }
 
         protected bool IsCanLoadAds()
@@ -106,6 +111,24 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString() } " + "OnAdsLoadFailed " + adsUnitID + " Error: " + message + " re-trying in " + (5 * reloadCount) + " seconds " + reloadCount + "/" + reloadMax);
                 Invoke(nameof(LoadAds), 5 * reloadCount);
             }
+        }
+
+        protected IEnumerator HandleTimeOut()
+        {
+            float timeOut = AdsManager.Instance.adsConfigs.adLoadTimeOut;
+
+            yield return new WaitForSeconds(timeOut);
+
+            if (Status == AdsEvents.LoadRequest)
+            {
+                OnAdsLoadTimeOut();
+            }
+        }
+
+        protected virtual void OnAdsLoadTimeOut()
+        {
+            Status = AdsEvents.LoadTimeOut;
+            OnAdsLoadFailed("TimeOut");
         }
 
         public virtual void ShowAds(string showPosition)

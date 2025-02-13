@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,11 @@ namespace TheLegends.Base.Ads
 #else
             return AdsType.None;
 #endif
+        }
+
+        private void Start()
+        {
+            IsCloseShowLoading = false;
         }
     }
 
