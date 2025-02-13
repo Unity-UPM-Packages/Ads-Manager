@@ -12,21 +12,6 @@ namespace TheLegends.Base.Ads
         private InterstitialAd _interstitialAd;
         private string _currentLoadRequestId;
 
-        private bool isCLoseShowLoading = true;
-
-        protected bool IsCloseShowLoading
-        {
-            get
-            {
-                return isCLoseShowLoading;
-            }
-
-            set
-            {
-                isCLoseShowLoading = value;
-            }
-        }
-
         public override void LoadAds()
         {
 #if USE_ADMOB
@@ -171,12 +156,9 @@ namespace TheLegends.Base.Ads
             base.OnAdsShowFailed(errorDescription);
         }
 
-        private void OnInterClosed()
+        protected virtual void OnInterClosed()
         {
-            if (IsCloseShowLoading)
-            {
-                UILoadingController.Show(1f, null);
-            }
+            UILoadingController.Show(1f, null);
             base.OnAdsClosed();
         }
 
