@@ -12,7 +12,17 @@ namespace TheLegends.Base.Ads
     {
         private bool isChecking = false;
 
-        [SerializeField] private List<string> testDevices = new List<string>();
+        [Header("DEBUG")]
+        [SerializeField]
+        private List<string> testDevicesIDAds = new List<string>();
+
+        [Space(5)]
+
+        [SerializeField]
+        private DebugGeography debugGeography = DebugGeography.Disabled;
+
+        [SerializeField]
+        private List<string> testDeivesIDConsent = new List<string>();
 
         private List<AdmobInterstitialController> interList = new List<AdmobInterstitialController>();
         private List<AdmobRewardedController> rewardedList = new List<AdmobRewardedController>();
@@ -31,7 +41,7 @@ namespace TheLegends.Base.Ads
             {
                 MobileAds.SetRequestConfiguration( new RequestConfiguration
                 {
-                    TestDeviceIds = testDevices
+                    TestDeviceIds = testDevicesIDAds
                 });
 
                 MobileAds.RaiseAdEventsOnUnityMainThread = true;
@@ -124,7 +134,14 @@ namespace TheLegends.Base.Ads
             isChecking = true;
 
             // Create a ConsentRequestParameters object.
-            ConsentRequestParameters request = new ConsentRequestParameters();
+            ConsentRequestParameters request = new ConsentRequestParameters
+            {
+                ConsentDebugSettings = new ConsentDebugSettings
+                {
+                    TestDeviceHashedIds = testDeivesIDConsent,
+                    DebugGeography = debugGeography
+                }
+            };
 
             // Check the current consent information status.
             ConsentInformation.Update(request, (updateError =>
