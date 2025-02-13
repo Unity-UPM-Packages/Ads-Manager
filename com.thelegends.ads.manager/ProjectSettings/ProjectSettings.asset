@@ -154,7 +154,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.com.thelegends.ads.manager
+    Android: com.thelegends.ads.manager
     Lumin: com.com.thelegends.ads.manager
     Standalone: com.com.thelegends.ads.manager
     WebGL: com.com.thelegends.ads.manager
