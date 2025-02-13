@@ -99,7 +99,7 @@ namespace TheLegends.Base.Ads
             AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
         }
 
-        public void HideAds()
+        public virtual void HideAds()
         {
 #if USE_ADMOB
             if (Status != AdsEvents.ShowSuccess && Status != AdsEvents.Click)
@@ -175,7 +175,7 @@ namespace TheLegends.Base.Ads
             base.OnAdsLoadFailed(errorDescription);
         }
 
-        private void BannerDestroy()
+        protected void BannerDestroy()
         {
 #if USE_ADMOB
             if (_bannerView != null)

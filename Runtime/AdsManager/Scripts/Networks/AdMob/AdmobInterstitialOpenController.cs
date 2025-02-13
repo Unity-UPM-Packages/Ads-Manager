@@ -15,9 +15,9 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        private void Start()
+        protected override void OnInterClosed()
         {
-            IsCloseShowLoading = false;
+            Status = AdsEvents.Close;
         }
     }
 
