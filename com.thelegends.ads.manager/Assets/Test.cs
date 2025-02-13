@@ -16,6 +16,7 @@ public class Test : MonoBehaviour
     {
         amout = 0;
         Load();
+        Debug.Log("AAAA");
     }
 
     private IEnumerator CallBack(float time, Action callBack)
