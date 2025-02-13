@@ -366,7 +366,7 @@ namespace TheLegends.Base.Ads
         {
             Debug.Log("OnApplicationPause " + isPaused);
 
-            if (isPaused == false)
+            if (status == InitiationStatus.Initialized && isPaused == false)
             {
                 StartCoroutine(IEShowAppOpen());
             }
