@@ -2,7 +2,7 @@
   "dependencies": {
     "com.google.ads.mobile": "9.5.0",
     "com.thelegends.appsflyer.manager": "1.0.1",
-    "com.thelegends.firebase.manager": "1.0.3",
+    "com.thelegends.firebase.manager": "1.0.4",
     "com.thelegends.unity.patterns": "1.0.1",
     "com.thelegends.unity.ui": "1.0.3",
     "com.unity.ide.rider": "3.0.34",
