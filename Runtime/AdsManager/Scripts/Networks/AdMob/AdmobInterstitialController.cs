@@ -10,6 +10,22 @@ namespace TheLegends.Base.Ads
     public class AdmobInterstitialController : AdsPlacementBase
     {
         private InterstitialAd _interstitialAd;
+        private string _currentLoadRequestId;
+
+        private bool isCLoseShowLoading = true;
+
+        protected bool IsCloseShowLoading
+        {
+            get
+            {
+                return isCLoseShowLoading;
+            }
+
+            set
+            {
+                isCLoseShowLoading = value;
+            }
+        }
 
         public override void LoadAds()
         {
@@ -36,9 +52,26 @@ namespace TheLegends.Base.Ads
 
                 base.LoadAds();
                 AdRequest request = new AdRequest();
+
+                _currentLoadRequestId = Guid.NewGuid().ToString();
+                string loadRequestId = _currentLoadRequestId;
+
                 InterstitialAd.Load(adsUnitID.Trim(), request,
                     (InterstitialAd ad, LoadAdError error) =>
                     {
+
+                        if (loadRequestId != _currentLoadRequestId)
+                        {
+                            // If the load request ID does not match, this callback is from a previous request
+                            return;
+                        }
+
+                        if (loadTimeOutCoroutine != null)
+                        {
+                            StopCoroutine(loadTimeOutCoroutine);
+                            loadTimeOutCoroutine = null;
+                        }
+
                         // if error is not null, the load request failed.
                         if(error != null)
                         {
@@ -140,7 +173,10 @@ namespace TheLegends.Base.Ads
 
         private void OnInterClosed()
         {
-            UILoadingController.Show(1f, null);
+            if (IsCloseShowLoading)
+            {
+                UILoadingController.Show(1f, null);
+            }
             base.OnAdsClosed();
         }
 

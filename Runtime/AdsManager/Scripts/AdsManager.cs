@@ -528,6 +528,7 @@ namespace TheLegends.Base.Ads
         public float timePlayToShowAds = 20f;
         public float adNativeBannerHeight = 140;
         public float adNativeTimeReload = 15f;
+        public float adLoadTimeOut = 5f;
     }
 
 }

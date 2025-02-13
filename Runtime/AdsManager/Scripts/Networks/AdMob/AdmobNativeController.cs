@@ -65,6 +65,10 @@ namespace TheLegends.Base.Ads
 
         public Action onClick = null;
 
+        private string _currentLoadRequestId;
+        private string _loadRequestId;
+
+
 
         private void Start()
         {
@@ -239,6 +243,17 @@ namespace TheLegends.Base.Ads
         private void OnNativeLoaded(object sender, NativeAdEventArgs args)
         {
 #if USE_ADMOB
+            if (_loadRequestId != _currentLoadRequestId)
+            {
+                // If the load request ID does not match, this callback is from a previous request
+                return;
+            }
+
+            if (loadTimeOutCoroutine != null)
+            {
+                StopCoroutine(loadTimeOutCoroutine);
+                loadTimeOutCoroutine = null;
+            }
 
             base.OnAdsLoadAvailable();
 
@@ -264,6 +279,18 @@ namespace TheLegends.Base.Ads
 #pragma warning restore CS0618 // Type or member is obsolete
         {
 #if USE_ADMOB
+            if (_loadRequestId != _currentLoadRequestId)
+            {
+                // If the load request ID does not match, this callback is from a previous request
+                return;
+            }
+
+            if (loadTimeOutCoroutine != null)
+            {
+                StopCoroutine(loadTimeOutCoroutine);
+                loadTimeOutCoroutine = null;
+            }
+
             var errorDescription = error.LoadAdError.GetMessage();
             base.OnAdsLoadFailed(errorDescription);
 #endif

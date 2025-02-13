@@ -52,7 +52,8 @@ namespace TheLegends.Base.Ads
                 {"adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart},
                 {"timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds},
                 {"adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight},
-                {"adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload}
+                {"adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload},
+                {"adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut},
             };
 
             yield return FirebaseManager.Instance.DoInit(defaultRemoteConfig);
@@ -64,6 +65,7 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.adsConfigs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds);
                 AdsManager.Instance.adsConfigs.adNativeBannerHeight = FirebaseManager.Instance.RemoteGetValueFloat("adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight);
                 AdsManager.Instance.adsConfigs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload);
+                AdsManager.Instance.adsConfigs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut);
             });
 
             AdsManager.Instance.LoadMrec(AdsType.MrecOpen, PlacementOrder.One);

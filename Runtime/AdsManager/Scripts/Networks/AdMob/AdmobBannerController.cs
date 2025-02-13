@@ -9,6 +9,8 @@ namespace TheLegends.Base.Ads
     public class AdmobBannerController : AdsPlacementBase
     {
         protected BannerView _bannerView;
+        private string _currentLoadRequestId;
+        private string _loadRequestId;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -59,6 +61,10 @@ namespace TheLegends.Base.Ads
 
                 base.LoadAds();
                 AdRequest request = new AdRequest();
+
+                _currentLoadRequestId = Guid.NewGuid().ToString();
+                _loadRequestId = _currentLoadRequestId;
+
                 _bannerView.LoadAd(request);
             }
 #endif
@@ -135,12 +141,36 @@ namespace TheLegends.Base.Ads
 
         public void OnBannerLoaded()
         {
+            if (_loadRequestId != _currentLoadRequestId)
+            {
+                // If the load request ID does not match, this callback is from a previous request
+                return;
+            }
+
+            if (loadTimeOutCoroutine != null)
+            {
+                StopCoroutine(loadTimeOutCoroutine);
+                loadTimeOutCoroutine = null;
+            }
+
             base.OnAdsLoadAvailable();
             _bannerView.Hide();
         }
 
         private void OnBannerLoadFailed(AdError error)
         {
+            if (_loadRequestId != _currentLoadRequestId)
+            {
+                // If the load request ID does not match, this callback is from a previous request
+                return;
+            }
+
+            if (loadTimeOutCoroutine != null)
+            {
+                StopCoroutine(loadTimeOutCoroutine);
+                loadTimeOutCoroutine = null;
+            }
+
             var errorDescription = error?.GetMessage();
             base.OnAdsLoadFailed(errorDescription);
         }
