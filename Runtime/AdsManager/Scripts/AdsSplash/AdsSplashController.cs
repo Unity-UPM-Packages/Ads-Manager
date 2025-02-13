@@ -114,11 +114,22 @@ namespace TheLegends.Base.Ads
             Debug.Log("LoadScene");
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
+            PreloadAds();
+
             // Wait until the asynchronous scene fully loads
             while (!asyncLoad.isDone)
             {
                 yield return null;
             }
+        }
+
+        private void PreloadAds()
+        {
+            AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, PlacementOrder.One);
+            AdsManager.Instance.LoadRewarded(PlacementOrder.One);
+            AdsManager.Instance.LoadMrec(AdsType.Mrec, PlacementOrder.One);
+            AdsManager.Instance.LoadAppOpen(PlacementOrder.One);
+            AdsManager.Instance.LoadBanner(PlacementOrder.One);
         }
 
 
