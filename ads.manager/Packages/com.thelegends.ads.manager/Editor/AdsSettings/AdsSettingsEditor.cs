@@ -239,14 +239,6 @@ namespace TheLegends.Base.Ads
 
 #if USE_ADMOB
 
-            //If Error please change GoogleMobileAdsSettings.cs private --> pullic class
-            GoogleMobileAdsSettings googleMobileAdsSettings = GoogleMobileAdsSettings.LoadInstance();
-            googleMobileAdsSettings.GoogleMobileAdsAndroidAppId = Instance.ADMOB_Android.appID;
-            googleMobileAdsSettings.GoogleMobileAdsIOSAppId = Instance.ADMOB_IOS.appID;
-            googleMobileAdsSettings.OptimizeInitialization = true;
-            googleMobileAdsSettings.OptimizeAdLoading = true;
-            AssetDatabase.SaveAssetIfDirty(googleMobileAdsSettings);
-
             EditorGUILayout.Separator();
             EditorGUILayout.Separator();
             EditorGUILayout.Separator();
@@ -260,7 +252,6 @@ namespace TheLegends.Base.Ads
 
             EditorGUILayout.LabelField("ANDROID AD_UNIT_ID");
             var ADMOB_Android = serializedObject.FindProperty("ADMOB_Android");
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("appID"));
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("bannerIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("interIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("rewardIds"), true); EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("mrecIds"), true);
@@ -273,7 +264,6 @@ namespace TheLegends.Base.Ads
 
             EditorGUILayout.LabelField("IOS AD_UNIT_ID");
             var ADMOB_IOS = serializedObject.FindProperty("ADMOB_IOS");
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("appID"));
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("bannerIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("interIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("rewardIds"), true);

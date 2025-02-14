@@ -9,7 +9,6 @@ namespace TheLegends.Base.Ads
     [Serializable]
     public class AdmobUnitID
     {
-        public string appID = string.Empty;
         public List<Placement> bannerIds = new List<Placement>();
         public List<Placement> interIds = new List<Placement>();
         public List<Placement> rewardIds = new List<Placement>();
