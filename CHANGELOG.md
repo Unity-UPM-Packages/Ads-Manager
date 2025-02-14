@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.1...v1.0.2) (2025-02-14)
+
+
+### Bug Fixes
+
+* remove old reference ([887cd36](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/887cd36dcdcb4900785a6679d832da1e143bc9e2))
+
 ## [1.0.1](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.0...v1.0.1) (2025-02-13)
 
 
