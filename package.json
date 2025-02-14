@@ -1,0 +1,46 @@
+{
+  "name": "com.thelegends.ads.manager",
+  "displayName": "Ads Manager",
+  "description": "Ads Manager description goes here.",
+  "keywords": [],
+  "version": "1.0.1",
+  "unity": "2022.3",
+  "documentationUrl": "https://github.com/Unity-UPM-Packages/Ads-Manager#documentation",
+  "changelogUrl": "https://github.com/Unity-UPM-Packages/Ads-Manager/releases",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "repository": "https://github.com/Unity-UPM-Packages/Ads-Manager.git",
+    "url": "https://github.com/Unity-UPM-Packages/Ads-Manager.git"
+  },
+  "author": {
+    "name": "Unity-UPM-Packages",
+    "url": "https://github.com/Unity-UPM-Packages"
+  },
+  "dependencies": {
+    "com.google.ads.mobile": "9.5.0",
+    "com.thelegends.firebase.manager": "1.0.4",
+    "com.thelegends.unity.patterns": "1.0.1",
+    "com.thelegends.appsflyer.manager": "1.0.1",
+    "com.thelegends.unity.ui": "1.0.3",
+    "com.annulusgames.lit-motion": "2.0.1",
+    "com.annulusgames.lit-motion.animation": "2.0.1"
+  },
+  "scopedRegistries": [
+    {
+      "name": "TripSoft",
+      "url": "https://verdaccio.tripdev.io/",
+      "scopes": [
+        "com.google",
+        "com.thelegends"
+      ]
+    },
+    {
+      "name": "OpenUPM",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.annulusgames.lit-motion"
+      ]
+    }
+  ]
+}
