@@ -42,9 +42,7 @@ namespace TheLegends.Base.Ads
         {
             UILoadingController.SetProgress(0.2f, null);
 
-            yield return AdsManager.Instance.DoInit();
-
-            UILoadingController.SetProgress(0.4f, null);
+            yield return AppsFlyerManager.Instance.DoInit();
 
             var defaultRemoteConfig = new Dictionary<string, object>
             {
@@ -57,6 +55,12 @@ namespace TheLegends.Base.Ads
             };
 
             yield return FirebaseManager.Instance.DoInit(defaultRemoteConfig);
+
+            yield return AdsManager.Instance.DoInit();
+
+            UILoadingController.SetProgress(0.4f, null);
+
+            yield return new WaitForSeconds(0.5f);
 
             FirebaseManager.Instance.FetchRemoteData(() =>
             {
@@ -73,7 +77,7 @@ namespace TheLegends.Base.Ads
 
             yield return IECheckAdsOpenAvailable();
 
-            yield return AppsFlyerManager.Instance.DoInit();
+
 
 
             UILoadingController.SetProgress(0.6f, null);
@@ -95,9 +99,12 @@ namespace TheLegends.Base.Ads
 
         private IEnumerator IECheckAdsOpenAvailable()
         {
-            while (!AdsManager.Instance.IsAdsTypeAvailable(AdsType.MrecOpen, PlacementOrder.One) ||
-                   !AdsManager.Instance.IsAdsTypeAvailable(AdsType.InterOpen, PlacementOrder.One))
+            float timeOut = 5f;
+            float eslapeTime = 0f;
+            while ((!AdsManager.Instance.IsAdsTypeAvailable(AdsType.MrecOpen, PlacementOrder.One) ||
+                   !AdsManager.Instance.IsAdsTypeAvailable(AdsType.InterOpen, PlacementOrder.One)) && eslapeTime < timeOut)
             {
+                eslapeTime += Time.deltaTime;
                 yield return null;
             }
         }
