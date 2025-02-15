@@ -22,8 +22,6 @@
     "com.thelegends.firebase.manager": "1.0.4",
     "com.thelegends.unity.patterns": "1.0.1",
     "com.thelegends.appsflyer.manager": "1.0.1",
-    "com.thelegends.unity.ui": "1.0.3",
-    "com.annulusgames.lit-motion": "2.0.1",
-    "com.annulusgames.lit-motion.animation": "2.0.1"
+    "com.thelegends.unity.ui": "1.0.3"
   }
 }

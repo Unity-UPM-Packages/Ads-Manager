@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c4e81637d017645bd80909faf5c2c4, type: 3}
   m_Name: AppsFlyerSettingsAsset
   m_EditorClassIdentifier: 
-  devKey: 
+  devKey: Qhno4yJY6KHmZp9uS9DRe4
   appID: 
   getConversionData: 1
   isDebug: 1
