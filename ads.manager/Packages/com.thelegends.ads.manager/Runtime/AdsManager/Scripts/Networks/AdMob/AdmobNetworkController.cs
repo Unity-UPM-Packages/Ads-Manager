@@ -11,6 +11,7 @@ namespace TheLegends.Base.Ads
     public class AdmobNetworkController : AdsNetworkBase
     {
         private bool isChecking = false;
+        private InitiationStatus status = InitiationStatus.NotInitialized;
 
         [Header("DEBUG")]
         [SerializeField]
@@ -35,6 +36,8 @@ namespace TheLegends.Base.Ads
 
         public override IEnumerator DoInit()
         {
+            status = InitiationStatus.Initializing;
+
             yield return RequestUMP();
 
             if (ConsentInformation.CanRequestAds())
@@ -50,74 +53,81 @@ namespace TheLegends.Base.Ads
 
                 MobileAds.Initialize(initStatus =>
                 {
-                    if (initStatus == null)
+                    UnityMainThreadDispatcher.Enqueue(() =>
                     {
-                        AdsManager.Instance.LogError("Google Mobile Ads initialization failed.");
-                        return;
-                    }
-
-                    if (initStatus != null)
-                    {
-                        AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Mediations checking status...");
-                        // If you use mediation, you can check the status of each adapter.
-                        var adapterStatusMap = initStatus.getAdapterStatusMap();
-                        if (adapterStatusMap != null)
+                        if (initStatus == null)
                         {
-                            foreach (var item in adapterStatusMap)
-                            {
-                                AdsManager.Instance.Log($"{TagLog.ADMOB} " + string.Format(" Google Adapter {0} is {1}",
-                                    item.Key,
-                                    item.Value.InitializationState));
-                            }
+                            status = InitiationStatus.Failed;
+                            AdsManager.Instance.LogError("Google Mobile Ads initialization failed.");
+                            return;
                         }
-                        AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Mediations checking done.");
 
-                        // if (loadOnInitDone)
-                        // {
-                        //     Invoke(nameof(InterInit), 0.5f);
-                        //     Invoke(nameof(RewardInit), 1.0f);
-                        // }
-                    }
+                        if (initStatus != null)
+                        {
+                            AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Mediations checking status...");
+                            // If you use mediation, you can check the status of each adapter.
+                            var adapterStatusMap = initStatus.getAdapterStatusMap();
+                            if (adapterStatusMap != null)
+                            {
+                                foreach (var item in adapterStatusMap)
+                                {
+                                    AdsManager.Instance.Log($"{TagLog.ADMOB} " + string.Format(" Google Adapter {0} is {1}",
+                                        item.Key,
+                                        item.Value.InitializationState));
+                                }
+                            }
+                            AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Mediations checking done.");
 
-                    AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Initialize: " + initStatus.ToString());
+                        }
+
+                        AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Initialize: " + initStatus.ToString());
 
 #if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
 
-                    var platform = Application.platform;
-                    var isIOS = platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.OSXPlayer;
+                        var platform = Application.platform;
+                        var isIOS = platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.OSXPlayer;
 
-                    var isAdmobTest = AdsManager.Instance.SettingsAds.isAdmobTest;
+                        var isAdmobTest = AdsManager.Instance.SettingsAds.isAdmobTest;
 
-                    var interIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.interIds, AdsManager.Instance.SettingsAds.ADMOB_Android.interIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.interIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.interIds);
-                    CreateAdController(interIds, interList);
+                        var interIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.interIds, AdsManager.Instance.SettingsAds.ADMOB_Android.interIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.interIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.interIds);
+                        CreateAdController(interIds, interList);
 
-                    var rewardedIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_Android.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.rewardIds);
-                    CreateAdController(rewardedIds, rewardedList);
+                        var rewardedIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_Android.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.rewardIds);
+                        CreateAdController(rewardedIds, rewardedList);
 
-                    var appOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.appOpenIds);
-                    CreateAdController(appOpenIds, appOpenList);
+                        var appOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.appOpenIds);
+                        CreateAdController(appOpenIds, appOpenList);
 
-                    var bannerIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_Android.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.bannerIds);
-                    CreateAdController(bannerIds, bannerList);
+                        var bannerIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_Android.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.bannerIds);
+                        CreateAdController(bannerIds, bannerList);
 
-                    var mrecIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_Android.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.mrecIds);
-                    CreateAdController(mrecIds, mrecList);
+                        var mrecIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_Android.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.mrecIds);
+                        CreateAdController(mrecIds, mrecList);
 
-                    var mrecOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.mrecOpenIds);
-                    CreateAdController(mrecOpenIds, mrecOpenList);
+                        var mrecOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.mrecOpenIds);
+                        CreateAdController(mrecOpenIds, mrecOpenList);
 
-                    var interOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.interOpenIds);
-                    CreateAdController(interOpenIds, interOpenList);
+                        var interOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.interOpenIds);
+                        CreateAdController(interOpenIds, interOpenList);
 
-                    var nativeOverlayIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds);
-                    CreateAdController(nativeOverlayIds, nativeOverlayList);
+                        var nativeOverlayIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds);
+                        CreateAdController(nativeOverlayIds, nativeOverlayList);
+
+                        status = InitiationStatus.Initialized;
 #endif
+                    });
+
                 });
             }
             else
             {
                 AdsManager.Instance.Log($"{TagLog.UMP} " + "UMP ConsentStatus --> " + ConsentInformation.ConsentStatus.ToString() + " CanRequestAds: " + ConsentInformation.CanRequestAds().ToString().ToUpper() + " --> NOT INIT");
                 yield return RequestUMP();
+            }
+
+            while (status == InitiationStatus.Initializing)
+            {
+                yield return null;
             }
         }
 
