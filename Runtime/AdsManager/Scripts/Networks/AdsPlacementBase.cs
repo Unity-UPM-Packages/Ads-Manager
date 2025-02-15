@@ -109,16 +109,21 @@ namespace TheLegends.Base.Ads
             {
                 Status = AdsEvents.LoadFail;
 
+                string extendString = "";
+
+                if (reloadCount < reloadMax)
+                {
+                    extendString = " re-trying in " + (5 * reloadCount) + " seconds " + (reloadCount + 1) + "/" + reloadMax;
+                }
+
+
+                AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " +
+                                             "OnAdsLoadFailed " + adsUnitID + " Error: " + message + extendString);
+
                 if (reloadCount < reloadMax)
                 {
                     adsUnitIDIndex++;
                     reloadCount++;
-
-                    AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " +
-                                                 "OnAdsLoadFailed " + adsUnitID + " Error: " + message +
-                                                 " re-trying in " + (5 * reloadCount) + " seconds " + reloadCount +
-                                                 "/" + reloadMax);
-
                     Invoke(nameof(LoadAds), 5 * reloadCount);
                 }
                 else
