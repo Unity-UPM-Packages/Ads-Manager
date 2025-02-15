@@ -238,7 +238,7 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        public override bool IsAdsTypeAvailable(AdsType type, PlacementOrder order)
+        public override AdsEvents GetAdsStatus(AdsType type, PlacementOrder order)
         {
             var listPlacement = new List<AdsPlacementBase>();
 
@@ -275,7 +275,7 @@ namespace TheLegends.Base.Ads
 
             var index = GetPlacementIndex((int)order, listPlacement.Count);
 
-            return listPlacement[index].IsAvailable;
+            return listPlacement[index].Status;
         }
 
         private int GetPlacementIndex(int order, int listCount)

@@ -11,6 +11,7 @@ namespace TheLegends.Base.Ads
         LoadAvailable,
         LoadFail,
         LoadTimeOut,
+        LoadNotAvailable,
         ShowSuccess,
         ShowFail,
         Close,

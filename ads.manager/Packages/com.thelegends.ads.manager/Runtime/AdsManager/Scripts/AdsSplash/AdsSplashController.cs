@@ -72,13 +72,15 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.adsConfigs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut);
             });
 
-            AdsManager.Instance.LoadMrec(AdsType.MrecOpen, PlacementOrder.One);
+
+            if (canShowSelectBrand)
+            {
+                AdsManager.Instance.LoadMrec(AdsType.MrecOpen, PlacementOrder.One);
+                yield return WaitAdLoaded(AdsType.MrecOpen, PlacementOrder.One);
+            }
+
             AdsManager.Instance.LoadInterstitial(AdsType.InterOpen, PlacementOrder.One);
-
-            yield return IECheckAdsOpenAvailable();
-
-
-
+            yield return WaitAdLoaded(AdsType.InterOpen, PlacementOrder.One);
 
             UILoadingController.SetProgress(0.6f, null);
 
@@ -88,30 +90,36 @@ namespace TheLegends.Base.Ads
             {
                 UILoadingController.Hide();
 
-                AdsManager.Instance.ShowInterstitial(AdsType.InterOpen, PlacementOrder.One, "Inter Open");
+                if (AdsManager.Instance.GetAdsStatus(AdsType.InterOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
+                {
+                    AdsManager.Instance.ShowInterstitial(AdsType.InterOpen, PlacementOrder.One, "Inter Open");
+                }
+
 
                 if (canShowSelectBrand)
                 {
                     ShowBrandScreen();
                 }
+
             });
         }
 
-        private IEnumerator IECheckAdsOpenAvailable()
+
+        private IEnumerator WaitAdLoaded(AdsType type, PlacementOrder order)
         {
-            float timeOut = 5f;
-            float eslapeTime = 0f;
-            while ((!AdsManager.Instance.IsAdsTypeAvailable(AdsType.MrecOpen, PlacementOrder.One) ||
-                   !AdsManager.Instance.IsAdsTypeAvailable(AdsType.InterOpen, PlacementOrder.One)) && eslapeTime < timeOut)
+            while (AdsManager.Instance.GetAdsStatus(type, order) != AdsEvents.LoadAvailable && AdsManager.Instance.GetAdsStatus(type, order) != AdsEvents.LoadNotAvailable)
             {
-                eslapeTime += Time.deltaTime;
                 yield return null;
             }
         }
 
+
         private void ShowBrandScreen()
         {
-            AdsManager.Instance.ShowMrec(AdsType.MrecOpen, PlacementOrder.One, MrecPos.CenterLeft, mrecOpenOffset, "Mrec Open");
+            if (AdsManager.Instance.GetAdsStatus(AdsType.MrecOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
+            {
+                AdsManager.Instance.ShowMrec(AdsType.MrecOpen, PlacementOrder.One, MrecPos.CenterLeft, mrecOpenOffset, "Mrec Open");
+            }
 
             brandScreen.Show();
         }

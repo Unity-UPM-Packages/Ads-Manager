@@ -31,7 +31,7 @@ namespace TheLegends.Base.Ads
         public abstract void HideAllBanner();
         public abstract void HideAllMrec();
 
-        public abstract bool IsAdsTypeAvailable(AdsType adsType, PlacementOrder order);
+        public abstract AdsEvents GetAdsStatus(AdsType adsType, PlacementOrder order);
 
 
         public abstract AdsNetworks GetNetworkType();

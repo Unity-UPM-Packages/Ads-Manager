@@ -14,7 +14,7 @@ namespace TheLegends.Base.Ads
         protected string adsUnitID = string.Empty;
         protected string position = "default";
 
-        protected int reloadMax = 3;
+        protected int reloadMax = 2;
         protected int reloadCount = 0;
 
         protected AdsEvents status;
@@ -120,6 +120,10 @@ namespace TheLegends.Base.Ads
                                                  "/" + reloadMax);
 
                     Invoke(nameof(LoadAds), 5 * reloadCount);
+                }
+                else
+                {
+                    Status = AdsEvents.LoadNotAvailable;
                 }
             });
         }
