@@ -378,6 +378,22 @@ namespace TheLegends.Base.Ads
             nativeOverlayList[placementIndex].HideAds();
         }
 
+        public override void HideAllBanner()
+        {
+            foreach (var banner in bannerList)
+            {
+                banner.HideAds();
+            }
+        }
+
+        public override void HideAllMrec()
+        {
+            foreach (var mrec in mrecList)
+            {
+                mrec.HideAds();
+            }
+        }
+
 
         public override AdsNetworks GetNetworkType()
         {

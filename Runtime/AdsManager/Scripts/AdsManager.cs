@@ -204,6 +204,8 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
+                netWork.HideAllBanner();
+                netWork.HideAllMrec();
                 netWork.ShowAppOpen(order, position);
             }
         }
