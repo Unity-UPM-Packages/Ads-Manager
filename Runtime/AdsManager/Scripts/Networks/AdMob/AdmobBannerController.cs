@@ -47,10 +47,10 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
+            BannerDestroy();
+
             if (!IsReady)
             {
-                BannerDestroy();
-
                 CreateBanner();
 
                 _bannerView.OnAdClicked += base.OnAdsClick;
