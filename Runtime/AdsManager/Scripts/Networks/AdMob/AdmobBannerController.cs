@@ -11,6 +11,7 @@ namespace TheLegends.Base.Ads
         protected BannerView _bannerView;
         private string _currentLoadRequestId;
         private string _loadRequestId;
+        private bool isShowing = false;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -84,6 +85,7 @@ namespace TheLegends.Base.Ads
             {
                 _bannerView.Show();
                 Status = AdsEvents.ShowSuccess;
+                isShowing = true;
             }
             else
             {
@@ -114,6 +116,7 @@ namespace TheLegends.Base.Ads
 
             if (_bannerView != null)
             {
+                isShowing = false;
                 _bannerView.Hide();
                 BannerDestroy();
                 base.OnAdsClosed();
@@ -160,7 +163,12 @@ namespace TheLegends.Base.Ads
                 }
 
                 base.OnAdsLoadAvailable();
-                _bannerView.Hide();
+
+                if (!isShowing)
+                {
+                    _bannerView.Hide();
+                }
+
             });
 
         }
