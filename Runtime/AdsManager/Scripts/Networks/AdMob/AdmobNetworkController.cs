@@ -122,7 +122,6 @@ namespace TheLegends.Base.Ads
             else
             {
                 AdsManager.Instance.Log($"{TagLog.UMP} " + "UMP ConsentStatus --> " + ConsentInformation.ConsentStatus.ToString() + " CanRequestAds: " + ConsentInformation.CanRequestAds().ToString().ToUpper() + " --> NOT INIT");
-                yield return RequestUMP();
             }
 
             while (status == InitiationStatus.Initializing)
