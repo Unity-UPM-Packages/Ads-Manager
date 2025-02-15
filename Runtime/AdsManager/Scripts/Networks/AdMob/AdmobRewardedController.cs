@@ -150,24 +150,36 @@ namespace TheLegends.Base.Ads
 
         private void OnRewardedLoadFailed(AdError error)
         {
-            var errorDescription = error?.GetMessage();
-            base.OnAdsLoadFailed(errorDescription);
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                var errorDescription = error?.GetMessage();
+                base.OnAdsLoadFailed(errorDescription);
+            });
         }
 
         private void OnRewardedShowFailed(AdError error)
         {
-            var errorDescription = error?.GetMessage();
-            base.OnAdsShowFailed(errorDescription);
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                var errorDescription = error?.GetMessage();
+                base.OnAdsShowFailed(errorDescription);
+            });
         }
 
         private void OnRewardedClosed()
         {
-            base.OnAdsClosed();
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                base.OnAdsClosed();
+            });
         }
 
         private void OnAdsPaid(AdValue value)
         {
-            AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            });
         }
 
         #endregion

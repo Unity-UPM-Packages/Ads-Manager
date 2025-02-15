@@ -96,7 +96,11 @@ namespace TheLegends.Base.Ads
 
         private void OnAdsPaid(AdValue value)
         {
-            AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            });
+
         }
 
         public virtual void HideAds()
@@ -141,38 +145,46 @@ namespace TheLegends.Base.Ads
 
         public void OnBannerLoaded()
         {
-            if (_loadRequestId != _currentLoadRequestId)
+            UnityMainThreadDispatcher.Enqueue(() =>
             {
-                // If the load request ID does not match, this callback is from a previous request
-                return;
-            }
+                if (_loadRequestId != _currentLoadRequestId)
+                {
+                    // If the load request ID does not match, this callback is from a previous request
+                    return;
+                }
 
-            if (loadTimeOutCoroutine != null)
-            {
-                StopCoroutine(loadTimeOutCoroutine);
-                loadTimeOutCoroutine = null;
-            }
+                if (loadTimeOutCoroutine != null)
+                {
+                    StopCoroutine(loadTimeOutCoroutine);
+                    loadTimeOutCoroutine = null;
+                }
 
-            base.OnAdsLoadAvailable();
-            _bannerView.Hide();
+                base.OnAdsLoadAvailable();
+                _bannerView.Hide();
+            });
+
         }
 
         private void OnBannerLoadFailed(AdError error)
         {
-            if (_loadRequestId != _currentLoadRequestId)
+            UnityMainThreadDispatcher.Enqueue(() =>
             {
-                // If the load request ID does not match, this callback is from a previous request
-                return;
-            }
+                if (_loadRequestId != _currentLoadRequestId)
+                {
+                    // If the load request ID does not match, this callback is from a previous request
+                    return;
+                }
 
-            if (loadTimeOutCoroutine != null)
-            {
-                StopCoroutine(loadTimeOutCoroutine);
-                loadTimeOutCoroutine = null;
-            }
+                if (loadTimeOutCoroutine != null)
+                {
+                    StopCoroutine(loadTimeOutCoroutine);
+                    loadTimeOutCoroutine = null;
+                }
 
-            var errorDescription = error?.GetMessage();
-            base.OnAdsLoadFailed(errorDescription);
+                var errorDescription = error?.GetMessage();
+                base.OnAdsLoadFailed(errorDescription);
+            });
+
         }
 
         protected void BannerDestroy()

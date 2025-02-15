@@ -243,34 +243,36 @@ namespace TheLegends.Base.Ads
         private void OnNativeLoaded(object sender, NativeAdEventArgs args)
         {
 #if USE_ADMOB
-            if (_loadRequestId != _currentLoadRequestId)
+            UnityMainThreadDispatcher.Enqueue(() =>
             {
-                // If the load request ID does not match, this callback is from a previous request
-                return;
-            }
+                if (_loadRequestId != _currentLoadRequestId)
+                {
+                    // If the load request ID does not match, this callback is from a previous request
+                    return;
+                }
 
-            if (loadTimeOutCoroutine != null)
-            {
-                StopCoroutine(loadTimeOutCoroutine);
-                loadTimeOutCoroutine = null;
-            }
+                if (loadTimeOutCoroutine != null)
+                {
+                    StopCoroutine(loadTimeOutCoroutine);
+                    loadTimeOutCoroutine = null;
+                }
 
-            base.OnAdsLoadAvailable();
+                base.OnAdsLoadAvailable();
 
-            if (args != null)
-            {
-                _nativeAd = args.nativeAd;
-            }
+                if (args != null)
+                {
+                    _nativeAd = args.nativeAd;
+                }
 
-            if (isCLosedByHide)
-            {
-                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "last closed by Hide() --> return");
+                if (isCLosedByHide)
+                {
+                    AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "last closed by Hide() --> return");
 
-                return;
-            }
+                    return;
+                }
 
-            ShowAds(position);
-
+                ShowAds(position);
+            });
 #endif
         }
 
@@ -279,42 +281,54 @@ namespace TheLegends.Base.Ads
 #pragma warning restore CS0618 // Type or member is obsolete
         {
 #if USE_ADMOB
-            if (_loadRequestId != _currentLoadRequestId)
+            UnityMainThreadDispatcher.Enqueue(() =>
             {
-                // If the load request ID does not match, this callback is from a previous request
-                return;
-            }
+                if (_loadRequestId != _currentLoadRequestId)
+                {
+                    // If the load request ID does not match, this callback is from a previous request
+                    return;
+                }
 
-            if (loadTimeOutCoroutine != null)
-            {
-                StopCoroutine(loadTimeOutCoroutine);
-                loadTimeOutCoroutine = null;
-            }
+                if (loadTimeOutCoroutine != null)
+                {
+                    StopCoroutine(loadTimeOutCoroutine);
+                    loadTimeOutCoroutine = null;
+                }
 
-            var errorDescription = error.LoadAdError.GetMessage();
-            base.OnAdsLoadFailed(errorDescription);
+                var errorDescription = error.LoadAdError.GetMessage();
+                base.OnAdsLoadFailed(errorDescription);
+            });
 #endif
         }
 
         private void OnAdsClose(object sender, EventArgs args)
         {
 #if USE_ADMOB
-            base.OnAdsClosed();
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                base.OnAdsClosed();
+            });
 #endif
         }
 
         private void OnAdsClick(object sender, EventArgs args)
         {
 #if USE_ADMOB
-            base.OnAdsClick();
-            onClick?.Invoke();
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                base.OnAdsClick();
+                onClick?.Invoke();
+            });
 #endif
         }
 
         private void OnImpression(object sender, EventArgs args)
         {
 #if USE_ADMOB
-            base.OnImpression();
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                base.OnImpression();
+            });
 #endif
         }
 
@@ -323,7 +337,10 @@ namespace TheLegends.Base.Ads
 #pragma warning restore CS0618 // Type or member is obsolete
         {
 #if USE_ADMOB
-            AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, args.AdValue);
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, args.AdValue);
+            });
 #endif
         }
 
