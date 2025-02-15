@@ -435,7 +435,7 @@ namespace TheLegends.Base.Ads
 
                 }
 
-                Debug.Log("GoogleMobileAds AdValue: " + impressionData.Value + " Revenue: " + revenue + " CurrencyCode: " + currency + " Precision: " + impressionData.Precision);
+                Log("GoogleMobileAds AdValue: " + impressionData.Value + " Revenue: " + revenue + " CurrencyCode: " + currency + " Precision: " + impressionData.Precision);
 
             }
 #endif
