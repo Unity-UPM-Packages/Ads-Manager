@@ -152,19 +152,29 @@ namespace TheLegends.Base.Ads
 
         private void OnInterShowFailed(AdError error)
         {
-            var errorDescription = error?.GetMessage();
-            base.OnAdsShowFailed(errorDescription);
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                var errorDescription = error?.GetMessage();
+                base.OnAdsShowFailed(errorDescription);
+            });
         }
 
         protected virtual void OnInterClosed()
         {
-            UILoadingController.Show(1f, null);
-            base.OnAdsClosed();
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                UILoadingController.Show(1f, null);
+                base.OnAdsClosed();
+            });
         }
 
         private void OnAdsPaid(AdValue value)
         {
-            AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            });
+
         }
 
         #endregion

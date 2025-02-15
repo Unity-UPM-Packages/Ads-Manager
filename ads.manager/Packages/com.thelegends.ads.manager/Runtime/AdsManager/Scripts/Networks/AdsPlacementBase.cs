@@ -91,8 +91,11 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnAdsLoadAvailable()
         {
-            Status = AdsEvents.LoadAvailable;
-            reloadCount = 0;
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                Status = AdsEvents.LoadAvailable;
+                reloadCount = 0;
+            });
         }
 
         public bool IsAdsAvailable()
@@ -102,15 +105,23 @@ namespace TheLegends.Base.Ads
 
         protected virtual void OnAdsLoadFailed(string message)
         {
-            Status = AdsEvents.LoadFail;
-
-            if (reloadCount < reloadMax)
+            UnityMainThreadDispatcher.Enqueue(() =>
             {
-                adsUnitIDIndex++;
-                reloadCount++;
-                AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString() } " + "OnAdsLoadFailed " + adsUnitID + " Error: " + message + " re-trying in " + (5 * reloadCount) + " seconds " + reloadCount + "/" + reloadMax);
-                Invoke(nameof(LoadAds), 5 * reloadCount);
-            }
+                Status = AdsEvents.LoadFail;
+
+                if (reloadCount < reloadMax)
+                {
+                    adsUnitIDIndex++;
+                    reloadCount++;
+
+                    AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " +
+                                                 "OnAdsLoadFailed " + adsUnitID + " Error: " + message +
+                                                 " re-trying in " + (5 * reloadCount) + " seconds " + reloadCount +
+                                                 "/" + reloadMax);
+
+                    Invoke(nameof(LoadAds), 5 * reloadCount);
+                }
+            });
         }
 
         protected IEnumerator HandleTimeOut()
@@ -139,32 +150,50 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnAdsShowSuccess()
         {
-            Status = AdsEvents.ShowSuccess;
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                Status = AdsEvents.ShowSuccess;
+            });
         }
 
         public virtual void OnAdsShowFailed(string message)
         {
-            Status = AdsEvents.ShowFail;
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                Status = AdsEvents.ShowFail;
 
-            AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " + "OnAdsShowFailed " + adsUnitID + " Error: " + message);
+                AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " + "OnAdsShowFailed " +
+                                             adsUnitID + " Error: " + message);
+            });
         }
 
 
         public virtual void OnAdsClosed()
         {
-            Status = AdsEvents.Close;
-            adsUnitIDIndex = 0;
-            LoadAds();
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                Status = AdsEvents.Close;
+                adsUnitIDIndex = 0;
+                LoadAds();
+            });
         }
 
         public virtual void OnAdsClick()
         {
-            Status = AdsEvents.Click;
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                Status = AdsEvents.Click;
+            });
+
         }
 
         public virtual void OnImpression()
         {
-            AdsManager.Instance.Log($"{AdsType} "+ "ad recorded an impression.");
+            UnityMainThreadDispatcher.Enqueue(() =>
+            {
+                AdsManager.Instance.Log($"{AdsType} "+ "ad recorded an impression.");
+            });
+
         }
 
 
