@@ -254,10 +254,12 @@ namespace TheLegends.Base.Ads
             var ADMOB_Android = serializedObject.FindProperty("ADMOB_Android");
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("bannerIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("interIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("rewardIds"), true); EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("mrecIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("rewardIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("mrecIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("interOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("mrecOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("appOpenIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeIds"), true);
 
             EditorGUILayout.Separator();
             EditorGUILayout.Separator();
@@ -271,6 +273,7 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("interOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("mrecOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("appOpenIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeIds"), true);
 #endif
 
             #endregion
