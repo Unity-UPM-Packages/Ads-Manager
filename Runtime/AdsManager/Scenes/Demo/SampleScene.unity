@@ -4385,6 +4385,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8287518035259073570, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: _order
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287518035259073570, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: isShowOnLoaded
       value: 1
       objectReference: {fileID: 0}
