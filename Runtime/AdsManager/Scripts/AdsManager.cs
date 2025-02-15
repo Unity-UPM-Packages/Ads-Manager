@@ -345,23 +345,23 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public bool IsAdsTypeAvailable(AdsType adsType, PlacementOrder order)
+        public AdsEvents GetAdsStatus(AdsType adsType, PlacementOrder order)
         {
-            bool isAvailable = false;
+            AdsEvents status = AdsEvents.None;
 
             if (!IsInitialized())
             {
-                isAvailable = false;
+                status = AdsEvents.None;
             }
 
-            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+            var netWork = (AdmobNetworkController)GetNetwork(DefaultMediation);
 
             if (netWork != null)
             {
-                isAvailable = netWork.IsAdsTypeAvailable(adsType, order);
+                status = netWork.GetAdsStatus(adsType, order);
             }
 
-            return isAvailable;
+            return status;
         }
 
         private void OnApplicationPause(bool isPaused)
