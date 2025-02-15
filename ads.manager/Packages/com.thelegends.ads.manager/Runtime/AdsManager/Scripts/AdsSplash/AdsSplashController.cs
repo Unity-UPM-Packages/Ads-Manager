@@ -119,9 +119,8 @@ namespace TheLegends.Base.Ads
             if (AdsManager.Instance.GetAdsStatus(AdsType.MrecOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
                 AdsManager.Instance.ShowMrec(AdsType.MrecOpen, PlacementOrder.One, MrecPos.CenterLeft, mrecOpenOffset, "Mrec Open");
+                brandScreen.Show();
             }
-
-            brandScreen.Show();
         }
 
         private IEnumerator IELoadScene()
