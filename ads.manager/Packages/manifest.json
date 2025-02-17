@@ -1,10 +1,9 @@
 {
   "dependencies": {
     "com.google.ads.mobile": "9.4.0",
-    "com.thelegends.appsflyer.manager": "1.0.2",
-    "com.thelegends.firebase.manager": "1.0.4",
-    "com.thelegends.unity.patterns": "1.0.1",
-    "com.thelegends.unity.ui": "1.0.3",
+    "com.thelegends.appsflyer.manager": "1.0.3",
+    "com.thelegends.firebase.manager": "1.0.5",
+    "com.thelegends.unity.ui": "1.0.4",
     "com.unity.ide.rider": "3.0.34",
     "com.unity.ide.visualstudio": "2.0.22",
     "com.unity.mobile.android-logcat": "1.4.4",
