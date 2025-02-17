@@ -31,7 +31,8 @@ namespace TheLegends.Base.Ads
                 BannerDestroy();
                 Status = AdsEvents.Close;
             }
-        }
 #endif
+        }
+
     }
 }
