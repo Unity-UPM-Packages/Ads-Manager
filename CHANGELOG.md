@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.3...v1.0.4) (2025-02-17)
+
+
+### Bug Fixes
+
+* change AppsFlyer Manager version ([a1ad5e4](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a1ad5e4d0632b8568856d412400caeef16ae61fb))
+
 ## [1.0.3](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.2...v1.0.3) (2025-02-15)
 
 
