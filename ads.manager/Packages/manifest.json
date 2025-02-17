@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.google.ads.mobile": "9.5.0",
-    "com.thelegends.appsflyer.manager": "1.0.1",
+    "com.google.ads.mobile": "9.4.0",
+    "com.thelegends.appsflyer.manager": "1.0.2",
     "com.thelegends.firebase.manager": "1.0.4",
     "com.thelegends.unity.patterns": "1.0.1",
     "com.thelegends.unity.ui": "1.0.3",
@@ -22,7 +22,8 @@
       "url": "https://verdaccio-2.tripdev.io",
       "scopes": [
         "com.google",
-        "com.thelegends"
+        "com.thelegends",
+        "appsflyer-unity-plugin"
       ]
     },
     {
