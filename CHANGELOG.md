@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.9...v1.0.10) (2025-02-18)
+
+
+### Bug Fixes
+
+* wrong index if list id = 0 ([6004915](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/60049151d4f09d5739e2f1c7d3ebe1d05dab881a))
+
 ## [1.0.9](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.8...v1.0.9) (2025-02-18)
 
 
