@@ -276,6 +276,11 @@ namespace TheLegends.Base.Ads
                     break;
             }
 
+            if (!IsListExist(listPlacement))
+            {
+                return AdsEvents.None;
+            }
+
             var index = GetPlacementIndex((int)order, listPlacement.Count);
 
             return listPlacement[index].Status;
@@ -283,7 +288,7 @@ namespace TheLegends.Base.Ads
 
         private int GetPlacementIndex(int order, int listCount)
         {
-            if (listCount == 0)
+            if (listCount <= 0)
             {
                 return 0;
             }
@@ -293,6 +298,12 @@ namespace TheLegends.Base.Ads
         public override void LoadInterstitial(AdsType interType, PlacementOrder order)
         {
             var list = interType == AdsType.InterOpen ? (new List<AdmobInterstitialController>(interOpenList)) : interList;
+
+            if (!IsListExist(list))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, list.Count);
             list[placementIndex].LoadAds();
         }
@@ -300,48 +311,89 @@ namespace TheLegends.Base.Ads
         public override void ShowInterstitial(AdsType interType, PlacementOrder order, string position)
         {
             var list = interType == AdsType.InterOpen ? (new List<AdmobInterstitialController>(interOpenList)) : interList;
+
+            if (!IsListExist(list))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, list.Count);
             list[placementIndex].ShowAds(position);
         }
 
         public override void LoadRewarded(PlacementOrder order)
         {
+            if (!IsListExist(rewardedList))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, rewardedList.Count);
             rewardedList[placementIndex].LoadAds();
         }
 
         public override void ShowRewarded(PlacementOrder order, Action OnRewarded, string position)
         {
+            if (!IsListExist(rewardedList))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, rewardedList.Count);
             rewardedList[placementIndex].ShowAds(OnRewarded, position);
         }
 
         public override void LoadAppOpen(PlacementOrder order)
         {
+            if (!IsListExist(appOpenList))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, appOpenList.Count);
             appOpenList[placementIndex].LoadAds();
         }
 
         public override void ShowAppOpen(PlacementOrder order, string position)
         {
+            if (!IsListExist(appOpenList))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, appOpenList.Count);
             appOpenList[placementIndex].ShowAds(position);
         }
 
         public override void LoadBanner(PlacementOrder order)
         {
+            if (!IsListExist(bannerList))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
             bannerList[placementIndex].LoadAds();
         }
 
         public override void HideBanner(PlacementOrder order)
         {
+            if (!IsListExist(bannerList))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
             bannerList[placementIndex].HideAds();
         }
 
         public override void ShowBanner(PlacementOrder order, string position)
         {
+            if (!IsListExist(bannerList))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
             bannerList[placementIndex].ShowAds(position);
         }
@@ -349,6 +401,12 @@ namespace TheLegends.Base.Ads
         public override void LoadMrec(AdsType mrecType, PlacementOrder order)
         {
             var list = mrecType == AdsType.MrecOpen ?(new List<AdmobMrecController>(mrecOpenList)) : mrecList;
+
+            if (!IsListExist(list))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, list.Count);
             list[placementIndex].LoadAds();
         }
@@ -356,6 +414,12 @@ namespace TheLegends.Base.Ads
         public override void ShowMrec(AdsType mrecType, PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position)
         {
             var list = mrecType == AdsType.MrecOpen ?(new List<AdmobMrecController>(mrecOpenList)) : mrecList;
+
+            if (!IsListExist(list))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, list.Count);
             list[placementIndex].ShowAds(mrecPosition, offset, position);
         }
@@ -363,26 +427,60 @@ namespace TheLegends.Base.Ads
         public override void HideMrec(AdsType mrecType, PlacementOrder order)
         {
             var list = mrecType == AdsType.MrecOpen ?(new List<AdmobMrecController>(mrecOpenList)) : mrecList;
+
+            if (!IsListExist(list))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, list.Count);
             list[placementIndex].HideAds();
         }
 
         public void LoadNativeOverlay(PlacementOrder order)
         {
+            if (!IsListExist(nativeOverlayList))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
             nativeOverlayList[placementIndex].LoadAds();
         }
 
         public void ShowNativeOverlay(PlacementOrder order, string position)
         {
+            if (!IsListExist(nativeOverlayList))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
             nativeOverlayList[placementIndex].ShowAds(position);
         }
 
         public void HideNativeOverlay(PlacementOrder order)
         {
+            if (!IsListExist(nativeOverlayList))
+            {
+                return;
+            }
+
             var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
             nativeOverlayList[placementIndex].HideAds();
+        }
+
+        private bool IsListExist<T>(List<T> list) where T : AdsPlacementBase
+        {
+            bool isExist = false;
+            isExist = list.Count > 0;
+
+            if (!isExist)
+            {
+                AdsManager.Instance.LogError($"{typeof(T).Name} is empty");
+            }
+
+            return isExist;
         }
 
         public override void HideAllBanner()
