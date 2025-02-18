@@ -1,3 +1,10 @@
+## [1.0.12](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.11...v1.0.12) (2025-02-18)
+
+
+### Bug Fixes
+
+* edit select brand UI layer ([d7efd8c](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/d7efd8c4faed66b5ccbd6450b788cfb05f870994))
+
 ## [1.0.11](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.10...v1.0.11) (2025-02-18)
 
 
