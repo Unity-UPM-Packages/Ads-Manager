@@ -18,8 +18,8 @@
   },
   "dependencies": {
     "com.google.ads.mobile": "9.4.0",
-    "com.thelegends.firebase.manager": "1.0.6",
-    "com.thelegends.appsflyer.manager": "1.0.4",
+    "com.thelegends.firebase.manager": "1.0.7",
+    "com.thelegends.appsflyer.manager": "1.0.5",
     "com.thelegends.unity.ui": "1.0.4",
     "com.baracuda.thread-dispatcher": "5.0.1"
   }
