@@ -7,6 +7,8 @@ namespace TheLegends.Base.Ads
 {
     public class AdmobMrecController : AdmobBannerController
     {
+        private Vector2Int offset = new Vector2Int(0, 0);
+        private MrecPos mrecPosition = MrecPos.None;
         public override AdsType GetAdsType()
         {
 #if USE_ADMOB
@@ -25,9 +27,17 @@ namespace TheLegends.Base.Ads
 
         public void ShowAds(MrecPos position, Vector2Int offset, string showPosition)
         {
+            this.offset = offset;
+            this.mrecPosition = position;
             base.ShowAds(showPosition);
-            SetAdCustomPosition(position, offset);
+
         }
+
+        protected override void PreShow()
+        {
+            SetAdCustomPosition(mrecPosition, offset);
+        }
+
 
         public void SetAdCustomPosition(MrecPos position, Vector2Int offset)
         {

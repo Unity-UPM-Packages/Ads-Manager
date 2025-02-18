@@ -92,11 +92,8 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnAdsLoadAvailable()
         {
-            Dispatcher.Invoke(() =>
-            {
-                Status = AdsEvents.LoadAvailable;
-                reloadCount = 0;
-            });
+            Status = AdsEvents.LoadAvailable;
+            reloadCount = 0;
         }
 
         public bool IsAdsAvailable()
@@ -106,32 +103,32 @@ namespace TheLegends.Base.Ads
 
         protected virtual void OnAdsLoadFailed(string message)
         {
-            Dispatcher.Invoke(() =>
+
+            Status = AdsEvents.LoadFail;
+
+            string extendString = "";
+
+            if (reloadCount < AdsManager.Instance.SettingsAds.autoReLoadMax)
             {
-                Status = AdsEvents.LoadFail;
-
-                string extendString = "";
-
-                if (reloadCount < AdsManager.Instance.SettingsAds.autoReLoadMax)
-                {
-                    extendString = " re-trying in " + (5 * reloadCount) + " seconds " + (reloadCount + 1) + "/" + AdsManager.Instance.SettingsAds.autoReLoadMax;
-                }
+                extendString = " re-trying in " + (5 * (reloadCount + 1)) + " seconds " + (reloadCount + 1) + "/" + AdsManager.Instance.SettingsAds.autoReLoadMax;
+            }
 
 
-                AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " +
-                                             "OnAdsLoadFailed " + adsUnitID + " Error: " + message + extendString);
+            AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " +
+                                         "OnAdsLoadFailed " + adsUnitID + " Error: " + message + extendString);
 
-                if (reloadCount < AdsManager.Instance.SettingsAds.autoReLoadMax)
-                {
-                    adsUnitIDIndex++;
-                    reloadCount++;
-                    Invoke(nameof(LoadAds), 5 * reloadCount);
-                }
-                else
-                {
-                    Status = AdsEvents.LoadNotAvailable;
-                }
-            });
+            if (reloadCount < AdsManager.Instance.SettingsAds.autoReLoadMax)
+            {
+                adsUnitIDIndex++;
+                reloadCount++;
+                Invoke(nameof(LoadAds), 5 * reloadCount);
+            }
+            else
+            {
+                Status = AdsEvents.LoadNotAvailable;
+                reloadCount = 0;
+            }
+
         }
 
         protected void HandleTimeOut()
@@ -156,50 +153,33 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnAdsShowSuccess()
         {
-            Dispatcher.Invoke(() =>
-            {
-                Status = AdsEvents.ShowSuccess;
-            });
+            Status = AdsEvents.ShowSuccess;
         }
 
         public virtual void OnAdsShowFailed(string message)
         {
-            Dispatcher.Invoke(() =>
-            {
-                Status = AdsEvents.ShowFail;
+            Status = AdsEvents.ShowFail;
 
-                AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " + "OnAdsShowFailed " +
-                                             adsUnitID + " Error: " + message);
-            });
+            AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " + "OnAdsShowFailed " +
+                                         adsUnitID + " Error: " + message);
         }
 
 
         public virtual void OnAdsClosed()
         {
-            Dispatcher.Invoke(() =>
-            {
-                Status = AdsEvents.Close;
-                adsUnitIDIndex = 0;
-                LoadAds();
-            });
+            Status = AdsEvents.Close;
+            adsUnitIDIndex = 0;
+            LoadAds();
         }
 
         public virtual void OnAdsClick()
         {
-            Dispatcher.Invoke(() =>
-            {
-                Status = AdsEvents.Click;
-            });
-
+            Status = AdsEvents.Click;
         }
 
         public virtual void OnImpression()
         {
-            Dispatcher.Invoke(() =>
-            {
-                AdsManager.Instance.Log($"{AdsType} "+ "ad recorded an impression.");
-            });
-
+            AdsManager.Instance.Log($"{AdsType} "+ "ad recorded an impression.");
         }
 
 

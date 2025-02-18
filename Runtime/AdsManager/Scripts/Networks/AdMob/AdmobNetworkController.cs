@@ -70,7 +70,7 @@ namespace TheLegends.Base.Ads
             var nativeOverlayIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds);
             CreateAdController(nativeOverlayIds, nativeOverlayList);
 
-            status = InitiationStatus.Initialized;
+
 #endif
 
             yield return RequestUMP();
@@ -93,12 +93,15 @@ namespace TheLegends.Base.Ads
                         if (initStatus == null)
                         {
                             status = InitiationStatus.Failed;
+
                             AdsManager.Instance.LogError("Google Mobile Ads initialization failed.");
                             return;
                         }
 
                         if (initStatus != null)
                         {
+                            status = InitiationStatus.Initialized;
+
                             AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Mediations checking status...");
                             // If you use mediation, you can check the status of each adapter.
                             var adapterStatusMap = initStatus.getAdapterStatusMap();
@@ -127,6 +130,8 @@ namespace TheLegends.Base.Ads
                 status = InitiationStatus.Failed;
             }
 
+
+
             while (status == InitiationStatus.Initializing)
             {
                 yield return null;
@@ -143,8 +148,6 @@ namespace TheLegends.Base.Ads
                 yield break;
             }
 
-            isChecking = true;
-
             // Create a ConsentRequestParameters object.
             ConsentRequestParameters request = new ConsentRequestParameters
             {
@@ -158,45 +161,47 @@ namespace TheLegends.Base.Ads
             // Check the current consent information status.
             ConsentInformation.Update(request, (updateError =>
             {
-                if (updateError != null)
+                Dispatcher.Invoke(() =>
                 {
-                    // Handle the error.
-                    AdsManager.Instance.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> " + updateError.Message);
-                    isChecking = false;
-                    return;
-                }
-
-                if (ConsentInformation.CanRequestAds()) // Determine the consent-related action to take based on the ConsentStatus.
-                {
-                    // Consent has already been gathered or not required.
-                    // Return control back to the user.
-                    AdsManager.Instance.Log($"{TagLog.UMP} " + "Update " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " -- Consent has already been gathered or not required");
-                    isChecking = false;
-                    return;
-                }
-
-                AdsManager.Instance.Log(ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW ConsentForm If Required");
-
-                // If the error is null, the consent information state was updated.
-                // You are now ready to check if a form is available.
-                ConsentForm.LoadAndShowConsentFormIfRequired((FormError formError) =>
-                {
-                    if (formError != null)
+                    if (updateError != null)
                     {
-                        // Consent gathering failed.
-                        AdsManager.Instance.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> " + formError.Message);
+                        // Handle the error.
+                        AdsManager.Instance.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> " + updateError.Message);
                         return;
                     }
-                    else
+
+                    if (ConsentInformation.CanRequestAds()) // Determine the consent-related action to take based on the ConsentStatus.
                     {
-                        // Form showing succeeded.
-                        AdsManager.Instance.Log($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW SUCCESS");
+                        // Consent has already been gathered or not required.
+                        // Return control back to the user.
+                        AdsManager.Instance.Log($"{TagLog.UMP} " + "Update " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " -- Consent has already been gathered or not required");
+                        return;
                     }
 
+                    AdsManager.Instance.Log(ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW ConsentForm If Required");
+
+                    // If the error is null, the consent information state was updated.
+                    // You are now ready to check if a form is available.
+                    ConsentForm.LoadAndShowConsentFormIfRequired((FormError formError) =>
+                    {
+                        if (formError != null)
+                        {
+                            // Consent gathering failed.
+                            AdsManager.Instance.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> " + formError.Message);
+                            return;
+                        }
+                        else
+                        {
+                            // Form showing succeeded.
+                            AdsManager.Instance.Log($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW SUCCESS");
+                        }
+
+                    });
                 });
+
             }));
 
-            while (isChecking && (ConsentInformation.ConsentStatus == ConsentStatus.Required || ConsentInformation.ConsentStatus == ConsentStatus.Unknown))
+            while ((ConsentInformation.ConsentStatus == ConsentStatus.Required || ConsentInformation.ConsentStatus == ConsentStatus.Unknown))
             {
                 yield return null;
             }
