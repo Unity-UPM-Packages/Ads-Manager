@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Baracuda.Threading;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
@@ -91,7 +92,7 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnAdsLoadAvailable()
         {
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 Status = AdsEvents.LoadAvailable;
                 reloadCount = 0;
@@ -105,7 +106,7 @@ namespace TheLegends.Base.Ads
 
         protected virtual void OnAdsLoadFailed(string message)
         {
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 Status = AdsEvents.LoadFail;
 
@@ -159,7 +160,7 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnAdsShowSuccess()
         {
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 Status = AdsEvents.ShowSuccess;
             });
@@ -167,7 +168,7 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnAdsShowFailed(string message)
         {
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 Status = AdsEvents.ShowFail;
 
@@ -179,7 +180,7 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnAdsClosed()
         {
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 Status = AdsEvents.Close;
                 adsUnitIDIndex = 0;
@@ -189,7 +190,7 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnAdsClick()
         {
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 Status = AdsEvents.Click;
             });
@@ -198,7 +199,7 @@ namespace TheLegends.Base.Ads
 
         public virtual void OnImpression()
         {
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 AdsManager.Instance.Log($"{AdsType} "+ "ad recorded an impression.");
             });

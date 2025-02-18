@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Baracuda.Threading;
 using GoogleMobileAds.Api;
 using TheLegends.Base.UI;
 using UnityEngine;
@@ -152,7 +153,7 @@ namespace TheLegends.Base.Ads
 
         private void OnInterShowFailed(AdError error)
         {
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 var errorDescription = error?.GetMessage();
                 base.OnAdsShowFailed(errorDescription);
@@ -161,7 +162,7 @@ namespace TheLegends.Base.Ads
 
         protected virtual void OnInterClosed()
         {
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 UILoadingController.Show(1f, null);
                 base.OnAdsClosed();
@@ -170,7 +171,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAdsPaid(AdValue value)
         {
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
             });
