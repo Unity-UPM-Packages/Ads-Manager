@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Baracuda.Threading;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Ump.Api;
 using UnityEngine;
@@ -87,7 +88,7 @@ namespace TheLegends.Base.Ads
 
                 MobileAds.Initialize(initStatus =>
                 {
-                    UnityMainThreadDispatcher.Enqueue(() =>
+                    Dispatcher.Invoke(() =>
                     {
                         if (initStatus == null)
                         {

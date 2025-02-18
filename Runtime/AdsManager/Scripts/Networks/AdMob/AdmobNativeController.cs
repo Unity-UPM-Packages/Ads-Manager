@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Baracuda.Threading;
 using GoogleMobileAds.Api;
 using TheLegends.Base.Ads;
 using UnityEngine;
@@ -243,7 +244,7 @@ namespace TheLegends.Base.Ads
         private void OnNativeLoaded(object sender, NativeAdEventArgs args)
         {
 #if USE_ADMOB
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 if (_loadRequestId != _currentLoadRequestId)
                 {
@@ -281,7 +282,7 @@ namespace TheLegends.Base.Ads
 #pragma warning restore CS0618 // Type or member is obsolete
         {
 #if USE_ADMOB
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 if (_loadRequestId != _currentLoadRequestId)
                 {
@@ -304,7 +305,7 @@ namespace TheLegends.Base.Ads
         private void OnAdsClose(object sender, EventArgs args)
         {
 #if USE_ADMOB
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 base.OnAdsClosed();
             });
@@ -314,7 +315,7 @@ namespace TheLegends.Base.Ads
         private void OnAdsClick(object sender, EventArgs args)
         {
 #if USE_ADMOB
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 base.OnAdsClick();
                 onClick?.Invoke();
@@ -325,7 +326,7 @@ namespace TheLegends.Base.Ads
         private void OnImpression(object sender, EventArgs args)
         {
 #if USE_ADMOB
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 base.OnImpression();
             });
@@ -337,7 +338,7 @@ namespace TheLegends.Base.Ads
 #pragma warning restore CS0618 // Type or member is obsolete
         {
 #if USE_ADMOB
-            UnityMainThreadDispatcher.Enqueue(() =>
+            Dispatcher.Invoke(() =>
             {
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, args.AdValue);
             });
