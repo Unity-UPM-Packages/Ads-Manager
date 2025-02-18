@@ -1,3 +1,10 @@
+## [1.0.13](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.12...v1.0.13) (2025-02-18)
+
+
+### Bug Fixes
+
+* update camera ads splash culling mask ([6675081](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/6675081e0d4c03b8611c97429e385b52e8830075))
+
 ## [1.0.12](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.11...v1.0.12) (2025-02-18)
 
 
