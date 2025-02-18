@@ -117,12 +117,12 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             if (IsReady && IsAvailable)
             {
-                _rewardedAd.OnAdClicked += base.OnAdsClick;
-                _rewardedAd.OnAdPaid += OnAdsPaid;
-                _rewardedAd.OnAdImpressionRecorded += OnImpression;
+                _rewardedAd.OnAdClicked += OnRewardClick;
+                _rewardedAd.OnAdPaid += OnRewardPaid;
+                _rewardedAd.OnAdImpressionRecorded += OnRewardImpression;
                 _rewardedAd.OnAdFullScreenContentClosed += OnRewardedClosed;
                 _rewardedAd.OnAdFullScreenContentFailed += OnRewardedShowFailed;
-                _rewardedAd.OnAdFullScreenContentOpened += () => base.OnAdsShowSuccess();
+                _rewardedAd.OnAdFullScreenContentOpened += OnRewardShowSuccess;
                 _rewardedAd.Show(reward =>
                 {
                     if (reward != null)
@@ -146,13 +146,42 @@ namespace TheLegends.Base.Ads
 
         #region Internal
 
-        private void OnRewardedLoadFailed(AdError error)
+        private void OnRewardClick()
         {
             Dispatcher.Invoke(() =>
             {
-                var errorDescription = error?.GetMessage();
-                base.OnAdsLoadFailed(errorDescription);
+                OnAdsClick();
             });
+        }
+
+        private void OnRewardPaid(AdValue value)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnAdsPaid(value);
+            });
+        }
+
+        private void OnRewardImpression()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnImpression();
+            });
+        }
+
+        private void OnRewardShowSuccess()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnAdsShowSuccess();
+            });
+        }
+
+        private void OnRewardedLoadFailed(AdError error)
+        {
+            var errorDescription = error?.GetMessage();
+            OnAdsLoadFailed(errorDescription);
         }
 
         private void OnRewardedShowFailed(AdError error)
@@ -160,7 +189,7 @@ namespace TheLegends.Base.Ads
             Dispatcher.Invoke(() =>
             {
                 var errorDescription = error?.GetMessage();
-                base.OnAdsShowFailed(errorDescription);
+                OnAdsShowFailed(errorDescription);
             });
         }
 
@@ -168,7 +197,7 @@ namespace TheLegends.Base.Ads
         {
             Dispatcher.Invoke(() =>
             {
-                base.OnAdsClosed();
+                OnAdsClosed();
             });
         }
 

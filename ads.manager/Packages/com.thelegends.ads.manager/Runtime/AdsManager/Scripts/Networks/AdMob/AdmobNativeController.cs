@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Baracuda.Threading;
 using GoogleMobileAds.Api;
 using LitMotion;
-using TheLegends.Base.Ads;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -127,9 +126,9 @@ namespace TheLegends.Base.Ads
 
             adLoader.OnNativeAdLoaded += OnNativeLoaded;
             adLoader.OnAdFailedToLoad += OnNativeLoadFailed;
-            adLoader.OnNativeAdImpression += OnImpression;
-            adLoader.OnNativeAdClicked += OnAdsClick;
-            adLoader.OnNativeAdClosed += OnAdsClose;
+            adLoader.OnNativeAdImpression += OnNativeImpression;
+            adLoader.OnNativeAdClicked += OnNativeClick;
+            adLoader.OnNativeAdClosed += OnNativeClose;
             adLoader.LoadAd(new AdRequest());
 
 #if UNITY_EDITOR
@@ -264,7 +263,7 @@ namespace TheLegends.Base.Ads
 
                 timeOutHandle.Cancel();
 
-                base.OnAdsLoadAvailable();
+                OnAdsLoadAvailable();
 
                 if (args != null)
                 {
@@ -298,39 +297,41 @@ namespace TheLegends.Base.Ads
 
                 timeOutHandle.Cancel();
 
+                container.SetActive(true);
+
                 var errorDescription = error.LoadAdError.GetMessage();
-                base.OnAdsLoadFailed(errorDescription);
+                OnAdsLoadFailed(errorDescription);
             });
 #endif
         }
 
-        private void OnAdsClose(object sender, EventArgs args)
+        private void OnNativeClose(object sender, EventArgs args)
         {
 #if USE_ADMOB
             Dispatcher.Invoke(() =>
             {
-                base.OnAdsClosed();
+                OnAdsClosed();
             });
 #endif
         }
 
-        private void OnAdsClick(object sender, EventArgs args)
+        private void OnNativeClick(object sender, EventArgs args)
         {
 #if USE_ADMOB
             Dispatcher.Invoke(() =>
             {
-                base.OnAdsClick();
+                OnAdsClick();
                 onClick?.Invoke();
             });
 #endif
         }
 
-        private void OnImpression(object sender, EventArgs args)
+        private void OnNativeImpression(object sender, EventArgs args)
         {
 #if USE_ADMOB
             Dispatcher.Invoke(() =>
             {
-                base.OnImpression();
+                OnImpression();
             });
 #endif
         }
@@ -453,7 +454,7 @@ namespace TheLegends.Base.Ads
         {
             isCLosedByHide = true;
             NativeDestroy();
-            base.OnAdsClosed();
+            OnAdsClosed();
         }
 
         private void DelayReloadAd(float time)

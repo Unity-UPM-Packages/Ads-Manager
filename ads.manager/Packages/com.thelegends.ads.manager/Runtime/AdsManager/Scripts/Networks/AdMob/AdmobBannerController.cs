@@ -13,7 +13,6 @@ namespace TheLegends.Base.Ads
         protected BannerView _bannerView;
         private string _currentLoadRequestId;
         private string _loadRequestId;
-        private bool isShowing = false;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -56,9 +55,9 @@ namespace TheLegends.Base.Ads
             {
                 CreateBanner();
 
-                _bannerView.OnAdClicked += base.OnAdsClick;
-                _bannerView.OnAdPaid += OnAdsPaid;
-                _bannerView.OnAdImpressionRecorded += OnImpression;
+                _bannerView.OnAdClicked += OnBannerClick;
+                _bannerView.OnAdPaid += OnBannerPaid;
+                _bannerView.OnAdImpressionRecorded += OnBannerImpression;
                 _bannerView.OnBannerAdLoadFailed += OnBannerLoadFailed;
                 _bannerView.OnBannerAdLoaded += OnBannerLoaded;
 
@@ -85,9 +84,9 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             if (IsReady && IsAvailable)
             {
+                PreShow();
                 _bannerView.Show();
                 Status = AdsEvents.ShowSuccess;
-                isShowing = true;
             }
             else
             {
@@ -98,14 +97,6 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        private void OnAdsPaid(AdValue value)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
-            });
-
-        }
 
         public virtual void HideAds()
         {
@@ -116,17 +107,21 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (_bannerView != null)
+            if (IsReady)
             {
-                isShowing = false;
                 _bannerView.Hide();
                 BannerDestroy();
-                base.OnAdsClosed();
+                OnAdsClosed();
             }
 #endif
         }
 
         #region Internal
+
+        protected virtual void PreShow()
+        {
+
+        }
 
         protected virtual void CreateBanner()
         {
@@ -148,6 +143,30 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
+        private void OnBannerClick()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnAdsClick();
+            });
+        }
+
+        private void OnBannerPaid(AdValue value)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            });
+        }
+
+        private void OnBannerImpression()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnImpression();
+            });
+        }
+
         public void OnBannerLoaded()
         {
             Dispatcher.Invoke(() =>
@@ -158,15 +177,11 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
+                _bannerView.Hide();
+
                 timeOutHandle.Cancel();
 
-                base.OnAdsLoadAvailable();
-
-                if (!isShowing)
-                {
-                    _bannerView.Hide();
-                }
-
+                OnAdsLoadAvailable();
             });
 
         }
@@ -184,7 +199,7 @@ namespace TheLegends.Base.Ads
                 timeOutHandle.Cancel();
 
                 var errorDescription = error?.GetMessage();
-                base.OnAdsLoadFailed(errorDescription);
+                OnAdsLoadFailed(errorDescription);
             });
 
         }
@@ -192,7 +207,7 @@ namespace TheLegends.Base.Ads
         protected void BannerDestroy()
         {
 #if USE_ADMOB
-            if (_bannerView != null)
+            if (IsReady)
             {
                 try
                 {

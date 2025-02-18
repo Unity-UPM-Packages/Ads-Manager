@@ -75,6 +75,7 @@ namespace TheLegends.Base.Ads
                         _interstitialAd = ad;
 
                         OnAdsLoadAvailable();
+
                     });
             }
 #else
@@ -88,12 +89,12 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             if (IsReady && IsAvailable)
             {
-                _interstitialAd.OnAdClicked += base.OnAdsClick;
-                _interstitialAd.OnAdPaid += OnAdsPaid;
-                _interstitialAd.OnAdImpressionRecorded += OnImpression;
+                _interstitialAd.OnAdClicked += OnInterClick;
+                _interstitialAd.OnAdPaid += OnInterPaid;
+                _interstitialAd.OnAdImpressionRecorded += OnInterImpression;
                 _interstitialAd.OnAdFullScreenContentClosed += OnInterClosed;
                 _interstitialAd.OnAdFullScreenContentFailed += OnInterShowFailed;
-                _interstitialAd.OnAdFullScreenContentOpened += () => base.OnAdsShowSuccess();
+                _interstitialAd.OnAdFullScreenContentOpened += OnInterShowSuccess;
                 _interstitialAd.Show();
             }
             else
@@ -142,10 +143,34 @@ namespace TheLegends.Base.Ads
 
         #region Internal
 
+        private void OnInterClick()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnAdsClick();
+            });
+        }
+
+        private void OnInterImpression()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnImpression();
+            });
+        }
+
+        private void OnInterShowSuccess()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnAdsShowSuccess();
+            });
+        }
+
         private void OnInterLoadFailed(AdError error)
         {
             var errorDescription = error?.GetMessage();
-            base.OnAdsLoadFailed(errorDescription);
+            OnAdsLoadFailed(errorDescription);
         }
 
         private void OnInterShowFailed(AdError error)
@@ -153,7 +178,7 @@ namespace TheLegends.Base.Ads
             Dispatcher.Invoke(() =>
             {
                 var errorDescription = error?.GetMessage();
-                base.OnAdsShowFailed(errorDescription);
+                OnAdsShowFailed(errorDescription);
             });
         }
 
@@ -162,11 +187,11 @@ namespace TheLegends.Base.Ads
             Dispatcher.Invoke(() =>
             {
                 UILoadingController.Show(1f, null);
-                base.OnAdsClosed();
+                OnAdsClosed();
             });
         }
 
-        private void OnAdsPaid(AdValue value)
+        private void OnInterPaid(AdValue value)
         {
             Dispatcher.Invoke(() =>
             {

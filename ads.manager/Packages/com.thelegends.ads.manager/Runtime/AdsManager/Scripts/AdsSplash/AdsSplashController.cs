@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GoogleMobileAds.Ump.Api;
 using TheLegends.Base.AppsFlyer;
 using TheLegends.Base.Firebase;
 using UnityEngine;
@@ -71,6 +72,12 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.adsConfigs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload);
                 AdsManager.Instance.adsConfigs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut);
             });
+
+            while ((ConsentInformation.ConsentStatus == ConsentStatus.Required || ConsentInformation.ConsentStatus == ConsentStatus.Unknown))
+            {
+                AdsManager.Instance.Log("AAAAAAAAAAAAAAAAA");
+                yield return null;
+            }
 
 
             if (canShowSelectBrand)

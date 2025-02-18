@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Baracuda.Threading;
 using GoogleMobileAds.Api;
 using TheLegends.Base.Ads;
 using UnityEngine;
@@ -85,6 +86,7 @@ namespace TheLegends.Base.Ads
                         _nativeOverlayAd = ad;
 
                         OnAdsLoadAvailable();
+
                     });
             }
 #endif
@@ -104,11 +106,11 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             if (IsReady && IsAvailable)
             {
-                _nativeOverlayAd.OnAdClicked += base.OnAdsClick;
-                _nativeOverlayAd.OnAdPaid += OnAdsPaid;
-                _nativeOverlayAd.OnAdImpressionRecorded += OnImpression;
+                _nativeOverlayAd.OnAdClicked += OnNativeClick;
+                _nativeOverlayAd.OnAdPaid += OnNativePaid;
+                _nativeOverlayAd.OnAdImpressionRecorded += OnNativeImpression;
                 _nativeOverlayAd.OnAdFullScreenContentClosed += OnNativeOverlayClosed;
-                _nativeOverlayAd.OnAdFullScreenContentOpened += () => base.OnAdsShowSuccess();
+                _nativeOverlayAd.OnAdFullScreenContentOpened += OnNativeShowSuccess;
                 _nativeOverlayAd.Show();
                 Status = AdsEvents.ShowSuccess;
             }
@@ -150,20 +152,51 @@ namespace TheLegends.Base.Ads
 
         #region Internal
 
+        private void OnNativeClick()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnAdsClick();
+            });
+        }
+
+        private void OnNativeImpression()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnImpression();
+            });
+        }
+
+        private void OnNativeShowSuccess()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnAdsShowSuccess();
+            });
+        }
+
         private void OnNativeLoadFailed(AdError error)
         {
             var errorDescription = error?.GetMessage();
-            base.OnAdsLoadFailed(errorDescription);
+            OnAdsLoadFailed(errorDescription);
         }
 
         private void OnNativeOverlayClosed()
         {
-            base.OnAdsClosed();
+            Dispatcher.Invoke(() =>
+            {
+                OnAdsClosed();
+            });
+
         }
 
-        private void OnAdsPaid(AdValue value)
+        private void OnNativePaid(AdValue value)
         {
-            AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            Dispatcher.Invoke(() =>
+            {
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            });
         }
 
         public void HideAds()
@@ -179,7 +212,7 @@ namespace TheLegends.Base.Ads
             {
                 _nativeOverlayAd.Hide();
                 NativeDestroy();
-                base.OnAdsClosed();
+                OnAdsClosed();
             }
 #endif
         }
