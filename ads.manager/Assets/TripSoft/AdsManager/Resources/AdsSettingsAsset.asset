@@ -17,7 +17,7 @@ MonoBehaviour:
   appleAppId: 
   bannerPosition: 2
   fixBannerSmallSize: 0
-  autoReLoadMax: 3
+  autoReLoadMax: 2
   showIRON: 0
   isIronTest: 0
   ironAndroidAppKey: 
