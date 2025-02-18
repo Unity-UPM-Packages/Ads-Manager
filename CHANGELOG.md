@@ -1,3 +1,10 @@
+## [1.0.14](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.13...v1.0.14) (2025-02-18)
+
+
+### Bug Fixes
+
+* change how handle timout request ([5251672](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/5251672cc93a06dc82a5374e8b2012994cf79335))
+
 ## [1.0.13](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.12...v1.0.13) (2025-02-18)
 
 
