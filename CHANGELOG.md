@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.8...v1.0.9) (2025-02-18)
+
+
+### Bug Fixes
+
+* reference auto reload max from AdsSettings ([43e7150](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/43e715052b4908fb9df0125f47efefd9740ee216))
+
 ## [1.0.8](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.7...v1.0.8) (2025-02-18)
 
 
