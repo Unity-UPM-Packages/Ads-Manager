@@ -44,15 +44,19 @@ MonoBehaviour:
     mrecIds: []
     appOpenIds: []
   showADMOB: 1
-  isAdmobTest: 1
+  isAdmobTest: 0
   ADMOB_Android:
     bannerIds: []
     interIds: []
     rewardIds: []
     mrecIds: []
     appOpenIds: []
-    interOpenIds: []
-    mrecOpenIds: []
+    interOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/1033173712
+    mrecOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/6300978111
     nativeIds: []
   ADMOB_IOS:
     bannerIds: []

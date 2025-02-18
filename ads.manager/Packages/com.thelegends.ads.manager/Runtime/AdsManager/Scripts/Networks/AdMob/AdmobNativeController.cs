@@ -81,18 +81,21 @@ namespace TheLegends.Base.Ads
             var isIOS = platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.OSXPlayer;
             var isAdmobTest = AdsManager.Instance.SettingsAds.isAdmobTest;
 
-            var placementIndex = Mathf.Clamp((int)_order, 1,
-                isIOS
-                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds.Count
-                    : AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds.Count) - 1;
-
-            placement = isAdmobTest
+            var list = isAdmobTest
                 ? (isIOS
-                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds[placementIndex]
-                    : AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds[placementIndex])
+                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds
+                    : AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds)
                 : (isIOS
-                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds[placementIndex]
-                    : AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds[placementIndex]);
+                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds
+                    : AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds);
+
+            if (list.Count <= 0)
+            {
+                return;
+            }
+
+            var placementIndex = Mathf.Clamp((int)_order - 1, 0, list.Count - 1);
+            placement = list[placementIndex];
 
             timeAutoReload = AdsManager.Instance.adsConfigs.adNativeTimeReload;
 
