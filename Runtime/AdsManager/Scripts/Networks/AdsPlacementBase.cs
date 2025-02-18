@@ -15,7 +15,6 @@ namespace TheLegends.Base.Ads
         protected string adsUnitID = string.Empty;
         protected string position = "default";
 
-        protected int reloadMax = 2;
         protected int reloadCount = 0;
 
         protected AdsEvents status;
@@ -112,16 +111,16 @@ namespace TheLegends.Base.Ads
 
                 string extendString = "";
 
-                if (reloadCount < reloadMax)
+                if (reloadCount < AdsManager.Instance.SettingsAds.autoReLoadMax)
                 {
-                    extendString = " re-trying in " + (5 * reloadCount) + " seconds " + (reloadCount + 1) + "/" + reloadMax;
+                    extendString = " re-trying in " + (5 * reloadCount) + " seconds " + (reloadCount + 1) + "/" + AdsManager.Instance.SettingsAds.autoReLoadMax;
                 }
 
 
                 AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " +
                                              "OnAdsLoadFailed " + adsUnitID + " Error: " + message + extendString);
 
-                if (reloadCount < reloadMax)
+                if (reloadCount < AdsManager.Instance.SettingsAds.autoReLoadMax)
                 {
                     adsUnitIDIndex++;
                     reloadCount++;
