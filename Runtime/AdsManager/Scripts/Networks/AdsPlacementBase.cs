@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Baracuda.Threading;
+using LitMotion;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
@@ -41,7 +42,7 @@ namespace TheLegends.Base.Ads
 
         public AdsType AdsType { get =>  GetAdsType(); }
 
-        protected Coroutine loadTimeOutCoroutine;
+        protected MotionHandle timeOutHandle;
 
 
 
@@ -57,7 +58,7 @@ namespace TheLegends.Base.Ads
         public virtual void LoadAds()
         {
             Status = AdsEvents.LoadRequest;
-            loadTimeOutCoroutine = StartCoroutine(HandleTimeOut());
+            timeOutHandle = LMotion.Create(0f, 0f, AdsManager.Instance.adsConfigs.adLoadTimeOut).WithOnComplete(HandleTimeOut).RunWithoutBinding();
         }
 
         protected bool IsCanLoadAds()
@@ -133,12 +134,8 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        protected IEnumerator HandleTimeOut()
+        protected void HandleTimeOut()
         {
-            float timeOut = AdsManager.Instance.adsConfigs.adLoadTimeOut;
-
-            yield return new WaitForSeconds(timeOut);
-
             if (Status == AdsEvents.LoadRequest)
             {
                 OnAdsLoadTimeOut();

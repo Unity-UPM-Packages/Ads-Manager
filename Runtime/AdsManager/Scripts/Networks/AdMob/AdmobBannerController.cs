@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Baracuda.Threading;
 using GoogleMobileAds.Api;
+using LitMotion;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
@@ -157,11 +158,7 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
-                if (loadTimeOutCoroutine != null)
-                {
-                    StopCoroutine(loadTimeOutCoroutine);
-                    loadTimeOutCoroutine = null;
-                }
+                timeOutHandle.Cancel();
 
                 base.OnAdsLoadAvailable();
 
@@ -184,11 +181,7 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
-                if (loadTimeOutCoroutine != null)
-                {
-                    StopCoroutine(loadTimeOutCoroutine);
-                    loadTimeOutCoroutine = null;
-                }
+                timeOutHandle.Cancel();
 
                 var errorDescription = error?.GetMessage();
                 base.OnAdsLoadFailed(errorDescription);
