@@ -1,3 +1,11 @@
+## [1.0.7](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.6...v1.0.7) (2025-02-18)
+
+
+### Bug Fixes
+
+* update dependencies ([ce962f9](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/ce962f9fca236632e530a8c725ce3b5a183f1145))
+* use new Thread Dispatcher ([50b36a0](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/50b36a04fa7d94c05bce1af8e71f003e2f789b66))
+
 ## [1.0.6](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.5...v1.0.6) (2025-02-17)
 
 
