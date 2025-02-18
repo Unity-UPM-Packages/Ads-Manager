@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Baracuda.Threading;
 using GoogleMobileAds.Api;
+using LitMotion;
 using TheLegends.Base.Ads;
 using UnityEngine;
 using UnityEngine.UI;
@@ -106,6 +107,12 @@ namespace TheLegends.Base.Ads
         public override void LoadAds()
         {
 #if USE_ADMOB
+            if (placement == null || placement.stringIDs.Count <= 0)
+            {
+                AdsManager.Instance.LogError("" + AdsNetworks + "_" + AdsType + " " + "UnitId NULL or Empty --> return");
+                return;
+            }
+
             if (!IsCanLoadAds())
             {
                 return;
@@ -255,11 +262,7 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
-                if (loadTimeOutCoroutine != null)
-                {
-                    StopCoroutine(loadTimeOutCoroutine);
-                    loadTimeOutCoroutine = null;
-                }
+                timeOutHandle.Cancel();
 
                 base.OnAdsLoadAvailable();
 
@@ -293,11 +296,7 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
-                if (loadTimeOutCoroutine != null)
-                {
-                    StopCoroutine(loadTimeOutCoroutine);
-                    loadTimeOutCoroutine = null;
-                }
+                timeOutHandle.Cancel();
 
                 var errorDescription = error.LoadAdError.GetMessage();
                 base.OnAdsLoadFailed(errorDescription);
