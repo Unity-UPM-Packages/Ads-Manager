@@ -1,3 +1,10 @@
+## [1.0.15](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.14...v1.0.15) (2025-02-18)
+
+
+### Bug Fixes
+
+* refactor + improve code ([0d7809a](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/0d7809a0a7e28d7ef855d2bf74106a1cf3949fbd))
+
 ## [1.0.14](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.13...v1.0.14) (2025-02-18)
 
 
