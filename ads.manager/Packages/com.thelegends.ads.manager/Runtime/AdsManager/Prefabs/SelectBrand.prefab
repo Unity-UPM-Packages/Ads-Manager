@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2224397475672768240}
   - component: {fileID: 2224397475672768242}
   - component: {fileID: 2224397475672768241}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 2224397475890702406}
   - component: {fileID: 2224397475890702520}
   - component: {fileID: 2224397475890702407}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 2224397475936448463}
   - component: {fileID: 2224397475936448449}
   - component: {fileID: 2224397475936448448}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Tick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 2224397476132830335}
   - component: {fileID: 2224397476132830334}
   - component: {fileID: 2224397476132830333}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Item (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 2224397476313729105}
   - component: {fileID: 2224397476313729104}
   - component: {fileID: 2224397476313729119}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Item (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 2224397476341778995}
   - component: {fileID: 2224397476341778994}
   - component: {fileID: 2224397476341778993}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Item (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 2224397476411731799}
   - component: {fileID: 2224397476411731798}
   - component: {fileID: 2224397476411731797}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Item (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -807,7 +807,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2224397476670330753}
   - component: {fileID: 2224397476670330754}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: BrandGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,7 +874,7 @@ GameObject:
   - component: {fileID: 2224397476812763780}
   - component: {fileID: 2224397476812763782}
   - component: {fileID: 2224397476812763781}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Tick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -949,7 +949,7 @@ GameObject:
   - component: {fileID: 2224397476939011705}
   - component: {fileID: 2224397476939011707}
   - component: {fileID: 2224397476939011706}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1028,7 +1028,7 @@ GameObject:
   - component: {fileID: 2224397477025835748}
   - component: {fileID: 2224397477025835750}
   - component: {fileID: 2224397477025835749}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Tick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1103,7 +1103,7 @@ GameObject:
   - component: {fileID: 2224397477058473731}
   - component: {fileID: 2224397477058473733}
   - component: {fileID: 2224397477058473732}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1182,7 +1182,7 @@ GameObject:
   - component: {fileID: 2224397477184162203}
   - component: {fileID: 2224397477184162205}
   - component: {fileID: 2224397477184162204}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Tick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1257,7 +1257,7 @@ GameObject:
   - component: {fileID: 2224397477385216344}
   - component: {fileID: 2224397477385216346}
   - component: {fileID: 2224397477385216345}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: AutoCloseTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1337,7 +1337,7 @@ GameObject:
   - component: {fileID: 2224397477577289960}
   - component: {fileID: 2224397477577289975}
   - component: {fileID: 3733544213546520106}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: SelectBrand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1433,7 +1433,7 @@ GameObject:
   - component: {fileID: 2224397477589891955}
   - component: {fileID: 2224397477589891957}
   - component: {fileID: 2224397477589891956}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1511,7 +1511,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2224397477657910802}
   - component: {fileID: 2224397477657910804}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1560,7 +1560,7 @@ GameObject:
   - component: {fileID: 3459187418713473349}
   - component: {fileID: 889205856209222342}
   - component: {fileID: 7761017305033980100}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1636,7 +1636,7 @@ GameObject:
   - component: {fileID: 6806616188807979185}
   - component: {fileID: 9138685870558388197}
   - component: {fileID: 1525973966617256960}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: ConfirmBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
