@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.10...v1.0.11) (2025-02-18)
+
+
+### Bug Fixes
+
+* improve validate conditions ([c88813a](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/c88813aedd5ad0cbfd784b007d609be04c1a7928))
+
 ## [1.0.10](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.9...v1.0.10) (2025-02-18)
 
 
