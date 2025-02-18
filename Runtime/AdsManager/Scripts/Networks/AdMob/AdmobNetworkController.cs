@@ -283,6 +283,10 @@ namespace TheLegends.Base.Ads
 
         private int GetPlacementIndex(int order, int listCount)
         {
+            if (listCount == 0)
+            {
+                return 0;
+            }
             return Mathf.Clamp(order - 1, 0, listCount - 1);
         }
 
