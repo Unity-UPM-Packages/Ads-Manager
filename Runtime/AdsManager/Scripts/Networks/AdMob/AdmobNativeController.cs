@@ -166,6 +166,7 @@ namespace TheLegends.Base.Ads
                         AdsManager.Instance.adsConfigs.adNativeBannerHeight, adImageCollider.size.z);
                 }
 
+                CancelReloadAds();
                 DelayReloadAd(timeAutoReload);
             }
             else
@@ -183,6 +184,7 @@ namespace TheLegends.Base.Ads
                 isCLosedByHide = false;
                 FetchData();
                 container.SetActive(true);
+                CancelReloadAds();
                 DelayReloadAd(timeAutoReload);
             }
             else
@@ -321,6 +323,8 @@ namespace TheLegends.Base.Ads
             Dispatcher.Invoke(() =>
             {
                 OnAdsClick();
+                CancelReloadAds();
+                DelayReloadAd(timeAutoReload);
                 onClick?.Invoke();
             });
 #endif
