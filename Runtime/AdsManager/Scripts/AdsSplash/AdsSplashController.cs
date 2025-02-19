@@ -73,12 +73,6 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.adsConfigs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut);
             });
 
-            while ((ConsentInformation.ConsentStatus == ConsentStatus.Required || ConsentInformation.ConsentStatus == ConsentStatus.Unknown))
-            {
-                AdsManager.Instance.Log("AAAAAAAAAAAAAAAAA");
-                yield return null;
-            }
-
 
             if (canShowSelectBrand)
             {

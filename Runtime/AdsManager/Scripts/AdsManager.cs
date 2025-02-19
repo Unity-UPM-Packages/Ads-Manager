@@ -5,6 +5,7 @@ using System.Linq;
 using AppsFlyerSDK;
 using TheLegends.Base.AppsFlyer;
 using TheLegends.Base.Firebase;
+using TheLegends.Base.UI;
 using TheLegends.Base.UnitySingleton;
 using UnityEngine;
 
@@ -170,6 +171,11 @@ namespace TheLegends.Base.Ads
             if (netWork != null)
             {
                 netWork.ShowRewarded(order, OnRewarded, position);
+
+                if (GetAdsStatus(AdsType.Rewarded, order) != AdsEvents.LoadAvailable)
+                {
+                    UIToatsController.Show("Ads not available", 0.5f, ToastPosition.BottomCenter);
+                }
             }
         }
 
