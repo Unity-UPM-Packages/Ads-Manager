@@ -27,7 +27,7 @@ namespace TheLegends.Base.Ads
                 if (status != value)
                 {
                     status = value;
-                    AdsManager.Instance.SetStatus(AdsType, adsUnitID, position, value, AdsNetworks);
+                    AdsManager.Instance.SetStatus(AdsNetworks, AdsType, adsUnitID, position, value, AdsNetworks);
                 }
             }
         }

@@ -389,9 +389,9 @@ namespace TheLegends.Base.Ads
 
         #region Common
 
-        public void SetStatus(AdsType adsType, string adsUnitID, string position, AdsEvents adEvent, AdsNetworks networks)
+        public void SetStatus(AdsNetworks AdsNetworks, AdsType adsType, string adsUnitID, string position, AdsEvents adEvent, AdsNetworks networks)
         {
-            string eventName = $"{adsType}__{adsUnitID}__{adEvent.ToString()}";
+            string eventName = $"{AdsNetworks}_{adsType} {adEvent.ToString()} {adsUnitID}";
 
             Log(eventName);
 
