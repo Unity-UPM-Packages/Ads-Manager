@@ -1,3 +1,11 @@
+## [1.0.17](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.16...v1.0.17) (2025-02-19)
+
+
+### Bug Fixes
+
+* add AdsUnitID into Log Status ([f56bc03](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/f56bc03c23865a057c19abfd31869250bd14f546))
+* change default reload count ([243d43d](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/243d43d9f3ff62c23fbf8bd4922ed8d93ea37aa1))
+
 ## [1.0.16](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.15...v1.0.16) (2025-02-19)
 
 
