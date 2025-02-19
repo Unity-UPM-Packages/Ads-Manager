@@ -82,7 +82,7 @@ namespace TheLegends.Base.Ads
         public BannerPos bannerPosition = BannerPos.Bottom;
         public bool fixBannerSmallSize;
 
-        public int autoReLoadMax = 3;
+        public int autoReLoadMax = 2;
 
         [Header("IRON")]
         public bool showIRON;
