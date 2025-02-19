@@ -392,10 +392,10 @@ namespace TheLegends.Base.Ads
         public void SetStatus(AdsNetworks AdsNetworks, AdsType adsType, string adsUnitID, string position, AdsEvents adEvent, AdsNetworks networks)
         {
             string eventName = $"{AdsNetworks}_{adsType} {adEvent.ToString()} {adsUnitID}";
-
+            string eventFirebaseName =  $"{adsType}_{adEvent.ToString()}";
             Log(eventName);
 
-            FirebaseManager.Instance.LogEvent(eventName, new Dictionary<string, object>()
+            FirebaseManager.Instance.LogEvent(eventFirebaseName, new Dictionary<string, object>()
             {
                 { "network", networks.ToString() },
                 { "type", adsType.ToString() },
