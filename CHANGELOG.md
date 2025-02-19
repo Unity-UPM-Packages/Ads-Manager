@@ -1,3 +1,10 @@
+## [1.0.19](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.18...v1.0.19) (2025-02-19)
+
+
+### Bug Fixes
+
+* auto reload native on click + show ([3257260](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/3257260098587b94a1f3655219c831595ec16056))
+
 ## [1.0.18](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.17...v1.0.18) (2025-02-19)
 
 
