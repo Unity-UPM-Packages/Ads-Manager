@@ -1,3 +1,10 @@
+## [1.0.20](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.19...v1.0.20) (2025-02-19)
+
+
+### Bug Fixes
+
+* update event log firebase ([bd60d59](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/bd60d599443cfa8c2642a2d0cad052e8d41777df))
+
 ## [1.0.19](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.18...v1.0.19) (2025-02-19)
 
 
