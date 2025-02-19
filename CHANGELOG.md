@@ -1,3 +1,12 @@
+## [1.0.16](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.15...v1.0.16) (2025-02-19)
+
+
+### Bug Fixes
+
+* admob banner set position on unity editor ([968ceb1](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/968ceb1c260f866d63de37b76988018861d57c12))
+* show toast when reward not available ([7f382d1](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/7f382d1f10f2d84275f157fbabb3cc0228209752))
+* update package UI ([cf51c8c](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/cf51c8c43b26ef04c23874592ae1001ff3bad2d0))
+
 ## [1.0.15](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.14...v1.0.15) (2025-02-18)
 
 
