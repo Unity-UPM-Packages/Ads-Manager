@@ -1,3 +1,10 @@
+## [1.0.18](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.17...v1.0.18) (2025-02-19)
+
+
+### Bug Fixes
+
+* update log status ([7eab91a](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/7eab91a646408ffd179af26ee890826c96a3fb19))
+
 ## [1.0.17](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.16...v1.0.17) (2025-02-19)
 
 
