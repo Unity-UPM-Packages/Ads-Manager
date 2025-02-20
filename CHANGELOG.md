@@ -1,3 +1,10 @@
+## [1.0.22](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.21...v1.0.22) (2025-02-20)
+
+
+### Bug Fixes
+
+* change int admob native to awake() ([e80cdfa](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/e80cdfa1632760e3ce5ed73abe668bf3513a47de))
+
 ## [1.0.21](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.20...v1.0.21) (2025-02-20)
 
 
