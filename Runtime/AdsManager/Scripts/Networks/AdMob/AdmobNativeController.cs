@@ -117,6 +117,11 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
+            if (IsAdsReady())
+            {
+                return;
+            }
+
             NativeDestroy();
             base.LoadAds();
 
@@ -466,6 +471,12 @@ namespace TheLegends.Base.Ads
 
         public void HideAds()
         {
+#if !UNITY_EDITOR
+            if (!IsAdsReady())
+            {
+                return;
+            }
+#endif
             isCLosedByHide = true;
             NativeDestroy();
             OnAdsClosed();
