@@ -117,7 +117,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (IsAdsReady())
+            if (IsAdsReady() && Status == AdsEvents.LoadAvailable)
             {
                 return;
             }
@@ -477,6 +477,11 @@ namespace TheLegends.Base.Ads
                 return;
             }
 #endif
+            if (Status != AdsEvents.ShowSuccess)
+            {
+                return;
+            }
+
             isCLosedByHide = true;
             NativeDestroy();
             OnAdsClosed();
