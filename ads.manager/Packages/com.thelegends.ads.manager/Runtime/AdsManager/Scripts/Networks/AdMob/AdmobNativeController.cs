@@ -266,11 +266,6 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
-                if (!isActiveAndEnabled)
-                {
-                    return;
-                }
-
                 StopHandleTimeout();
 
                 OnAdsLoadAvailable();
@@ -305,10 +300,6 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
-                if (!isActiveAndEnabled)
-                {
-                    return;
-                }
 
                 StopHandleTimeout();
 
@@ -318,6 +309,16 @@ namespace TheLegends.Base.Ads
                 OnAdsLoadFailed(errorDescription);
             });
 #endif
+        }
+
+        protected override void OnAdsLoadFailed(string message)
+        {
+            base.OnAdsLoadFailed(message);
+
+            if (Status == AdsEvents.LoadNotAvailable)
+            {
+                DelayReloadAd(30);
+            }
         }
 
         private void OnNativeClose(object sender, EventArgs args)
