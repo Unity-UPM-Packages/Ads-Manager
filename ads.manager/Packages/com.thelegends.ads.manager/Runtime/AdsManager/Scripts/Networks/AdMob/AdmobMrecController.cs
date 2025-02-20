@@ -81,39 +81,39 @@ namespace TheLegends.Base.Ads
             switch (position)
             {
                 case MrecPos.Top:
-                    newPos = new Vector2Int(xCenter + offset.x, -offset.y);
+                    newPos = new Vector2Int(xCenter + offset.x, offset.y);
 
                     break;
                 case MrecPos.TopLeft:
-                    newPos = new Vector2Int(offset.x, -offset.y);
+                    newPos = new Vector2Int(offset.x, offset.y);
 
                     break;
                 case MrecPos.TopRight:
-                    newPos = new Vector2Int(xMax + offset.x, -offset.y);
+                    newPos = new Vector2Int(xMax + offset.x, offset.y);
 
                     break;
                 case MrecPos.Center:
-                    newPos = new Vector2Int(xCenter + offset.x, yCenter + -offset.y);
+                    newPos = new Vector2Int(xCenter + offset.x, yCenter + offset.y);
 
                     break;
                 case MrecPos.CenterLeft:
-                    newPos = new Vector2Int(offset.x, yCenter + -offset.y);
+                    newPos = new Vector2Int(offset.x, yCenter + offset.y);
 
                     break;
                 case MrecPos.CenterRight:
-                    newPos = new Vector2Int(xMax + offset.x, yCenter + -offset.y);
+                    newPos = new Vector2Int(xMax + offset.x, yCenter + offset.y);
 
                     break;
                 case MrecPos.Bottom:
-                    newPos = new Vector2Int(xCenter + offset.x, yMax + -offset.y);
+                    newPos = new Vector2Int(xCenter + offset.x, yMax + offset.y);
 
                     break;
                 case MrecPos.BottomLeft:
-                    newPos = new Vector2Int(offset.x, yMax + -offset.y);
+                    newPos = new Vector2Int(offset.x, yMax + offset.y);
 
                     break;
                 case MrecPos.BottomRight:
-                    newPos = new Vector2Int(xMax + offset.x, yMax + -offset.y);
+                    newPos = new Vector2Int(xMax + offset.x, yMax + offset.y);
 
                     break;
             }
