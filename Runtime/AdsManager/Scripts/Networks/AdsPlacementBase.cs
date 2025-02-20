@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Baracuda.Threading;
-using LitMotion;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
@@ -42,9 +38,6 @@ namespace TheLegends.Base.Ads
 
         public AdsType AdsType { get =>  GetAdsType(); }
 
-        protected MotionHandle timeOutHandle;
-
-
 
         public virtual void Init(Placement placement)
         {
@@ -58,7 +51,17 @@ namespace TheLegends.Base.Ads
         public virtual void LoadAds()
         {
             Status = AdsEvents.LoadRequest;
-            timeOutHandle = LMotion.Create(0f, 0f, AdsManager.Instance.adsConfigs.adLoadTimeOut).WithOnComplete(HandleTimeOut).RunWithoutBinding();
+            StartHandleTimeout();
+        }
+
+        protected void StartHandleTimeout()
+        {
+            Invoke(nameof(HandleTimeOut), AdsManager.Instance.adsConfigs.adLoadTimeOut);
+        }
+
+        protected void StopHandleTimeout()
+        {
+            CancelInvoke(nameof(HandleTimeOut));
         }
 
         protected bool IsCanLoadAds()
