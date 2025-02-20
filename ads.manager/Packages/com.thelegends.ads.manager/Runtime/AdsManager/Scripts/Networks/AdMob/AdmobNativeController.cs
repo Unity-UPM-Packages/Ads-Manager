@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Baracuda.Threading;
 using GoogleMobileAds.Api;
-using LitMotion;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -273,7 +271,7 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
-                timeOutHandle.Cancel();
+                StopHandleTimeout();
 
                 OnAdsLoadAvailable();
 
@@ -312,7 +310,7 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
-                timeOutHandle.Cancel();
+                StopHandleTimeout();
 
                 container.SetActive(true);
 

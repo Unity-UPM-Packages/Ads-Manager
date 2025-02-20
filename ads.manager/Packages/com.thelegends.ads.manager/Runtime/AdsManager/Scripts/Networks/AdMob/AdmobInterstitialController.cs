@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Baracuda.Threading;
 using GoogleMobileAds.Api;
-using LitMotion;
 using TheLegends.Base.UI;
-using UnityEngine;
 
 namespace TheLegends.Base.Ads
 {
@@ -53,7 +49,7 @@ namespace TheLegends.Base.Ads
                             return;
                         }
 
-                        timeOutHandle.Cancel();
+                        StopHandleTimeout();
 
                         // if error is not null, the load request failed.
                         if(error != null)
