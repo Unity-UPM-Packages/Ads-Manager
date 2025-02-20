@@ -1,3 +1,10 @@
+## [1.0.25](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.24...v1.0.25) (2025-02-20)
+
+
+### Bug Fixes
+
+* fix LastTimeShowAd ([f6f523d](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/f6f523da9932666c0b7d3d89f96a6087c689a654))
+
 ## [1.0.24](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.23...v1.0.24) (2025-02-20)
 
 
