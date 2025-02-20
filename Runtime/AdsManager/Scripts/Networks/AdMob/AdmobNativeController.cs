@@ -263,6 +263,11 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
+                if (!isActiveAndEnabled)
+                {
+                    return;
+                }
+
                 timeOutHandle.Cancel();
 
                 OnAdsLoadAvailable();
@@ -294,6 +299,11 @@ namespace TheLegends.Base.Ads
                 if (_loadRequestId != _currentLoadRequestId)
                 {
                     // If the load request ID does not match, this callback is from a previous request
+                    return;
+                }
+
+                if (!isActiveAndEnabled)
+                {
                     return;
                 }
 
