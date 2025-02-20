@@ -1,3 +1,13 @@
+## [1.0.21](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.20...v1.0.21) (2025-02-20)
+
+
+### Bug Fixes
+
+* add some condition checking for admob native ([74c3994](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/74c3994b82c45d3456f8c1f6f26fb9817b22663b))
+* change how to handle Load Timeout ([a22aa5a](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a22aa5a5441095f09ca7b8ef0f6fdb4a74eaeb6f))
+* check IsReady OnLoaded/OnLoadFail Admob native ([caf248d](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/caf248db77712cdd61d1912fca84a42bb86c8d46))
+* return if !isActiveAndEnable OnLoaded, OnloadFialed Admob Native ([ac1221f](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/ac1221fa566bdb621ef39d11c7e5039d1fc88f89))
+
 ## [1.0.20](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.19...v1.0.20) (2025-02-19)
 
 
