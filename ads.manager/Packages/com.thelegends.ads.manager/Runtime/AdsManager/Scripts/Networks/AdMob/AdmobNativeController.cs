@@ -69,7 +69,7 @@ namespace TheLegends.Base.Ads
 
 
 
-        private void Start()
+        private void Awake()
         {
             container.SetActive(false);
 
