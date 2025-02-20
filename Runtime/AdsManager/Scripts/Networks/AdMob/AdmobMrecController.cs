@@ -56,41 +56,25 @@ namespace TheLegends.Base.Ads
             }
 
             var deviceScale = MobileAds.Utils.GetDeviceScale();
-            var deviceSafeWidth = MobileAds.Utils.GetDeviceSafeWidth();
-            var safeArea = Screen.safeArea;
 
             float adWidth = _bannerView.GetWidthInPixels() / deviceScale;
-
-            if (adWidth == float.PositiveInfinity)
-            {
-                adWidth = 320;
-            }
-
             float adHeight = _bannerView.GetHeightInPixels() / deviceScale;
 
-            if (adHeight == float.PositiveInfinity)
-            {
-                adHeight = 50;
-            }
+            // var safeArea = Screen.safeArea;
+            // var screenRatio = safeArea.width / safeArea.height;
+            //
+            // var deviceSafeWidth = MobileAds.Utils.GetDeviceSafeWidth();
+            // float deviceSafeHeight = deviceSafeWidth / screenRatio;
 
-            if (deviceSafeWidth <= 0)
-            {
-                deviceSafeWidth = MobileAds.Utils.GetDeviceSafeWidth();
-            }
+            var safeAreaWidth = Screen.safeArea.width / deviceScale;
+            var safeAreaHeight = Screen.safeArea.height / deviceScale;
 
-            if (deviceSafeWidth == 0)
-            {
-                deviceSafeWidth = 832;
-            }
 
-            float screenRatioSafeArea = safeArea.width / safeArea.height;
 
-            float adScreenSafeHeight = deviceSafeWidth / screenRatioSafeArea;
-
-            int xMax = (int)(deviceSafeWidth - adWidth);
-            int yMax = (int)(adScreenSafeHeight - adHeight);
-            int xCenter = (int)(xMax * 0.5f);
-            int yCenter = (int)(yMax * 0.5f);
+            int xMax = (int)(safeAreaWidth - adWidth);
+            int yMax = (int)(safeAreaHeight - adHeight);
+            int xCenter = xMax / 2;
+            int yCenter = yMax / 2;
 
             Vector2Int newPos = Vector2Int.zero;
 
@@ -140,52 +124,53 @@ namespace TheLegends.Base.Ads
 
         public void SetAdPosition(MrecPos position, Vector2Int offset)
         {
-            var adWidth = _bannerView.GetWidthInPixels();
-            var adHeight = _bannerView.GetHeightInPixels();
-            var screenWidth = Screen.width;
-            var screenHeight = Screen.height;
+
+            if (!IsAdsReady())
+            {
+                return;
+            }
+
             var deviceScale = MobileAds.Utils.GetDeviceScale();
 
-            Vector2 targetPosition = Vector2.zero;
+            float adWidth = _bannerView.GetWidthInPixels() / deviceScale;
+            float adHeight = _bannerView.GetHeightInPixels() / deviceScale;
+
+            var screenWidth = Screen.width / deviceScale;
+            var screenHeight = Screen.height / deviceScale;
+
+
+            Vector2Int targetPosition = Vector2Int.zero;
 
             switch (position)
             {
-                case MrecPos.TopLeft:
-                    targetPosition = new Vector2(0, 0);
-                    break;
                 case MrecPos.Top:
-                    targetPosition = new Vector2((screenWidth/2) - (adWidth/2), 0);
+                    targetPosition = new Vector2Int((int)(screenWidth / 2 - adWidth / 2), 0);
+                    break;
+                case MrecPos.TopLeft:
                     break;
                 case MrecPos.TopRight:
-                    targetPosition = new Vector2(screenWidth - adWidth, 0);
                     break;
                 case MrecPos.Center:
-                    targetPosition = new Vector2((screenWidth/2) - (adWidth/2), -(screenHeight/2) + (adHeight/2));
+                    targetPosition = new Vector2Int((int)(screenWidth / 2 - adWidth / 2), (int)(screenHeight / 2 - adHeight / 2));
                     break;
                 case MrecPos.CenterLeft:
-                    targetPosition = new Vector2(0, -(screenHeight/2) + (adHeight/2));
+                    targetPosition = new Vector2Int(0, (int)(screenHeight / 2 - adHeight / 2));
                     break;
                 case MrecPos.CenterRight:
-                    targetPosition = new Vector2(screenWidth - adWidth, -(screenHeight/2) + (adHeight/2));
+                    targetPosition = new Vector2Int((int)(screenWidth - adWidth), (int)(screenHeight / 2 - adHeight / 2));
                     break;
                 case MrecPos.Bottom:
-                    targetPosition = new Vector2((screenWidth/2) - (adWidth/2), -screenHeight + adHeight);
+                    targetPosition = new Vector2Int((int)(screenWidth / 2 - adWidth / 2), (int)(screenHeight - adHeight));
                     break;
                 case MrecPos.BottomLeft:
-                    targetPosition = new Vector2(0, -screenHeight + adHeight);
                     break;
                 case MrecPos.BottomRight:
-                    targetPosition = new Vector2(screenWidth - adWidth, -screenHeight + adHeight);
                     break;
                 default:
-                    targetPosition = new Vector2(0, 0);
                     break;
             }
 
-            // var transformPoint = transform.TransformPoint(targetPosition);
-            // Vector2 worldPosition = Camera.main.WorldToScreenPoint(targetPosition) * deviceScale;
-            // Debug.Log("AAAAAAAAAAAA " + worldPosition);
-            _bannerView.SetPosition((int)targetPosition.x, (int)targetPosition.y);
+            _bannerView.SetPosition(targetPosition.x, targetPosition.y);
         }
     }
 }
