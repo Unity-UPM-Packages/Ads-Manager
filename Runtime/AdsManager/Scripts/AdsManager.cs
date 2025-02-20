@@ -391,7 +391,7 @@ namespace TheLegends.Base.Ads
 
         public void SetStatus(AdsNetworks AdsNetworks, AdsType adsType, string adsUnitID, string position, AdsEvents adEvent, AdsNetworks networks)
         {
-            string eventName = $"{AdsNetworks}_{adsType} {adEvent.ToString()} {adsUnitID}";
+            string eventName = $"{AdsNetworks}_{adsType} | {adEvent.ToString()} | {adsUnitID} | {position}";
             string eventFirebaseName =  $"{adsType}_{adEvent.ToString()}";
             Log(eventName);
 
