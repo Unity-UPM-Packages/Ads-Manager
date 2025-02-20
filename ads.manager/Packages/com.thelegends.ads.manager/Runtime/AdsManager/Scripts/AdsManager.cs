@@ -403,7 +403,8 @@ namespace TheLegends.Base.Ads
                 { "adUnitID", adsUnitID }
             });
 
-            if (adEvent == AdsEvents.ShowSuccess || adEvent == AdsEvents.Close)
+            if ((adsType == AdsType.Interstitial || adsType == AdsType.InterOpen || adsType == AdsType.AppOpen || adsType == AdsType.Rewarded) &&
+                (adEvent == AdsEvents.ShowSuccess))
             {
                 LastTimeShowAd = DateTime.Now;
             }
