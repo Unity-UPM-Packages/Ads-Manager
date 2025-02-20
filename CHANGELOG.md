@@ -1,3 +1,10 @@
+## [1.0.23](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.22...v1.0.23) (2025-02-20)
+
+
+### Bug Fixes
+
+* improve native loading ([d9d2e81](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/d9d2e8180a57c4c6bc6aa1c6e847bef463e8dd8d))
+
 ## [1.0.22](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.21...v1.0.22) (2025-02-20)
 
 
