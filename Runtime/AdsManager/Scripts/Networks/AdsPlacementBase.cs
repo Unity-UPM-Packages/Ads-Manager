@@ -109,11 +109,21 @@ namespace TheLegends.Base.Ads
 
             Status = AdsEvents.LoadFail;
 
+            float timeWait = 5f;
+
+            switch (GetAdsType())
+            {
+                case AdsType.InterOpen:
+                case AdsType.MrecOpen:
+                    timeWait = 0;
+                    break;
+            }
+
             string extendString = "";
 
-            if (reloadCount < AdsManager.Instance.SettingsAds.autoReLoadMax)
+            if (reloadCount < AdsManager.Instance.SettingsAds.autoReLoadMax && timeWait > 0)
             {
-                extendString = " re-trying in " + (5 * (reloadCount + 1)) + " seconds " + (reloadCount + 1) + "/" + AdsManager.Instance.SettingsAds.autoReLoadMax;
+                extendString = " re-trying in " + (timeWait * (reloadCount + 1)) + " seconds " + (reloadCount + 1) + "/" + AdsManager.Instance.SettingsAds.autoReLoadMax;
             }
 
 
@@ -124,7 +134,7 @@ namespace TheLegends.Base.Ads
             {
                 adsUnitIDIndex++;
                 reloadCount++;
-                Invoke(nameof(LoadAds), 5 * reloadCount);
+                Invoke(nameof(LoadAds), timeWait * reloadCount);
             }
             else
             {
