@@ -1,3 +1,10 @@
+## [1.0.27](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.26...v1.0.27) (2025-02-26)
+
+
+### Bug Fixes
+
+* increase time reload InterOpen, MrecOpen ([382aa94](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/382aa94366f237af492cb3e21f1f3d3b6e144565))
+
 ## [1.0.26](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.25...v1.0.26) (2025-02-26)
 
 
