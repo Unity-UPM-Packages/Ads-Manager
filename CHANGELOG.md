@@ -1,3 +1,12 @@
+## [1.0.26](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.25...v1.0.26) (2025-02-26)
+
+
+### Bug Fixes
+
+* edit how show set custom postion banner ([6656b4d](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/6656b4d36c02bdaf725c73256722e9f5644d0644))
+* refactor custom position admob mrec ([8044619](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/80446191e5bc28e6973ed03ffd2c1d7417923191))
+* remove time wait request InterOpen + MrecOpen ([4353120](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/4353120167efb605d38126750ee05be49cac5b4b))
+
 ## [1.0.25](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.24...v1.0.25) (2025-02-20)
 
 
