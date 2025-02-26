@@ -115,7 +115,7 @@ namespace TheLegends.Base.Ads
             {
                 case AdsType.InterOpen:
                 case AdsType.MrecOpen:
-                    timeWait = 0;
+                    timeWait = 0.125f;
                     break;
             }
 
