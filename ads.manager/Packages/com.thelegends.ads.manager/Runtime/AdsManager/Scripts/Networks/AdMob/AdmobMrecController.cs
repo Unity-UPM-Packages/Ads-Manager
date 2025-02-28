@@ -60,16 +60,8 @@ namespace TheLegends.Base.Ads
             float adWidth = _bannerView.GetWidthInPixels() / deviceScale;
             float adHeight = _bannerView.GetHeightInPixels() / deviceScale;
 
-            // var safeArea = Screen.safeArea;
-            // var screenRatio = safeArea.width / safeArea.height;
-            //
-            // var deviceSafeWidth = MobileAds.Utils.GetDeviceSafeWidth();
-            // float deviceSafeHeight = deviceSafeWidth / screenRatio;
-
             var safeAreaWidth = Screen.safeArea.width / deviceScale;
             var safeAreaHeight = Screen.safeArea.height / deviceScale;
-
-
 
             int xMax = (int)(safeAreaWidth - adWidth);
             int yMax = (int)(safeAreaHeight - adHeight);
@@ -122,55 +114,5 @@ namespace TheLegends.Base.Ads
             _bannerView.SetPosition(newPos.x, newPos.y);
         }
 
-        public void SetAdPosition(MrecPos position, Vector2Int offset)
-        {
-
-            if (!IsAdsReady())
-            {
-                return;
-            }
-
-            var deviceScale = MobileAds.Utils.GetDeviceScale();
-
-            float adWidth = _bannerView.GetWidthInPixels() / deviceScale;
-            float adHeight = _bannerView.GetHeightInPixels() / deviceScale;
-
-            var screenWidth = Screen.width / deviceScale;
-            var screenHeight = Screen.height / deviceScale;
-
-
-            Vector2Int targetPosition = Vector2Int.zero;
-
-            switch (position)
-            {
-                case MrecPos.Top:
-                    targetPosition = new Vector2Int((int)(screenWidth / 2 - adWidth / 2), 0);
-                    break;
-                case MrecPos.TopLeft:
-                    break;
-                case MrecPos.TopRight:
-                    break;
-                case MrecPos.Center:
-                    targetPosition = new Vector2Int((int)(screenWidth / 2 - adWidth / 2), (int)(screenHeight / 2 - adHeight / 2));
-                    break;
-                case MrecPos.CenterLeft:
-                    targetPosition = new Vector2Int(0, (int)(screenHeight / 2 - adHeight / 2));
-                    break;
-                case MrecPos.CenterRight:
-                    targetPosition = new Vector2Int((int)(screenWidth - adWidth), (int)(screenHeight / 2 - adHeight / 2));
-                    break;
-                case MrecPos.Bottom:
-                    targetPosition = new Vector2Int((int)(screenWidth / 2 - adWidth / 2), (int)(screenHeight - adHeight));
-                    break;
-                case MrecPos.BottomLeft:
-                    break;
-                case MrecPos.BottomRight:
-                    break;
-                default:
-                    break;
-            }
-
-            _bannerView.SetPosition(targetPosition.x, targetPosition.y);
-        }
     }
 }
