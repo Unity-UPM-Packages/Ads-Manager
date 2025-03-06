@@ -12,6 +12,22 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.015686275
       objectReference: {fileID: 0}
+    - target: {fileID: 87230972718560032, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.x
+      value: 136
+      objectReference: {fileID: 0}
+    - target: {fileID: 87230972718560032, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.y
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 87230972718560032, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Offset.x
+      value: -68
+      objectReference: {fileID: 0}
+    - target: {fileID: 87230972718560032, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Offset.y
+      value: -14
+      objectReference: {fileID: 0}
     - target: {fileID: 108624709337545119, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_EffectColor.b
       value: 0.035648122
@@ -116,6 +132,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2222490690794761276, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.x
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 2222490690794761276, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.y
+      value: 110
+      objectReference: {fileID: 0}
     - target: {fileID: 2733247556613890540, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -131,6 +155,22 @@ PrefabInstance:
     - target: {fileID: 2733247556613890540, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758111332526723484, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.x
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758111332526723484, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758111332526723484, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Offset.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758111332526723484, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Offset.y
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 2766580939089900779, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -344,6 +384,30 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: -12
       objectReference: {fileID: 0}
+    - target: {fileID: 5631272824915893975, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.x
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5631272824915893975, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.y
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 6292419293094523823, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6292419293094523823, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.y
+      value: 76
+      objectReference: {fileID: 0}
+    - target: {fileID: 6292419293094523823, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Offset.x
+      value: -145
+      objectReference: {fileID: 0}
+    - target: {fileID: 6292419293094523823, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Offset.y
+      value: 34
+      objectReference: {fileID: 0}
     - target: {fileID: 6504542310228210588, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_Size.x
       value: 110
@@ -372,10 +436,6 @@ PrefabInstance:
       propertyPath: _adUnitIdIPhone
       value: ca-app-pub-5904408074441373/1762738228
       objectReference: {fileID: 0}
-    - target: {fileID: 6684301407392620832, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
-      propertyPath: adImageCollider
-      value: 
-      objectReference: {fileID: 8829326562269262790}
     - target: {fileID: 6684301407392620832, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: _adUnitIdAndroid
       value: ca-app-pub-5904408074441373/5701983234
@@ -757,10 +817,6 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8287518035259073570, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
-      propertyPath: adImageCollider
-      value: 
-      objectReference: {fileID: 8829326562269262790}
     - target: {fileID: 8633187899259396203, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -780,6 +836,22 @@ PrefabInstance:
     - target: {fileID: 8948981390357211311, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_Center.y
       value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964220376328222319, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.x
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964220376328222319, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Size.y
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964220376328222319, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Offset.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964220376328222319, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: m_Offset.y
+      value: -12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -817,8 +889,3 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 32000
   m_TargetDisplay: 0
---- !u!65 &8829326562269262790 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 4627281838039999380, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
-  m_PrefabInstance: {fileID: 4233236221520203858}
-  m_PrefabAsset: {fileID: 0}
