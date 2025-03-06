@@ -872,7 +872,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6684301407392620845}
   - component: {fileID: 8287518035259073570}
-  - component: {fileID: 7120034903584335441}
   - component: {fileID: 1874160600788344820}
   - component: {fileID: 7440937706650092476}
   m_Layer: 5
@@ -917,8 +916,8 @@ MonoBehaviour:
   container: {fileID: 6684301408647159774}
   _order: 1
   positionNative: default
-  isShowOnLoaded: 0
   adImage: {fileID: 67230857050814571}
+  adImageCollider: {fileID: 0}
   callToAction: {fileID: 2766580939951162571}
   callToActionText: {fileID: 2766580939089900779}
   adChoice: {fileID: 8228916879119132784}
@@ -929,29 +928,6 @@ MonoBehaviour:
   store: {fileID: 3947645753863751158}
   starFilling: {fileID: 74293983186013904}
   price: {fileID: 3505419255479952240}
---- !u!223 &7120034903584335441
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6684301407392620844}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 32767
-  m_TargetDisplay: 0
 --- !u!222 &1874160600788344820
 CanvasRenderer:
   m_ObjectHideFlags: 0
