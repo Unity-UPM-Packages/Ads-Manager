@@ -33,6 +33,8 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        public static bool IsShowing = false;
+
         public void Start()
         {
             brandScreen.gameObject.SetActive(false);
@@ -41,6 +43,8 @@ namespace TheLegends.Base.Ads
 
         private IEnumerator IELoad()
         {
+            IsShowing = true;
+
             UILoadingController.SetProgress(0.2f, null);
 
             yield return AppsFlyerManager.Instance.DoInit();
@@ -87,22 +91,32 @@ namespace TheLegends.Base.Ads
 
             yield return IELoadScene();
 
-            UILoadingController.SetProgress(1f, () =>
+            UILoadingController.SetProgress(1f, OnLoadingDone);
+        }
+
+        private void OnLoadingDone()
+        {
+            StartCoroutine(IEOnLoadingDone());
+        }
+
+
+        private IEnumerator IEOnLoadingDone()
+        {
+            if (AdsManager.Instance.GetAdsStatus(AdsType.InterOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
-                UILoadingController.Hide();
+                AdsManager.Instance.ShowInterstitial(AdsType.InterOpen, PlacementOrder.One, "Inter Open");
+            }
 
-                if (AdsManager.Instance.GetAdsStatus(AdsType.InterOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
-                {
-                    AdsManager.Instance.ShowInterstitial(AdsType.InterOpen, PlacementOrder.One, "Inter Open");
-                }
+            UILoadingController.Hide();
 
+            if (canShowSelectBrand)
+            {
+                ShowBrandScreen();
+            }
 
-                if (canShowSelectBrand)
-                {
-                    ShowBrandScreen();
-                }
+            yield return new WaitForEndOfFrame();
 
-            });
+            IsShowing = false;
         }
 
 
