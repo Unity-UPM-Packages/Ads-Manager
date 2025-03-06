@@ -1375,21 +1375,9 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5313214381272986736, guid: 6d8f35f935195ec4bbc19147a6e9826b, type: 3}
-      propertyPath: imageTest
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5313214381272986736, guid: 6d8f35f935195ec4bbc19147a6e9826b, type: 3}
-      propertyPath: isShowOnLoaded
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7384796581138051454, guid: 6d8f35f935195ec4bbc19147a6e9826b, type: 3}
       propertyPath: m_Name
       value: AdmobNativeUI_Banner_Full
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384796581138051454, guid: 6d8f35f935195ec4bbc19147a6e9826b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7384796581138051455, guid: 6d8f35f935195ec4bbc19147a6e9826b, type: 3}
       propertyPath: m_Pivot.x
@@ -4481,10 +4469,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2733247556613890540, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5163759530227212830, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -4500,10 +4484,6 @@ PrefabInstance:
     - target: {fileID: 6684301407392620844, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_Name
       value: AdmobNativeUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6684301407392620844, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6684301407392620845, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_Pivot.x
@@ -4584,14 +4564,6 @@ PrefabInstance:
     - target: {fileID: 6684301407392620845, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8287518035259073570, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
-      propertyPath: _order
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8287518035259073570, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
-      propertyPath: isShowOnLoaded
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4705,7 +4677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1681100200}
   - component: {fileID: 1681100202}
-  - component: {fileID: 1681100201}
+  - component: {fileID: 1681100203}
   m_Layer: 5
   m_Name: GameObject
   m_TagString: Untagged
@@ -4733,23 +4705,6 @@ RectTransform:
   m_AnchoredPosition: {x: -507, y: -304}
   m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1681100201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681100199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!223 &1681100202
 Canvas:
   m_ObjectHideFlags: 0
@@ -4773,6 +4728,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 32001
   m_TargetDisplay: 0
+--- !u!114 &1681100203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681100199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1713154691
 GameObject:
   m_ObjectHideFlags: 0
