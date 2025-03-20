@@ -1,3 +1,10 @@
+## [1.0.30](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.29...v1.0.30) (2025-03-20)
+
+
+### Bug Fixes
+
+* dont show appopen if not available ([2d08616](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/2d08616f58fe8373765dd3bbbfc561dd77d93fce))
+
 ## [1.0.29](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.28...v1.0.29) (2025-03-20)
 
 
