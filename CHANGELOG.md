@@ -1,3 +1,10 @@
+## [1.0.29](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.28...v1.0.29) (2025-03-20)
+
+
+### Bug Fixes
+
+* edit admob native prefab ([75768f0](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/75768f0a861dff9394ed6c1f97542370323ae65c))
+
 ## [1.0.28](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.27...v1.0.28) (2025-02-28)
 
 
