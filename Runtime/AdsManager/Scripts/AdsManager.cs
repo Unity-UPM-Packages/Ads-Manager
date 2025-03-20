@@ -196,7 +196,7 @@ namespace TheLegends.Base.Ads
 
         public void ShowAppOpen(PlacementOrder order, string position)
         {
-            if (!IsInitialized())
+            if (!IsInitialized() || GetAdsStatus(AdsType.AppOpen, order) != AdsEvents.LoadAvailable)
             {
                 return;
             }
