@@ -1,3 +1,10 @@
+## [1.0.31](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.30...v1.0.31) (2025-03-21)
+
+
+### Bug Fixes
+
+* add Ads Camera ([a8a3ebf](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a8a3ebf87b67b3734ef16571a377b6504c8bac57))
+
 ## [1.0.30](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.29...v1.0.30) (2025-03-20)
 
 
