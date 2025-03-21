@@ -1,3 +1,10 @@
+## [1.0.32](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.31...v1.0.32) (2025-03-21)
+
+
+### Bug Fixes
+
+* public IsTimeToShowAd ([cebfa61](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/cebfa613292c6a09f6b2fb252be855d392959873))
+
 ## [1.0.31](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.30...v1.0.31) (2025-03-21)
 
 
