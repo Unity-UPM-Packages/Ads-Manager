@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6487a8c154f554b922654f4b3ebc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  adsCamera: {fileID: 3845295882497662316}
   adsConfigs:
     adInterOnComplete: 1
     adInterOnStart: 1

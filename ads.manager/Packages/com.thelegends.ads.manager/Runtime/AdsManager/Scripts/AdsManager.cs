@@ -13,8 +13,15 @@ namespace TheLegends.Base.Ads
 {
     public class AdsManager : PersistentMonoSingleton<AdsManager>
     {
+        [SerializeField]
+        private Camera adsCamera;
+
+        public Camera AdsCamera
+        {
+            get { return adsCamera; }
+        }
+        
         private List<AdsNetworkBase> adsNetworks = new List<AdsNetworkBase>();
-        // [SerializeField] private AdmobNetworkController admob;
 
         protected AdsSettings settingsAds = null;
 
@@ -48,17 +55,12 @@ namespace TheLegends.Base.Ads
 
         private DateTime lastTimeShowAd = DateTime.Now.AddSeconds(-600);
 
-        public DateTime LastTimeShowAd
-        {
-            get => lastTimeShowAd;
-            set => lastTimeShowAd = value;
-        }
 
-        public bool IsTimeToShowAd
+        private bool isTimeToShowAd
         {
             get
             {
-                float totalTimePlay = (float)(DateTime.Now - LastTimeShowAd).TotalSeconds;
+                float totalTimePlay = (float)(DateTime.Now - lastTimeShowAd).TotalSeconds;
                 bool canShowAds = Mathf.FloorToInt(totalTimePlay) >= adsConfigs.timePlayToShowAds;
 
                 LogWarning(
@@ -69,6 +71,7 @@ namespace TheLegends.Base.Ads
         }
 
         private InitiationStatus status = InitiationStatus.NotInitialized;
+        
 
 
         public void Init()
@@ -131,7 +134,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (!IsTimeToShowAd)
+            if (!isTimeToShowAd)
             {
                 return;
             }
@@ -201,7 +204,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (!IsTimeToShowAd)
+            if (!isTimeToShowAd)
             {
                 return;
             }
@@ -406,7 +409,7 @@ namespace TheLegends.Base.Ads
             if ((adsType == AdsType.Interstitial || adsType == AdsType.InterOpen || adsType == AdsType.AppOpen || adsType == AdsType.Rewarded) &&
                 (adEvent == AdsEvents.ShowSuccess))
             {
-                LastTimeShowAd = DateTime.Now;
+                lastTimeShowAd = DateTime.Now;
             }
         }
 
