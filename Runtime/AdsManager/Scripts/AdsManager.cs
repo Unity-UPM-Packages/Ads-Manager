@@ -56,7 +56,7 @@ namespace TheLegends.Base.Ads
         private DateTime lastTimeShowAd = DateTime.Now.AddSeconds(-600);
 
 
-        private bool isTimeToShowAd
+        public bool IsTimeToShowAd
         {
             get
             {
@@ -134,7 +134,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (!isTimeToShowAd)
+            if (!IsTimeToShowAd)
             {
                 return;
             }
@@ -204,7 +204,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (!isTimeToShowAd)
+            if (!IsTimeToShowAd)
             {
                 return;
             }
