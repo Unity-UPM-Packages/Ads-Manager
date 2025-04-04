@@ -4,8 +4,9 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 using UnityEngine;
+using TheLegends.Base.Ads;
 
-namespace TheLegends.Base.AppsFlyer
+namespace TheLegends.Base.Ads
 {
     public class BuildPostProcess : MonoBehaviour
     {
@@ -42,7 +43,7 @@ namespace TheLegends.Base.AppsFlyer
 
                 pbxProject.WriteToFile(projectPath);
 
-                Debug.Log("DisableBitcode");
+                AdsManager.Instance.Log("DisableBitcode");
             }
             catch (Exception ex)
             {
