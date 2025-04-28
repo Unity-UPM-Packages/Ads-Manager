@@ -1,3 +1,12 @@
+## [1.0.33](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.32...v1.0.33) (2025-04-28)
+
+
+### Bug Fixes
+
+* Add BuildPostProcess ([4cca725](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/4cca725dcffb7418df8bc4c4a4b54ed50a4d0426))
+* Log BuildPostProcess ([c5c9984](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/c5c9984fe1988262ec98183d3841c1592f115540))
+* return checking RequestUMP ([9679579](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/9679579df08287183b2a2a7d5ffddf7e53556ba2))
+
 ## [1.0.32](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.31...v1.0.32) (2025-03-21)
 
 
