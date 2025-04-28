@@ -167,6 +167,7 @@ namespace TheLegends.Base.Ads
                     {
                         // Handle the error.
                         AdsManager.Instance.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> " + updateError.Message);
+                        isChecking = false;
                         return;
                     }
 
@@ -195,13 +196,14 @@ namespace TheLegends.Base.Ads
                             // Form showing succeeded.
                             AdsManager.Instance.Log($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW SUCCESS");
                         }
-
+                        
+                        isChecking = false;
                     });
                 });
 
             }));
 
-            while ((ConsentInformation.ConsentStatus == ConsentStatus.Required || ConsentInformation.ConsentStatus == ConsentStatus.Unknown))
+            while (isChecking && (ConsentInformation.ConsentStatus == ConsentStatus.Required || ConsentInformation.ConsentStatus == ConsentStatus.Unknown))
             {
                 yield return null;
             }
