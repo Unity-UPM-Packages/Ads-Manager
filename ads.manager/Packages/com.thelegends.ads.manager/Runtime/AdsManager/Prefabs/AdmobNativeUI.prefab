@@ -1061,17 +1061,21 @@ MonoBehaviour:
   _order: 1
   positionNative: default
   adImage: {fileID: 67230857050814571}
+  defaultAdImageSprite: {fileID: 21300000, guid: c306b7e6a083930448c57c9c909dbb27, type: 3}
   adImageCollider: {fileID: 0}
   callToAction: {fileID: 2766580939951162571}
   callToActionText: {fileID: 2766580939089900779}
   adChoice: {fileID: 8228916879119132784}
+  defaultAdChoiceSprite: {fileID: 21300000, guid: e87d7d04a9d461842ba6aeb2b81c0e9c, type: 3}
   adIcon: {fileID: 1026723291480842095}
+  defaultAdIconSprite: {fileID: 21300000, guid: c306b7e6a083930448c57c9c909dbb27, type: 3}
   advertiser: {fileID: 3146956292145430438}
   adHeadline: {fileID: 6684301408827734831}
   adBody: {fileID: 6684301407452948165}
   store: {fileID: 3947645753863751158}
   starFilling: {fileID: 74293983186013904}
   price: {fileID: 3505419255479952240}
+  isShowOnLoadFailed: 1
 --- !u!222 &1874160600788344820
 CanvasRenderer:
   m_ObjectHideFlags: 0

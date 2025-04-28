@@ -29,6 +29,9 @@ namespace TheLegends.Base.Ads
         private Image adImage;
 
         [SerializeField]
+        private Sprite defaultAdImageSprite;
+
+        [SerializeField]
         private BoxCollider adImageCollider;
 
         [SerializeField]
@@ -41,7 +44,13 @@ namespace TheLegends.Base.Ads
         private Image adChoice;
 
         [SerializeField]
+        private Sprite defaultAdChoiceSprite;
+
+        [SerializeField]
         private Image adIcon;
+
+        [SerializeField]
+        private Sprite defaultAdIconSprite;
 
         [SerializeField]
         private Text advertiser;
@@ -60,6 +69,9 @@ namespace TheLegends.Base.Ads
 
         [SerializeField]
         private Text price;
+
+        [SerializeField]
+        private bool isShowOnLoadFailed = false;
 
 
         public Action onClick = null;
@@ -246,6 +258,22 @@ namespace TheLegends.Base.Ads
                     _nativeAd.Destroy();
                     _nativeAd = null;
                 }
+
+                if (adImage != null)
+                {
+                    adImage.sprite = defaultAdImageSprite;
+                }
+
+                if (adIcon != null)
+                {
+                    adIcon.sprite = defaultAdIconSprite;
+                }
+
+                if (adChoice != null)
+                {
+                    adChoice.sprite = defaultAdChoiceSprite;
+                }
+
             }
             catch (Exception ex)
             {
@@ -303,7 +331,7 @@ namespace TheLegends.Base.Ads
 
                 StopHandleTimeout();
 
-                container.SetActive(true);
+                container.SetActive(isShowOnLoadFailed);
 
                 var errorDescription = error.LoadAdError.GetMessage();
                 OnAdsLoadFailed(errorDescription);
@@ -327,6 +355,7 @@ namespace TheLegends.Base.Ads
             Dispatcher.Invoke(() =>
             {
                 OnAdsClosed();
+                LoadAds();
             });
 #endif
         }
@@ -338,7 +367,6 @@ namespace TheLegends.Base.Ads
             {
                 OnAdsClick();
                 CancelReloadAds();
-                DelayReloadAd(timeAutoReload);
                 onClick?.Invoke();
             });
 #endif
@@ -470,17 +498,6 @@ namespace TheLegends.Base.Ads
 
         public void HideAds()
         {
-#if !UNITY_EDITOR
-            if (!IsAdsReady())
-            {
-                return;
-            }
-#endif
-            if (Status != AdsEvents.ShowSuccess)
-            {
-                return;
-            }
-
             isCLosedByHide = true;
             NativeDestroy();
             OnAdsClosed();
