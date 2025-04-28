@@ -78,10 +78,11 @@ namespace TheLegends.Base.Ads
                 return false;
             }
 
-            if(placement.stringIDs != null && placement.stringIDs.Count > 0)
+            if (placement.stringIDs != null && placement.stringIDs.Count > 0)
             {
                 adsUnitIDIndex %= placement.stringIDs.Count;
                 adsUnitID = placement.stringIDs[adsUnitIDIndex];
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "Startting LoadAds " + adsUnitID);
             }
 
             if (string.IsNullOrEmpty(adsUnitID))
