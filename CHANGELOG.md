@@ -1,3 +1,10 @@
+## [1.0.35](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.34...v1.0.35) (2025-05-09)
+
+
+### Bug Fixes
+
+* add BoxCollider to SelectBrand ([8c5e39c](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/8c5e39c72fd3872408b079cd22007052d7ab3e84))
+
 ## [1.0.34](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.33...v1.0.34) (2025-04-28)
 
 
