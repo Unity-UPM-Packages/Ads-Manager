@@ -14,6 +14,8 @@ namespace TheLegends.Base.Ads
     public class AdsSplashController : MonoBehaviour
     {
         [SerializeField]
+        private MrecPos mrecOpenPos = MrecPos.CenterLeft;
+        [SerializeField]
         private Vector2Int mrecOpenOffset = Vector2Int.zero;
 
         [Space(10)]
@@ -119,7 +121,7 @@ namespace TheLegends.Base.Ads
         {
             if (AdsManager.Instance.GetAdsStatus(AdsType.MrecOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
-                AdsManager.Instance.ShowMrec(AdsType.MrecOpen, PlacementOrder.One, MrecPos.CenterLeft, mrecOpenOffset, "Mrec Open");
+                AdsManager.Instance.ShowMrec(AdsType.MrecOpen, PlacementOrder.One, mrecOpenPos, mrecOpenOffset, "Mrec Open");
                 brandScreen.Show();
             }
         }
