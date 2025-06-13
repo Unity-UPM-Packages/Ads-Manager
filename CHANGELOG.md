@@ -1,3 +1,10 @@
+## [1.0.36](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.35...v1.0.36) (2025-06-13)
+
+
+### Bug Fixes
+
+* MrecOpen custom position ([4a97c2f](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/4a97c2fca9eda665560ac4b758c29f6669718c96))
+
 ## [1.0.35](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.34...v1.0.35) (2025-05-09)
 
 
