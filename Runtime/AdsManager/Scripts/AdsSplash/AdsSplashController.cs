@@ -96,6 +96,8 @@ namespace TheLegends.Base.Ads
 
             UILoadingController.SetProgress(1f, () =>
             {
+                onLoadComplete?.Invoke();
+
                 UILoadingController.Hide();
 
                 if (AdsManager.Instance.GetAdsStatus(AdsType.InterOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
@@ -108,9 +110,6 @@ namespace TheLegends.Base.Ads
                 {
                     ShowBrandScreen();
                 }
-
-                onLoadComplete?.Invoke();
-
             });
         }
 
