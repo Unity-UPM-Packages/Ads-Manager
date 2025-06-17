@@ -8,6 +8,7 @@ using UnityEngine;
 
 using TheLegends.Base.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace TheLegends.Base.Ads
 {
@@ -34,6 +35,10 @@ namespace TheLegends.Base.Ads
                 return temp == 1;
             }
         }
+
+        [Space(10)]
+        [SerializeField]
+        private UnityEvent onLoadComplete = new UnityEvent();
 
         public void Start()
         {
@@ -103,6 +108,8 @@ namespace TheLegends.Base.Ads
                 {
                     ShowBrandScreen();
                 }
+
+                onLoadComplete?.Invoke();
 
             });
         }
