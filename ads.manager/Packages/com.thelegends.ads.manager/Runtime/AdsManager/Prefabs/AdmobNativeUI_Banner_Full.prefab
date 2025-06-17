@@ -817,6 +817,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8287518035259073570, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: adImageCollider
+      value: 
+      objectReference: {fileID: 8401805018644827781}
     - target: {fileID: 8633187899259396203, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -889,3 +893,8 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 32000
   m_TargetDisplay: 0
+--- !u!61 &8401805018644827781 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5631272824915893975, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+  m_PrefabInstance: {fileID: 4233236221520203858}
+  m_PrefabAsset: {fileID: 0}

@@ -32,7 +32,7 @@ namespace TheLegends.Base.Ads
         private Sprite defaultAdImageSprite;
 
         [SerializeField]
-        private BoxCollider adImageCollider;
+        private BoxCollider2D adImageCollider;
 
         [SerializeField]
         private Image callToAction;
@@ -177,8 +177,8 @@ namespace TheLegends.Base.Ads
 
                 if (adImageCollider && AdsManager.Instance.adsConfigs.adNativeBannerHeight > 0)
                 {
-                    adImageCollider.size = new Vector3(adImage.rectTransform.rect.width,
-                        AdsManager.Instance.adsConfigs.adNativeBannerHeight, adImageCollider.size.z);
+                    adImageCollider.size = new Vector2(adImage.rectTransform.rect.width,
+                        AdsManager.Instance.adsConfigs.adNativeBannerHeight);
                 }
 
                 CancelReloadAds();
@@ -410,8 +410,8 @@ namespace TheLegends.Base.Ads
 
                 if (adImageCollider && AdsManager.Instance.adsConfigs.adNativeBannerHeight > 0)
                 {
-                    adImageCollider.size = new Vector3(adImage.rectTransform.rect.width,
-                        AdsManager.Instance.adsConfigs.adNativeBannerHeight, adImageCollider.size.z);
+                    adImageCollider.size = new Vector2(adImage.rectTransform.rect.width,
+                        AdsManager.Instance.adsConfigs.adNativeBannerHeight);
                 }
 
                 _nativeAd.RegisterImageGameObjects(new List<GameObject> { adImage.gameObject });
