@@ -1,3 +1,10 @@
+## [1.0.41](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.40...v1.0.41) (2025-06-17)
+
+
+### Bug Fixes
+
+* add native isShowOnLoaded ([953d82c](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/953d82cf2e7084593e955c92157da95c428c8067))
+
 ## [1.0.40](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.39...v1.0.40) (2025-06-17)
 
 
