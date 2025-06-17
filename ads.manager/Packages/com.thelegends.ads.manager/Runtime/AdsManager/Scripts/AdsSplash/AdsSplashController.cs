@@ -38,7 +38,7 @@ namespace TheLegends.Base.Ads
 
         [Space(10)]
         [SerializeField]
-        private UnityEvent onLoadComplete = new UnityEvent();
+        private UnityEvent OnLoadComplete = new UnityEvent();
 
         public void Start()
         {
@@ -92,7 +92,7 @@ namespace TheLegends.Base.Ads
 
             UILoadingController.SetProgress(0.6f, null);
 
-            onLoadComplete?.Invoke();
+            OnLoadComplete?.Invoke();
 
             yield return IELoadScene();
 
