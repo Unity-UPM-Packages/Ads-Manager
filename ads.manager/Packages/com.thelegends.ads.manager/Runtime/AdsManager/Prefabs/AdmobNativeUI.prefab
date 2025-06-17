@@ -1075,6 +1075,7 @@ MonoBehaviour:
   store: {fileID: 3947645753863751158}
   starFilling: {fileID: 74293983186013904}
   price: {fileID: 3505419255479952240}
+  isShowOnLoaded: 1
   isShowOnLoadFailed: 1
 --- !u!222 &1874160600788344820
 CanvasRenderer:
