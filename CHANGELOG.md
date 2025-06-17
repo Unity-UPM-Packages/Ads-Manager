@@ -1,3 +1,12 @@
+## [1.0.40](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.39...v1.0.40) (2025-06-17)
+
+
+### Bug Fixes
+
+* Action OnClose Interstitial ([a58d5bb](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a58d5bb6f5d09bc46e83a3db3e7031765ba42ef3))
+* refactor AdsSplashController ([3e6b6c9](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/3e6b6c9162ab780e8d728f5e1c7695cf7e5e57af))
+* Refactor OnReward RewardAds ([c3da9c8](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/c3da9c8b4df64ddd306620ab3a8d74c2c1895fc4))
+
 ## [1.0.39](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.38...v1.0.39) (2025-06-17)
 
 
