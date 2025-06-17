@@ -158,6 +158,11 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
+        public void ShowAds()
+        {
+            ShowAds(position);
+        }
+
 
         public override void ShowAds(string showPosition)
         {
