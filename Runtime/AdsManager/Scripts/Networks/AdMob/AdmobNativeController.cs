@@ -70,6 +70,11 @@ namespace TheLegends.Base.Ads
         [SerializeField]
         private Text price;
 
+        [Space(10)]
+        [Header("Show On")]
+        [SerializeField]
+        private bool isShowOnLoaded = false;
+
         [SerializeField]
         private bool isShowOnLoadFailed = false;
 
@@ -312,7 +317,10 @@ namespace TheLegends.Base.Ads
 
                 adsUnitIDIndex = 0;
 
-                ShowAds(position);
+                if (isShowOnLoaded)
+                {
+                    ShowAds(position);
+                }
             });
 #endif
         }
