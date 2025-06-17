@@ -92,12 +92,12 @@ namespace TheLegends.Base.Ads
 
             UILoadingController.SetProgress(0.6f, null);
 
+            onLoadComplete?.Invoke();
+
             yield return IELoadScene();
 
             UILoadingController.SetProgress(1f, () =>
             {
-                onLoadComplete?.Invoke();
-
                 UILoadingController.Hide();
 
                 if (AdsManager.Instance.GetAdsStatus(AdsType.InterOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
