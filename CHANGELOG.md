@@ -1,3 +1,12 @@
+## [1.0.37](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.36...v1.0.37) (2025-06-17)
+
+
+### Bug Fixes
+
+* Edit BoxCollider Native => BoxCollider2D ([b5ce13c](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/b5ce13c311c88f1aff80bd6302b0f533b70c30af))
+* On AdsSplash LoadComplete ([bad49eb](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/bad49ebecbe70aef326d4e5939419bed39d0ad30))
+* reset native ads inden ID when loaded ([402d183](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/402d1838a8af8462a376d5c0c4d0fc02ab5bfc65))
+
 ## [1.0.36](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.35...v1.0.36) (2025-06-13)
 
 
