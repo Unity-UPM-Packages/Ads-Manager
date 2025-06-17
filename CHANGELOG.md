@@ -1,3 +1,10 @@
+## [1.0.42](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.41...v1.0.42) (2025-06-17)
+
+
+### Bug Fixes
+
+* add default ShowAds Admob Native ([4bd8605](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/4bd86051305eff14aab65e76efe6f3826fc90300))
+
 ## [1.0.41](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.40...v1.0.41) (2025-06-17)
 
 
