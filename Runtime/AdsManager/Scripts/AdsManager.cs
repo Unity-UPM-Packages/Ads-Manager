@@ -162,7 +162,7 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public void ShowRewarded(PlacementOrder order, Action OnRewarded, string position)
+        public void ShowRewarded(PlacementOrder order, string position, Action OnRewarded = null)
         {
             if (!IsInitialized())
             {
@@ -173,7 +173,7 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowRewarded(order, OnRewarded, position);
+                netWork.ShowRewarded(order, position, OnRewarded);
 
                 if (GetAdsStatus(AdsType.Rewarded, order) != AdsEvents.LoadAvailable)
                 {

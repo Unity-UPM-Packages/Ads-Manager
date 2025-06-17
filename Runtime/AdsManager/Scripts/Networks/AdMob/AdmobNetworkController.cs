@@ -339,7 +339,7 @@ namespace TheLegends.Base.Ads
             rewardedList[placementIndex].LoadAds();
         }
 
-        public override void ShowRewarded(PlacementOrder order, Action OnRewarded, string position)
+        public override void ShowRewarded(PlacementOrder order, string position, Action OnRewarded = null)
         {
             if (!IsListExist(rewardedList))
             {
@@ -347,7 +347,7 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, rewardedList.Count);
-            rewardedList[placementIndex].ShowAds(OnRewarded, position);
+            rewardedList[placementIndex].ShowAds(position, OnRewarded);
         }
 
         public override void LoadAppOpen(PlacementOrder order)

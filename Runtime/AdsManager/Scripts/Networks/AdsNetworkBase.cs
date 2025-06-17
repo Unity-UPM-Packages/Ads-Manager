@@ -15,7 +15,7 @@ namespace TheLegends.Base.Ads
         public abstract void ShowInterstitial(AdsType interType, PlacementOrder order, string position, Action OnClose = null);
 
         public abstract void LoadRewarded(PlacementOrder order);
-        public abstract void ShowRewarded(PlacementOrder order, Action OnRewarded, string position);
+        public abstract void ShowRewarded(PlacementOrder order, string position, Action OnRewarded = null);
 
         public abstract void LoadAppOpen(PlacementOrder order);
         public abstract void ShowAppOpen(PlacementOrder order, string position);

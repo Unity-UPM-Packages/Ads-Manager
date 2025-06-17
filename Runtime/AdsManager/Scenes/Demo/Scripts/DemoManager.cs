@@ -127,10 +127,10 @@ public class DemoManager : MonoBehaviour
 
     private void ShowRewarded()
     {
-        AdsManager.Instance.ShowRewarded(order, () =>
+        AdsManager.Instance.ShowRewarded(order, "Default", () =>
         {
             AdsManager.Instance.Log("Rewarded successfully");
-        }, "Default");
+        });
 
     }
 
