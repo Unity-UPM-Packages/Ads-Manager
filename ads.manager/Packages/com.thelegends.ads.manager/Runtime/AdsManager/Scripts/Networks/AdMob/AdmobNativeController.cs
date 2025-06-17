@@ -310,6 +310,8 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
+                adsUnitIDIndex = 0;
+
                 ShowAds(position);
             });
 #endif
