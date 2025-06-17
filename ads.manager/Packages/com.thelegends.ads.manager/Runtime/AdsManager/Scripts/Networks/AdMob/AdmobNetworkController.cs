@@ -315,7 +315,7 @@ namespace TheLegends.Base.Ads
             list[placementIndex].LoadAds();
         }
 
-        public override void ShowInterstitial(AdsType interType, PlacementOrder order, string position)
+        public override void ShowInterstitial(AdsType interType, PlacementOrder order, string position, Action OnClose = null)
         {
             var list = interType == AdsType.InterOpen ? (new List<AdmobInterstitialController>(interOpenList)) : interList;
 
@@ -325,7 +325,7 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, list.Count);
-            list[placementIndex].ShowAds(position);
+            list[placementIndex].ShowAds(position, OnClose);
         }
 
         public override void LoadRewarded(PlacementOrder order)

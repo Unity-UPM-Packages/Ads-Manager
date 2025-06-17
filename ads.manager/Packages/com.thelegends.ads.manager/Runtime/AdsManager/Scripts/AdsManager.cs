@@ -127,7 +127,7 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public void ShowInterstitial(AdsType interType, PlacementOrder order, string position)
+        public void ShowInterstitial(AdsType interType, PlacementOrder order, string position, Action OnClose = null)
         {
             if (!IsInitialized())
             {
@@ -143,7 +143,7 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowInterstitial(interType, order, position);
+                netWork.ShowInterstitial(interType, order, position, OnClose);
             }
         }
 

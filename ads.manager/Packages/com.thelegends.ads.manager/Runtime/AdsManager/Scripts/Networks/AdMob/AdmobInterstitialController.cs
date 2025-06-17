@@ -10,6 +10,8 @@ namespace TheLegends.Base.Ads
         private InterstitialAd _interstitialAd;
         private string _currentLoadRequestId;
 
+        private Action OnClose;
+
         public override void LoadAds()
         {
 #if USE_ADMOB
@@ -52,14 +54,14 @@ namespace TheLegends.Base.Ads
                         StopHandleTimeout();
 
                         // if error is not null, the load request failed.
-                        if(error != null)
+                        if (error != null)
                         {
                             AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
                             OnInterLoadFailed(error);
                             return;
                         }
 
-                        if(ad == null)
+                        if (ad == null)
                         {
                             AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
                             OnInterLoadFailed(error);
@@ -79,9 +81,11 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        public override void ShowAds(string showPosition)
+        public void ShowAds(string showPosition, Action OnClose = null)
         {
+            this.OnClose = OnClose;
             base.ShowAds(showPosition);
+
 #if USE_ADMOB
             if (IsReady && IsAvailable)
             {
@@ -100,8 +104,31 @@ namespace TheLegends.Base.Ads
                 LoadAds();
             }
 #endif
-
         }
+
+//         public override void ShowAds(string showPosition)
+//         {
+//             base.ShowAds(showPosition);
+// #if USE_ADMOB
+//             if (IsReady && IsAvailable)
+//             {
+//                 _interstitialAd.OnAdClicked += OnInterClick;
+//                 _interstitialAd.OnAdPaid += OnInterPaid;
+//                 _interstitialAd.OnAdImpressionRecorded += OnInterImpression;
+//                 _interstitialAd.OnAdFullScreenContentClosed += OnInterClosed;
+//                 _interstitialAd.OnAdFullScreenContentFailed += OnInterShowFailed;
+//                 _interstitialAd.OnAdFullScreenContentOpened += OnInterShowSuccess;
+//                 _interstitialAd.Show();
+//             }
+//             else
+//             {
+//                 AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+//                 reloadCount = 0;
+//                 LoadAds();
+//             }
+// #endif
+
+//         }
 
 
         public override AdsNetworks GetAdsNetworks()
@@ -182,7 +209,12 @@ namespace TheLegends.Base.Ads
         {
             Dispatcher.Invoke(() =>
             {
-                UILoadingController.Show(1f, null);
+                UILoadingController.Show(1f, () =>
+                {
+                    OnClose?.Invoke();
+                    OnClose = null;
+                });
+
                 OnAdsClosed();
             });
         }

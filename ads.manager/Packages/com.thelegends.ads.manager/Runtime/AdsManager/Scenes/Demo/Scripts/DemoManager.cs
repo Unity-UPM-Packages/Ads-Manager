@@ -114,7 +114,10 @@ public class DemoManager : MonoBehaviour
 
     private void ShowInterstitial()
     {
-        AdsManager.Instance.ShowInterstitial(AdsType.Interstitial, order, "Default");
+        AdsManager.Instance.ShowInterstitial(AdsType.Interstitial, order, "Default", () =>
+        {
+            AdsManager.Instance.Log("Interstitial closed");
+        });
     }
 
     private void Loadrewarded()

@@ -12,7 +12,7 @@ namespace TheLegends.Base.Ads
         public abstract IEnumerator DoInit();
 
         public abstract void LoadInterstitial(AdsType interType, PlacementOrder order);
-        public abstract void ShowInterstitial(AdsType interType, PlacementOrder order, string position);
+        public abstract void ShowInterstitial(AdsType interType, PlacementOrder order, string position, Action OnClose = null);
 
         public abstract void LoadRewarded(PlacementOrder order);
         public abstract void ShowRewarded(PlacementOrder order, Action OnRewarded, string position);
