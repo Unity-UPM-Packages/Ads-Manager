@@ -111,7 +111,7 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        public void ShowAds(Action OnRewarded, string showPosition)
+        public void ShowAds(string showPosition, Action OnRewarded = null)
         {
             base.ShowAds(showPosition);
 #if USE_ADMOB
