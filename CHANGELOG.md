@@ -1,3 +1,10 @@
+## [1.0.38](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.37...v1.0.38) (2025-06-17)
+
+
+### Bug Fixes
+
+* AdsSplash OnLoadComplete invoke first ([6ef3505](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/6ef3505f5d1cd033c1eb14462c53c7c7236de154))
+
 ## [1.0.37](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.36...v1.0.37) (2025-06-17)
 
 
