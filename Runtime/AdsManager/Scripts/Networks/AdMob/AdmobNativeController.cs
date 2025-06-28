@@ -127,6 +127,11 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
+            if (!CheckNativeAdAvailability())
+            {
+                return;
+            }
+
             if (!IsCanLoadAds())
             {
                 return;
@@ -168,6 +173,11 @@ namespace TheLegends.Base.Ads
         {
 #if USE_ADMOB
             position = showPosition;
+
+            if (!CheckNativeAdAvailability())
+            {
+                return;
+            }
 
             if (Status == AdsEvents.ShowSuccess)
             {
@@ -252,6 +262,18 @@ namespace TheLegends.Base.Ads
         }
 
         #region Internal
+
+        private bool CheckNativeAdAvailability()
+        {
+            if (!AdsManager.Instance.adsConfigs.isUseAdNative)
+            {
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not use native --> return");
+                NativeDestroy();
+                OnAdsCancel();
+                return false;
+            }
+            return true;
+        }
 
         private void NativeDestroy()
         {
@@ -513,6 +535,11 @@ namespace TheLegends.Base.Ads
 
         public void HideAds()
         {
+            if (!CheckNativeAdAvailability())
+            {
+                return;
+            }
+            
             isCLosedByHide = true;
             NativeDestroy();
             OnAdsClosed();

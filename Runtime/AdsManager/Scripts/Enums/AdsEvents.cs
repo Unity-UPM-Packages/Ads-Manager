@@ -16,6 +16,7 @@ namespace TheLegends.Base.Ads
         ShowFail,
         Close,
         Click,
+        Cancel,
     }
 }
 
