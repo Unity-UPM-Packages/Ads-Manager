@@ -1,3 +1,11 @@
+## [1.0.43](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.42...v1.0.43) (2025-06-28)
+
+
+### Bug Fixes
+
+* add remote config isUseAdInterOpen ([ded769e](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/ded769e299661e4755b9746fb2485fd0784b85d6))
+* add remote config isUseAdNative ([a808532](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a8085320e5224734dedca5ed5dcb2582d5c8de58))
+
 ## [1.0.42](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.41...v1.0.42) (2025-06-17)
 
 
