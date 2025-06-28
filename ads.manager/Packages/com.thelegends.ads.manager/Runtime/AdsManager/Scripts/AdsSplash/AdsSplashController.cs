@@ -79,6 +79,7 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.adsConfigs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload);
                 AdsManager.Instance.adsConfigs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut);
                 AdsManager.Instance.adsConfigs.isUseAdNative = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdNative", AdsManager.Instance.adsConfigs.isUseAdNative);
+                AdsManager.Instance.adsConfigs.isUseAdInterOpen = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdInterOpen", AdsManager.Instance.adsConfigs.isUseAdInterOpen);
             });
 
 
@@ -88,8 +89,13 @@ namespace TheLegends.Base.Ads
                 yield return WaitAdLoaded(AdsType.MrecOpen, PlacementOrder.One);
             }
 
-            AdsManager.Instance.LoadInterstitial(AdsType.InterOpen, PlacementOrder.One);
-            yield return WaitAdLoaded(AdsType.InterOpen, PlacementOrder.One);
+            if (AdsManager.Instance.adsConfigs.isUseAdInterOpen)
+            {
+                
+                AdsManager.Instance.LoadInterstitial(AdsType.InterOpen, PlacementOrder.One);
+                yield return WaitAdLoaded(AdsType.InterOpen, PlacementOrder.One);
+            }
+
 
             UILoadingController.SetProgress(0.6f, null);
 
