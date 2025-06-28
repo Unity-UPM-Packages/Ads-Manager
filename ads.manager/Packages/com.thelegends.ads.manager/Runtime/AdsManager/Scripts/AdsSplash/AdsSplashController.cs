@@ -78,6 +78,7 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.adsConfigs.adNativeBannerHeight = FirebaseManager.Instance.RemoteGetValueFloat("adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight);
                 AdsManager.Instance.adsConfigs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload);
                 AdsManager.Instance.adsConfigs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut);
+                AdsManager.Instance.adsConfigs.isUseAdNative = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdNative", AdsManager.Instance.adsConfigs.isUseAdNative);
             });
 
 

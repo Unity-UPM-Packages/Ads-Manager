@@ -72,7 +72,7 @@ namespace TheLegends.Base.Ads
                 return false;
             }
 
-            if(IsAvailable)
+            if (IsAvailable)
             {
                 AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is available --> return");
                 return false;
@@ -190,10 +190,15 @@ namespace TheLegends.Base.Ads
         {
             Status = AdsEvents.Click;
         }
+        
+        public virtual void OnAdsCancel()
+        {
+            Status = AdsEvents.Cancel;
+        }
 
         public virtual void OnImpression()
         {
-            AdsManager.Instance.Log($"{AdsType} "+ "ad recorded an impression.");
+            AdsManager.Instance.Log($"{AdsType} " + "ad recorded an impression.");
         }
 
 

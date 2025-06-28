@@ -538,6 +538,7 @@ namespace TheLegends.Base.Ads
         public bool adInterOnComplete = true;
         public bool adInterOnStart = true;
         public float timePlayToShowAds = 20f;
+        public bool isUseAdNative = true;
         public float adNativeBannerHeight = 140;
         public float adNativeTimeReload = 15f;
         public float adLoadTimeOut = 5f;
