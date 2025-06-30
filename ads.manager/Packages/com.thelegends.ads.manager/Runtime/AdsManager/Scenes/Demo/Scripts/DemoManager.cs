@@ -218,22 +218,22 @@ public class DemoManager : MonoBehaviour
                 targetPosition = new Vector2(0, 0);
                 break;
             case MrecPos.Top:
-                targetPosition = new Vector2((screenWidth/2) - (adWidth/2), 0);
+                targetPosition = new Vector2((screenWidth / 2) - (adWidth / 2), 0);
                 break;
             case MrecPos.TopRight:
                 targetPosition = new Vector2(screenWidth - adWidth, 0);
                 break;
             case MrecPos.Center:
-                targetPosition = new Vector2((screenWidth/2) - (adWidth/2), -(screenHeight/2) + (adHeight/2));
+                targetPosition = new Vector2((screenWidth / 2) - (adWidth / 2), -(screenHeight / 2) + (adHeight / 2));
                 break;
             case MrecPos.CenterLeft:
-                targetPosition = new Vector2(0, -(screenHeight/2) + (adHeight/2));
+                targetPosition = new Vector2(0, -(screenHeight / 2) + (adHeight / 2));
                 break;
             case MrecPos.CenterRight:
-                targetPosition = new Vector2(screenWidth - adWidth, -(screenHeight/2) + (adHeight/2));
+                targetPosition = new Vector2(screenWidth - adWidth, -(screenHeight / 2) + (adHeight / 2));
                 break;
             case MrecPos.Bottom:
-                targetPosition = new Vector2((screenWidth/2) - (adWidth/2), -screenHeight + adHeight);
+                targetPosition = new Vector2((screenWidth / 2) - (adWidth / 2), -screenHeight + adHeight);
                 break;
             case MrecPos.BottomLeft:
                 targetPosition = new Vector2(0, -screenHeight + adHeight);
