@@ -60,6 +60,8 @@ namespace TheLegends.Base.Ads
                 {"adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight},
                 {"adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload},
                 {"adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut},
+                {"isUseAdNative", AdsManager.Instance.adsConfigs.isUseAdNative},
+                {"isUseAdInterOpen", AdsManager.Instance.adsConfigs.isUseAdInterOpen},
             };
 
             yield return FirebaseManager.Instance.DoInit(defaultRemoteConfig);
