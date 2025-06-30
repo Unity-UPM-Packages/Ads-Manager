@@ -1,3 +1,10 @@
+## [1.0.44](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.43...v1.0.44) (2025-06-30)
+
+
+### Bug Fixes
+
+* Addition default remote config ([cd9be8c](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/cd9be8c37f6dee469768cc313d698a249e35b32b))
+
 ## [1.0.43](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.42...v1.0.43) (2025-06-28)
 
 
