@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Baracuda.Threading;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
@@ -37,7 +34,7 @@ namespace TheLegends.Base.Ads
         protected override void PreShow()
         {
 #if UNITY_EDITOR
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 SetAdCustomPosition(mrecPosition, offset);
             });

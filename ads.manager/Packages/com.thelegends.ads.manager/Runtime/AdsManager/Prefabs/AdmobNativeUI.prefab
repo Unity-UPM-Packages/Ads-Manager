@@ -1075,6 +1075,10 @@ MonoBehaviour:
   store: {fileID: 3947645753863751158}
   starFilling: {fileID: 74293983186013904}
   price: {fileID: 3505419255479952240}
+  adImageAspectRatioFitter: {fileID: 5261428174182619534}
+  iconMaxSize: {x: 50, y: 50}
+  adImageMaxSize: {x: 200, y: 200}
+  adChoiceMaxSize: {x: 50, y: 50}
   isShowOnLoaded: 1
   isShowOnLoadFailed: 1
 --- !u!222 &1874160600788344820

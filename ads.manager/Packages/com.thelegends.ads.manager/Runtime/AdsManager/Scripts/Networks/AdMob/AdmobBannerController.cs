@@ -1,6 +1,6 @@
 using System;
-using Baracuda.Threading;
 using GoogleMobileAds.Api;
+using UnityEngine;
 
 namespace TheLegends.Base.Ads
 {
@@ -141,7 +141,7 @@ namespace TheLegends.Base.Ads
 
         private void OnBannerClick()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClick();
             });
@@ -149,7 +149,7 @@ namespace TheLegends.Base.Ads
 
         private void OnBannerPaid(AdValue value)
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
             });
@@ -157,7 +157,7 @@ namespace TheLegends.Base.Ads
 
         private void OnBannerImpression()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnImpression();
             });
@@ -165,7 +165,7 @@ namespace TheLegends.Base.Ads
 
         public void OnBannerLoaded()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 if (_loadRequestId != _currentLoadRequestId)
                 {
@@ -184,7 +184,7 @@ namespace TheLegends.Base.Ads
 
         private void OnBannerLoadFailed(AdError error)
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 if (_loadRequestId != _currentLoadRequestId)
                 {

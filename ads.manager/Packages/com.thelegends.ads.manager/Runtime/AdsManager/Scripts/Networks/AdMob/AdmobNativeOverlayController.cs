@@ -1,10 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Baracuda.Threading;
 using GoogleMobileAds.Api;
-using TheLegends.Base.Ads;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
@@ -154,7 +149,7 @@ namespace TheLegends.Base.Ads
 
         private void OnNativeClick()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClick();
             });
@@ -162,7 +157,7 @@ namespace TheLegends.Base.Ads
 
         private void OnNativeImpression()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnImpression();
             });
@@ -170,7 +165,7 @@ namespace TheLegends.Base.Ads
 
         private void OnNativeShowSuccess()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsShowSuccess();
             });
@@ -184,7 +179,7 @@ namespace TheLegends.Base.Ads
 
         private void OnNativeOverlayClosed()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClosed();
             });
@@ -193,7 +188,7 @@ namespace TheLegends.Base.Ads
 
         private void OnNativePaid(AdValue value)
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
             });

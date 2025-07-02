@@ -3,8 +3,8 @@
     <package>androidx.constraintlayout:constraintlayout:2.1.4</package>
     <package>com.android.installreferrer:installreferrer:2.1</package>
     <package>com.appsflyer:af-android-sdk:6.15.0</package>
-    <package>com.appsflyer:unity-wrapper:6.15.3</package>
-    <package>com.google.android.gms:play-services-ads:23.6.0</package>
+    <package>com.appsflyer:unity-wrapper:6.15.1</package>
+    <package>com.google.android.gms:play-services-ads:23.5.0</package>
     <package>com.google.android.gms:play-services-base:18.5.0</package>
     <package>com.google.android.ump:user-messaging-platform:3.1.0</package>
     <package>com.google.code.gson:gson:2.8.5</package>

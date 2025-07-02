@@ -260,7 +260,7 @@ public class DemoManager : MonoBehaviour
 
     public void ShowNative()
     {
-        nativeAdsMrec.ShowAds("Default");
+        nativeAdsMrec.ShowAds();
         nativeAdsBanner.ShowAds("Default");
     }
 
@@ -268,6 +268,11 @@ public class DemoManager : MonoBehaviour
     {
         nativeAdsMrec.HideAds();
         nativeAdsBanner.HideAds();
+    }
+
+    public void AAAAA()
+    {
+        AdsManager.Instance.GetAdsStatus(AdsType.Native, order);
     }
 
 

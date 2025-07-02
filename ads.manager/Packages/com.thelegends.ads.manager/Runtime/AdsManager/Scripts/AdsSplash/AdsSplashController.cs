@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using GoogleMobileAds.Ump.Api;
 using TheLegends.Base.AppsFlyer;
 using TheLegends.Base.Firebase;
 using UnityEngine;
@@ -9,18 +8,23 @@ using UnityEngine;
 using TheLegends.Base.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using EditorAttributes;
 
 namespace TheLegends.Base.Ads
 {
     public class AdsSplashController : MonoBehaviour
     {
         [SerializeField]
+        private bool isUseSelectBrand = true;
+
+        [Space(10)]
+        [SerializeField, ShowField(nameof(isUseSelectBrand))]
         private MrecPos mrecOpenPos = MrecPos.CenterLeft;
-        [SerializeField]
+        [SerializeField, ShowField(nameof(isUseSelectBrand))]
         private Vector2Int mrecOpenOffset = Vector2Int.zero;
 
         [Space(10)]
-        [SerializeField]
+        [SerializeField, ShowField(nameof(isUseSelectBrand))]
         private BrandScreenController brandScreen;
 
         [Space(10)]
@@ -36,9 +40,15 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        private bool isUseAdInterOpen = true;
+
         [Space(10)]
         [SerializeField]
-        private UnityEvent OnLoadComplete = new UnityEvent();
+        private UnityEvent OnInitFirebaseDone = new UnityEvent();
+
+        [Space(10)]
+        [SerializeField]
+        private UnityEvent OnInitAdsDone = new UnityEvent();
 
         public void Start()
         {
@@ -50,9 +60,46 @@ namespace TheLegends.Base.Ads
         {
             UILoadingController.SetProgress(0.2f, null);
 
+            // Initialize AppsFlyer
             yield return AppsFlyerManager.Instance.DoInit();
 
-            var defaultRemoteConfig = new Dictionary<string, object>
+            // Initialize Firebase with remote config
+            yield return InitializeFirebase();
+
+            // Initialize Ads Manager
+            yield return AdsManager.Instance.DoInit();
+
+            UILoadingController.SetProgress(0.4f, null);
+            yield return new WaitForSeconds(0.5f);
+
+            // Fetch remote data and update configs
+            FetchAndUpdateRemoteConfigs();
+            OnInitFirebaseDone?.Invoke();
+
+            // Load ads based on brand selection settings
+            if (isUseSelectBrand)
+            {
+                yield return LoadInitialAds();
+            }
+            
+            UILoadingController.SetProgress(0.6f, null);
+
+            // Load the target scene
+            yield return IELoadScene();
+
+            // Complete initialization
+            CompleteInitialization();
+        }
+
+        private IEnumerator InitializeFirebase()
+        {
+            var defaultRemoteConfig = CreateDefaultRemoteConfig();
+            yield return FirebaseManager.Instance.DoInit(defaultRemoteConfig);
+        }
+
+        private Dictionary<string, object> CreateDefaultRemoteConfig()
+        {
+            var config = new Dictionary<string, object>
             {
                 {"adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete},
                 {"adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart},
@@ -60,77 +107,94 @@ namespace TheLegends.Base.Ads
                 {"adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight},
                 {"adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload},
                 {"adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut},
-                {"isUseAdNative", AdsManager.Instance.adsConfigs.isUseAdNative},
-                {"isUseAdInterOpen", AdsManager.Instance.adsConfigs.isUseAdInterOpen},
+                {"isUseAdNative", AdsManager.Instance.adsConfigs.isUseAdNative}
             };
 
-            yield return FirebaseManager.Instance.DoInit(defaultRemoteConfig);
+            if (isUseSelectBrand)
+            {
+                config.Add("isUseAdInterOpen", isUseAdInterOpen);
+            }
 
-            yield return AdsManager.Instance.DoInit();
+            return config;
+        }
 
-            UILoadingController.SetProgress(0.4f, null);
-
-            yield return new WaitForSeconds(0.5f);
-
+        private void FetchAndUpdateRemoteConfigs()
+        {
             FirebaseManager.Instance.FetchRemoteData(() =>
             {
-                AdsManager.Instance.adsConfigs.adInterOnComplete = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete);
-                AdsManager.Instance.adsConfigs.adInterOnStart = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart);
-                AdsManager.Instance.adsConfigs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds);
-                AdsManager.Instance.adsConfigs.adNativeBannerHeight = FirebaseManager.Instance.RemoteGetValueFloat("adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight);
-                AdsManager.Instance.adsConfigs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload);
-                AdsManager.Instance.adsConfigs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut);
-                AdsManager.Instance.adsConfigs.isUseAdNative = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdNative", AdsManager.Instance.adsConfigs.isUseAdNative);
-                AdsManager.Instance.adsConfigs.isUseAdInterOpen = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdInterOpen", AdsManager.Instance.adsConfigs.isUseAdInterOpen);
+                UpdateCommonConfigs();
+                UpdateBrandSpecificConfigs();
             });
+        }
 
+        private void UpdateCommonConfigs()
+        {
+            var configs = AdsManager.Instance.adsConfigs;
+            configs.adInterOnComplete = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnComplete", configs.adInterOnComplete);
+            configs.adInterOnStart = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnStart", configs.adInterOnStart);
+            configs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", configs.timePlayToShowAds);
+            configs.adNativeBannerHeight = FirebaseManager.Instance.RemoteGetValueFloat("adNativeBannerHeight", configs.adNativeBannerHeight);
+            configs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", configs.adNativeTimeReload);
+            configs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", configs.adLoadTimeOut);
+            configs.isUseAdNative = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdNative", configs.isUseAdNative);
+        }
 
+        private void UpdateBrandSpecificConfigs()
+        {
+            if (isUseSelectBrand)
+            {
+                isUseAdInterOpen = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdInterOpen", isUseAdInterOpen);
+            }
+        }
+
+        private IEnumerator LoadInitialAds()
+        {
+            
+            // Load MREC for brand selection if needed
             if (canShowSelectBrand)
             {
                 AdsManager.Instance.LoadMrec(AdsType.MrecOpen, PlacementOrder.One);
-                yield return WaitAdLoaded(AdsType.MrecOpen, PlacementOrder.One);
+                yield return AdsManager.Instance.WaitAdLoaded(AdsType.MrecOpen, PlacementOrder.One);
             }
 
-            if (AdsManager.Instance.adsConfigs.isUseAdInterOpen)
+            // Load interstitial for app open if enabled
+            if (isUseAdInterOpen)
             {
-                
                 AdsManager.Instance.LoadInterstitial(AdsType.InterOpen, PlacementOrder.One);
-                yield return WaitAdLoaded(AdsType.InterOpen, PlacementOrder.One);
+                yield return AdsManager.Instance.WaitAdLoaded(AdsType.InterOpen, PlacementOrder.One);
             }
+        }
 
+        private void CompleteInitialization()
+        {
+            float finishProgress = isUseSelectBrand ? 1f : 0.9f;
 
-            UILoadingController.SetProgress(0.6f, null);
-
-            OnLoadComplete?.Invoke();
-
-            yield return IELoadScene();
-
-            UILoadingController.SetProgress(1f, () =>
+            UILoadingController.SetProgress(finishProgress, () =>
             {
-                UILoadingController.Hide();
-
-                if (AdsManager.Instance.GetAdsStatus(AdsType.InterOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
+                if (isUseSelectBrand)
                 {
-                    AdsManager.Instance.ShowInterstitial(AdsType.InterOpen, PlacementOrder.One, "Inter Open");
+                    HandleBrandSelectionFlow();
                 }
-
-
-                if (canShowSelectBrand)
-                {
-                    ShowBrandScreen();
-                }
+                OnInitAdsDone?.Invoke();
             });
         }
 
-
-        private IEnumerator WaitAdLoaded(AdsType type, PlacementOrder order)
+        private void HandleBrandSelectionFlow()
         {
-            while (AdsManager.Instance.GetAdsStatus(type, order) != AdsEvents.LoadAvailable && AdsManager.Instance.GetAdsStatus(type, order) != AdsEvents.LoadNotAvailable)
+            UILoadingController.Hide();
+
+            // Show interstitial if available
+            if (AdsManager.Instance.GetAdsStatus(AdsType.InterOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
-                yield return null;
+                AdsManager.Instance.ShowInterstitial(AdsType.InterOpen, PlacementOrder.One, "Inter Open");
+            }
+
+            // Show brand selection screen if can show
+            if (canShowSelectBrand)
+            {
+                ShowBrandScreen();
             }
         }
-
 
         private void ShowBrandScreen()
         {
