@@ -1,5 +1,4 @@
 using System;
-using Baracuda.Threading;
 using GoogleMobileAds.Api;
 using TheLegends.Base.UI;
 
@@ -138,7 +137,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAppOpenClick()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClick();
             });
@@ -146,7 +145,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAppOpenShowSuccess()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsShowSuccess();
             });
@@ -154,7 +153,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAppOpenImpression()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnImpression();
             });
@@ -168,7 +167,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAppOpenShowFailed(AdError error)
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 var errorDescription = error?.GetMessage();
                 OnAdsShowFailed(errorDescription);
@@ -177,7 +176,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAppOpenClosed()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 UILoadingController.Show(1f, null);
                 OnAdsClosed();
@@ -186,7 +185,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAdsPaid(AdValue value)
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
             });

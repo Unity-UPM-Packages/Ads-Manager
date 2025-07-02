@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Baracuda.Threading;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Ump.Api;
 using UnityEngine;
@@ -88,7 +87,7 @@ namespace TheLegends.Base.Ads
 
                 MobileAds.Initialize(initStatus =>
                 {
-                    Dispatcher.Invoke(() =>
+                    PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
                     {
                         if (initStatus == null)
                         {
@@ -161,7 +160,7 @@ namespace TheLegends.Base.Ads
             // Check the current consent information status.
             ConsentInformation.Update(request, (updateError =>
             {
-                Dispatcher.Invoke(() =>
+                PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
                 {
                     if (updateError != null)
                     {

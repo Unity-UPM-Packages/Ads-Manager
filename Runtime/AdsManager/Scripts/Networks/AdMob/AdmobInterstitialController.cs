@@ -1,8 +1,7 @@
+
 using System;
-using Baracuda.Threading;
 using GoogleMobileAds.Api;
 using TheLegends.Base.UI;
-
 namespace TheLegends.Base.Ads
 {
     public class AdmobInterstitialController : AdsPlacementBase
@@ -168,7 +167,7 @@ namespace TheLegends.Base.Ads
 
         private void OnInterClick()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClick();
             });
@@ -176,7 +175,7 @@ namespace TheLegends.Base.Ads
 
         private void OnInterImpression()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnImpression();
             });
@@ -184,7 +183,7 @@ namespace TheLegends.Base.Ads
 
         private void OnInterShowSuccess()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsShowSuccess();
             });
@@ -198,7 +197,7 @@ namespace TheLegends.Base.Ads
 
         private void OnInterShowFailed(AdError error)
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 var errorDescription = error?.GetMessage();
                 OnAdsShowFailed(errorDescription);
@@ -207,7 +206,7 @@ namespace TheLegends.Base.Ads
 
         protected virtual void OnInterClosed()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 UILoadingController.Show(1f, () =>
                 {
@@ -221,7 +220,7 @@ namespace TheLegends.Base.Ads
 
         private void OnInterPaid(AdValue value)
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
             });

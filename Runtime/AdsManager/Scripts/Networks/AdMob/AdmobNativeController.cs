@@ -1,6 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using Baracuda.Threading;
+using System.Linq;
 using GoogleMobileAds.Api;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,6 +71,18 @@ namespace TheLegends.Base.Ads
         [SerializeField]
         private Text price;
 
+        [SerializeField]
+        private AspectRatioFitter adImageAspectRatioFitter;
+
+        [SerializeField]
+        private Vector2Int iconMaxSize = new Vector2Int(50, 50);
+
+        [SerializeField]
+        private Vector2Int adImageMaxSize = new Vector2Int(200, 200);
+
+        [SerializeField]
+        private Vector2Int adChoiceMaxSize = new Vector2Int(50, 50);
+
         [Space(10)]
         [Header("Show On")]
         [SerializeField]
@@ -83,6 +96,8 @@ namespace TheLegends.Base.Ads
 
         private string _currentLoadRequestId;
         private string _loadRequestId;
+
+        protected AdLoader adLoader;
 
 
 
@@ -145,7 +160,7 @@ namespace TheLegends.Base.Ads
             NativeDestroy();
             base.LoadAds();
 
-            AdLoader adLoader = new AdLoader.Builder(adsUnitID)
+            adLoader = new AdLoader.Builder(adsUnitID)
                 .ForNativeAd()
                 .Build();
 
@@ -291,20 +306,30 @@ namespace TheLegends.Base.Ads
                     _nativeAd = null;
                 }
 
-                if (adImage != null)
+                if (adLoader != null)
                 {
-                    adImage.sprite = defaultAdImageSprite;
+                    adLoader.OnNativeAdLoaded -= OnNativeLoaded;
+                    adLoader.OnAdFailedToLoad -= OnNativeLoadFailed;
+                    adLoader.OnNativeAdImpression -= OnNativeImpression;
+                    adLoader.OnNativeAdClicked -= OnNativeClick;
+                    adLoader.OnNativeAdClosed -= OnNativeClose;
+                    adLoader = null;
                 }
 
-                if (adIcon != null)
-                {
-                    adIcon.sprite = defaultAdIconSprite;
-                }
+                // if (adImage != null)
+                // {
+                //     adImage.sprite = defaultAdImageSprite;
+                // }
 
-                if (adChoice != null)
-                {
-                    adChoice.sprite = defaultAdChoiceSprite;
-                }
+                // if (adIcon != null)
+                // {
+                //     adIcon.sprite = defaultAdIconSprite;
+                // }
+
+                // if (adChoice != null)
+                // {
+                //     adChoice.sprite = defaultAdChoiceSprite;
+                // }
 
             }
             catch (Exception ex)
@@ -318,7 +343,7 @@ namespace TheLegends.Base.Ads
         private void OnNativeLoaded(object sender, NativeAdEventArgs args)
         {
 #if USE_ADMOB
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 if (_loadRequestId != _currentLoadRequestId)
                 {
@@ -357,7 +382,7 @@ namespace TheLegends.Base.Ads
 #pragma warning restore CS0618 // Type or member is obsolete
         {
 #if USE_ADMOB
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 if (_loadRequestId != _currentLoadRequestId)
                 {
@@ -389,7 +414,7 @@ namespace TheLegends.Base.Ads
         private void OnNativeClose(object sender, EventArgs args)
         {
 #if USE_ADMOB
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClosed();
                 LoadAds();
@@ -400,7 +425,7 @@ namespace TheLegends.Base.Ads
         private void OnNativeClick(object sender, EventArgs args)
         {
 #if USE_ADMOB
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClick();
                 CancelReloadAds();
@@ -412,7 +437,7 @@ namespace TheLegends.Base.Ads
         private void OnNativeImpression(object sender, EventArgs args)
         {
 #if USE_ADMOB
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnImpression();
             });
@@ -424,7 +449,7 @@ namespace TheLegends.Base.Ads
 #pragma warning restore CS0618 // Type or member is obsolete
         {
 #if USE_ADMOB
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, args.AdValue);
             });
@@ -435,11 +460,25 @@ namespace TheLegends.Base.Ads
         {
             if (adImage)
             {
-                var images = _nativeAd.GetImageTextures();
+                List<Texture2D> images = _nativeAd.GetImageTextures();
 
                 if (images.Count > 0)
                 {
-                    adImage.sprite = Sprite.Create(images[0], new Rect(0, 0, images[0].width, images[0].height),
+                    Texture2D image = images.FirstOrDefault();
+
+                    if (image.width > adImageMaxSize.x || image.height > adImageMaxSize.y)
+                    {
+                        image = ResizeTexture(image, adImageMaxSize);
+                    }
+
+                    Debug.Log("AAAAAAAAAA: image.width: " + image.width + " image.height: " + image.height);
+
+                    if (adImageAspectRatioFitter)
+                    {
+                        adImageAspectRatioFitter.aspectRatio = (float)image.width / image.height;
+                    }
+
+                    adImage.sprite = Sprite.Create(image, new Rect(0, 0, image.width, image.height),
                         new Vector2(0.5f, 0.5f));
                 }
 
@@ -452,12 +491,6 @@ namespace TheLegends.Base.Ads
                 _nativeAd.RegisterImageGameObjects(new List<GameObject> { adImage.gameObject });
             }
 
-            if (callToAction && callToActionText)
-            {
-                callToActionText.text = _nativeAd.GetCallToActionText().ToLower();
-
-                _nativeAd.RegisterCallToActionGameObject(callToAction.gameObject);
-            }
 
             if (adChoice)
             {
@@ -465,6 +498,13 @@ namespace TheLegends.Base.Ads
 
                 if (choice != null)
                 {
+                    if (choice.width > adChoiceMaxSize.x || choice.height > adChoiceMaxSize.y)
+                    {
+                        choice = ResizeTexture(choice, adChoiceMaxSize);
+                    }
+
+                    Debug.Log("AAAAAAAAAA: choice.width: " + choice.width + " choice.height: " + choice.height);
+
                     adChoice.sprite = Sprite.Create(choice, new Rect(0, 0, choice.width, choice.height),
                         new Vector2(0.5f, 0.5f));
                 }
@@ -472,18 +512,36 @@ namespace TheLegends.Base.Ads
                 _nativeAd.RegisterAdChoicesLogoGameObject(adChoice.gameObject);
             }
 
+
             if (adIcon)
             {
                 Texture2D icon = _nativeAd.GetIconTexture();
 
                 if (icon != null)
                 {
+
+                    if (icon.width > iconMaxSize.x || icon.height > iconMaxSize.y)
+                    {
+                        icon = ResizeTexture(icon, iconMaxSize);
+                    }
+
+                    Debug.Log("AAAAAAAAAA: icon.width: " + icon.width + " icon.height: " + icon.height);
+
                     adIcon.sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height),
                         new Vector2(0.5f, 0.5f));
                 }
 
                 _nativeAd.RegisterIconImageGameObject(adIcon.gameObject);
             }
+
+
+            if (callToAction && callToActionText)
+            {
+                callToActionText.text = _nativeAd.GetCallToActionText().ToLower();
+
+                _nativeAd.RegisterCallToActionGameObject(callToAction.gameObject);
+            }
+
 
             if (advertiser)
             {
@@ -492,12 +550,14 @@ namespace TheLegends.Base.Ads
                 _nativeAd.RegisterAdvertiserTextGameObject(advertiser.gameObject);
             }
 
+
             if (adHeadline)
             {
                 adHeadline.text = _nativeAd.GetHeadlineText();
 
                 _nativeAd.RegisterHeadlineTextGameObject(adHeadline.gameObject);
             }
+
 
             if (adBody)
             {
@@ -506,6 +566,7 @@ namespace TheLegends.Base.Ads
                 _nativeAd.RegisterBodyTextGameObject(adBody.gameObject);
             }
 
+
             if (store)
             {
                 store.text = _nativeAd.GetStore();
@@ -513,12 +574,14 @@ namespace TheLegends.Base.Ads
                 _nativeAd.RegisterStoreGameObject(store.gameObject);
             }
 
+
             if (price)
             {
                 price.text = _nativeAd.GetPrice();
 
                 _nativeAd.RegisterPriceGameObject(price.gameObject);
             }
+
 
             if (starFilling)
             {
@@ -531,6 +594,7 @@ namespace TheLegends.Base.Ads
 
                 starFilling.fillAmount = (float)(storeStarRating * 0.2f);
             }
+
         }
 
         public void HideAds()
@@ -539,7 +603,7 @@ namespace TheLegends.Base.Ads
             {
                 return;
             }
-            
+
             isCLosedByHide = true;
             NativeDestroy();
             OnAdsClosed();
@@ -553,6 +617,41 @@ namespace TheLegends.Base.Ads
         private void CancelReloadAds()
         {
             CancelInvoke(nameof(LoadAds));
+        }
+
+        private Texture2D ResizeTexture(Texture2D sourceTexture, Vector2Int maxSize)
+        {
+            if (sourceTexture == null)
+                return null;
+
+            float ratioX = (float)maxSize.x / sourceTexture.width;
+            float ratioY = (float)maxSize.y / sourceTexture.height;
+            float ratio = Mathf.Min(ratioX, ratioY);
+
+            int newWidth = Mathf.RoundToInt(sourceTexture.width * ratio);
+            int newHeight = Mathf.RoundToInt(sourceTexture.height * ratio);
+
+            // Tạo RenderTexture tạm thời
+            RenderTexture rt = RenderTexture.GetTemporary(newWidth, newHeight, 0, RenderTextureFormat.ARGB32);
+            rt.filterMode = FilterMode.Bilinear;
+
+            // Lưu RenderTexture hiện tại
+            RenderTexture currentRT = RenderTexture.active;
+
+            // Blit texture gốc vào RenderTexture mới
+            Graphics.Blit(sourceTexture, rt);
+            RenderTexture.active = rt;
+
+            // Tạo texture mới với kích thước đã chỉ định
+            Texture2D resizedTexture = new Texture2D(newWidth, newHeight, TextureFormat.RGBA32, false);
+            resizedTexture.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
+            resizedTexture.Apply();
+
+            // Khôi phục RenderTexture và giải phóng tài nguyên
+            RenderTexture.active = currentRT;
+            RenderTexture.ReleaseTemporary(rt);
+
+            return resizedTexture;
         }
 
         #endregion

@@ -373,6 +373,14 @@ namespace TheLegends.Base.Ads
             return status;
         }
 
+        public IEnumerator WaitAdLoaded(AdsType type, PlacementOrder order)
+        {
+            while (GetAdsStatus(type, order) != AdsEvents.LoadAvailable && GetAdsStatus(type, order) != AdsEvents.LoadNotAvailable)
+            {
+                yield return null;
+            }
+        }
+
         private void OnApplicationPause(bool isPaused)
         {
             Debug.Log("OnApplicationPause " + isPaused);
@@ -542,8 +550,6 @@ namespace TheLegends.Base.Ads
         public float adNativeBannerHeight = 140;
         public float adNativeTimeReload = 15f;
         public float adLoadTimeOut = 5f;
-        public bool isUseAdInterOpen = true;
-        
     }
 
 }

@@ -821,6 +821,18 @@ PrefabInstance:
       propertyPath: adImageCollider
       value: 
       objectReference: {fileID: 8401805018644827781}
+    - target: {fileID: 8287518035259073570, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: adImageMaxSize.x
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287518035259073570, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: adImageMaxSize.y
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287518035259073570, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+      propertyPath: adImageAspectRatioFitter
+      value: 
+      objectReference: {fileID: 8339295308955797980}
     - target: {fileID: 8633187899259396203, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -893,6 +905,17 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 32000
   m_TargetDisplay: 0
+--- !u!114 &8339295308955797980 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5261428174182619534, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}
+  m_PrefabInstance: {fileID: 4233236221520203858}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &8401805018644827781 stripped
 BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 5631272824915893975, guid: 2754c63329cf8c1469e4a7b61ef722b8, type: 3}

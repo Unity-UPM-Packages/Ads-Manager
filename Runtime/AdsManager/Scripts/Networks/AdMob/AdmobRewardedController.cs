@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Baracuda.Threading;
 using GoogleMobileAds.Api;
-using LitMotion;
 using TheLegends.Base.UI;
-using UnityEngine;
 
 namespace TheLegends.Base.Ads
 {
@@ -148,7 +143,7 @@ namespace TheLegends.Base.Ads
 
         private void OnRewardClick()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClick();
             });
@@ -156,7 +151,7 @@ namespace TheLegends.Base.Ads
 
         private void OnRewardPaid(AdValue value)
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsPaid(value);
             });
@@ -164,7 +159,7 @@ namespace TheLegends.Base.Ads
 
         private void OnRewardImpression()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnImpression();
             });
@@ -172,7 +167,7 @@ namespace TheLegends.Base.Ads
 
         private void OnRewardShowSuccess()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsShowSuccess();
             });
@@ -186,7 +181,7 @@ namespace TheLegends.Base.Ads
 
         private void OnRewardedShowFailed(AdError error)
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 var errorDescription = error?.GetMessage();
                 OnAdsShowFailed(errorDescription);
@@ -195,7 +190,7 @@ namespace TheLegends.Base.Ads
 
         private void OnRewardedClosed()
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClosed();
             });
@@ -203,7 +198,7 @@ namespace TheLegends.Base.Ads
 
         private void OnAdsPaid(AdValue value)
         {
-            Dispatcher.Invoke(() =>
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
             });
