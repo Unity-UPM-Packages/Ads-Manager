@@ -1,3 +1,10 @@
+## [1.0.45](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.44...v1.0.45) (2025-07-18)
+
+
+### Bug Fixes
+
+* optimize ad native resize texture ([4cab03e](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/4cab03eb5c3fd079e2fec6b19e1b4f4b9928fb1f))
+
 ## [1.0.44](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.43...v1.0.44) (2025-06-30)
 
 
