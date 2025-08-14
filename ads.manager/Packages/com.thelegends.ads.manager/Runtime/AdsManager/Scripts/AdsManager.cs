@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AppsFlyerSDK;
+using GoogleMobileAds.Api;
 using TheLegends.Base.AppsFlyer;
 using TheLegends.Base.Firebase;
 using TheLegends.Base.UI;
@@ -279,7 +280,7 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public void ShowMrec(AdsType mrecType, PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position)
+        public void ShowMrec(AdsType mrecType, PlacementOrder order, AdsPos mrecPosition, Vector2Int offset, string position)
         {
             if (!IsInitialized())
             {
@@ -324,7 +325,7 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public void ShowNativeOverlay(PlacementOrder order, string position)
+        public void ShowNativeOverlay(PlacementOrder order, NativeTemplateStyle style, AdsPos nativeOverlayposition, Vector2Int size, Vector2Int offset, string position, Action OnShow = null, Action OnClose = null)
         {
             if (!IsInitialized())
             {
@@ -335,7 +336,7 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowNativeOverlay(order, position);
+                netWork.ShowNativeOverlay(order, style, nativeOverlayposition, size, offset, position, OnShow, OnClose);
             }
         }
 

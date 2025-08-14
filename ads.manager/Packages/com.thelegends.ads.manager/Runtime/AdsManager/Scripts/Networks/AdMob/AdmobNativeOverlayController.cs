@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
@@ -7,6 +8,10 @@ namespace TheLegends.Base.Ads
     public class AdmobNativeOverlayController : AdsPlacementBase
     {
         private NativeOverlayAd _nativeOverlayAd;
+
+        private string _currentLoadRequestId;
+
+        private Action OnClose;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -38,7 +43,8 @@ namespace TheLegends.Base.Ads
         public override void LoadAds()
         {
 #if USE_ADMOB
-            if(!IsCanLoadAds())
+
+            if (!IsCanLoadAds())
             {
                 return;
             }
@@ -51,28 +57,45 @@ namespace TheLegends.Base.Ads
 
                 AdRequest request = new AdRequest();
 
+                _currentLoadRequestId = Guid.NewGuid().ToString();
+                string loadRequestId = _currentLoadRequestId;
+
                 var options = new NativeAdOptions
                 {
-                    AdChoicesPlacement  = AdChoicesPlacement.TopRightCorner,
+                    AdChoicesPlacement = AdChoicesPlacement.TopRightCorner,
                     MediaAspectRatio = MediaAspectRatio.Any,
+                    VideoOptions = new VideoOptions()
+                    {
+                        ClickToExpandRequested = true,
+                        CustomControlsRequested = true,
+                        StartMuted = true
+                    }
                 };
 
 
                 NativeOverlayAd.Load(adsUnitID.Trim(), request, options,
                     (NativeOverlayAd ad, LoadAdError error) =>
                     {
-                        // if error is not null, the load request failed.
-                        if(error != null)
+                        if (loadRequestId != _currentLoadRequestId)
                         {
-                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
-                            OnNativeLoadFailed(error);
+                            // If the load request ID does not match, this callback is from a previous request
                             return;
                         }
 
-                        if(ad == null)
+                        StopHandleTimeout();
+
+                        // if error is not null, the load request failed.
+                        if (error != null)
+                        {
+                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
+                            OnNativeOverlayLoadFailed(error);
+                            return;
+                        }
+
+                        if (ad == null)
                         {
                             AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
-                            OnNativeLoadFailed(error);
+                            OnNativeOverlayLoadFailed(error);
                             return;
                         }
 
@@ -84,29 +107,53 @@ namespace TheLegends.Base.Ads
 
                     });
             }
+
+#if UNITY_EDITOR
+            OnAdsLoadAvailable();
+#endif
+
 #endif
 
         }
 
-        public override void ShowAds(string showPosition)
+        public void ShowAds(NativeTemplateStyle style, AdsPos position, Vector2Int size, Vector2Int offset, string showPosition, Action OnShow = null, Action OnClose = null)
         {
+#if USE_ADMOB
             if (Status == AdsEvents.ShowSuccess)
             {
                 AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "is showing --> return");
                 return;
             }
 
+            this.OnClose = OnClose;
             base.ShowAds(showPosition);
-            RenderAd();
-#if USE_ADMOB
+
+
+
+#if UNITY_EDITOR
+            if (IsAvailable)
+            {
+                Status = AdsEvents.ShowSuccess;
+                OnShow?.Invoke();
+            }
+            else
+            {
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+                reloadCount = 0;
+                LoadAds();
+            }
+
+#else
             if (IsReady && IsAvailable)
             {
-                _nativeOverlayAd.OnAdClicked += OnNativeClick;
-                _nativeOverlayAd.OnAdPaid += OnNativePaid;
-                _nativeOverlayAd.OnAdImpressionRecorded += OnNativeImpression;
+                RenderAd(style, position, size, offset);
+                _nativeOverlayAd.OnAdClicked += OnNativeOverlayClick;
+                _nativeOverlayAd.OnAdPaid += OnNativeOverlayPaid;
+                _nativeOverlayAd.OnAdImpressionRecorded += OnNativeOverlayImpression;
                 _nativeOverlayAd.OnAdFullScreenContentClosed += OnNativeOverlayClosed;
-                _nativeOverlayAd.OnAdFullScreenContentOpened += OnNativeShowSuccess;
+                _nativeOverlayAd.OnAdFullScreenContentOpened += OnNativeOverlayShowSuccess;
                 _nativeOverlayAd.Show();
+                OnShow?.Invoke();
                 Status = AdsEvents.ShowSuccess;
             }
             else
@@ -116,9 +163,10 @@ namespace TheLegends.Base.Ads
                 LoadAds();
             }
 #endif
+#endif
         }
 
-        public void RenderAd()
+        private void RenderAd(NativeTemplateStyle style, AdsPos position, Vector2Int size, Vector2Int offset)
         {
 #if USE_ADMOB
             if (_nativeOverlayAd != null)
@@ -126,28 +174,109 @@ namespace TheLegends.Base.Ads
                 Debug.Log("Rendering Native Overlay ad.");
 
                 // Define a native template style with a custom style.
-                var style = new NativeTemplateStyle
-                {
-                    TemplateId = NativeTemplateId.Small,
-                    MainBackgroundColor = Color.red,
-                    CallToActionText = new NativeTemplateTextStyle()
-                    {
-                        BackgroundColor = Color.green,
-                        TextColor = Color.white,
-                        FontSize = 9,
-                        Style = NativeTemplateFontStyle.Bold
-                    }
-                };
+                
+                var deviceScale = MobileAds.Utils.GetDeviceScale();
+                
+                Debug.Log("AAAAAAAAAAAA deviceScale: " + deviceScale);
 
-                _nativeOverlayAd.RenderTemplate(style, AdSize.MediumRectangle, AdPosition.Bottom);
+                //Đéo hiểu sao phải nhân deviceScale mới ra được dp đúng như banner. NativeOverlay lol
+                var adSizeDp = new AdSize(Mathf.RoundToInt(size.x * deviceScale), Mathf.RoundToInt(size.y * deviceScale));
+
+                //Còn đây là công thức chuẩn tính từ pixel sang dp nhưng lại lệch kích thước vl
+                // var adSizeDp = new AdSize((int)(size.x / deviceScale), (int)(size.y / deviceScale));
+                
+                // var adSizeDp = new AdSize(size.x, size.y);
+
+                var safeAreaWidth = Mathf.RoundToInt(Screen.safeArea.width * deviceScale);
+                var safeAreaHeight = Mathf.RoundToInt(Screen.safeArea.height * deviceScale);
+                
+                if (adSizeDp.Width > safeAreaWidth)
+                {
+                    adSizeDp = new AdSize(safeAreaWidth, adSizeDp.Height);
+                }
+                if (adSizeDp.Height > safeAreaHeight)
+                {
+                    adSizeDp = new AdSize(adSizeDp.Width, safeAreaHeight);
+                }
+
+                _nativeOverlayAd.RenderTemplate(style, new AdSize(adSizeDp.Width, adSizeDp.Height), AdPosition.Center);
+                
+                SetAdCustomPosition(position, new Vector2Int(adSizeDp.Width, adSizeDp.Height), offset);
             }
 #endif
 
         }
 
+        public void SetAdCustomPosition(AdsPos position, Vector2Int size, Vector2Int offset)
+        {
+
+            if (!IsAdsReady())
+            {
+                return;
+            }
+
+            var deviceScale = MobileAds.Utils.GetDeviceScale();
+
+            float adWidth = size.x / deviceScale;
+            float adHeight = size.y / deviceScale;
+
+            var safeAreaWidth = Screen.safeArea.width / deviceScale;
+            var safeAreaHeight = Screen.safeArea.height / deviceScale;
+
+            int xMax = Mathf.RoundToInt(safeAreaWidth - adWidth);
+            int yMax = Mathf.RoundToInt(safeAreaHeight - adHeight);
+            int xCenter = xMax / 2;
+            int yCenter = yMax / 2;
+
+            Vector2Int newPos = Vector2Int.zero;
+
+            switch (position)
+            {
+                case AdsPos.Top:
+                    newPos = new Vector2Int(xCenter + offset.x, offset.y);
+
+                    break;
+                case AdsPos.TopLeft:
+                    newPos = new Vector2Int(offset.x, offset.y);
+
+                    break;
+                case AdsPos.TopRight:
+                    newPos = new Vector2Int(xMax + offset.x, offset.y);
+
+                    break;
+                case AdsPos.Center:
+                    newPos = new Vector2Int(xCenter + offset.x, yCenter + offset.y);
+
+                    break;
+                case AdsPos.CenterLeft:
+                    newPos = new Vector2Int(offset.x, yCenter + offset.y);
+
+                    break;
+                case AdsPos.CenterRight:
+                    newPos = new Vector2Int(xMax + offset.x, yCenter + offset.y);
+
+                    break;
+                case AdsPos.Bottom:
+                    newPos = new Vector2Int(xCenter + offset.x, yMax + offset.y);
+
+                    break;
+                case AdsPos.BottomLeft:
+                    newPos = new Vector2Int(offset.x, yMax + offset.y);
+
+                    break;
+                case AdsPos.BottomRight:
+                    newPos = new Vector2Int(xMax + offset.x, yMax + offset.y);
+
+                    break;
+            }
+
+
+            _nativeOverlayAd.SetTemplatePosition(newPos.x, newPos.y);
+        }
+
         #region Internal
 
-        private void OnNativeClick()
+        private void OnNativeOverlayClick()
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
@@ -155,7 +284,7 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        private void OnNativeImpression()
+        private void OnNativeOverlayImpression()
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
@@ -163,7 +292,7 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        private void OnNativeShowSuccess()
+        private void OnNativeOverlayShowSuccess()
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
@@ -171,7 +300,7 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        private void OnNativeLoadFailed(AdError error)
+        private void OnNativeOverlayLoadFailed(AdError error)
         {
             var errorDescription = error?.GetMessage();
             OnAdsLoadFailed(errorDescription);
@@ -181,12 +310,12 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                OnAdsClosed();
+                HideAds();
             });
 
         }
 
-        private void OnNativePaid(AdValue value)
+        private void OnNativeOverlayPaid(AdValue value)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
@@ -206,9 +335,17 @@ namespace TheLegends.Base.Ads
             if (_nativeOverlayAd != null)
             {
                 _nativeOverlayAd.Hide();
+                OnClose?.Invoke();
+                OnClose = null;
                 NativeDestroy();
                 OnAdsClosed();
             }
+#if UNITY_EDITOR
+            OnClose?.Invoke();
+            OnClose = null;
+            NativeDestroy();
+            OnAdsClosed();
+#endif
 #endif
         }
 
@@ -231,115 +368,6 @@ namespace TheLegends.Base.Ads
         }
 
         #endregion
-
-        public void SetAdCustomPosition(MrecPos position, Vector2Int offset)
-        {
-            if (!IsAdsReady())
-            {
-                return;
-            }
-
-            var deviceScale = MobileAds.Utils.GetDeviceScale();
-            Debug.Log("Overlay device scale " + deviceScale);
-
-            var deviceSafeWidth = MobileAds.Utils.GetDeviceSafeWidth();
-
-            float adWidth = _nativeOverlayAd.GetTemplateWidthInPixels() / deviceScale;
-
-            if (adWidth == float.PositiveInfinity)
-            {
-                adWidth = 320;
-            }
-
-            Debug.Log("Overlay ad width " + adWidth);
-
-            float adHeight = _nativeOverlayAd.GetTemplateHeightInPixels() / deviceScale;
-
-            if (adHeight == float.PositiveInfinity)
-            {
-                adHeight = 50;
-            }
-
-            Debug.Log("Overlay ad height " + adHeight);
-
-            var safeArea = Screen.safeArea;
-
-            Debug.Log("Overlay safe width " + safeArea.width);
-            Debug.Log("Overlay safe height " + safeArea.height);
-
-            float screenRatioSafeArea = safeArea.width / safeArea.height;
-
-            Debug.Log("Overlay screen ratio safe area " + screenRatioSafeArea);
-
-            if (deviceSafeWidth <= 0)
-            {
-                deviceSafeWidth = MobileAds.Utils.GetDeviceSafeWidth();
-            }
-
-            if (deviceSafeWidth == 0)
-            {
-                deviceSafeWidth = 832;
-            }
-
-            Debug.Log("Overlay device safe width " + deviceSafeWidth);
-
-            float adScreenSafeHeight = deviceSafeWidth / screenRatioSafeArea;
-
-            int xMax = (int)(deviceSafeWidth - adWidth);
-            int yMax = (int)(adScreenSafeHeight - adHeight);
-            int xCenter = (int)(xMax * 0.5f);
-            int yCenter = (int)(yMax * 0.5f);
-
-            Vector2Int newPos = Vector2Int.zero;
-
-            switch (position)
-            {
-                case MrecPos.Top:
-                    newPos = new Vector2Int(xCenter + offset.x, -offset.y);
-
-                    break;
-                case MrecPos.TopLeft:
-                    newPos = new Vector2Int(offset.x, -offset.y);
-
-                    break;
-                case MrecPos.TopRight:
-                    newPos = new Vector2Int(xMax + offset.x, -offset.y);
-
-                    break;
-                case MrecPos.Center:
-                    newPos = new Vector2Int(xCenter + offset.x, yCenter + -offset.y);
-
-                    break;
-                case MrecPos.CenterLeft:
-                    newPos = new Vector2Int(offset.x, yCenter + -offset.y);
-
-                    break;
-                case MrecPos.CenterRight:
-                    newPos = new Vector2Int(xMax + offset.x, yCenter + -offset.y);
-
-                    break;
-                case MrecPos.Bottom:
-                    newPos = new Vector2Int(xCenter + offset.x, yMax + -offset.y);
-
-                    break;
-                case MrecPos.BottomLeft:
-                    newPos = new Vector2Int(offset.x, yMax + -offset.y);
-
-                    break;
-                case MrecPos.BottomRight:
-                    newPos = new Vector2Int(xMax + offset.x, yMax + -offset.y);
-
-                    break;
-            }
-
-            _nativeOverlayAd.SetTemplatePosition(newPos.x, newPos.y);
-        }
-    }
-
-    public enum NativeTemplateType
-    {
-        Small = 1,
-        Medium = 2,
     }
 
 }

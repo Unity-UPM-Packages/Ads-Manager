@@ -12,7 +12,7 @@ namespace TheLegends.Base.Ads
 
     }
 
-    public enum MrecPos
+    public enum AdsPos
     {
         None = 0,
 

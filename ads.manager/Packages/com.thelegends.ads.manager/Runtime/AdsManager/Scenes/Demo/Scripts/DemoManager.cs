@@ -35,7 +35,9 @@ public class DemoManager : MonoBehaviour
     public AdmobNativeController nativeAdsMrec;
     public AdmobNativeController nativeAdsBanner;
 
-    public Image image;
+
+    public Button nativeOverlayCloseBtn;
+    public GameObject nativeOverlayBG;
 
 
     private void OnEnable()
@@ -56,11 +58,10 @@ public class DemoManager : MonoBehaviour
         loadNativeOverlayBtn.onClick.AddListener(LoadNativeOverlay);
         showNativeOverlayBtn.onClick.AddListener(ShowNativeOverlay);
         hideNativeOverlayBtn.onClick.AddListener(HideNativeOverlay);
-        testBtn.onClick.AddListener(Test);
         loadNativeBtn.onClick.AddListener(LoadNative);
         showNativeBtn.onClick.AddListener(ShowNative);
         hideNativeBtn.onClick.AddListener(HideNative);
-
+        nativeOverlayCloseBtn.onClick.AddListener(HideNativeOverlay);
     }
 
 
@@ -166,7 +167,7 @@ public class DemoManager : MonoBehaviour
 
     private void ShowMrec()
     {
-        var mrecPos = (MrecPos)MrecPosDropdown.value;
+        var mrecPos = (AdsPos)MrecPosDropdown.value;
         AdsManager.Instance.ShowMrec(AdsType.Mrec, order, mrecPos, new Vector2Int(0, 0), "Default");
     }
 
@@ -182,74 +183,35 @@ public class DemoManager : MonoBehaviour
 
     private void ShowNativeOverlay()
     {
-        AdsManager.Instance.ShowNativeOverlay(order, "default");
+        var pos = (AdsPos)MrecPosDropdown.value;
+        var deviceScale = MobileAds.Utils.GetDeviceScale();
+
+        AdsManager.Instance.ShowNativeOverlay(order, new NativeTemplateStyle
+        {
+            TemplateId = NativeTemplateId.Medium,
+            MainBackgroundColor = Color.red,
+            CallToActionText = new NativeTemplateTextStyle()
+            {
+                BackgroundColor = Color.green,
+                TextColor = Color.black,
+                FontSize = 20,
+                Style = NativeTemplateFontStyle.Bold
+            }
+        }, pos, new Vector2Int(Mathf.RoundToInt(Screen.safeArea.width / deviceScale / 1.5f), Mathf.RoundToInt(Screen.safeArea.height / deviceScale)), new Vector2Int(0, 0), "Default", () => {
+            nativeOverlayBG.SetActive(true);
+            AdsManager.Instance.Log("NativeOverlay show");
+        }, () => {
+            AdsManager.Instance.Log("NativeOverlay closed");
+            nativeOverlayBG.SetActive(false);
+        });
+        
+        // new Vector2Int(Mathf.RoundToInt(Screen.safeArea.width / deviceScale / 3), Mathf.RoundToInt(Screen.safeArea.height / deviceScale))
     }
 
 
     private void HideNativeOverlay()
     {
         AdsManager.Instance.HideNativeOverlay(order);
-    }
-
-    private void Test()
-    {
-        SetAdPosition((MrecPos)MrecPosDropdown.value);
-        // FirebaseManager.Instance.FetchRemoteData(() =>
-        // {
-        //     AdsManager.Instance.adsConfigs.adInterOnComplete = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete);
-        //     AdsManager.Instance.adsConfigs.adInterOnStart = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart);
-        //     AdsManager.Instance.adsConfigs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds);
-        // });
-    }
-
-    public void SetAdPosition(MrecPos position)
-    {
-        var adWidth = image.rectTransform.rect.width;
-        var adHeight = image.rectTransform.rect.height;
-        var screenWidth = Screen.width;
-        var screenHeight = Screen.height;
-        var deviceScale = MobileAds.Utils.GetDeviceScale();
-
-        Vector2 targetPosition = Vector2.zero;
-
-        switch (position)
-        {
-            case MrecPos.TopLeft:
-                targetPosition = new Vector2(0, 0);
-                break;
-            case MrecPos.Top:
-                targetPosition = new Vector2((screenWidth / 2) - (adWidth / 2), 0);
-                break;
-            case MrecPos.TopRight:
-                targetPosition = new Vector2(screenWidth - adWidth, 0);
-                break;
-            case MrecPos.Center:
-                targetPosition = new Vector2((screenWidth / 2) - (adWidth / 2), -(screenHeight / 2) + (adHeight / 2));
-                break;
-            case MrecPos.CenterLeft:
-                targetPosition = new Vector2(0, -(screenHeight / 2) + (adHeight / 2));
-                break;
-            case MrecPos.CenterRight:
-                targetPosition = new Vector2(screenWidth - adWidth, -(screenHeight / 2) + (adHeight / 2));
-                break;
-            case MrecPos.Bottom:
-                targetPosition = new Vector2((screenWidth / 2) - (adWidth / 2), -screenHeight + adHeight);
-                break;
-            case MrecPos.BottomLeft:
-                targetPosition = new Vector2(0, -screenHeight + adHeight);
-                break;
-            case MrecPos.BottomRight:
-                targetPosition = new Vector2(screenWidth - adWidth, -screenHeight + adHeight);
-                break;
-        }
-
-        // image.rectTransform.anchoredPosition = targetPosition;
-        var transformPoint = image.transform.TransformPoint(targetPosition);
-        var worldPosition = Camera.main.ScreenToWorldPoint(transformPoint);
-        Debug.Log("BBBBBBBBBB " + worldPosition);
-        image.transform.position = worldPosition;
-
-
     }
 
     public void LoadNative()

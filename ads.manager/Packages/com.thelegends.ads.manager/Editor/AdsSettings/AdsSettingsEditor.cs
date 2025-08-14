@@ -260,6 +260,7 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("mrecOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("appOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeOverlayIds"), true);
 
             EditorGUILayout.Separator();
             EditorGUILayout.Separator();
@@ -273,7 +274,7 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("interOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("mrecOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("appOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeOverlayIds"), true);
 #endif
 
             #endregion

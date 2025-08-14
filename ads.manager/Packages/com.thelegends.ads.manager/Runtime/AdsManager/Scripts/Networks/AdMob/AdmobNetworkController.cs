@@ -66,7 +66,7 @@ namespace TheLegends.Base.Ads
             var interOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.interOpenIds);
             CreateAdController(interOpenIds, interOpenList);
 
-            var nativeOverlayIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds);
+            var nativeOverlayIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeOverlayIds);
             CreateAdController(nativeOverlayIds, nativeOverlayList);
 
 
@@ -417,7 +417,7 @@ namespace TheLegends.Base.Ads
             list[placementIndex].LoadAds();
         }
 
-        public override void ShowMrec(AdsType mrecType, PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position)
+        public override void ShowMrec(AdsType mrecType, PlacementOrder order, AdsPos mrecPosition, Vector2Int offset, string position)
         {
             var list = mrecType == AdsType.MrecOpen ?(new List<AdmobMrecController>(mrecOpenList)) : mrecList;
 
@@ -454,7 +454,7 @@ namespace TheLegends.Base.Ads
             nativeOverlayList[placementIndex].LoadAds();
         }
 
-        public void ShowNativeOverlay(PlacementOrder order, string position)
+        public void ShowNativeOverlay(PlacementOrder order, NativeTemplateStyle style, AdsPos nativeOverlayposition, Vector2Int size, Vector2Int offset, string position, Action OnShow = null, Action OnClose = null)
         {
             if (!IsListExist(nativeOverlayList))
             {
@@ -462,7 +462,7 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
-            nativeOverlayList[placementIndex].ShowAds(position);
+            nativeOverlayList[placementIndex].ShowAds(style, nativeOverlayposition, size, offset, position, OnShow, OnClose);
         }
 
         public void HideNativeOverlay(PlacementOrder order)

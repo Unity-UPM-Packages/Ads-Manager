@@ -471,7 +471,6 @@ namespace TheLegends.Base.Ads
                         image = ResizeTexture(image, adImageMaxSize);
                     }
 
-                    Debug.Log("AAAAAAAAAA: image.width: " + image.width + " image.height: " + image.height);
 
                     if (adImageAspectRatioFitter)
                     {
@@ -503,7 +502,6 @@ namespace TheLegends.Base.Ads
                         choice = ResizeTexture(choice, adChoiceMaxSize);
                     }
 
-                    Debug.Log("AAAAAAAAAA: choice.width: " + choice.width + " choice.height: " + choice.height);
 
                     adChoice.sprite = Sprite.Create(choice, new Rect(0, 0, choice.width, choice.height),
                         new Vector2(0.5f, 0.5f));
@@ -525,7 +523,6 @@ namespace TheLegends.Base.Ads
                         icon = ResizeTexture(icon, iconMaxSize);
                     }
 
-                    Debug.Log("AAAAAAAAAA: icon.width: " + icon.width + " icon.height: " + icon.height);
 
                     adIcon.sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height),
                         new Vector2(0.5f, 0.5f));

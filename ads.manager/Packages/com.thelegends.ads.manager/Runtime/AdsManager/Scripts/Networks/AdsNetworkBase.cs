@@ -25,7 +25,7 @@ namespace TheLegends.Base.Ads
         public abstract void HideBanner(PlacementOrder order);
 
         public abstract void LoadMrec(AdsType mrecType, PlacementOrder order);
-        public abstract void ShowMrec(AdsType mrecType, PlacementOrder order, MrecPos mrecPosition, Vector2Int offset, string position);
+        public abstract void ShowMrec(AdsType mrecType, PlacementOrder order, AdsPos mrecPosition, Vector2Int offset, string position);
         public abstract void HideMrec(AdsType mrecType, PlacementOrder order);
 
         public abstract void HideAllBanner();
