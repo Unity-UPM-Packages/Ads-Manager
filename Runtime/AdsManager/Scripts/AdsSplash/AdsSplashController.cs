@@ -19,7 +19,7 @@ namespace TheLegends.Base.Ads
 
         [Space(10)]
         [SerializeField, ShowField(nameof(isUseSelectBrand))]
-        private MrecPos mrecOpenPos = MrecPos.CenterLeft;
+        private AdsPos mrecOpenPos = AdsPos.CenterLeft;
         [SerializeField, ShowField(nameof(isUseSelectBrand))]
         private Vector2Int mrecOpenOffset = Vector2Int.zero;
 
@@ -226,6 +226,7 @@ namespace TheLegends.Base.Ads
             AdsManager.Instance.LoadMrec(AdsType.Mrec, PlacementOrder.One);
             AdsManager.Instance.LoadAppOpen(PlacementOrder.One);
             AdsManager.Instance.LoadBanner(PlacementOrder.One);
+            AdsManager.Instance.LoadNativeOverlay(PlacementOrder.One);
         }
 
 

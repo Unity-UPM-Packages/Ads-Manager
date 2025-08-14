@@ -6,7 +6,7 @@ namespace TheLegends.Base.Ads
     public class AdmobMrecController : AdmobBannerController
     {
         private Vector2Int offset = new Vector2Int(0, 0);
-        private MrecPos mrecPosition = MrecPos.None;
+        private AdsPos mrecPosition = AdsPos.None;
         public override AdsType GetAdsType()
         {
 #if USE_ADMOB
@@ -23,7 +23,7 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        public void ShowAds(MrecPos position, Vector2Int offset, string showPosition)
+        public void ShowAds(AdsPos position, Vector2Int offset, string showPosition)
         {
             this.offset = offset;
             this.mrecPosition = position;
@@ -45,7 +45,7 @@ namespace TheLegends.Base.Ads
         }
 
 
-        public void SetAdCustomPosition(MrecPos position, Vector2Int offset)
+        public void SetAdCustomPosition(AdsPos position, Vector2Int offset)
         {
             if (!IsAdsReady())
             {
@@ -56,6 +56,8 @@ namespace TheLegends.Base.Ads
 
             float adWidth = _bannerView.GetWidthInPixels() / deviceScale;
             float adHeight = _bannerView.GetHeightInPixels() / deviceScale;
+
+            Debug.Log("AAAAA " + "adWidthMrec: " + adWidth + " adHeightMrec: " + adHeight);
 
             var safeAreaWidth = Screen.safeArea.width / deviceScale;
             var safeAreaHeight = Screen.safeArea.height / deviceScale;
@@ -69,39 +71,39 @@ namespace TheLegends.Base.Ads
 
             switch (position)
             {
-                case MrecPos.Top:
+                case AdsPos.Top:
                     newPos = new Vector2Int(xCenter + offset.x, offset.y);
 
                     break;
-                case MrecPos.TopLeft:
+                case AdsPos.TopLeft:
                     newPos = new Vector2Int(offset.x, offset.y);
 
                     break;
-                case MrecPos.TopRight:
+                case AdsPos.TopRight:
                     newPos = new Vector2Int(xMax + offset.x, offset.y);
 
                     break;
-                case MrecPos.Center:
+                case AdsPos.Center:
                     newPos = new Vector2Int(xCenter + offset.x, yCenter + offset.y);
 
                     break;
-                case MrecPos.CenterLeft:
+                case AdsPos.CenterLeft:
                     newPos = new Vector2Int(offset.x, yCenter + offset.y);
 
                     break;
-                case MrecPos.CenterRight:
+                case AdsPos.CenterRight:
                     newPos = new Vector2Int(xMax + offset.x, yCenter + offset.y);
 
                     break;
-                case MrecPos.Bottom:
+                case AdsPos.Bottom:
                     newPos = new Vector2Int(xCenter + offset.x, yMax + offset.y);
 
                     break;
-                case MrecPos.BottomLeft:
+                case AdsPos.BottomLeft:
                     newPos = new Vector2Int(offset.x, yMax + offset.y);
 
                     break;
-                case MrecPos.BottomRight:
+                case AdsPos.BottomRight:
                     newPos = new Vector2Int(xMax + offset.x, yMax + offset.y);
 
                     break;
