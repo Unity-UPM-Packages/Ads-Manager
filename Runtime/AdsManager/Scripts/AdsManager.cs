@@ -355,6 +355,51 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        public void LoadNativePlatform(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.LoadNativePlatform(order);
+            }
+        }
+
+        public void ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.ShowNativePlatform(order, position, layoutName, OnShow, OnClose);
+            }
+        }
+
+        public void HideNativePlatform(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.HideNativePlatform(order);
+            }
+        }
+
         public AdsEvents GetAdsStatus(AdsType adsType, PlacementOrder order)
         {
             AdsEvents status = AdsEvents.None;
@@ -551,6 +596,7 @@ namespace TheLegends.Base.Ads
         public float adNativeBannerHeight = 140;
         public float adNativeTimeReload = 15f;
         public float adLoadTimeOut = 5f;
+        public float nativeTimeClose = 5f;
     }
 
 }

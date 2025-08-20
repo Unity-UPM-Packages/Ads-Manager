@@ -32,6 +32,9 @@ public class DemoManager : MonoBehaviour
     public Button loadNativeBtn;
     public Button showNativeBtn;
     public Button hideNativeBtn;
+    public Button loadNativePlatformBtn;
+    public Button showNativePlatformBtn;
+    public Button hideNativePlatformBtn;
     public AdmobNativeController nativeAdsMrec;
     public AdmobNativeController nativeAdsBanner;
 
@@ -62,6 +65,9 @@ public class DemoManager : MonoBehaviour
         showNativeBtn.onClick.AddListener(ShowNative);
         hideNativeBtn.onClick.AddListener(HideNative);
         nativeOverlayCloseBtn.onClick.AddListener(HideNativeOverlay);
+        loadNativePlatformBtn.onClick.AddListener(LoadNativePlatform);
+        showNativePlatformBtn.onClick.AddListener(ShowNativePlatform);
+        hideNativePlatformBtn.onClick.AddListener(HideNativePlatform);
     }
 
 
@@ -237,5 +243,25 @@ public class DemoManager : MonoBehaviour
         AdsManager.Instance.GetAdsStatus(AdsType.Native, order);
     }
 
+    public void LoadNativePlatform()
+    {
+        AdsManager.Instance.LoadNativePlatform(order);
+    }
+
+    public void ShowNativePlatform()
+    {
+        AdsManager.Instance.ShowNativePlatform(order, "Default", "native_template", () =>
+        {
+            AdsManager.Instance.Log("NativePlatform show");
+        }, () =>
+        {
+            AdsManager.Instance.Log("NativePlatform closed");
+        });
+    }
+
+    public void HideNativePlatform()
+    {
+        AdsManager.Instance.HideNativePlatform(order);
+    }
 
 }

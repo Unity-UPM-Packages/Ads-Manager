@@ -33,6 +33,7 @@ namespace TheLegends.Base.Ads
         private List<AdmobMrecOpenController> mrecOpenList = new List<AdmobMrecOpenController>();
         private List<AdmobInterstitialOpenController> interOpenList = new List<AdmobInterstitialOpenController>();
         private List<AdmobNativeOverlayController> nativeOverlayList = new List<AdmobNativeOverlayController>();
+        private List<AdmobNativePlatformController> nativePlatformList = new List<AdmobNativePlatformController>();
 
         public override IEnumerator DoInit()
         {
@@ -68,6 +69,9 @@ namespace TheLegends.Base.Ads
 
             var nativeOverlayIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeOverlayIds);
             CreateAdController(nativeOverlayIds, nativeOverlayList);
+
+            var nativePlatformIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativePlatformIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativePlatformIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativePlatformIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativePlatformIds);
+            CreateAdController(nativePlatformIds, nativePlatformList);
 
 
 #endif
@@ -280,6 +284,9 @@ namespace TheLegends.Base.Ads
                 case AdsType.Native:
                     listPlacement = nativeOverlayList.Cast<AdsPlacementBase>().ToList();
                     break;
+                case AdsType.NativePlatform:
+                    listPlacement = nativePlatformList.Cast<AdsPlacementBase>().ToList();
+                    break;
             }
 
             if (!IsListExist(listPlacement))
@@ -474,6 +481,39 @@ namespace TheLegends.Base.Ads
 
             var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
             nativeOverlayList[placementIndex].HideAds();
+        }
+
+        public void LoadNativePlatform(PlacementOrder order)
+        {
+            if (!IsListExist(nativePlatformList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+            nativePlatformList[placementIndex].LoadAds();
+        }
+
+        public void ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null)
+        {
+            if (!IsListExist(nativePlatformList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+            nativePlatformList[placementIndex].ShowAds(position, layoutName, OnShow, OnClose);
+        }
+
+        public void HideNativePlatform(PlacementOrder order)
+        {
+            if (!IsListExist(nativePlatformList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+            nativePlatformList[placementIndex].HideAds();
         }
 
         private bool IsListExist<T>(List<T> list) where T : AdsPlacementBase
