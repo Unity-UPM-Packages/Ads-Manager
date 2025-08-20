@@ -18,6 +18,7 @@ namespace TheLegends.Base.Ads
         public List<Placement> mrecOpenIds = new List<Placement>();
         public List<Placement> nativeIds = new List<Placement>();
         public List<Placement> nativeOverlayIds = new List<Placement>();
+        public List<Placement> nativePlatformIds = new List<Placement>();
     }
 
     [Serializable]

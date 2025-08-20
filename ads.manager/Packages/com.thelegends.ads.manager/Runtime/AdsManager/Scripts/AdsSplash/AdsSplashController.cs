@@ -107,7 +107,8 @@ namespace TheLegends.Base.Ads
                 {"adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight},
                 {"adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload},
                 {"adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut},
-                {"isUseAdNative", AdsManager.Instance.adsConfigs.isUseAdNative}
+                {"isUseAdNative", AdsManager.Instance.adsConfigs.isUseAdNative},
+                {"nativeTimeClose", AdsManager.Instance.adsConfigs.nativeTimeClose}
             };
 
             if (isUseSelectBrand)
@@ -124,7 +125,7 @@ namespace TheLegends.Base.Ads
             {
                 UpdateCommonConfigs();
                 UpdateBrandSpecificConfigs();
-            });
+            }, 0);
         }
 
         private void UpdateCommonConfigs()
@@ -137,6 +138,7 @@ namespace TheLegends.Base.Ads
             configs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", configs.adNativeTimeReload);
             configs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", configs.adLoadTimeOut);
             configs.isUseAdNative = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdNative", configs.isUseAdNative);
+            configs.nativeTimeClose = FirebaseManager.Instance.RemoteGetValueFloat("nativeTimeClose", configs.nativeTimeClose);
         }
 
         private void UpdateBrandSpecificConfigs()
@@ -227,6 +229,7 @@ namespace TheLegends.Base.Ads
             AdsManager.Instance.LoadAppOpen(PlacementOrder.One);
             AdsManager.Instance.LoadBanner(PlacementOrder.One);
             AdsManager.Instance.LoadNativeOverlay(PlacementOrder.One);
+            AdsManager.Instance.LoadNativePlatform(PlacementOrder.One);
         }
 
 

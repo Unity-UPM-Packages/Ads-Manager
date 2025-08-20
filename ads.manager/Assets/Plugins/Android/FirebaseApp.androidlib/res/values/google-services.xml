@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
-  <string name="gcm_defaultSenderId" translatable="false">590494744738</string>
-  <string name="google_storage_bucket" translatable="false">testbase-56761.firebasestorage.app</string>
-  <string name="project_id" translatable="false">testbase-56761</string>
-  <string name="google_api_key" translatable="false">AIzaSyD9R7ncohfVgNohhzab-L2VUdedQNcAOYI</string>
-  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyD9R7ncohfVgNohhzab-L2VUdedQNcAOYI</string>
-  <string name="google_app_id" translatable="false">1:590494744738:android:97b925409bda5ef3b757fb</string>
+  <string name="gcm_defaultSenderId" translatable="false">903030470682</string>
+  <string name="google_storage_bucket" translatable="false">test-base-72bfe.firebasestorage.app</string>
+  <string name="project_id" translatable="false">test-base-72bfe</string>
+  <string name="google_api_key" translatable="false">AIzaSyBQQyZdR5qHz164xX2UglsICkAvo2SrJQk</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBQQyZdR5qHz164xX2UglsICkAvo2SrJQk</string>
+  <string name="google_app_id" translatable="false">1:903030470682:android:87f4ced98f239375b5f9a3</string>
 </resources>

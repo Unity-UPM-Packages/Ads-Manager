@@ -8,7 +8,7 @@ using TheLegends.Base.Ads;
 
 namespace TheLegends.Base.Ads
 {
-    public class BuildPostProcess : MonoBehaviour
+    public class DisableBitcodeiOS
     {
         [PostProcessBuildAttribute(999)]
         public static void OnPostprocessBuild(BuildTarget buildTarget, string pathToXcode)

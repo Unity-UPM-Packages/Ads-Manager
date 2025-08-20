@@ -85,7 +85,7 @@ namespace TheLegends.Base.Ads
             //     PackagesManagerIntergration.SetSymbolEnabled("USE_ADMOB", Instance.showADMOB);
             // }
 
-            if(GUILayout.Button("SAVE"))
+            if (GUILayout.Button("SAVE"))
             {
                 Save(Instance);
                 PackagesManagerIntergration.SetSymbolEnabled("USE_IRON", Instance.showIRON);
@@ -261,6 +261,7 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("appOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeOverlayIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativePlatformIds"), true);
 
             EditorGUILayout.Separator();
             EditorGUILayout.Separator();
@@ -275,6 +276,7 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("mrecOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("appOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeOverlayIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativePlatformIds"), true);
 #endif
 
             #endregion

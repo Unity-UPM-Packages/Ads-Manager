@@ -16,6 +16,7 @@ namespace TheLegends.Base.Ads
         InterOpen = 7,
         NativeOverlay = 8,
         Native = 9,
+        NativePlatform = 10,
     }
 }
 
