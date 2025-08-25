@@ -400,6 +400,11 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        public void ShowNativeVideoPlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null)
+        {
+            ShowNativePlatform(order, position, adsConfigs.nativeVideoCountdownTimerDuration, adsConfigs.nativeVideoDelayBeforeCountdown, adsConfigs.nativeVideoCloseClickableDelay, layoutName, OnShow, OnClose);
+        }
+
         public void HideNativePlatform(PlacementOrder order)
         {
             if (!IsInitialized())

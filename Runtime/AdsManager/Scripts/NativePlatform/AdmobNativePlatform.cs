@@ -25,6 +25,8 @@ namespace TheLegends.Base.Ads
         public event Action OnVideoPause;
         public event Action OnAdClosed;
         public event Action OnAdShow;
+        public event Action OnAdShowedFullScreenContent;
+        public event Action OnAdDismissedFullScreenContent;
 
         public static void Load(string adUnitId, AdRequest request, Action<AdmobNativePlatform, LoadAdError> adLoadCallback)
         {
@@ -35,7 +37,7 @@ namespace TheLegends.Base.Ads
             }
 
             IAdmobNativePlatformClient client;
-            
+
 #if UNITY_ANDROID && !UNITY_EDITOR
             client = new AdmobNativePlatformAndroidClient();
 #elif UNITY_IOS && !UNITY_EDITOR
@@ -85,6 +87,8 @@ namespace TheLegends.Base.Ads
             _client.OnVideoPause += () => OnVideoPause?.Invoke();
             _client.OnAdClosed += () => OnAdClosed?.Invoke();
             _client.OnAdShow += () => OnAdShow?.Invoke();
+            _client.OnAdShowedFullScreenContent += () => OnAdShowedFullScreenContent?.Invoke();
+            _client.OnAdDismissedFullScreenContent += () => OnAdDismissedFullScreenContent?.Invoke();
         }
     }
 }

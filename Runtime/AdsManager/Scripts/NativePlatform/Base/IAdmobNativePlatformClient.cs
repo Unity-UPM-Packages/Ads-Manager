@@ -19,6 +19,8 @@ namespace TheLegends.Base.Ads
         event EventHandler<bool> OnVideoMute;
         event Action OnVideoPlay;
         event Action OnVideoPause;
+        event Action OnAdShowedFullScreenContent;
+        event Action OnAdDismissedFullScreenContent;
 
         // === METHODS ===
         void Initialize();

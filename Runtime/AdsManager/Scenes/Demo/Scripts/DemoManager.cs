@@ -250,13 +250,22 @@ public class DemoManager : MonoBehaviour
 
     public void ShowNativePlatform()
     {
-        AdsManager.Instance.ShowNativePlatform(order, "Default", "native_template", () =>
+        // AdsManager.Instance.ShowNativePlatform(order, "Default", "native_template", () =>
+        // {
+        //     AdsManager.Instance.Log("NativePlatform show");
+        // }, () =>
+        // {
+        //     AdsManager.Instance.Log("NativePlatform closed");
+        // });
+
+        AdsManager.Instance.ShowNativeVideoPlatform(order, "Default", "native_template", () =>
         {
             AdsManager.Instance.Log("NativePlatform show");
         }, () =>
         {
             AdsManager.Instance.Log("NativePlatform closed");
         });
+        
     }
 
     public void HideNativePlatform()
