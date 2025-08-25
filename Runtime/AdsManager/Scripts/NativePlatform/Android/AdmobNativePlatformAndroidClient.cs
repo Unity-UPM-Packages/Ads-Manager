@@ -46,17 +46,13 @@ namespace TheLegends.Base.Ads
         }
 
         public void ShowAd(string layoutName) => _kotlinController?.Call("showAd", layoutName);
+        public void ShowAd(string layoutName, float countdownSec, float initDelaySec, float closeDelaySec) => _kotlinController?.Call("showAd", layoutName, countdownSec, initDelaySec, closeDelaySec);
         public void DestroyAd() => _kotlinController?.Call("destroyAd");
         public bool IsAdAvailable() => _kotlinController?.Call<bool>("isAdAvailable") ?? false;
 
         public IResponseInfoClient GetResponseInfoClient()
         {
             return _kotlinController != null ? new AdmobNativePlatformAndroidResponseInfoClient (_kotlinController) : null;
-        }
-
-        public void SetCountdownDuration(float seconds)
-        {
-            _kotlinController?.Call("setCountdownDuration", seconds);
         }
 
         #region Kotlin Callbacks Implementation

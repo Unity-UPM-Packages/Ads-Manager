@@ -108,7 +108,9 @@ namespace TheLegends.Base.Ads
                 {"adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload},
                 {"adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut},
                 {"isUseAdNative", AdsManager.Instance.adsConfigs.isUseAdNative},
-                {"nativeTimeClose", AdsManager.Instance.adsConfigs.nativeTimeClose}
+                {"nativeVideoCountdownTimerDuration", AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration},
+                {"nativeVideoDelayBeforeCountdown", AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown},
+                {"nativeVideoCloseClickableDelay", AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay}
             };
 
             if (isUseSelectBrand)
@@ -138,7 +140,9 @@ namespace TheLegends.Base.Ads
             configs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", configs.adNativeTimeReload);
             configs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", configs.adLoadTimeOut);
             configs.isUseAdNative = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdNative", configs.isUseAdNative);
-            configs.nativeTimeClose = FirebaseManager.Instance.RemoteGetValueFloat("nativeTimeClose", configs.nativeTimeClose);
+            configs.nativeVideoCountdownTimerDuration = FirebaseManager.Instance.RemoteGetValueFloat("nativeVideoCountdownTimerDuration", configs.nativeVideoCountdownTimerDuration);
+            configs.nativeVideoDelayBeforeCountdown = FirebaseManager.Instance.RemoteGetValueFloat("nativeVideoDelayBeforeCountdown", configs.nativeVideoDelayBeforeCountdown);
+            configs.nativeVideoCloseClickableDelay = FirebaseManager.Instance.RemoteGetValueFloat("nativeVideoCloseClickableDelay", configs.nativeVideoCloseClickableDelay);
         }
 
         private void UpdateBrandSpecificConfigs()
