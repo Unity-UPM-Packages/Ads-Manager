@@ -1,3 +1,12 @@
+## [1.0.47](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.46...v1.0.47) (2025-08-25)
+
+
+### Bug Fixes
+
+* add native overlay ([f1db036](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/f1db036c3a19e88ee8b8bd57b2a0576eb1de41e7))
+* force Hardware Acceleration Android ([17ce5eb](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/17ce5ebdf3f9f4f789a382fe3bcc257a5313fe02))
+* impletement Native Platform ([155e0b4](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/155e0b4daf5a1cf8575b33cb8d50386a2518f608))
+
 ## [1.0.46](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.45...v1.0.46) (2025-07-23)
 
 
