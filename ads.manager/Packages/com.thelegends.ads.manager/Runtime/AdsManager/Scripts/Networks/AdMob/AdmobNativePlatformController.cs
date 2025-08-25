@@ -104,7 +104,8 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        private void ShowAds(string showPosition, Action OnShow = null, Action OnClose = null)
+        private void ShowAds(string showPosition, float? countdownSec = null, float? initDelaySec = null, float? closeDelaySec = null, 
+             Action OnShow = null, Action OnClose = null)
         {
 #if USE_ADMOB
             position = showPosition;
@@ -122,36 +123,16 @@ namespace TheLegends.Base.Ads
             if (IsReady && IsAvailable)
             {
                 RegisterAdEvents();
-                _nativePlatformAd.Show(_layoutName);
-            }
-            else
-            {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
-                reloadCount = 0;
-                LoadAds();
-            }
-#endif
-        }
-
-        private void ShowAds(string showPosition, float countdownSec, float initDelaySec, float closeDelaySec, Action OnShow = null, Action OnClose = null)
-        {
-#if USE_ADMOB
-            position = showPosition;
-
-            if (Status == AdsEvents.ShowSuccess)
-            {
-                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "is showing --> return");
-                return;
-            }
-
-            this.OnClose = OnClose;
-            this.OnShow = OnShow;
-            base.ShowAds(showPosition);
-
-            if (IsReady && IsAvailable)
-            {
-                RegisterAdEvents();
-                _nativePlatformAd.Show(_layoutName, countdownSec, initDelaySec, closeDelaySec);
+                
+                // Show ad with or without timing parameters
+                if (countdownSec.HasValue && initDelaySec.HasValue && closeDelaySec.HasValue)
+                {
+                    _nativePlatformAd.Show(_layoutName, countdownSec.Value, initDelaySec.Value, closeDelaySec.Value);
+                }
+                else
+                {
+                    _nativePlatformAd.Show(_layoutName);
+                }
             }
             else
             {
@@ -165,7 +146,7 @@ namespace TheLegends.Base.Ads
         public void ShowAds(string showPosition, string layoutName, Action OnShow = null, Action OnClose = null)
         {
             _layoutName = layoutName;
-            ShowAds(showPosition, OnShow, OnClose);
+            ShowAds(showPosition, null, null, null, OnShow, OnClose);
         }
 
         public void ShowAds(string showPosition, float countdownSec, float initDelaySec, float closeDelaySec, string layoutName, Action OnShow = null, Action OnClose = null)
@@ -236,6 +217,8 @@ namespace TheLegends.Base.Ads
             _nativePlatformAd.OnVideoPause += OnVideoPause;
             _nativePlatformAd.OnAdClosed += OnNativePlatformClosed;
             _nativePlatformAd.OnAdShow += OnNativePlatformShow;
+            _nativePlatformAd.OnAdShowedFullScreenContent += OnNativePlatformShowedFullScreenContent;
+            _nativePlatformAd.OnAdDismissedFullScreenContent += OnNativePlatformDismissedFullScreenContent;
 #endif
         }
 
@@ -254,6 +237,8 @@ namespace TheLegends.Base.Ads
             _nativePlatformAd.OnVideoPause -= OnVideoPause;
             _nativePlatformAd.OnAdClosed -= OnNativePlatformClosed;
             _nativePlatformAd.OnAdShow -= OnNativePlatformShow;
+            _nativePlatformAd.OnAdShowedFullScreenContent -= OnNativePlatformShowedFullScreenContent;
+            _nativePlatformAd.OnAdDismissedFullScreenContent -= OnNativePlatformDismissedFullScreenContent;
 #endif
         }
 
@@ -337,6 +322,22 @@ namespace TheLegends.Base.Ads
             {
                 OnAdsShowSuccess();
                 OnShow?.Invoke();
+            });
+        }
+
+        private void OnNativePlatformShowedFullScreenContent()
+        {
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                OnAdsShowSuccess();
+            });
+        }
+
+        private void OnNativePlatformDismissedFullScreenContent()
+        {
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                HideAds();
             });
         }
 

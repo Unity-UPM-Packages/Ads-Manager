@@ -26,6 +26,9 @@ namespace TheLegends.Base.Ads
         public event Action OnVideoPause;
         public event Action OnAdClosed;
         public event Action OnAdShow;
+        public event Action OnAdShowedFullScreenContent;
+        public event Action OnAdDismissedFullScreenContent;
+
         // ... khai báo tất cả các event khác nhưng không bao giờ kích hoạt chúng ...
 
         public void Initialize()

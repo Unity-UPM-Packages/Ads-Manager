@@ -22,6 +22,8 @@ namespace TheLegends.Base.Ads
         public event EventHandler<bool> OnVideoMute;
         public event Action OnVideoPlay;
         public event Action OnVideoPause;
+        public event Action OnAdShowedFullScreenContent;
+        public event Action OnAdDismissedFullScreenContent;
 
         private AndroidJavaObject _kotlinController;
 
@@ -156,7 +158,20 @@ namespace TheLegends.Base.Ads
                 OnVideoPause?.Invoke();
             });
         }
-
+        void onAdShowedFullScreenContent()
+        {
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                OnAdShowedFullScreenContent?.Invoke();
+            });
+        }
+        void onAdDismissedFullScreenContent()
+        {
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                OnAdDismissedFullScreenContent?.Invoke();
+            });
+        }
         #endregion
     }
 }
