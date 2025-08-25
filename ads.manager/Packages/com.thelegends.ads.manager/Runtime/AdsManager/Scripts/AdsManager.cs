@@ -385,6 +385,21 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        public void ShowNativePlatform(PlacementOrder order, string position, float countdownSec, float initDelaySec, float closeDelaySec, string layoutName, Action OnShow = null, Action OnClose = null)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.ShowNativePlatform(order, position, countdownSec, initDelaySec, closeDelaySec, layoutName, OnShow, OnClose);
+            }
+        }
+
         public void HideNativePlatform(PlacementOrder order)
         {
             if (!IsInitialized())
@@ -596,7 +611,9 @@ namespace TheLegends.Base.Ads
         public float adNativeBannerHeight = 140;
         public float adNativeTimeReload = 15f;
         public float adLoadTimeOut = 5f;
-        public float nativeTimeClose = 5f;
+        public float nativeVideoCountdownTimerDuration = 5f;
+        public float nativeVideoDelayBeforeCountdown = 5f;
+        public float nativeVideoCloseClickableDelay = 2f;
     }
 
 }

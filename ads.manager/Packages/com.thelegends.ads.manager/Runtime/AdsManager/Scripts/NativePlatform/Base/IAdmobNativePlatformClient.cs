@@ -24,10 +24,9 @@ namespace TheLegends.Base.Ads
         void Initialize();
         void LoadAd(string adUnitId, AdRequest request);
         void ShowAd(string layoutName);
+        void ShowAd(string layoutName, float countdownSec, float initDelaySec, float closeDelaySec);
         void DestroyAd();
         bool IsAdAvailable();
         IResponseInfoClient GetResponseInfoClient();
-        void SetCountdownDuration(float seconds);
-
     }
 }

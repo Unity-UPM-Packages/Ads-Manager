@@ -95,8 +95,6 @@ namespace TheLegends.Base.Ads
 
                         _nativePlatformAd = native;
 
-                        SetCountdownDuration(AdsManager.Instance.adsConfigs.nativeTimeClose);
-
                         OnAdsLoadAvailable();
 
                     });
@@ -135,10 +133,45 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
+        private void ShowAds(string showPosition, float countdownSec, float initDelaySec, float closeDelaySec, Action OnShow = null, Action OnClose = null)
+        {
+#if USE_ADMOB
+            position = showPosition;
+
+            if (Status == AdsEvents.ShowSuccess)
+            {
+                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "is showing --> return");
+                return;
+            }
+
+            this.OnClose = OnClose;
+            this.OnShow = OnShow;
+            base.ShowAds(showPosition);
+
+            if (IsReady && IsAvailable)
+            {
+                RegisterAdEvents();
+                _nativePlatformAd.Show(_layoutName, countdownSec, initDelaySec, closeDelaySec);
+            }
+            else
+            {
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+                reloadCount = 0;
+                LoadAds();
+            }
+#endif
+        }
+
         public void ShowAds(string showPosition, string layoutName, Action OnShow = null, Action OnClose = null)
         {
             _layoutName = layoutName;
             ShowAds(showPosition, OnShow, OnClose);
+        }
+
+        public void ShowAds(string showPosition, float countdownSec, float initDelaySec, float closeDelaySec, string layoutName, Action OnShow = null, Action OnClose = null)
+        {
+            _layoutName = layoutName;
+            ShowAds(showPosition, countdownSec, initDelaySec, closeDelaySec, OnShow, OnClose);
         }
 
         public void SetLayoutName(string layoutName)
@@ -160,12 +193,6 @@ namespace TheLegends.Base.Ads
 
         #region Internal
 
-        private void SetCountdownDuration(float seconds)
-        {
-#if USE_ADMOB
-            _nativePlatformAd?.SetCountdownDuration(seconds);
-#endif
-        }
 
         private void NativePlatformDestroy()
         {
