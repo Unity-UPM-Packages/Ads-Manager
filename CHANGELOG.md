@@ -1,3 +1,11 @@
+## [1.0.48](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.47...v1.0.48) (2025-08-26)
+
+
+### Bug Fixes
+
+* implement OnNativePlatformShowedFullScreenContent, OnNativePlatformDismissedFullScreenContent ([c55e4c0](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/c55e4c0ad83128e6fd92ff9c8b8fe6f3106a7d3d))
+* update show native with multiple parameter ([688bbf9](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/688bbf99c1226ddf95b81810a0bde8a4aff8a21c))
+
 ## [1.0.47](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.46...v1.0.47) (2025-08-25)
 
 
