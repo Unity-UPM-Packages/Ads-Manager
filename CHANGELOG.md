@@ -1,3 +1,10 @@
+## [1.0.49](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.48...v1.0.49) (2025-09-03)
+
+
+### Bug Fixes
+
+* remove Inter Open record lastTimeShowAd ([3343d2b](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/3343d2bc3f3b2dc0d1203533b19e0da8d50e6b44))
+
 ## [1.0.48](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.47...v1.0.48) (2025-08-26)
 
 
