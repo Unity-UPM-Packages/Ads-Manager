@@ -48,14 +48,24 @@ namespace TheLegends.Base.Ads
         }
 
         public void ShowAd(string layoutName) { /* Không làm gì */ }
-        public void ShowAd(string layoutName, float countdownSec, float initDelaySec, float closeDelaySec)
-        {
-            throw new NotImplementedException();
-        }
         public void DestroyAd() { /* Không làm gì */ }
         public bool IsAdAvailable() => false;
         public IResponseInfoClient GetResponseInfoClient() => null;
 
+        public void WithCountdown(float initialDelaySeconds, float countdownDurationSeconds, float closeButtonDelaySeconds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WithAutoReload(string adUnitId, long intervalSeconds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WithShowOnLoaded(bool enabled)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     /// <summary>

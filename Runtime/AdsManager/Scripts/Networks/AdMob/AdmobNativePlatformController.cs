@@ -9,12 +9,20 @@ namespace TheLegends.Base.Ads
     public class AdmobNativePlatformController : AdsPlacementBase
     {
         private AdmobNativePlatform _nativePlatformAd;
+        private string _layoutName;
         
         private string _currentLoadRequestId;
-        private string _layoutName = "default_layout";
         
         private Action OnClose;
         private Action OnShow;
+        private Action OnAdDismissedFullScreenContent;
+        
+        // Unity-side config storage for persistence (only Countdown needs storage for native)
+        private NativePlatformShowBuilder.CountdownConfig _storedCountdown;
+        
+        // Unity AutoReload & ShowOnLoaded management (exactly like AdmobNativeController)
+        private float _autoReloadTime = 0f; // Like timeAutoReload in AdmobNativeController
+        private bool _isShowOnLoaded = false; // Like isShowOnLoaded in AdmobNativeController
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -51,11 +59,16 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (!IsReady)
+            if (IsReady && Status == AdsEvents.LoadAvailable)
             {
+                return;
+            }
+
                 NativePlatformDestroy();
 
                 base.LoadAds();
+
+                // Unity flags already set in StoreConfigs (simple like AdmobNativeController)
 
                 AdRequest request = new AdRequest();
 
@@ -77,14 +90,14 @@ namespace TheLegends.Base.Ads
                         StopHandleTimeout();
 
                         // if error is not null, the load request failed.
-                        if(error != null)
+                        if (error != null)
                         {
                             AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
                             OnNativePlatformLoadFailed(error);
                             return;
                         }
 
-                        if(native == null)
+                        if (native == null)
                         {
                             AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
                             OnNativePlatformLoadFailed(error);
@@ -97,18 +110,25 @@ namespace TheLegends.Base.Ads
 
                         OnAdsLoadAvailable();
 
+                        adsUnitIDIndex = 0;
+                        
+                        if (_isShowOnLoaded)
+                        {
+                            ShowAds(position, _layoutName, OnShow, OnClose); // Use default layout like AdmobNativeController
+                        }
+
                     });
                 });
-
-            }
 #endif
         }
 
-        private void ShowAds(string showPosition, float? countdownSec = null, float? initDelaySec = null, float? closeDelaySec = null, 
-             Action OnShow = null, Action OnClose = null)
+
+        public void ShowAds(string showPosition, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
+
 #if USE_ADMOB
             position = showPosition;
+            _layoutName = layoutName;
 
             if (Status == AdsEvents.ShowSuccess)
             {
@@ -118,20 +138,26 @@ namespace TheLegends.Base.Ads
 
             this.OnClose = OnClose;
             this.OnShow = OnShow;
+            this.OnAdDismissedFullScreenContent = OnAdDismissedFullScreenContent;
             base.ShowAds(showPosition);
 
             if (IsReady && IsAvailable)
             {
                 RegisterAdEvents();
-                
-                // Show ad with or without timing parameters
-                if (countdownSec.HasValue && initDelaySec.HasValue && closeDelaySec.HasValue)
+
+                if (_storedCountdown != null)
                 {
-                    _nativePlatformAd.Show(_layoutName, countdownSec.Value, initDelaySec.Value, closeDelaySec.Value);
+                    _nativePlatformAd.WithCountdown(_storedCountdown.InitialDelaySeconds, 
+                                                  _storedCountdown.CountdownDurationSeconds, 
+                                                  _storedCountdown.CloseButtonDelaySeconds);
                 }
-                else
+
+                _nativePlatformAd.Show(layoutName);
+                
+                CancelReloadAds();
+                if (_autoReloadTime > 0)
                 {
-                    _nativePlatformAd.Show(_layoutName);
+                    DelayReloadAd(_autoReloadTime);
                 }
             }
             else
@@ -143,23 +169,6 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        public void ShowAds(string showPosition, string layoutName, Action OnShow = null, Action OnClose = null)
-        {
-            _layoutName = layoutName;
-            ShowAds(showPosition, null, null, null, OnShow, OnClose);
-        }
-
-        public void ShowAds(string showPosition, float countdownSec, float initDelaySec, float closeDelaySec, string layoutName, Action OnShow = null, Action OnClose = null)
-        {
-            _layoutName = layoutName;
-            ShowAds(showPosition, countdownSec, initDelaySec, closeDelaySec, OnShow, OnClose);
-        }
-
-        public void SetLayoutName(string layoutName)
-        {
-            _layoutName = layoutName;
-        }
-
         public void HideAds()
         {
             if (Status != AdsEvents.ShowSuccess)
@@ -168,8 +177,21 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
+            ClearStoredConfigs();
+
             NativePlatformDestroy();
             OnNativePlatformClosed();
+            CancelReloadAds();
+        }
+
+        private void DelayReloadAd(float time)
+        {
+            Invoke(nameof(LoadAds), time);
+        }
+
+        private void CancelReloadAds()
+        {
+            CancelInvoke(nameof(LoadAds));
         }
 
         #region Internal
@@ -182,6 +204,8 @@ namespace TheLegends.Base.Ads
             {
                 if (_nativePlatformAd != null)
                 {
+                    CancelReloadAds();
+                    
                     UnregisterAdEvents();
                     _nativePlatformAd.Destroy();
                     _nativePlatformAd = null;
@@ -199,6 +223,10 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             var errorDescription = error?.GetMessage();
             OnAdsLoadFailed(errorDescription);
+            if (Status == AdsEvents.LoadNotAvailable)
+            {
+                DelayReloadAd(30);
+            }
 #endif
         }
 
@@ -309,44 +337,84 @@ namespace TheLegends.Base.Ads
 
         private void OnNativePlatformClosed()
         {
+#if USE_ADMOB
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClosed();
                 OnClose?.Invoke();
             });
+#endif
         }
 
         private void OnNativePlatformShow()
         {
+#if USE_ADMOB
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsShowSuccess();
                 OnShow?.Invoke();
             });
+#endif
         }
 
         private void OnNativePlatformShowedFullScreenContent()
         {
+#if USE_ADMOB
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsShowSuccess();
             });
+#endif
         }
 
         private void OnNativePlatformDismissedFullScreenContent()
         {
+#if USE_ADMOB
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                HideAds();
+                OnAdDismissedFullScreenContent?.Invoke();
             });
+#endif
         }
 
         #endregion
 
+        #region Config Persistence Management
 
-        private void OnDestroy()
+
+        /// <summary>
+        /// Store configs from builder for persistence across LoadFails
+        /// </summary>
+        internal void StoreConfigs(NativePlatformShowBuilder.CountdownConfig countdown, 
+                                   NativePlatformShowBuilder.AutoReloadConfig autoReload, 
+                                   NativePlatformShowBuilder.ShowOnLoadedConfig showOnLoaded)
         {
-            NativePlatformDestroy();
+            _storedCountdown = countdown?.Clone();
+            _autoReloadTime = autoReload?.IntervalSeconds ?? 0f;
+            _isShowOnLoaded = showOnLoaded?.Enabled ?? false;
+            
+            var configsInfo = new System.Collections.Generic.List<string>();
+            if (_storedCountdown != null) configsInfo.Add($"Countdown({_storedCountdown})");
+            if (_autoReloadTime > 0) configsInfo.Add($"AutoReload({_autoReloadTime}s)");
+            if (_isShowOnLoaded) configsInfo.Add($"ShowOnLoaded({_isShowOnLoaded})");
+            
+            Debug.Log($"[{AdsNetworks}_{AdsType}] Stored configs: [{string.Join(", ", configsInfo)}]");
         }
+
+
+        /// <summary>
+        /// Clear stored configs (called on Hide)
+        /// </summary>
+        private void ClearStoredConfigs()
+        {
+            CancelReloadAds();
+            
+            _storedCountdown = null;
+            _autoReloadTime = 0f;
+            _isShowOnLoaded = false;
+        }
+
+        #endregion
+
     }
 }

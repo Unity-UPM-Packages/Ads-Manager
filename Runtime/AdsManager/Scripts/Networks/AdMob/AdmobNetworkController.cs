@@ -494,28 +494,19 @@ namespace TheLegends.Base.Ads
             nativePlatformList[placementIndex].LoadAds();
         }
 
-        public void ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null)
+        public NativePlatformShowBuilder ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
             if (!IsListExist(nativePlatformList))
             {
-                return;
+                return null;
             }
 
             var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
-            nativePlatformList[placementIndex].ShowAds(position, layoutName, OnShow, OnClose);
+            var controller = nativePlatformList[placementIndex];
+
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
         }
 
-        public void ShowNativePlatform(PlacementOrder order, string position, float countdownSec, float initDelaySec, float closeDelaySec, string layoutName, Action OnShow = null, Action OnClose = null)
-        {
-            if (!IsListExist(nativePlatformList))
-            {
-                return;
-            }
-
-            var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
-            nativePlatformList[placementIndex].ShowAds(position, countdownSec, initDelaySec, closeDelaySec, layoutName, OnShow, OnClose);
-        }
-        
         public void HideNativePlatform(PlacementOrder order)
         {
             if (!IsListExist(nativePlatformList))

@@ -66,7 +66,7 @@ public class DemoManager : MonoBehaviour
         hideNativeBtn.onClick.AddListener(HideNative);
         nativeOverlayCloseBtn.onClick.AddListener(HideNativeOverlay);
         loadNativePlatformBtn.onClick.AddListener(LoadNativePlatform);
-        showNativePlatformBtn.onClick.AddListener(ShowNativePlatform);
+        showNativePlatformBtn.onClick.AddListener(ShowNativeBannerPlatform);
         hideNativePlatformBtn.onClick.AddListener(HideNativePlatform);
     }
 
@@ -248,24 +248,36 @@ public class DemoManager : MonoBehaviour
         AdsManager.Instance.LoadNativePlatform(order);
     }
 
-    public void ShowNativePlatform()
+    public void ShowNativeBannerPlatform()
     {
-        // AdsManager.Instance.ShowNativePlatform(order, "Default", "native_template", () =>
-        // {
-        //     AdsManager.Instance.Log("NativePlatform show");
-        // }, () =>
-        // {
-        //     AdsManager.Instance.Log("NativePlatform closed");
-        // });
-
-        AdsManager.Instance.ShowNativeVideoPlatform(order, "Default", "native_template", () =>
+        // Test new Execute() pattern API
+        AdsManager.Instance.ShowNativeBannerPlatform(order, "Default", "native_banner", () =>
         {
-            AdsManager.Instance.Log("NativePlatform show");
+            AdsManager.Instance.Log("NativeBannerPlatform show");
         }, () =>
         {
-            AdsManager.Instance.Log("NativePlatform closed");
+            AdsManager.Instance.Log("NativeBannerPlatform closed");
+        }, () =>
+        {
+            AdsManager.Instance.Log("NativeBannerPlatform full screen content closed");
         });
         
+
+
+    }
+
+    public void ShowNativeVideoPlatform()
+    {
+        AdsManager.Instance.ShowNativeVideoPlatform(order, "Default", "native_template", () =>
+        {
+            AdsManager.Instance.Log("NativeVideoPlatform show");
+        }, () =>
+        {
+            AdsManager.Instance.Log("NativeVideoPlatform closed");
+        }, () =>
+        {
+            AdsManager.Instance.Log("NativeVideoPlatform full screen content closed");
+        });
     }
 
     public void HideNativePlatform()

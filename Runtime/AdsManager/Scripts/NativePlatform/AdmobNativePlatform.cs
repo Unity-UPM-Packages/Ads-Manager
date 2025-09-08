@@ -64,9 +64,17 @@ namespace TheLegends.Base.Ads
         }
 
         public void Show(string layoutName) => _client?.ShowAd(layoutName);
-        public void Show(string layoutName, float countdownSec, float initDelaySec, float closeDelaySec) => _client?.ShowAd(layoutName, countdownSec, initDelaySec, closeDelaySec);
         public void Destroy() => _client?.DestroyAd();
         public bool IsAdAvailable() => _client != null && _client.IsAdAvailable();
+
+        #region Builder Pattern Support - Forward to Native
+
+        public void WithCountdown(float initialDelaySeconds, float countdownDurationSeconds, float closeButtonDelaySeconds)
+        {
+            _client?.WithCountdown(initialDelaySeconds, countdownDurationSeconds, closeButtonDelaySeconds);
+        }
+
+        #endregion
 
         public IResponseInfoClient GetResponseInfo()
         {
