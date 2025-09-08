@@ -370,39 +370,40 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public void ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null)
+        public NativePlatformShowBuilder ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
             if (!IsInitialized())
             {
-                return;
+                LogError("AdsManager not initialized");
+                return null;
             }
 
             var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
 
             if (netWork != null)
             {
-                netWork.ShowNativePlatform(order, position, layoutName, OnShow, OnClose);
+                return netWork.ShowNativePlatform(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
             }
+
+            return null;
         }
 
-        public void ShowNativePlatform(PlacementOrder order, string position, float countdownSec, float initDelaySec, float closeDelaySec, string layoutName, Action OnShow = null, Action OnClose = null)
+        public void ShowNativeVideoPlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
-            if (!IsInitialized())
+            ShowNativePlatform(order, position, layoutName, OnShow, OnClose, () =>
             {
-                return;
-            }
-
-            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
-
-            if (netWork != null)
-            {
-                netWork.ShowNativePlatform(order, position, countdownSec, initDelaySec, closeDelaySec, layoutName, OnShow, OnClose);
-            }
+                OnAdDismissedFullScreenContent?.Invoke();
+                HideNativePlatform(order);
+            }).WithCountdown(adsConfigs.nativeVideoCountdownTimerDuration, adsConfigs.nativeVideoDelayBeforeCountdown, adsConfigs.nativeVideoCloseClickableDelay)
+            .Execute();
         }
 
-        public void ShowNativeVideoPlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null)
+        public void ShowNativeBannerPlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
-            ShowNativePlatform(order, position, adsConfigs.nativeVideoCountdownTimerDuration, adsConfigs.nativeVideoDelayBeforeCountdown, adsConfigs.nativeVideoCloseClickableDelay, layoutName, OnShow, OnClose);
+            ShowNativePlatform(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent)
+            .WithAutoReload(10)
+            .WithShowOnLoaded(true)
+            .Execute();
         }
 
         public void HideNativePlatform(PlacementOrder order)

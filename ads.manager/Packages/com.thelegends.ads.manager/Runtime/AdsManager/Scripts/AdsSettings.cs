@@ -117,7 +117,7 @@ namespace TheLegends.Base.Ads
             mrecOpenIds = CreatePlacement("ca-app-pub-3940256099942544/6300978111"),
             nativeIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
             nativeOverlayIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
-            nativePlatformIds = CreatePlacement("ca-app-pub-3940256099942544/1044960115")
+            nativePlatformIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110")
         };
 
         public AdmobUnitID ADMOB_IOS_Test = new AdmobUnitID

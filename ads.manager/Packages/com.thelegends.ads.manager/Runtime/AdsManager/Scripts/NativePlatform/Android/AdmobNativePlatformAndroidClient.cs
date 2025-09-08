@@ -27,30 +27,37 @@ namespace TheLegends.Base.Ads
 
         private AndroidJavaObject _kotlinController;
 
-        // Constructor phải gọi base() với tên đầy đủ của interface Kotlin.
         public AdmobNativePlatformAndroidClient() : base("com.thelegends.admob_native_unity.NativeAdCallbacks") { }
 
-        public void Initialize() { } // Sẽ được gọi bởi AdmobNativePlatform
+        public void Initialize() { } 
 
         public void LoadAd(string adUnitId, AdRequest request)
         {
             var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
             var adRequestJava = new AndroidJavaObject("com.google.android.gms.ads.AdRequest$Builder").Call<AndroidJavaObject>("build");
 
-            // Tạo controller Kotlin và truyền "this" (chính là client này) làm callback proxy.
             _kotlinController = new AndroidJavaObject(
                 "com.thelegends.admob_native_unity.AdmobNativeController",
                 activity,
-                this // "this" hoạt động được vì class này kế thừa AndroidJavaProxy
+                this 
             );
 
             _kotlinController.Call("loadAd", adUnitId, adRequestJava);
         }
 
         public void ShowAd(string layoutName) => _kotlinController?.Call("showAd", layoutName);
-        public void ShowAd(string layoutName, float countdownSec, float initDelaySec, float closeDelaySec) => _kotlinController?.Call("showAd", layoutName, countdownSec, initDelaySec, closeDelaySec);
         public void DestroyAd() => _kotlinController?.Call("destroyAd");
         public bool IsAdAvailable() => _kotlinController?.Call<bool>("isAdAvailable") ?? false;
+
+        #region Builder Pattern Support - Direct Native Calls
+
+        public void WithCountdown(float initialDelaySeconds, float countdownDurationSeconds, float closeButtonDelaySeconds)
+        {
+            _kotlinController?.Call<AndroidJavaObject>("withCountdown", initialDelaySeconds, countdownDurationSeconds, closeButtonDelaySeconds);
+        }
+
+
+        #endregion
 
         public IResponseInfoClient GetResponseInfoClient()
         {
@@ -70,8 +77,6 @@ namespace TheLegends.Base.Ads
 
         void onAdFailedToLoad(AndroidJavaObject errorJO)
         {
-            // Tạm thời chúng ta không có object lỗi đầy đủ từ đây, chỉ có message
-            // Chúng ta có thể tạo một wrapper "giả"
             var args = new LoadAdErrorClientEventArgs()
             {
                 LoadAdErrorClient = new AdmobNativePlatformAndroidAdErrorClient(errorJO)
