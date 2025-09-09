@@ -1,3 +1,12 @@
+## [1.0.50](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.49...v1.0.50) (2025-09-09)
+
+
+### Bug Fixes
+
+* Add Firebase Remote Config nativeBannerTimeReload ([85e1b33](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/85e1b335a787f34c7619713992b6ea4764df791a))
+* apply builder pattern (WithAutoReload, WithShowOnLoaded), decorator pattern (WithCountDown) for native platform ([a9776cb](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a9776cbe82663924952fc4722fd2aec47ca6dc4c))
+* layout helper ([64836cc](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/64836cc905d89b9a618963c57db65901eaaead06))
+
 ## [1.0.49](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.48...v1.0.49) (2025-09-03)
 
 
