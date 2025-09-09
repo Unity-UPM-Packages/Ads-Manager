@@ -117,7 +117,7 @@ namespace TheLegends.Base.Ads
             mrecOpenIds = CreatePlacement("ca-app-pub-3940256099942544/6300978111"),
             nativeIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
             nativeOverlayIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
-            nativePlatformIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110")
+            nativePlatformIds = CreatePlacement("ca-app-pub-3940256099942544/1044960115", "ca-app-pub-3940256099942544/2247696110")
         };
 
         public AdmobUnitID ADMOB_IOS_Test = new AdmobUnitID
@@ -131,18 +131,22 @@ namespace TheLegends.Base.Ads
             mrecOpenIds = CreatePlacement("ca-app-pub-3940256099942544/2934735716"),
             nativeIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
             nativeOverlayIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
-            nativePlatformIds = CreatePlacement("ca-app-pub-3940256099942544/2521693316")
+            nativePlatformIds = CreatePlacement("ca-app-pub-3940256099942544/2521693316", "ca-app-pub-3940256099942544/3986624511")
         };
 
-        private static List<Placement> CreatePlacement(string adUnitId)
+        private static List<Placement> CreatePlacement(params string[] adUnitIds)
         {
-            return new List<Placement>
+            var placements = new List<Placement>();
+            
+            foreach (string adUnitId in adUnitIds)
             {
-                new Placement
+                placements.Add(new Placement
                 {
                     stringIDs = new List<string> { adUnitId }
-                }
-            };
+                });
+            }
+            
+            return placements;
         }
 
     }
