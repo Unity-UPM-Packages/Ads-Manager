@@ -401,7 +401,7 @@ namespace TheLegends.Base.Ads
         public void ShowNativeBannerPlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
             ShowNativePlatform(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent)
-            .WithAutoReload(10)
+            .WithAutoReload(adsConfigs.nativeBannerTimeReload)
             .WithShowOnLoaded(true)
             .Execute();
         }
@@ -620,6 +620,7 @@ namespace TheLegends.Base.Ads
         public float nativeVideoCountdownTimerDuration = 5f;
         public float nativeVideoDelayBeforeCountdown = 5f;
         public float nativeVideoCloseClickableDelay = 2f;
+        public float nativeBannerTimeReload = 15f;
     }
 
 }

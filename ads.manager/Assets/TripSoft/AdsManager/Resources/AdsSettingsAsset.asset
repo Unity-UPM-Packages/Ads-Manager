@@ -97,6 +97,7 @@ MonoBehaviour:
       - ca-app-pub-3940256099942544/2247696110
     nativePlatformIds:
     - stringIDs:
+      - ca-app-pub-3940256099942544/1044960115
       - ca-app-pub-3940256099942544/2247696110
   ADMOB_IOS_Test:
     bannerIds:
@@ -125,7 +126,8 @@ MonoBehaviour:
       - ca-app-pub-3940256099942544/3986624511
     nativeOverlayIds:
     - stringIDs:
-      - ca-app-pub-3940256099942544/2247696110
+      - ca-app-pub-3940256099942544/3986624511
     nativePlatformIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/2521693316
+      - ca-app-pub-3940256099942544/3986624511
