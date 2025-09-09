@@ -38,6 +38,7 @@ public class DemoManager : MonoBehaviour
     public Button loadNativeBannerPlatformBtn;
     public Button showNativeBannerPlatformBtn;
     public Button hideNativeBannerPlatformBtn;
+    public Button adjustLayoutForNativeBannerBtn;
 
     public AdmobNativeController nativeAdsMrec;
     public AdmobNativeController nativeAdsBanner;
@@ -45,6 +46,8 @@ public class DemoManager : MonoBehaviour
 
     public Button nativeOverlayCloseBtn;
     public GameObject nativeOverlayBG;
+
+    public AdLayoutHelper adLayoutHelper;
 
 
     private void OnEnable()
@@ -75,6 +78,7 @@ public class DemoManager : MonoBehaviour
         loadNativeBannerPlatformBtn.onClick.AddListener(LoadNativeBannerPlatform);
         showNativeBannerPlatformBtn.onClick.AddListener(ShowNativeBannerPlatform);
         hideNativeBannerPlatformBtn.onClick.AddListener(HideNativeBannerPlatform);
+        adjustLayoutForNativeBannerBtn.onClick.AddListener(AdjustLayoutForNativeBanner);
     }
 
 
@@ -299,5 +303,10 @@ public class DemoManager : MonoBehaviour
     public void HideNativeBannerPlatform()
     {
         AdsManager.Instance.HideNativePlatform(PlacementOrder.Two);
+    }
+
+    public void AdjustLayoutForNativeBanner()
+    {
+        adLayoutHelper.AdjustLayoutForNativeBanner(60);
     }
 }
