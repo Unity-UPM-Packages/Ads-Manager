@@ -1,3 +1,10 @@
+## [1.0.51](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.50...v1.0.51) (2025-09-10)
+
+
+### Bug Fixes
+
+* Edit AdLayoutHelper ([bbbe769](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/bbbe769e28ed7d416aab9df08a437745513d6356))
+
 ## [1.0.50](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.49...v1.0.50) (2025-09-09)
 
 
