@@ -50,6 +50,10 @@ namespace TheLegends.Base.Ads
         [SerializeField]
         private UnityEvent OnInitAdsDone = new UnityEvent();
 
+        [Space(10)]
+        [SerializeField]
+        private UnityEvent OnCompleteSplash = new UnityEvent();
+
         public void Start()
         {
             brandScreen.gameObject.SetActive(false);
@@ -81,7 +85,7 @@ namespace TheLegends.Base.Ads
             {
                 yield return LoadInitialAds();
             }
-            
+
             UILoadingController.SetProgress(0.6f, null);
 
             // Load the target scene
@@ -89,6 +93,8 @@ namespace TheLegends.Base.Ads
 
             // Complete initialization
             CompleteInitialization();
+
+            CheckCompleteSplash();
         }
 
         private IEnumerator InitializeFirebase()
@@ -187,6 +193,19 @@ namespace TheLegends.Base.Ads
             });
         }
 
+        private void CheckCompleteSplash()
+        {
+            if (!canShowSelectBrand)
+            {
+                CompleteSplash();
+            }
+        }
+
+        public void CompleteSplash()
+        {
+            OnCompleteSplash?.Invoke();
+        }
+
         private void HandleBrandSelectionFlow()
         {
             UILoadingController.Hide();
@@ -210,6 +229,7 @@ namespace TheLegends.Base.Ads
             {
                 AdsManager.Instance.ShowMrec(AdsType.MrecOpen, PlacementOrder.One, mrecOpenPos, mrecOpenOffset, "Mrec Open");
                 brandScreen.Show();
+                brandScreen.SetAdsSplashController(this);
             }
         }
 
