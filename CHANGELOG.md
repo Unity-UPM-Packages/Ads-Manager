@@ -1,3 +1,11 @@
+## [1.0.52](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.51...v1.0.52) (2025-09-11)
+
+
+### Bug Fixes
+
+* Ad option to enable/disable admob native validator ([ce0ce6b](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/ce0ce6baab0f5e4621fe1837a924e0a2f975c648))
+* fix 2 native overlap ([49c6ca1](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/49c6ca13cf3c22206639b5467df3a3b303a2dacb))
+
 ## [1.0.51](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.50...v1.0.51) (2025-09-10)
 
 
