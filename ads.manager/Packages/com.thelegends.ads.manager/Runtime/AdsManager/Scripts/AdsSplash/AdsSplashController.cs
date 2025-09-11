@@ -190,6 +190,11 @@ namespace TheLegends.Base.Ads
                     HandleBrandSelectionFlow();
                 }
                 OnInitAdsDone?.Invoke();
+
+                if (!isUseSelectBrand)
+                {
+                    CompleteSplash();
+                }
             });
         }
 
@@ -230,6 +235,10 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.ShowMrec(AdsType.MrecOpen, PlacementOrder.One, mrecOpenPos, mrecOpenOffset, "Mrec Open");
                 brandScreen.Show();
                 brandScreen.SetAdsSplashController(this);
+            }
+            else
+            {
+                CompleteSplash();
             }
         }
 
