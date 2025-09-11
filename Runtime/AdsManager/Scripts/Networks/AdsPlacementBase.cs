@@ -66,9 +66,15 @@ namespace TheLegends.Base.Ads
 
         protected bool IsCanLoadAds()
         {
+            if (IsInvoking(nameof(LoadAds)))
+            {
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is scheduled loading --> return");
+                return false;
+            }
+
             if (Status == AdsEvents.LoadRequest)
             {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} "  + "is loading --> return");
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is loading --> return");
                 return false;
             }
 
