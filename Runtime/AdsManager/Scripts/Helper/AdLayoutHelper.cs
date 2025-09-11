@@ -28,7 +28,11 @@ namespace TheLegends.Base.Ads
             Vector2 offsetMin = mainContentRect.offsetMin;
             offsetMin.y = bannerHeightInCanvasUnits;
             mainContentRect.offsetMin = offsetMin;
-            adBackground.rectTransform.sizeDelta = new Vector2(mainContentRect.rect.width, bannerHeightInCanvasUnits);
+
+            if (adBackground != null)
+            {
+                adBackground.rectTransform.sizeDelta = new Vector2(mainContentRect.rect.width, bannerHeightInCanvasUnits);
+            }
 
             Debug.Log($"Calculated banner height in Canvas Units: {bannerHeightInCanvasUnits}. Adjusting bottom padding.");
         }
