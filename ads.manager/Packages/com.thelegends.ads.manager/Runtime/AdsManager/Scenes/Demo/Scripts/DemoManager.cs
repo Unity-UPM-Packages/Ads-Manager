@@ -266,9 +266,11 @@ public class DemoManager : MonoBehaviour
         AdsManager.Instance.ShowNativeVideoPlatform(PlacementOrder.One, "Default", "native_template", () =>
         {
             AdsManager.Instance.Log("NativeVideoPlatform show");
+            HideNativeBannerPlatform();
         }, () =>
         {
             AdsManager.Instance.Log("NativeVideoPlatform closed");
+            ShowNativeBannerPlatform();
         }, () =>
         {
             AdsManager.Instance.Log("NativeVideoPlatform full screen content closed");

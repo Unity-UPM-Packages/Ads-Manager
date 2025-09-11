@@ -64,7 +64,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-                NativePlatformDestroy();
+                // NativePlatformDestroy();
 
                 base.LoadAds();
 
@@ -105,6 +105,11 @@ namespace TheLegends.Base.Ads
                         }
 
                         AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + native.GetResponseInfo());
+
+                        if (_nativePlatformAd != null)
+                        {
+                            NativePlatformDestroy();
+                        }
 
                         _nativePlatformAd = native;
 
@@ -171,17 +176,9 @@ namespace TheLegends.Base.Ads
 
         public void HideAds()
         {
-            if (Status != AdsEvents.ShowSuccess)
-            {
-                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + " is not showing --> return");
-                return;
-            }
-
             ClearStoredConfigs();
-
             NativePlatformDestroy();
             OnNativePlatformClosed();
-            CancelReloadAds();
         }
 
         private void DelayReloadAd(float time)
@@ -407,8 +404,6 @@ namespace TheLegends.Base.Ads
         /// </summary>
         private void ClearStoredConfigs()
         {
-            CancelReloadAds();
-            
             _storedCountdown = null;
             _autoReloadTime = 0f;
             _isShowOnLoaded = false;
