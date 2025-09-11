@@ -1,3 +1,10 @@
+## [1.0.53](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.52...v1.0.53) (2025-09-11)
+
+
+### Bug Fixes
+
+* Add Splash done callback ([2454b0d](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/2454b0d63a745f83f337e4be7723b5804ef6e547))
+
 ## [1.0.52](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.51...v1.0.52) (2025-09-11)
 
 
