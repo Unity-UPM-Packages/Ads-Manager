@@ -1,3 +1,10 @@
+## [1.0.54](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.53...v1.0.54) (2025-09-11)
+
+
+### Bug Fixes
+
+* more case Complete Splash ([6957c99](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/6957c9993fac7e036c0955c6e1ae8887ede058b8))
+
 ## [1.0.53](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.52...v1.0.53) (2025-09-11)
 
 
