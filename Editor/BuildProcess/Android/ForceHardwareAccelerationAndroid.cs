@@ -19,9 +19,9 @@ public class ForceHardwareAccelerationAndroid : IPostGenerateGradleAndroidProjec
         Debug.Log("--- ForceHardwareAcceleration: Starting execution ---");
 
         // Find the path to the AndroidManifest.xml file in the exported project.
-        string manifestPath = Path.Combine(path, "src/main/AndroidManifest.xml");
+        string manifestPath = AndroidBuildUtils.GetManifestPath(path); ;
 
-        if (!File.Exists(manifestPath))
+        if (string.IsNullOrEmpty(manifestPath))
         {
             Debug.LogError("ForceHardwareAcceleration: AndroidManifest.xml not found at: " + manifestPath);
             return;

@@ -246,6 +246,7 @@ namespace TheLegends.Base.Ads
 
             EditorGUILayout.LabelField("Admob", EditorStyles.boldLabel);
             Instance.isAdmobTest = EditorGUILayout.Toggle("Is Testing", Instance.isAdmobTest);
+            Instance.isShowAdmobNativeValidator = EditorGUILayout.Toggle("Show Admob Validator", Instance.isShowAdmobNativeValidator);
 
             EditorGUILayout.Separator();
             EditorGUILayout.Separator();
