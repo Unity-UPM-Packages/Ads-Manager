@@ -10,7 +10,7 @@ namespace TheLegends.Base.Ads
 {
     public class BrandScreenController : MonoBehaviour
     {
-        private AdsSplashController adsSplashController;
+        public Action OnClose;
 
         [SerializeField]
         private BrandItemController[] brandItems;
@@ -38,7 +38,7 @@ namespace TheLegends.Base.Ads
             StopAllCoroutines();
             ActiveScreen(false);
             PlayerPrefs.SetInt("canShowSelectBrand", 0);
-            adsSplashController.CompleteSplash();
+            OnClose?.Invoke();
         }
 
         private void Start()
@@ -100,8 +100,7 @@ namespace TheLegends.Base.Ads
             }
 
             ActiveScreen(false);
-
-            adsSplashController.CompleteSplash();
+            OnClose?.Invoke();
         }
 
         private void ActiveScreen(bool isActive)
@@ -111,11 +110,6 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.HideMrec(AdsType.MrecOpen, PlacementOrder.One);
             }
             gameObject.SetActive(isActive);
-        }
-
-        public void SetAdsSplashController(AdsSplashController adsSplashController)
-        {
-            this.adsSplashController = adsSplashController;
         }
 
     }

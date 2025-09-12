@@ -239,6 +239,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6243931895743878932, guid: dc87e2d9a85fceb428329e7efc285cbb, type: 3}
+      propertyPath: isUseNativeMrecOpen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243931895743878932, guid: dc87e2d9a85fceb428329e7efc285cbb, type: 3}
       propertyPath: OnInitAdsDone.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
