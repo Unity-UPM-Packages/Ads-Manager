@@ -105,10 +105,10 @@ namespace TheLegends.Base.Ads
 
         private void ActiveScreen(bool isActive)
         {
-            if (!isActive)
-            {
-                AdsManager.Instance.HideMrec(AdsType.MrecOpen, PlacementOrder.One);
-            }
+            // if (!isActive)
+            // {
+            //     AdsManager.Instance.HideMrec(AdsType.MrecOpen, PlacementOrder.One);
+            // }
             gameObject.SetActive(isActive);
         }
 
