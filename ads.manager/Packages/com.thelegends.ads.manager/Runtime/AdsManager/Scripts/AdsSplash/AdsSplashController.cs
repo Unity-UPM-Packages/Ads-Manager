@@ -19,13 +19,25 @@ namespace TheLegends.Base.Ads
 
         [Space(10)]
         [SerializeField, ShowField(nameof(isUseSelectBrand))]
-        private AdsPos mrecOpenPos = AdsPos.CenterLeft;
-        [SerializeField, ShowField(nameof(isUseSelectBrand))]
-        private Vector2Int mrecOpenOffset = Vector2Int.zero;
+        private bool isUseNormalMrecOpen = false;
 
         [Space(10)]
         [SerializeField, ShowField(nameof(isUseSelectBrand))]
+        private bool isUseNativeMrecOpen = false;
+
+
+
+        [Space(10)]
+        [SerializeField, ConditionalField(ConditionType.AND, nameof(isUseSelectBrand), nameof(isUseNormalMrecOpen))]
+        private AdsPos mrecOpenPos = AdsPos.CenterLeft;
+        [SerializeField, ConditionalField(ConditionType.AND, nameof(isUseSelectBrand), nameof(isUseNormalMrecOpen))]
+        private Vector2Int mrecOpenOffset = Vector2Int.zero;
+
+        [Space(10)]
+        [SerializeField, ConditionalField(ConditionType.AND, nameof(isUseSelectBrand), nameof(isUseNormalMrecOpen))]
         private BrandScreenController brandScreen;
+
+
 
         [Space(10)]
         [SerializeField]
@@ -163,12 +175,22 @@ namespace TheLegends.Base.Ads
 
         private IEnumerator LoadInitialAds()
         {
-            
+
             // Load MREC for brand selection if needed
             if (canShowSelectBrand)
             {
-                AdsManager.Instance.LoadMrec(AdsType.MrecOpen, PlacementOrder.One);
-                yield return AdsManager.Instance.WaitAdLoaded(AdsType.MrecOpen, PlacementOrder.One);
+                if (isUseNormalMrecOpen)
+                {
+                    AdsManager.Instance.LoadMrec(AdsType.MrecOpen, PlacementOrder.One);
+                    yield return AdsManager.Instance.WaitAdLoaded(AdsType.MrecOpen, PlacementOrder.One);
+                }
+
+                if (isUseNativeMrecOpen)
+                {
+                    AdsManager.Instance.LoadNativePlatform(PlacementOrder.Three);
+                    yield return AdsManager.Instance.WaitAdLoaded(AdsType.NativePlatform, PlacementOrder.Three);
+                }
+
             }
 
             // Load interstitial for app open if enabled
@@ -208,6 +230,18 @@ namespace TheLegends.Base.Ads
 
         public void CompleteSplash()
         {
+            if (isUseNormalMrecOpen)
+            {
+                AdsManager.Instance.HideMrec(AdsType.MrecOpen, PlacementOrder.One);
+            }
+
+            if (isUseNativeMrecOpen)
+            {
+                AdsManager.Instance.HideNativePlatform(PlacementOrder.Three);
+            }
+
+            brandScreen.OnClose -= CompleteSplash;
+
             OnCompleteSplash?.Invoke();
         }
 
@@ -230,11 +264,17 @@ namespace TheLegends.Base.Ads
 
         private void ShowBrandScreen()
         {
-            if (AdsManager.Instance.GetAdsStatus(AdsType.MrecOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
+            if (isUseNormalMrecOpen && AdsManager.Instance.GetAdsStatus(AdsType.MrecOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
                 AdsManager.Instance.ShowMrec(AdsType.MrecOpen, PlacementOrder.One, mrecOpenPos, mrecOpenOffset, "Mrec Open");
                 brandScreen.Show();
-                brandScreen.SetAdsSplashController(this);
+                brandScreen.OnClose += CompleteSplash;
+            }
+            else if (isUseNativeMrecOpen && AdsManager.Instance.GetAdsStatus(AdsType.NativePlatform, PlacementOrder.Three) == AdsEvents.LoadAvailable)
+            {
+                AdsManager.Instance.ShowNativePlatform(PlacementOrder.Three, "Default", "native_mrec_open", null, null, null).Execute();
+                brandScreen.Show();
+                brandScreen.OnClose += CompleteSplash;
             }
             else
             {
