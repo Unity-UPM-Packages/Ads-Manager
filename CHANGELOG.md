@@ -1,3 +1,10 @@
+## [1.0.56](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.55...v1.0.56) (2025-09-13)
+
+
+### Bug Fixes
+
+* Edit Inter Open + GetPlacementIndex ([bf678f1](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/bf678f1802fc3c00d55c0e418009a6792ce28db1))
+
 ## [1.0.55](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.54...v1.0.55) (2025-09-13)
 
 
