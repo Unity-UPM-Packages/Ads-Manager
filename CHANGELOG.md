@@ -1,3 +1,13 @@
+## [1.0.55](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.54...v1.0.55) (2025-09-13)
+
+
+### Bug Fixes
+
+* add native mrec open ([9d48d9a](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/9d48d9a20aa450ab1c2d9af6b74a90c96f81dc69))
+* Admob Unity Client ([3d851c7](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/3d851c72afb258aabc87e0427df3d044ec215145))
+* edit ActiveAdmobNativeValidator Editor ([c9ce791](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/c9ce791755c31f63d4ada5cd866f8ac9021b2cf7))
+* native mrec open + native inter open AdSplash ([8ee12c0](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/8ee12c0ecf35936e48961334d0b3faf60ea2c741))
+
 ## [1.0.54](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.53...v1.0.54) (2025-09-11)
 
 
