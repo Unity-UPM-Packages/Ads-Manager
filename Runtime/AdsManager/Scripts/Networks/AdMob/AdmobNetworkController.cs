@@ -296,6 +296,12 @@ namespace TheLegends.Base.Ads
 
             var index = GetPlacementIndex((int)order, listPlacement.Count);
 
+            if (index == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {type} {order} is not exist");
+                return AdsEvents.None;
+            }
+
             return listPlacement[index].Status;
         }
 
@@ -303,8 +309,14 @@ namespace TheLegends.Base.Ads
         {
             if (listCount <= 0)
             {
-                return 0;
+                return -1;
             }
+
+            if (order > listCount)
+            {
+                return -1;
+            }
+
             return Mathf.Clamp(order - 1, 0, listCount - 1);
         }
 
@@ -318,6 +330,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, list.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {interType} {order} is not exist");
+                return;
+            }
+
             list[placementIndex].LoadAds();
         }
 
@@ -331,6 +350,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, list.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {interType} {order} is not exist");
+                return;
+            }
+
             list[placementIndex].ShowAds(position, OnClose);
         }
 
@@ -342,6 +368,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, rewardedList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"Rewarded"} {order} is not exist");
+                return;
+            }
+
             rewardedList[placementIndex].LoadAds();
         }
 
@@ -353,6 +386,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, rewardedList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"Rewarded"} {order} is not exist");
+                return;
+            }
+
             rewardedList[placementIndex].ShowAds(position, OnRewarded);
         }
 
@@ -364,6 +404,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, appOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"AppOpen"} {order} is not exist");
+                return;
+            }
+
             appOpenList[placementIndex].LoadAds();
         }
 
@@ -375,6 +422,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, appOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"AppOpen"} {order} is not exist");
+                return;
+            }
+
             appOpenList[placementIndex].ShowAds(position);
         }
 
@@ -386,6 +440,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"Banner"} {order} is not exist");
+                return;
+            }
+
             bannerList[placementIndex].LoadAds();
         }
 
@@ -397,6 +458,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"Banner"} {order} is not exist");
+                return;
+            }
+
             bannerList[placementIndex].HideAds();
         }
 
@@ -408,6 +476,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"Banner"} {order} is not exist");
+                return;
+            }
+
             bannerList[placementIndex].ShowAds(position);
         }
 
@@ -421,6 +496,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, list.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"Mrec"} {order} is not exist");
+                return;
+            }
+
             list[placementIndex].LoadAds();
         }
 
@@ -434,6 +516,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, list.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"Mrec"} {order} is not exist");
+                return;
+            }
+
             list[placementIndex].ShowAds(mrecPosition, offset, position);
         }
 
@@ -447,6 +536,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, list.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"Mrec"} {order} is not exist");
+                return;
+            }
+
             list[placementIndex].HideAds();
         }
 
@@ -458,6 +554,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeOverlay"} {order} is not exist");
+                return;
+            }
+
             nativeOverlayList[placementIndex].LoadAds();
         }
 
@@ -469,6 +572,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeOverlay"} {order} is not exist");
+                return;
+            }
+
             nativeOverlayList[placementIndex].ShowAds(style, nativeOverlayposition, size, offset, position, OnShow, OnClose);
         }
 
@@ -480,6 +590,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, nativeOverlayList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeOverlay"} {order} is not exist");
+                return;
+            }
+
             nativeOverlayList[placementIndex].HideAds();
         }
 
@@ -491,6 +608,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
+                return;
+            }
+
             nativePlatformList[placementIndex].LoadAds();
         }
 
@@ -502,6 +626,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
+                return null;
+            }
+
             var controller = nativePlatformList[placementIndex];
 
             return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
@@ -515,6 +646,13 @@ namespace TheLegends.Base.Ads
             }
 
             var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
+                return;
+            }
+
             nativePlatformList[placementIndex].HideAds();
         }
 

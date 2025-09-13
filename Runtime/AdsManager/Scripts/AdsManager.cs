@@ -442,6 +442,11 @@ namespace TheLegends.Base.Ads
 
         public IEnumerator WaitAdLoaded(AdsType type, PlacementOrder order)
         {
+            if (GetAdsStatus(type, order) == AdsEvents.None)
+            {
+                yield break;
+            }
+
             while (GetAdsStatus(type, order) != AdsEvents.LoadAvailable && GetAdsStatus(type, order) != AdsEvents.LoadNotAvailable)
             {
                 yield return null;
