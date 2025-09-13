@@ -38,33 +38,42 @@ namespace TheLegends.Base.Ads
 
         public void LoadAd(string adUnitId, AdRequest request)
         {
-            string message = "Native Ads are not supported in the Unity Editor.";
-            Debug.LogWarning(message);
+            // string message = "Native Ads are not supported in the Unity Editor.";
+            // Debug.LogWarning(message);
 
-            // Ngay lập tức gọi lại callback thất bại
-            var errorClient = new DummyLoadAdErrorClient(message);
-            var args = new LoadAdErrorClientEventArgs { LoadAdErrorClient = errorClient };
-            OnAdFailedToLoad?.Invoke(this, args);
+            // // Ngay lập tức gọi lại callback thất bại
+            // var errorClient = new DummyLoadAdErrorClient(message);
+            // var args = new LoadAdErrorClientEventArgs { LoadAdErrorClient = errorClient };
+            // OnAdFailedToLoad?.Invoke(this, args);
+            OnAdLoaded?.Invoke(this, EventArgs.Empty);
         }
 
-        public void ShowAd(string layoutName) { /* Không làm gì */ }
-        public void DestroyAd() { /* Không làm gì */ }
-        public bool IsAdAvailable() => false;
+        public void ShowAd(string layoutName)
+        {
+            OnAdShow?.Invoke();
+            DestroyAd();
+        }
+        public void DestroyAd()
+        {
+            OnAdDismissedFullScreenContent?.Invoke();
+            OnAdClosed?.Invoke();
+        }
+        public bool IsAdAvailable() => true;
         public IResponseInfoClient GetResponseInfoClient() => null;
 
         public void WithCountdown(float initialDelaySeconds, float countdownDurationSeconds, float closeButtonDelaySeconds)
         {
-            throw new NotImplementedException();
+            Debug.Log("DummyNativeClient: WithCountdown");
         }
 
         public void WithAutoReload(string adUnitId, long intervalSeconds)
         {
-            throw new NotImplementedException();
+            Debug.Log("DummyNativeClient: WithAutoReload");
         }
 
         public void WithShowOnLoaded(bool enabled)
         {
-            throw new NotImplementedException();
+            Debug.Log("DummyNativeClient: WithShowOnLoaded");
         }
     }
 

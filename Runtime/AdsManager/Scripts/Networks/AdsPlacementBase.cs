@@ -88,7 +88,7 @@ namespace TheLegends.Base.Ads
             {
                 adsUnitIDIndex %= placement.stringIDs.Count;
                 adsUnitID = placement.stringIDs[adsUnitIDIndex];
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "Startting LoadAds " + adsUnitID);
+                AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "Startting LoadAds " + adsUnitID);
             }
 
             if (string.IsNullOrEmpty(adsUnitID))
