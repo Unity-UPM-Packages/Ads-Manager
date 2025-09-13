@@ -281,6 +281,7 @@ namespace TheLegends.Base.Ads
             UILoadingController.Hide();
         }
 
+
         private void ShowBrandScreen()
         {
             if (AdsManager.Instance.GetAdsStatus(AdsType.NativePlatform, PlacementOrder.Three) == AdsEvents.LoadAvailable)

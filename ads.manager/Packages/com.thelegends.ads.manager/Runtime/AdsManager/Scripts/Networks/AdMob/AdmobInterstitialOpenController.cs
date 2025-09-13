@@ -17,6 +17,8 @@ namespace TheLegends.Base.Ads
 
         protected override void OnInterClosed()
         {
+            OnClose?.Invoke();
+            OnClose = null;
             Status = AdsEvents.Close;
         }
     }

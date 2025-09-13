@@ -9,7 +9,7 @@ namespace TheLegends.Base.Ads
         private InterstitialAd _interstitialAd;
         private string _currentLoadRequestId;
 
-        private Action OnClose;
+        protected Action OnClose;
 
         public override void LoadAds()
         {
