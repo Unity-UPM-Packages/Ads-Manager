@@ -10,19 +10,20 @@ namespace TheLegends.Base.Ads
     {
         private AdmobNativePlatform _nativePlatformAd;
         private string _layoutName;
-        
+
         private string _currentLoadRequestId;
-        
+
         private Action OnClose;
         private Action OnShow;
         private Action OnAdDismissedFullScreenContent;
-        
+
         // Unity-side config storage for persistence (only Countdown needs storage for native)
         private NativePlatformShowBuilder.CountdownConfig _storedCountdown;
-        
+
         // Unity AutoReload & ShowOnLoaded management (exactly like AdmobNativeController)
         private float _autoReloadTime = 0f; // Like timeAutoReload in AdmobNativeController
         private bool _isShowOnLoaded = false; // Like isShowOnLoaded in AdmobNativeController
+        private NativePlatformShowBuilder.PositionConfig _storedPosition;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -64,66 +65,66 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-                // NativePlatformDestroy();
+            // NativePlatformDestroy();
 
-                base.LoadAds();
+            base.LoadAds();
 
-                // Unity flags already set in StoreConfigs (simple like AdmobNativeController)
+            // Unity flags already set in StoreConfigs (simple like AdmobNativeController)
 
-                AdRequest request = new AdRequest();
+            AdRequest request = new AdRequest();
 
-                _currentLoadRequestId = Guid.NewGuid().ToString();
-                string loadRequestId = _currentLoadRequestId;
+            _currentLoadRequestId = Guid.NewGuid().ToString();
+            string loadRequestId = _currentLoadRequestId;
 
-                Debug.Log("LoadAds: " + adsUnitID);
+            Debug.Log("LoadAds: " + adsUnitID);
 
-                AdmobNativePlatform.Load(adsUnitID.Trim(), request, (native, error) =>
+            AdmobNativePlatform.Load(adsUnitID.Trim(), request, (native, error) =>
+            {
+                PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
                 {
-                    PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                    if (loadRequestId != _currentLoadRequestId)
                     {
-                        if (loadRequestId != _currentLoadRequestId)
-                        {
-                            // If the load request ID does not match, this callback is from a previous request
-                            return;
-                        }
+                        // If the load request ID does not match, this callback is from a previous request
+                        return;
+                    }
 
-                        StopHandleTimeout();
+                    StopHandleTimeout();
 
-                        // if error is not null, the load request failed.
-                        if (error != null)
-                        {
-                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
-                            OnNativePlatformLoadFailed(error);
-                            return;
-                        }
+                    // if error is not null, the load request failed.
+                    if (error != null)
+                    {
+                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
+                        OnNativePlatformLoadFailed(error);
+                        return;
+                    }
 
-                        if (native == null)
-                        {
-                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
-                            OnNativePlatformLoadFailed(error);
-                            return;
-                        }
+                    if (native == null)
+                    {
+                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
+                        OnNativePlatformLoadFailed(error);
+                        return;
+                    }
 
-                        AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + native.GetResponseInfo());
+                    AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + native.GetResponseInfo());
 
-                        if (_nativePlatformAd != null)
-                        {
-                            NativePlatformDestroy();
-                        }
+                    if (_nativePlatformAd != null)
+                    {
+                        NativePlatformDestroy();
+                    }
 
-                        _nativePlatformAd = native;
+                    _nativePlatformAd = native;
 
-                        OnAdsLoadAvailable();
+                    OnAdsLoadAvailable();
 
-                        adsUnitIDIndex = 0;
-                        
-                        if (_isShowOnLoaded)
-                        {
-                            ShowAds(position, _layoutName, OnShow, OnClose); // Use default layout like AdmobNativeController
-                        }
+                    adsUnitIDIndex = 0;
 
-                    });
+                    if (_isShowOnLoaded)
+                    {
+                        ShowAds(position, _layoutName, OnShow, OnClose); // Use default layout like AdmobNativeController
+                    }
+
                 });
+            });
 #endif
         }
 
@@ -152,13 +153,18 @@ namespace TheLegends.Base.Ads
 
                 if (_storedCountdown != null)
                 {
-                    _nativePlatformAd.WithCountdown(_storedCountdown.InitialDelaySeconds, 
-                                                  _storedCountdown.CountdownDurationSeconds, 
+                    _nativePlatformAd.WithCountdown(_storedCountdown.InitialDelaySeconds,
+                                                  _storedCountdown.CountdownDurationSeconds,
                                                   _storedCountdown.CloseButtonDelaySeconds);
                 }
 
+                if (_storedPosition != null)
+                {
+                    SetAdCustomPosition(_storedPosition.AdsPos, _storedPosition.Offset);
+                }
+
                 _nativePlatformAd.Show(layoutName);
-                
+
                 CancelReloadAds();
                 if (_autoReloadTime > 0)
                 {
@@ -202,7 +208,7 @@ namespace TheLegends.Base.Ads
                 if (_nativePlatformAd != null)
                 {
                     CancelReloadAds();
-                    
+
                     UnregisterAdEvents();
                     _nativePlatformAd.Destroy();
                     _nativePlatformAd = null;
@@ -382,19 +388,22 @@ namespace TheLegends.Base.Ads
         /// <summary>
         /// Store configs from builder for persistence across LoadFails
         /// </summary>
-        internal void StoreConfigs(NativePlatformShowBuilder.CountdownConfig countdown, 
-                                   NativePlatformShowBuilder.AutoReloadConfig autoReload, 
-                                   NativePlatformShowBuilder.ShowOnLoadedConfig showOnLoaded)
+        internal void StoreConfigs(NativePlatformShowBuilder.CountdownConfig countdown,
+                                   NativePlatformShowBuilder.AutoReloadConfig autoReload,
+                                   NativePlatformShowBuilder.ShowOnLoadedConfig showOnLoaded,
+                                   NativePlatformShowBuilder.PositionConfig position)
         {
             _storedCountdown = countdown?.Clone();
             _autoReloadTime = autoReload?.IntervalSeconds ?? 0f;
             _isShowOnLoaded = showOnLoaded?.Enabled ?? false;
-            
+            _storedPosition = position?.Clone() ?? null;
+
             var configsInfo = new System.Collections.Generic.List<string>();
             if (_storedCountdown != null) configsInfo.Add($"Countdown({_storedCountdown})");
             if (_autoReloadTime > 0) configsInfo.Add($"AutoReload({_autoReloadTime}s)");
             if (_isShowOnLoaded) configsInfo.Add($"ShowOnLoaded({_isShowOnLoaded})");
-            
+            if (_storedPosition != null) configsInfo.Add($"Position({_storedPosition})");
+
             Debug.Log($"[{AdsNetworks}_{AdsType}] Stored configs: [{string.Join(", ", configsInfo)}]");
         }
 
@@ -407,9 +416,77 @@ namespace TheLegends.Base.Ads
             _storedCountdown = null;
             _autoReloadTime = 0f;
             _isShowOnLoaded = false;
+            _storedPosition = null;
         }
 
         #endregion
+        
+        private void SetAdCustomPosition(AdsPos position, Vector2Int offset)
+        {
+            if (!IsAdsReady())
+            {
+                return;
+            }
+
+            var deviceScale = MobileAds.Utils.GetDeviceScale();
+
+            float adWidth = AdSize.MediumRectangle.Width;
+            float adHeight = AdSize.MediumRectangle.Height;
+
+            Debug.Log("AAAAA " + "adWidthNative: " + adWidth + " adHeightNative: " + adHeight);
+
+            var safeAreaWidth = Screen.width / deviceScale;
+            var safeAreaHeight = Screen.height / deviceScale;
+
+            int xMax = (int)(safeAreaWidth - adWidth);
+            int yMax = (int)(safeAreaHeight - adHeight);
+            int xCenter = xMax / 2;
+            int yCenter = yMax / 2;
+
+            Vector2Int newPos = Vector2Int.zero;
+
+            switch (position)
+            {
+                case AdsPos.Top:
+                    newPos = new Vector2Int(xCenter + offset.x, offset.y);
+
+                    break;
+                case AdsPos.TopLeft:
+                    newPos = new Vector2Int(offset.x, offset.y);
+
+                    break;
+                case AdsPos.TopRight:
+                    newPos = new Vector2Int(xMax + offset.x, offset.y);
+
+                    break;
+                case AdsPos.Center:
+                    newPos = new Vector2Int(xCenter + offset.x, yCenter + offset.y);
+
+                    break;
+                case AdsPos.CenterLeft:
+                    newPos = new Vector2Int(offset.x, yCenter + offset.y);
+
+                    break;
+                case AdsPos.CenterRight:
+                    newPos = new Vector2Int(xMax + offset.x, yCenter + offset.y);
+
+                    break;
+                case AdsPos.Bottom:
+                    newPos = new Vector2Int(xCenter + offset.x, yMax + offset.y);
+
+                    break;
+                case AdsPos.BottomLeft:
+                    newPos = new Vector2Int(offset.x, yMax + offset.y);
+
+                    break;
+                case AdsPos.BottomRight:
+                    newPos = new Vector2Int(xMax + offset.x, yMax + offset.y);
+
+                    break;
+            }
+
+            _nativePlatformAd.WithPosition(Mathf.RoundToInt(newPos.x * deviceScale), Mathf.RoundToInt(newPos.y * deviceScale));
+        }
 
     }
 }

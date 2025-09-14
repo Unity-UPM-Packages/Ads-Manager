@@ -59,8 +59,8 @@ namespace TheLegends.Base.Ads
 
             Debug.Log("AAAAA " + "adWidthMrec: " + adWidth + " adHeightMrec: " + adHeight);
 
-            var safeAreaWidth = Screen.safeArea.width / deviceScale;
-            var safeAreaHeight = Screen.safeArea.height / deviceScale;
+            var safeAreaWidth = Screen.width / deviceScale;
+            var safeAreaHeight = Screen.height / deviceScale;
 
             int xMax = (int)(safeAreaWidth - adWidth);
             int yMax = (int)(safeAreaHeight - adHeight);

@@ -21,7 +21,7 @@ namespace TheLegends.Base.Ads
         private CountdownConfig _countdownConfig;
         private AutoReloadConfig _autoReloadConfig;
         private ShowOnLoadedConfig _showOnLoadedConfig;
-
+        private PositionConfig _positionConfig;
         internal NativePlatformShowBuilder(AdmobNativePlatformController controller, string position, string layoutName, Action onShow, Action onClose, Action OnAdDismissedFullScreenContent)
         {
             _controller = controller;
@@ -101,6 +101,17 @@ namespace TheLegends.Base.Ads
             return this;
         }
 
+        public NativePlatformShowBuilder WithPosition(AdsPos adsPos, Vector2Int offset)
+        {
+            _positionConfig = new PositionConfig
+            {
+                AdsPos = adsPos,
+                Offset = offset
+            };
+
+            return this;
+        }
+
 
         /// <summary>
         /// Execute all configurations: store configs for persistence, then show()
@@ -111,7 +122,7 @@ namespace TheLegends.Base.Ads
             
             Debug.Log($"[NativePlatformShowBuilder] Executing with configurations for position: {_position}, layout: {_layoutName}");
             
-            _controller.StoreConfigs(_countdownConfig, _autoReloadConfig, _showOnLoadedConfig);
+            _controller.StoreConfigs(_countdownConfig, _autoReloadConfig, _showOnLoadedConfig, _positionConfig);
             
             Debug.Log($"[NativePlatformShowBuilder] Executing show with stored configurations");
             _controller.ShowAds(_position, _layoutName, _onShow, _onClose, _onAdDismissedFullScreenContent);
@@ -168,6 +179,20 @@ namespace TheLegends.Base.Ads
             };
             
             public override string ToString() => $"{Enabled}";
+        }
+
+        public class PositionConfig
+        {
+            public AdsPos AdsPos { get; set; }
+            public Vector2Int Offset { get; set; }
+
+            public PositionConfig Clone() => new PositionConfig
+            {
+                AdsPos = this.AdsPos,
+                Offset = this.Offset
+            };
+            
+            public override string ToString() => $"{Offset}";
         }
 
         #endregion

@@ -180,17 +180,22 @@ public class DemoManager : MonoBehaviour
     private void LoadMrec()
     {
         AdsManager.Instance.LoadMrec(AdsType.Mrec, order);
+        AdsManager.Instance.LoadNativePlatform(PlacementOrder.Three);
     }
 
     private void ShowMrec()
     {
         var mrecPos = (AdsPos)MrecPosDropdown.value;
         AdsManager.Instance.ShowMrec(AdsType.Mrec, order, mrecPos, new Vector2Int(0, 0), "Default");
+        AdsManager.Instance.ShowNativePlatform(PlacementOrder.Three, "Default", "native_mrec", null, null, null)
+        .WithPosition(mrecPos, new Vector2Int(0, 0))
+        .Execute();
     }
 
     private void HideMrec()
     {
         AdsManager.Instance.HideMrec(AdsType.Mrec, order);
+        AdsManager.Instance.HideNativePlatform(PlacementOrder.Three);
     }
 
     private void LoadNativeOverlay()

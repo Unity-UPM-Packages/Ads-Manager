@@ -74,11 +74,26 @@ namespace TheLegends.Base.Ads
             _client?.WithCountdown(initialDelaySeconds, countdownDurationSeconds, closeButtonDelaySeconds);
         }
 
+        public void WithPosition(int positionX, int positionY)
+        {
+            _client?.WithPosition(positionX, positionY);
+        }
+
         #endregion
 
         public IResponseInfoClient GetResponseInfo()
         {
             return _client.GetResponseInfoClient();
+        }
+
+        public float GetHeightInPixels()
+        {
+            return _client.GetHeightInPixels();
+        }
+
+        public float GetWidthInPixels()
+        {
+            return _client.GetWidthInPixels();
         }
 
 
