@@ -286,7 +286,9 @@ namespace TheLegends.Base.Ads
         {
             if (AdsManager.Instance.GetAdsStatus(AdsType.NativePlatform, PlacementOrder.Three) == AdsEvents.LoadAvailable)
             {
-                AdsManager.Instance.ShowNativePlatform(PlacementOrder.Three, "native_mrec_open", "native_mrec_open", null, null, null).Execute();
+                AdsManager.Instance.ShowNativePlatform(PlacementOrder.Three, "native_mrec_open", "native_mrec", null, null, null)
+                .WithPosition(mrecOpenPos, mrecOpenOffset)
+                .Execute();
                 brandScreen.Show();
                 brandScreen.OnClose += CompleteSplash;
             }

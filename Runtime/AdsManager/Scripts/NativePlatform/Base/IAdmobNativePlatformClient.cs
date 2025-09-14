@@ -1,6 +1,7 @@
 using System;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
+using UnityEngine;
 
 namespace TheLegends.Base.Ads
 {
@@ -29,8 +30,11 @@ namespace TheLegends.Base.Ads
         void DestroyAd();
         bool IsAdAvailable();
         IResponseInfoClient GetResponseInfoClient();
+        public float GetHeightInPixels();
+        public float GetWidthInPixels();
 
         // === BUILDER PATTERN SUPPORT ===
         void WithCountdown(float initialDelaySeconds, float countdownDurationSeconds, float closeButtonDelaySeconds);
+        void WithPosition(int positionX, int positionY);
     }
 }

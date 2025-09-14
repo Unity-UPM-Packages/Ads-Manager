@@ -244,11 +244,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6243931895743878932, guid: dc87e2d9a85fceb428329e7efc285cbb, type: 3}
       propertyPath: OnInitAdsDone.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6243931895743878932, guid: dc87e2d9a85fceb428329e7efc285cbb, type: 3}
       propertyPath: OnCompleteSplash.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6243931895743878932, guid: dc87e2d9a85fceb428329e7efc285cbb, type: 3}
       propertyPath: OnInitAdsDone.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

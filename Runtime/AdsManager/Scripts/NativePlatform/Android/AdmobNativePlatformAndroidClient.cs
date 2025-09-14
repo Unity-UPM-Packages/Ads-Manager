@@ -55,6 +55,11 @@ namespace TheLegends.Base.Ads
         {
             _kotlinController?.Call<AndroidJavaObject>("withCountdown", initialDelaySeconds, countdownDurationSeconds, closeButtonDelaySeconds);
         }
+        
+        public void WithPosition(int positionX, int positionY)
+        {
+            _kotlinController?.Call<AndroidJavaObject>("withPosition", positionX, positionY);
+        }
 
 
         #endregion
@@ -176,6 +181,16 @@ namespace TheLegends.Base.Ads
             {
                 OnAdDismissedFullScreenContent?.Invoke();
             });
+        }
+
+        public float GetHeightInPixels()
+        {
+            return _kotlinController?.Call<float>("getHeightInPixels") ?? -100f;
+        }
+
+        public float GetWidthInPixels()
+        {
+            return _kotlinController?.Call<float>("getWidthInPixels") ?? -100f;
         }
         #endregion
     }

@@ -75,6 +75,23 @@ namespace TheLegends.Base.Ads
         {
             Debug.Log("DummyNativeClient: WithShowOnLoaded");
         }
+
+        public float GetHeightInPixels()
+        {
+            Debug.Log("DummyNativeClient: GetHeightInPixels");
+            return 0f;
+        }
+
+        public float GetWidthInPixels()
+        {
+            Debug.Log("DummyNativeClient: GetWidthInPixels");
+            return 0f;
+        }
+
+        public void WithPosition(int positionX, int positionY)
+        {
+            Debug.Log("DummyNativeClient: WithPosition " + positionX + "x" + positionY);
+        }
     }
 
     /// <summary>
