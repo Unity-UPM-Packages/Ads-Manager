@@ -30,8 +30,6 @@ namespace TheLegends.Base.Ads
         void DestroyAd();
         bool IsAdAvailable();
         IResponseInfoClient GetResponseInfoClient();
-        public float GetHeightInPixels();
-        public float GetWidthInPixels();
 
         // === BUILDER PATTERN SUPPORT ===
         void WithCountdown(float initialDelaySeconds, float countdownDurationSeconds, float closeButtonDelaySeconds);

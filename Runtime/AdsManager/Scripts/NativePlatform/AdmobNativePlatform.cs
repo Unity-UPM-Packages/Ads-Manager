@@ -86,17 +86,6 @@ namespace TheLegends.Base.Ads
             return _client.GetResponseInfoClient();
         }
 
-        public float GetHeightInPixels()
-        {
-            return _client.GetHeightInPixels();
-        }
-
-        public float GetWidthInPixels()
-        {
-            return _client.GetWidthInPixels();
-        }
-
-
         private void RegisterAdEvents()
         {
             if (_client == null) return;

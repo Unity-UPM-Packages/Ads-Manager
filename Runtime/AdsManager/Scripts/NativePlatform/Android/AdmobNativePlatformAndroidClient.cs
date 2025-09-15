@@ -183,15 +183,6 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        public float GetHeightInPixels()
-        {
-            return _kotlinController?.Call<float>("getHeightInPixels") ?? -100f;
-        }
-
-        public float GetWidthInPixels()
-        {
-            return _kotlinController?.Call<float>("getWidthInPixels") ?? -100f;
-        }
         #endregion
     }
 }
