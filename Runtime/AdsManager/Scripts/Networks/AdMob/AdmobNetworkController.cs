@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Ump.Api;
 using UnityEngine;
@@ -26,7 +27,7 @@ namespace TheLegends.Base.Ads
         private List<string> testDeivesIDConsent = new List<string>();
 
         private List<AdmobInterstitialController> interList = new List<AdmobInterstitialController>();
-        private List<AdmobRewardedController> rewardedList = new List<AdmobRewardedController>();
+        private List<AdmobRewardedController> rewardList = new List<AdmobRewardedController>();
         private List<AdmobAppOpenController> appOpenList = new List<AdmobAppOpenController>();
         private List<AdmobBannerController> bannerList = new List<AdmobBannerController>();
         private List<AdmobMrecController> mrecList = new List<AdmobMrecController>();
@@ -34,6 +35,13 @@ namespace TheLegends.Base.Ads
         private List<AdmobInterstitialOpenController> interOpenList = new List<AdmobInterstitialOpenController>();
         private List<AdmobNativeOverlayController> nativeOverlayList = new List<AdmobNativeOverlayController>();
         private List<AdmobNativePlatformController> nativePlatformList = new List<AdmobNativePlatformController>();
+
+        // Danh sách các trường ID cần loại trừ khỏi quá trình tự động tạo controller
+        private readonly List<string> excludedIdFields = new List<string>
+        {
+            "nativeIds" // Không tạo controller cho nativeIds
+            // Thêm các ID khác cần loại trừ ở đây
+        };
 
         public override IEnumerator DoInit()
         {
@@ -46,34 +54,68 @@ namespace TheLegends.Base.Ads
 
             var isAdmobTest = AdsManager.Instance.SettingsAds.isAdmobTest;
 
-            var interIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.interIds, AdsManager.Instance.SettingsAds.ADMOB_Android.interIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.interIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.interIds);
-            CreateAdController(interIds, interList);
+            // Lấy tất cả các trường trong AdmobUnitID
+            var unitIdFields = typeof(AdmobUnitID).GetFields();
+            
+            // Lấy tất cả các trường danh sách controller trong AdmobNetworkController
+            var controllerListFields = this.GetType()
+                .GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Where(f => f.FieldType.IsGenericType && 
+                           f.FieldType.GetGenericTypeDefinition() == typeof(List<>) && 
+                           typeof(AdsPlacementBase).IsAssignableFrom(f.FieldType.GetGenericArguments()[0]))
+                .ToList();
 
-            var rewardedIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_Android.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.rewardIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.rewardIds);
-            CreateAdController(rewardedIds, rewardedList);
-
-            var appOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.appOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.appOpenIds);
-            CreateAdController(appOpenIds, appOpenList);
-
-            var bannerIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_Android.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.bannerIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.bannerIds);
-            CreateAdController(bannerIds, bannerList);
-
-            var mrecIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_Android.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.mrecIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.mrecIds);
-            CreateAdController(mrecIds, mrecList);
-
-            var mrecOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.mrecOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.mrecOpenIds);
-            CreateAdController(mrecOpenIds, mrecOpenList);
-
-            var interOpenIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.interOpenIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.interOpenIds);
-            CreateAdController(interOpenIds, interOpenList);
-
-            var nativeOverlayIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeOverlayIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeOverlayIds);
-            CreateAdController(nativeOverlayIds, nativeOverlayList);
-
-            var nativePlatformIds = GetAdUnitIds(isIOS, isAdmobTest, AdsManager.Instance.SettingsAds.ADMOB_IOS.nativePlatformIds, AdsManager.Instance.SettingsAds.ADMOB_Android.nativePlatformIds, AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativePlatformIds, AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativePlatformIds);
-            CreateAdController(nativePlatformIds, nativePlatformList);
-
-
+            // Tạo một ánh xạ từ tên trường trong AdmobUnitID đến trường danh sách controller
+            foreach (var unitIdField in unitIdFields)
+            {
+                // Chỉ xử lý các trường kiểu List<Placement>
+                if (unitIdField.FieldType == typeof(List<Placement>))
+                {
+                    string fieldName = unitIdField.Name;
+                    
+                    // Kiểm tra xem trường này có nằm trong danh sách loại trừ không
+                    if (excludedIdFields.Contains(fieldName))
+                    {
+                        // Bỏ qua trường này
+                        continue;
+                    }
+                    
+                    // Tìm trường danh sách controller tương ứng dựa trên quy ước đặt tên
+                    var controllerField = controllerListFields.FirstOrDefault(f => 
+                        fieldName.Replace("Ids", "List").Equals(f.Name, StringComparison.OrdinalIgnoreCase));
+                    
+                    if (controllerField != null)
+                    {
+                        // Lấy danh sách Placement từ các AdmobUnitID
+                        var iosIds = AdsManager.Instance.SettingsAds.ADMOB_IOS;
+                        var androidIds = AdsManager.Instance.SettingsAds.ADMOB_Android;
+                        var iosTestIds = AdsManager.Instance.SettingsAds.ADMOB_IOS_Test;
+                        var androidTestIds = AdsManager.Instance.SettingsAds.ADMOB_Android_Test;
+                        
+                        var placements = GetAdUnitIds(
+                            isIOS,
+                            isAdmobTest,
+                            (List<Placement>)unitIdField.GetValue(iosIds),
+                            (List<Placement>)unitIdField.GetValue(androidIds),
+                            (List<Placement>)unitIdField.GetValue(iosTestIds),
+                            (List<Placement>)unitIdField.GetValue(androidTestIds)
+                        );
+                        
+                        // Lấy danh sách controller
+                        var controllerList = controllerField.GetValue(this);
+                        
+                        // Gọi phương thức CreateAdController với generic type phù hợp
+                        var controllerType = controllerField.FieldType.GetGenericArguments()[0];
+                        var methodInfo = typeof(AdmobNetworkController).GetMethod("CreateAdController", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                        var genericMethod = methodInfo.MakeGenericMethod(controllerType);
+                        genericMethod.Invoke(this, new object[] { placements, controllerList });
+                    }
+                    else
+                    {
+                        AdsManager.Instance.LogError($"Cannot find controller list for {fieldName} - skipping");
+                    }
+                }
+            }
 #endif
 
             yield return RequestUMP();
@@ -264,7 +306,7 @@ namespace TheLegends.Base.Ads
                     listPlacement = interList.Cast<AdsPlacementBase>().ToList();
                     break;
                 case AdsType.Rewarded:
-                    listPlacement = rewardedList.Cast<AdsPlacementBase>().ToList();
+                    listPlacement = rewardList.Cast<AdsPlacementBase>().ToList();
                     break;
                 case AdsType.Mrec:
                     listPlacement = mrecList.Cast<AdsPlacementBase>().ToList();
@@ -362,12 +404,12 @@ namespace TheLegends.Base.Ads
 
         public override void LoadRewarded(PlacementOrder order)
         {
-            if (!IsListExist(rewardedList))
+            if (!IsListExist(rewardList))
             {
                 return;
             }
 
-            var placementIndex = GetPlacementIndex((int)order, rewardedList.Count);
+            var placementIndex = GetPlacementIndex((int)order, rewardList.Count);
 
             if (placementIndex == -1)
             {
@@ -375,17 +417,17 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            rewardedList[placementIndex].LoadAds();
+            rewardList[placementIndex].LoadAds();
         }
 
         public override void ShowRewarded(PlacementOrder order, string position, Action OnRewarded = null)
         {
-            if (!IsListExist(rewardedList))
+            if (!IsListExist(rewardList))
             {
                 return;
             }
 
-            var placementIndex = GetPlacementIndex((int)order, rewardedList.Count);
+            var placementIndex = GetPlacementIndex((int)order, rewardList.Count);
 
             if (placementIndex == -1)
             {
@@ -393,7 +435,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            rewardedList[placementIndex].ShowAds(position, OnRewarded);
+            rewardList[placementIndex].ShowAds(position, OnRewarded);
         }
 
         public override void LoadAppOpen(PlacementOrder order)
