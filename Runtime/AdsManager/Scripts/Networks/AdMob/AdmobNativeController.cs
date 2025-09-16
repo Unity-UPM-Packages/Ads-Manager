@@ -113,11 +113,11 @@ namespace TheLegends.Base.Ads
 
             var list = isAdmobTest
                 ? (isIOS
-                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeIds
-                    : AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeIds)
+                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeUnityIds
+                    : AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeUnityIds)
                 : (isIOS
-                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeIds
-                    : AdsManager.Instance.SettingsAds.ADMOB_Android.nativeIds);
+                    ? AdsManager.Instance.SettingsAds.ADMOB_IOS.nativeUnityIds
+                    : AdsManager.Instance.SettingsAds.ADMOB_Android.nativeUnityIds);
 
             if (list.Count <= 0)
             {
@@ -261,7 +261,7 @@ namespace TheLegends.Base.Ads
         public override AdsType GetAdsType()
         {
 #if USE_ADMOB
-            return AdsType.Native;
+            return AdsType.NativeUnity;
 #else
             return AdsType.None;
 #endif
