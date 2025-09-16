@@ -35,8 +35,6 @@ namespace TheLegends.Base.Ads
         private List<AdmobInterstitialOpenController> interOpenList = new List<AdmobInterstitialOpenController>();
         private List<AdmobNativeOverlayController> nativeOverlayList = new List<AdmobNativeOverlayController>();
         private List<AdmobNativePlatformController> nativePlatformList = new List<AdmobNativePlatformController>();
-        
-        // Native controllers
         private List<AdmobNativeBannerController> nativeBannerList = new List<AdmobNativeBannerController>();
         private List<AdmobNativeInterController> nativeInterList = new List<AdmobNativeInterController>();
         private List<AdmobNativeRewardController> nativeRewardList = new List<AdmobNativeRewardController>();
@@ -368,6 +366,50 @@ namespace TheLegends.Base.Ads
             }
 
             return listPlacement[index].Status;
+        }
+
+        public void RemoveAds()
+        {
+            foreach (var ad in bannerList)
+            {
+                ad.HideAds();
+            }
+
+            foreach (var ad in mrecList)
+            {
+                ad.HideAds();
+            }
+
+            foreach (var ad in mrecOpenList)
+            {
+                ad.HideAds();
+            }
+
+            foreach (var ad in nativeOverlayList)
+            {
+                ad.HideAds();
+            }
+
+            foreach (var ad in nativeBannerList)
+            {
+                ad.HideAds();
+            }
+
+            foreach (var ad in nativeMrecList)
+            {
+                ad.HideAds();
+            }
+
+            foreach (var ad in nativeMrecOpenList)
+            {
+                ad.HideAds();
+            }
+
+            foreach (var ad in nativeVideoList)
+            {
+                ad.HideAds();
+            }
+
         }
 
         private int GetPlacementIndex(int order, int listCount)

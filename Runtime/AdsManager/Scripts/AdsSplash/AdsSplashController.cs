@@ -166,13 +166,18 @@ namespace TheLegends.Base.Ads
         private IEnumerator LoadInitialAds()
         {
 
+            if (!AdsManager.Instance.IsCanShowAds)
+            {
+                yield break;
+            }
+
             // Load MREC for brand selection if needed
             if (canShowSelectBrand)
             {
 
                 AdsManager.Instance.LoadNativeMrecOpen(PlacementOrder.One);
                 yield return AdsManager.Instance.WaitAdLoaded(AdsType.NativeMrecOpen, PlacementOrder.One);
-                
+
 
                 if (AdsManager.Instance.GetAdsStatus(AdsType.NativeMrecOpen, PlacementOrder.One) != AdsEvents.LoadAvailable)
                 {

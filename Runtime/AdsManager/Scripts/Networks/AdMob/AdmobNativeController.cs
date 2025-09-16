@@ -130,8 +130,18 @@ namespace TheLegends.Base.Ads
             timeAutoReload = AdsManager.Instance.adsConfigs.adNativeTimeReload;
 
             Init(placement);
+
+            AdsManager.Instance.OnCanShowAdsChanged += OnCanShowAdsChanged;
         }
 
+
+        private void OnCanShowAdsChanged(bool isCanShowAds)
+        {
+            if (!isCanShowAds)
+            {
+                HideAds();
+            }
+        }
 
         public override void LoadAds()
         {
@@ -604,6 +614,7 @@ namespace TheLegends.Base.Ads
             isCLosedByHide = true;
             NativeDestroy();
             OnAdsClosed();
+            AdsManager.Instance.OnCanShowAdsChanged -= OnCanShowAdsChanged;
         }
 
         private void DelayReloadAd(float time)

@@ -198,6 +198,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AdsManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5431774434381936511, guid: dc87e2d9a85fceb428329e7efc285cbb, type: 3}
+      propertyPath: isCanShowAds
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6057493772809429767, guid: dc87e2d9a85fceb428329e7efc285cbb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
