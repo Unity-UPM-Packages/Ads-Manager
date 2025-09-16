@@ -57,6 +57,14 @@ MonoBehaviour:
     nativeIds: []
     nativeOverlayIds: []
     nativePlatformIds: []
+    nativeBannerIds: []
+    nativeInterIds: []
+    nativeRewardIds: []
+    nativeMrecIds: []
+    nativeAppOpenIds: []
+    nativeInterOpenIds: []
+    nativeMrecOpenIds: []
+    nativeVideoIds: []
   ADMOB_IOS:
     bannerIds: []
     interIds: []
@@ -68,6 +76,14 @@ MonoBehaviour:
     nativeIds: []
     nativeOverlayIds: []
     nativePlatformIds: []
+    nativeBannerIds: []
+    nativeInterIds: []
+    nativeRewardIds: []
+    nativeMrecIds: []
+    nativeAppOpenIds: []
+    nativeInterOpenIds: []
+    nativeMrecOpenIds: []
+    nativeVideoIds: []
   ADMOB_Android_Test:
     bannerIds:
     - stringIDs:
@@ -99,6 +115,28 @@ MonoBehaviour:
     nativePlatformIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/1044960115
+    nativeBannerIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2247696110
+    nativeInterIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2247696110
+    nativeRewardIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2247696110
+    nativeMrecIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2247696110
+    nativeAppOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2247696110
+    nativeInterOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2247696110
+    nativeMrecOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/2247696110
+    nativeVideoIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/2247696110
   ADMOB_IOS_Test:
@@ -132,5 +170,27 @@ MonoBehaviour:
     nativePlatformIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/2521693316
+    nativeBannerIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/3986624511
+    nativeInterIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/3986624511
+    nativeRewardIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/3986624511
+    nativeMrecIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/3986624511
+    nativeAppOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/3986624511
+    nativeInterOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/3986624511
+    nativeMrecOpenIds:
+    - stringIDs:
+      - ca-app-pub-3940256099942544/3986624511
+    nativeVideoIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/3986624511

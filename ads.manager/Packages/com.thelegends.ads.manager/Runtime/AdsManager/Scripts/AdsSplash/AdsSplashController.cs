@@ -170,11 +170,11 @@ namespace TheLegends.Base.Ads
             if (canShowSelectBrand)
             {
 
-                AdsManager.Instance.LoadNativePlatform(PlacementOrder.Three);
-                yield return AdsManager.Instance.WaitAdLoaded(AdsType.NativePlatform, PlacementOrder.Three);
+                AdsManager.Instance.LoadNativeMrecOpen(PlacementOrder.One);
+                yield return AdsManager.Instance.WaitAdLoaded(AdsType.NativeMrecOpen, PlacementOrder.One);
                 
 
-                if (AdsManager.Instance.GetAdsStatus(AdsType.NativePlatform, PlacementOrder.Three) != AdsEvents.LoadAvailable)
+                if (AdsManager.Instance.GetAdsStatus(AdsType.NativeMrecOpen, PlacementOrder.One) != AdsEvents.LoadAvailable)
                 {
                     AdsManager.Instance.LoadMrec(AdsType.MrecOpen, PlacementOrder.One);
                     yield return AdsManager.Instance.WaitAdLoaded(AdsType.MrecOpen, PlacementOrder.One);
@@ -184,10 +184,10 @@ namespace TheLegends.Base.Ads
             // Load interstitial for app open if enabled
             if (isUseAdInterOpen)
             {
-                AdsManager.Instance.LoadNativePlatform(PlacementOrder.Four);
-                yield return AdsManager.Instance.WaitAdLoaded(AdsType.NativePlatform, PlacementOrder.Four);
+                AdsManager.Instance.LoadNativeInterOpen(PlacementOrder.One);
+                yield return AdsManager.Instance.WaitAdLoaded(AdsType.NativeInterOpen, PlacementOrder.One);
 
-                if (AdsManager.Instance.GetAdsStatus(AdsType.NativePlatform, PlacementOrder.Four) != AdsEvents.LoadAvailable)
+                if (AdsManager.Instance.GetAdsStatus(AdsType.NativeInterOpen, PlacementOrder.One) != AdsEvents.LoadAvailable)
                 {
                     AdsManager.Instance.LoadInterstitial(AdsType.InterOpen, PlacementOrder.One);
                     yield return AdsManager.Instance.WaitAdLoaded(AdsType.InterOpen, PlacementOrder.One);
@@ -226,15 +226,10 @@ namespace TheLegends.Base.Ads
 
         public void CompleteSplash()
         {
-            // if (AdsManager.Instance.GetAdsStatus(AdsType.MrecOpen, PlacementOrder.One) == AdsEvents.ShowSuccess)
-            // {
-                AdsManager.Instance.HideMrec(AdsType.MrecOpen, PlacementOrder.One);
-            // }
 
-            // if (AdsManager.Instance.GetAdsStatus(AdsType.NativePlatform, PlacementOrder.Three) == AdsEvents.Show)
-            // {
-                AdsManager.Instance.HideNativePlatform(PlacementOrder.Three);
-            // }
+            AdsManager.Instance.HideMrec(AdsType.MrecOpen, PlacementOrder.One);
+
+            AdsManager.Instance.HideNativeMrecOpen(PlacementOrder.One);
 
             brandScreen.OnClose -= CompleteSplash;
 
@@ -247,13 +242,14 @@ namespace TheLegends.Base.Ads
 
             bool isShowInter = false;
 
-            if (AdsManager.Instance.GetAdsStatus(AdsType.NativePlatform, PlacementOrder.Four) == AdsEvents.LoadAvailable)
+            if (AdsManager.Instance.GetAdsStatus(AdsType.NativeInterOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
-                AdsManager.Instance.ShowNativeVideoPlatform(PlacementOrder.Four, "native_inter_open", "native_inter", null, () =>
+                AdsManager.Instance.ShowNativeInter(PlacementOrder.One, "native_inter_open", "native_inter", null, () =>
                 {
                     isShowInter = false;
-                }, null);
-                isShowInter = true;
+                }, null)
+                .WithCountdown(AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration, AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown, AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay)
+                .Execute();
             }
             else
             {
@@ -284,9 +280,9 @@ namespace TheLegends.Base.Ads
 
         private void ShowBrandScreen()
         {
-            if (AdsManager.Instance.GetAdsStatus(AdsType.NativePlatform, PlacementOrder.Three) == AdsEvents.LoadAvailable)
+            if (AdsManager.Instance.GetAdsStatus(AdsType.NativeMrecOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
-                AdsManager.Instance.ShowNativePlatform(PlacementOrder.Three, "native_mrec_open", "native_mrec", null, null, null)
+                AdsManager.Instance.ShowNativeMrecOpen(PlacementOrder.One, "native_mrec_open", "native_mrec", null, null, null)
                 .WithPosition(mrecOpenPos, mrecOpenOffset)
                 .Execute();
                 brandScreen.Show();
@@ -326,7 +322,12 @@ namespace TheLegends.Base.Ads
             AdsManager.Instance.LoadAppOpen(PlacementOrder.One);
             AdsManager.Instance.LoadBanner(PlacementOrder.One);
             AdsManager.Instance.LoadNativeOverlay(PlacementOrder.One);
-            AdsManager.Instance.LoadNativePlatform(PlacementOrder.One);
+            AdsManager.Instance.LoadNativeBanner(PlacementOrder.One);
+            AdsManager.Instance.LoadNativeInter(PlacementOrder.One);
+            AdsManager.Instance.LoadNativeReward(PlacementOrder.One);
+            AdsManager.Instance.LoadNativeMrec(PlacementOrder.One);
+            AdsManager.Instance.LoadNativeAppOpen(PlacementOrder.One);
+            AdsManager.Instance.LoadNativeVideo(PlacementOrder.One);
         }
 
 

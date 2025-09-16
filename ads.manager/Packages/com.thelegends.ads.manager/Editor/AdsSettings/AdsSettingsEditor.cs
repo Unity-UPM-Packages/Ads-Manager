@@ -263,7 +263,14 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeOverlayIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativePlatformIds"), true);
-
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeBannerIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeInterIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeRewardIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeMrecIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeAppOpenIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeInterOpenIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeMrecOpenIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeVideoIds"), true);
             EditorGUILayout.Separator();
             EditorGUILayout.Separator();
 
@@ -278,6 +285,14 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("appOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeOverlayIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativePlatformIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeBannerIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeInterIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeRewardIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeMrecIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeAppOpenIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeInterOpenIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeMrecOpenIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeVideoIds"), true);
 #endif
 
             #endregion

@@ -17,6 +17,14 @@ namespace TheLegends.Base.Ads
         NativeOverlay = 8,
         Native = 9,
         NativePlatform = 10,
+        NativeBanner = 11,
+        NativeInter = 12,
+        NativeReward = 13,
+        NativeMrec = 14,
+        NativeAppOpen = 15,
+        NativeInterOpen = 16,
+        NativeMrecOpen = 17,
+        NativeVideo = 18,
     }
 }
 

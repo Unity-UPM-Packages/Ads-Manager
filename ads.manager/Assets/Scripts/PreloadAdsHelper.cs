@@ -5,7 +5,7 @@ public class PreloadAdsHelper : MonoBehaviour
 {
     public void PreloadAds()
     {
-        AdsManager.Instance.LoadNativePlatform(PlacementOrder.Two);
+        // AdsManager.Instance.LoadNativeBanner(PlacementOrder.One);
     }
 
     public void ShowAds()
