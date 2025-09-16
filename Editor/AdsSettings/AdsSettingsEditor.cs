@@ -260,7 +260,7 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("interOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("mrecOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("appOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeUnityIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeOverlayIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativePlatformIds"), true);
             EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeBannerIds"), true);
@@ -283,6 +283,7 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("interOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("mrecOpenIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("appOpenIds"), true);
+            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeUnityIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeOverlayIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativePlatformIds"), true);
             EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeBannerIds"), true);
