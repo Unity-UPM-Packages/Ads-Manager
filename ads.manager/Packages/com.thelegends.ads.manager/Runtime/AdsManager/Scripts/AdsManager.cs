@@ -71,6 +71,38 @@ namespace TheLegends.Base.Ads
             }
         }
 
+
+        public Action<bool> OnCanShowAdsChanged;
+        [SerializeField]
+        private bool isCanShowAds = true;
+        public bool IsCanShowAds
+        {
+            get {
+                return isCanShowAds = PlayerPrefs.GetInt("IsCanShowAds", 1) == 1;
+            }
+            set
+            {
+                isCanShowAds = value;
+                if (isCanShowAds)
+                {
+                    PlayerPrefs.SetInt("IsCanShowAds", 1);
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("IsCanShowAds", 0);
+
+                    var netWork = (AdmobNetworkController)GetNetwork(DefaultMediation);
+
+                    if (netWork != null)
+                    {
+                        netWork.RemoveAds();
+                    }
+                }
+
+                OnCanShowAdsChanged?.Invoke(isCanShowAds);
+            }
+        }
+
         private InitiationStatus status = InitiationStatus.NotInitialized;
         
 

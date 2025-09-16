@@ -39,6 +39,7 @@ public class DemoManager : MonoBehaviour
     public Button showNativeBannerPlatformBtn;
     public Button hideNativeBannerPlatformBtn;
     public Button adjustLayoutForNativeBannerBtn;
+    public Button removeAdsBtn;
 
     public AdmobNativeController nativeAdsMrec;
     public AdmobNativeController nativeAdsBanner;
@@ -79,6 +80,7 @@ public class DemoManager : MonoBehaviour
         showNativeBannerPlatformBtn.onClick.AddListener(ShowNativeBannerPlatform);
         hideNativeBannerPlatformBtn.onClick.AddListener(HideNativeBannerPlatform);
         adjustLayoutForNativeBannerBtn.onClick.AddListener(AdjustLayoutForNativeBanner);
+        removeAdsBtn.onClick.AddListener(RemoveAds);
     }
 
 
@@ -322,5 +324,10 @@ public class DemoManager : MonoBehaviour
     public void AdjustLayoutForNativeBanner()
     {
         adLayoutHelper.AdjustLayoutForNativeBanner(60);
+    }
+
+    public void RemoveAds()
+    {
+        AdsManager.Instance.IsCanShowAds = false;
     }
 }

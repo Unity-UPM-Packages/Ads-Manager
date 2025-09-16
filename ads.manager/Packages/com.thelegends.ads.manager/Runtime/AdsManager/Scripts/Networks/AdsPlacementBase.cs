@@ -66,6 +66,12 @@ namespace TheLegends.Base.Ads
 
         protected bool IsCanLoadAds()
         {
+            if (!AdsManager.Instance.IsCanShowAds)
+            {
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not can show ads --> return");
+                return false;
+            }
+
             if (IsInvoking(nameof(LoadAds)))
             {
                 AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is scheduled loading --> return");
@@ -108,7 +114,7 @@ namespace TheLegends.Base.Ads
 
         public bool IsAdsAvailable()
         {
-            return Status == AdsEvents.LoadAvailable;
+            return Status == AdsEvents.LoadAvailable && AdsManager.Instance.IsCanShowAds;
         }
 
         protected virtual void OnAdsLoadFailed(string message)
