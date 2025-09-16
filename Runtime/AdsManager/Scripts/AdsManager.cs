@@ -355,7 +355,7 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public void LoadNativePlatform(PlacementOrder order)
+        public void LoadNativeBanner(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -366,11 +366,11 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.LoadNativePlatform(order);
+                netWork.LoadNativeBanner(order);
             }
         }
 
-        public NativePlatformShowBuilder ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        public NativePlatformShowBuilder ShowNativeBanner(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
             if (!IsInitialized())
             {
@@ -382,31 +382,13 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                return netWork.ShowNativePlatform(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+                return netWork.ShowNativeBanner(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
             }
 
             return null;
         }
 
-        public void ShowNativeVideoPlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
-        {
-            ShowNativePlatform(order, position, layoutName, OnShow, OnClose, () =>
-            {
-                OnAdDismissedFullScreenContent?.Invoke();
-                HideNativePlatform(order);
-            }).WithCountdown(adsConfigs.nativeVideoCountdownTimerDuration, adsConfigs.nativeVideoDelayBeforeCountdown, adsConfigs.nativeVideoCloseClickableDelay)
-            .Execute();
-        }
-
-        public void ShowNativeBannerPlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
-        {
-            ShowNativePlatform(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent)
-            .WithAutoReload(adsConfigs.nativeBannerTimeReload)
-            .WithShowOnLoaded(true)
-            .Execute();
-        }
-
-        public void HideNativePlatform(PlacementOrder order)
+        public void HideNativeBanner(PlacementOrder order)
         {
             if (!IsInitialized())
             {
@@ -417,7 +399,411 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.HideNativePlatform(order);
+                netWork.HideNativeBanner(order);
+            }
+        }
+
+
+
+        // public void LoadNativePlatform(PlacementOrder order)
+        // {
+        //     if (!IsInitialized())
+        //     {
+        //         return;
+        //     }
+
+        //     var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+        //     if (netWork != null)
+        //     {
+        //         netWork.LoadNativePlatform(order);
+        //     }
+        // }
+
+        // public NativePlatformShowBuilder ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        // {
+        //     if (!IsInitialized())
+        //     {
+        //         LogError("AdsManager not initialized");
+        //         return null;
+        //     }
+
+        //     var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+        //     if (netWork != null)
+        //     {
+        //         return netWork.ShowNativePlatform(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+        //     }
+
+        //     return null;
+        // }
+
+        // public void ShowNativeVideoPlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        // {
+        //     ShowNativePlatform(order, position, layoutName, OnShow, OnClose, () =>
+        //     {
+        //         OnAdDismissedFullScreenContent?.Invoke();
+        //         HideNativePlatform(order);
+        //     }).WithCountdown(adsConfigs.nativeVideoCountdownTimerDuration, adsConfigs.nativeVideoDelayBeforeCountdown, adsConfigs.nativeVideoCloseClickableDelay)
+        //     .Execute();
+        // }
+
+        // public void ShowNativeBannerPlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        // {
+        //     ShowNativePlatform(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent)
+        //     .WithAutoReload(adsConfigs.nativeBannerTimeReload)
+        //     .WithShowOnLoaded(true)
+        //     .Execute();
+        // }
+
+        // public void HideNativePlatform(PlacementOrder order)
+        // {
+        //     if (!IsInitialized())
+        //     {
+        //         return;
+        //     }
+
+        //     var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+        //     if (netWork != null)
+        //     {
+        //         netWork.HideNativePlatform(order);
+        //     }
+        // }
+
+        public void LoadNativeInter(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.LoadNativeInter(order);
+            }
+        }
+
+        public NativePlatformShowBuilder ShowNativeInter(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsInitialized())
+            {
+                LogError("AdsManager not initialized");
+                return null;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                return netWork.ShowNativeInter(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            }
+
+            return null;
+        }
+
+        public void HideNativeInter(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.HideNativeInter(order);
+            }
+        }
+
+        public void LoadNativeReward(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.LoadNativeReward(order);
+            }
+        }
+
+        public NativePlatformShowBuilder ShowNativeReward(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsInitialized())
+            {
+                LogError("AdsManager not initialized");
+                return null;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                return netWork.ShowNativeReward(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            }
+
+            return null;
+        }
+
+        public void HideNativeReward(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.HideNativeReward(order);
+            }
+        }
+
+        public void LoadNativeMrec(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.LoadNativeMrec(order);
+            }
+        }
+
+        public NativePlatformShowBuilder ShowNativeMrec(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsInitialized())
+            {
+                LogError("AdsManager not initialized");
+                return null;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                return netWork.ShowNativeMrec(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            }
+
+            return null;
+        }
+
+        public void HideNativeMrec(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.HideNativeMrec(order);
+            }
+        }
+
+        public void LoadNativeAppOpen(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.LoadNativeAppOpen(order);
+            }
+        }
+
+        public NativePlatformShowBuilder ShowNativeAppOpen(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsInitialized())
+            {
+                LogError("AdsManager not initialized");
+                return null;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                return netWork.ShowNativeAppOpen(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            }
+
+            return null;
+        }
+
+        public void HideNativeAppOpen(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.HideNativeAppOpen(order);
+            }
+        }
+
+        public void LoadNativeInterOpen(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.LoadNativeInterOpen(order);
+            }
+        }
+
+        public NativePlatformShowBuilder ShowNativeInterOpen(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsInitialized())
+            {
+                LogError("AdsManager not initialized");
+                return null;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                return netWork.ShowNativeInterOpen(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            }
+
+            return null;
+        }
+
+        public void HideNativeInterOpen(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.HideNativeInterOpen(order);
+            }
+        }
+
+        public void LoadNativeMrecOpen(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.LoadNativeMrecOpen(order);
+            }
+        }
+
+        public NativePlatformShowBuilder ShowNativeMrecOpen(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsInitialized())
+            {
+                LogError("AdsManager not initialized");
+                return null;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                return netWork.ShowNativeMrecOpen(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            }
+
+            return null;
+        }
+
+        public void HideNativeMrecOpen(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.HideNativeMrecOpen(order);
+            }
+        }
+
+        public void LoadNativeVideo(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.LoadNativeVideo(order);
+            }
+        }
+
+        public NativePlatformShowBuilder ShowNativeVideo(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsInitialized())
+            {
+                LogError("AdsManager not initialized");
+                return null;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                return netWork.ShowNativeVideo(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            }
+
+            return null;
+        }
+
+        public void HideNativeVideo(PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return;
+            }
+
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.HideNativeVideo(order);
             }
         }
 

@@ -180,14 +180,14 @@ public class DemoManager : MonoBehaviour
     private void LoadMrec()
     {
         AdsManager.Instance.LoadMrec(AdsType.Mrec, order);
-        AdsManager.Instance.LoadNativePlatform(PlacementOrder.Three);
+        AdsManager.Instance.LoadNativeMrec(PlacementOrder.One);
     }
 
     private void ShowMrec()
     {
         var mrecPos = (AdsPos)MrecPosDropdown.value;
         AdsManager.Instance.ShowMrec(AdsType.Mrec, order, mrecPos, new Vector2Int(0, 0), "Default");
-        AdsManager.Instance.ShowNativePlatform(PlacementOrder.Three, "Default", "native_mrec", null, null, null)
+        AdsManager.Instance.ShowNativeMrec(PlacementOrder.One, "Default", "native_mrec", null, null, null)
         .WithPosition(mrecPos, new Vector2Int(0, 0))
         .Execute();
     }
@@ -195,7 +195,7 @@ public class DemoManager : MonoBehaviour
     private void HideMrec()
     {
         AdsManager.Instance.HideMrec(AdsType.Mrec, order);
-        AdsManager.Instance.HideNativePlatform(PlacementOrder.Three);
+        AdsManager.Instance.HideNativeMrec(PlacementOrder.One);
     }
 
     private void LoadNativeOverlay()
@@ -261,14 +261,14 @@ public class DemoManager : MonoBehaviour
 
     public void LoadNativeVideoPlatform()
     {
-        AdsManager.Instance.LoadNativePlatform(PlacementOrder.One);
+        AdsManager.Instance.LoadNativeVideo(PlacementOrder.One);
     }
 
 
 
     public void ShowNativeVideoPlatform()
     {
-        AdsManager.Instance.ShowNativeVideoPlatform(PlacementOrder.One, "Default", "native_template", () =>
+        AdsManager.Instance.ShowNativeVideo(PlacementOrder.One, "Default", "native_template", () =>
         {
             AdsManager.Instance.Log("NativeVideoPlatform show");
             HideNativeBannerPlatform();
@@ -279,23 +279,26 @@ public class DemoManager : MonoBehaviour
         }, () =>
         {
             AdsManager.Instance.Log("NativeVideoPlatform full screen content closed");
-        });
+        })
+        .WithCountdown(AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration, AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown, AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay)
+        .Execute();
     }
 
     public void HideNativeVideoPlatform()
     {
-        AdsManager.Instance.HideNativePlatform(PlacementOrder.One);
+        // AdsManager.Instance.HideNativePlatform(PlacementOrder.One);
+        AdsManager.Instance.HideNativeVideo(PlacementOrder.One);
     }
 
 
     public void LoadNativeBannerPlatform()
     {
-        AdsManager.Instance.LoadNativePlatform(PlacementOrder.Two);
+        AdsManager.Instance.LoadNativeBanner(PlacementOrder.One);
     }
 
     public void ShowNativeBannerPlatform()
     {
-        AdsManager.Instance.ShowNativeBannerPlatform(PlacementOrder.Two, "Default", "native_banner", () =>
+        AdsManager.Instance.ShowNativeBanner(PlacementOrder.One, "Default", "native_banner", () =>
         {
             AdsManager.Instance.Log("NativeBannerPlatform show");
         }, () =>
@@ -304,12 +307,16 @@ public class DemoManager : MonoBehaviour
         }, () =>
         {
             AdsManager.Instance.Log("NativeBannerPlatform full screen content closed");
-        });
+        })
+        .WithAutoReload(AdsManager.Instance.adsConfigs.nativeBannerTimeReload)
+        .WithShowOnLoaded(true)
+        .Execute();
     }
 
     public void HideNativeBannerPlatform()
     {
-        AdsManager.Instance.HideNativePlatform(PlacementOrder.Two);
+        // AdsManager.Instance.HideNativePlatform(PlacementOrder.Two);
+        AdsManager.Instance.HideNativeBanner(PlacementOrder.One);
     }
 
     public void AdjustLayoutForNativeBanner()

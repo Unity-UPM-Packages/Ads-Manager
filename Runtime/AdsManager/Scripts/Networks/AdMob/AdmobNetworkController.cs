@@ -35,6 +35,16 @@ namespace TheLegends.Base.Ads
         private List<AdmobInterstitialOpenController> interOpenList = new List<AdmobInterstitialOpenController>();
         private List<AdmobNativeOverlayController> nativeOverlayList = new List<AdmobNativeOverlayController>();
         private List<AdmobNativePlatformController> nativePlatformList = new List<AdmobNativePlatformController>();
+        
+        // Native controllers
+        private List<AdmobNativeBannerController> nativeBannerList = new List<AdmobNativeBannerController>();
+        private List<AdmobNativeInterController> nativeInterList = new List<AdmobNativeInterController>();
+        private List<AdmobNativeRewardController> nativeRewardList = new List<AdmobNativeRewardController>();
+        private List<AdmobNativeMrecController> nativeMrecList = new List<AdmobNativeMrecController>();
+        private List<AdmobNativeAppOpenController> nativeAppOpenList = new List<AdmobNativeAppOpenController>();
+        private List<AdmobNativeInterOpenController> nativeInterOpenList = new List<AdmobNativeInterOpenController>();
+        private List<AdmobNativeMrecOpenController> nativeMrecOpenList = new List<AdmobNativeMrecOpenController>();
+        private List<AdmobNativeVideoController> nativeVideoList = new List<AdmobNativeVideoController>();
 
         // Danh sách các trường ID cần loại trừ khỏi quá trình tự động tạo controller
         private readonly List<string> excludedIdFields = new List<string>
@@ -101,12 +111,10 @@ namespace TheLegends.Base.Ads
                             (List<Placement>)unitIdField.GetValue(androidTestIds)
                         );
                         
-                        // Lấy danh sách controller
                         var controllerList = controllerField.GetValue(this);
                         
-                        // Gọi phương thức CreateAdController với generic type phù hợp
                         var controllerType = controllerField.FieldType.GetGenericArguments()[0];
-                        var methodInfo = typeof(AdmobNetworkController).GetMethod("CreateAdController", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                        var methodInfo = typeof(AdmobNetworkController).GetMethod("CreateAdController", BindingFlags.NonPublic | BindingFlags.Instance);
                         var genericMethod = methodInfo.MakeGenericMethod(controllerType);
                         genericMethod.Invoke(this, new object[] { placements, controllerList });
                     }
@@ -328,6 +336,30 @@ namespace TheLegends.Base.Ads
                     break;
                 case AdsType.NativePlatform:
                     listPlacement = nativePlatformList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.NativeBanner:
+                    listPlacement = nativeBannerList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.NativeInter:
+                    listPlacement = nativeInterList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.NativeReward:
+                    listPlacement = nativeRewardList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.NativeMrec:
+                    listPlacement = nativeMrecList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.NativeAppOpen:
+                    listPlacement = nativeAppOpenList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.NativeInterOpen:
+                    listPlacement = nativeInterOpenList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.NativeMrecOpen:
+                    listPlacement = nativeMrecOpenList.Cast<AdsPlacementBase>().ToList();
+                    break;
+                case AdsType.NativeVideo:
+                    listPlacement = nativeVideoList.Cast<AdsPlacementBase>().ToList();
                     break;
             }
 
@@ -642,32 +674,32 @@ namespace TheLegends.Base.Ads
             nativeOverlayList[placementIndex].HideAds();
         }
 
-        public void LoadNativePlatform(PlacementOrder order)
+        public void LoadNativeBanner(PlacementOrder order)
         {
-            if (!IsListExist(nativePlatformList))
+            if (!IsListExist(nativeBannerList))
             {
                 return;
             }
 
-            var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+            var placementIndex = GetPlacementIndex((int)order, nativeBannerList.Count);
 
             if (placementIndex == -1)
             {
-                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeBanner"} {order} is not exist");
                 return;
             }
 
-            nativePlatformList[placementIndex].LoadAds();
+            nativeBannerList[placementIndex].LoadAds();
         }
 
-        public NativePlatformShowBuilder ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        public NativePlatformShowBuilder ShowNativeBanner(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
-            if (!IsListExist(nativePlatformList))
+            if (!IsListExist(nativeBannerList))
             {
                 return null;
             }
 
-            var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+            var placementIndex = GetPlacementIndex((int)order, nativeBannerList.Count);
 
             if (placementIndex == -1)
             {
@@ -675,28 +707,476 @@ namespace TheLegends.Base.Ads
                 return null;
             }
 
-            var controller = nativePlatformList[placementIndex];
+            var controller = nativeBannerList[placementIndex];
 
             return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
         }
 
-        public void HideNativePlatform(PlacementOrder order)
+        public void HideNativeBanner(PlacementOrder order)
         {
-            if (!IsListExist(nativePlatformList))
+            if (!IsListExist(nativeBannerList))
             {
                 return;
             }
 
-            var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+            var placementIndex = GetPlacementIndex((int)order, nativeBannerList.Count);
 
             if (placementIndex == -1)
             {
-                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeBanner"} {order} is not exist");
                 return;
             }
 
-            nativePlatformList[placementIndex].HideAds();
+            nativeBannerList[placementIndex].HideAds();
         }
+
+        public void LoadNativeInter(PlacementOrder order)
+        {
+            if (!IsListExist(nativeInterList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeInterList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeInter"} {order} is not exist");
+                return;
+            }
+
+            nativeInterList[placementIndex].LoadAds();
+        }
+
+        public NativePlatformShowBuilder ShowNativeInter(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsListExist(nativeInterList))
+            {
+                return null;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeInterList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeInter"} {order} is not exist");
+                return null;
+            }
+
+            var controller = nativeInterList[placementIndex];
+
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+        }
+
+        public void HideNativeInter(PlacementOrder order)
+        {
+            if (!IsListExist(nativeInterList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeInterList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeInter"} {order} is not exist");
+                return;
+            }
+
+            nativeInterList[placementIndex].HideAds();
+        }
+
+        public void LoadNativeReward(PlacementOrder order)
+        {
+            if (!IsListExist(nativeRewardList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeRewardList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeReward"} {order} is not exist");
+                return;
+            }
+
+            nativeRewardList[placementIndex].LoadAds();
+        }
+
+        public NativePlatformShowBuilder ShowNativeReward(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsListExist(nativeRewardList))
+            {
+                return null;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeRewardList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeReward"} {order} is not exist");
+                return null;
+            }
+
+            var controller = nativeRewardList[placementIndex];
+
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+        }
+
+        public void HideNativeReward(PlacementOrder order)
+        {
+            if (!IsListExist(nativeRewardList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeRewardList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeReward"} {order} is not exist");
+                return;
+            }
+
+            nativeRewardList[placementIndex].HideAds();
+        }
+
+        public void LoadNativeMrec(PlacementOrder order)
+        {
+            if (!IsListExist(nativeMrecList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeMrecList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeMrec"} {order} is not exist");
+                return;
+            }
+
+            nativeMrecList[placementIndex].LoadAds();
+        }
+
+        public NativePlatformShowBuilder ShowNativeMrec(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsListExist(nativeMrecList))
+            {
+                return null;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeMrecList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeMrec"} {order} is not exist");
+                return null;
+            }
+
+            var controller = nativeMrecList[placementIndex];
+
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+        }
+
+        public void HideNativeMrec(PlacementOrder order)
+        {
+            if (!IsListExist(nativeMrecList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeMrecList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeMrec"} {order} is not exist");
+                return;
+            }
+
+            nativeMrecList[placementIndex].HideAds();
+        }
+
+        public void LoadNativeAppOpen(PlacementOrder order)
+        {
+            if (!IsListExist(nativeAppOpenList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeAppOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeAppOpen"} {order} is not exist");
+                return;
+            }
+
+            nativeAppOpenList[placementIndex].LoadAds();
+        }
+
+        public NativePlatformShowBuilder ShowNativeAppOpen(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsListExist(nativeAppOpenList))
+            {
+                return null;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeAppOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeAppOpen"} {order} is not exist");
+                return null;
+            }
+
+            var controller = nativeAppOpenList[placementIndex];
+
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+        }
+
+        public void HideNativeAppOpen(PlacementOrder order)
+        {
+            if (!IsListExist(nativeAppOpenList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeAppOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeAppOpen"} {order} is not exist");
+                return;
+            }
+
+            nativeAppOpenList[placementIndex].HideAds();
+        }
+
+        public void LoadNativeInterOpen(PlacementOrder order)
+        {
+            if (!IsListExist(nativeInterOpenList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeInterOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeInterOpen"} {order} is not exist");
+                return;
+            }
+
+            nativeInterOpenList[placementIndex].LoadAds();
+        }
+
+        public NativePlatformShowBuilder ShowNativeInterOpen(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsListExist(nativeInterOpenList))
+            {
+                return null;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeInterOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeInterOpen"} {order} is not exist");
+                return null;
+            }
+
+            var controller = nativeInterOpenList[placementIndex];
+
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+        }
+
+        public void HideNativeInterOpen(PlacementOrder order)
+        {
+            if (!IsListExist(nativeInterOpenList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeInterOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeInterOpen"} {order} is not exist");
+                return;
+            }
+
+            nativeInterOpenList[placementIndex].HideAds();
+        }
+
+        public void LoadNativeMrecOpen(PlacementOrder order)
+        {
+            if (!IsListExist(nativeMrecOpenList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeMrecOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeMrecOpen"} {order} is not exist");
+                return;
+            }
+
+            nativeMrecOpenList[placementIndex].LoadAds();
+        }
+
+        public NativePlatformShowBuilder ShowNativeMrecOpen(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsListExist(nativeMrecOpenList))
+            {
+                return null;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeMrecOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeMrecOpen"} {order} is not exist");
+                return null;
+            }
+
+            var controller = nativeMrecOpenList[placementIndex];
+
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+        }
+
+        public void HideNativeMrecOpen(PlacementOrder order)
+        {
+            if (!IsListExist(nativeMrecOpenList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeMrecOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeMrecOpen"} {order} is not exist");
+                return;
+            }
+
+            nativeMrecOpenList[placementIndex].HideAds();
+        }
+
+        public void LoadNativeVideo(PlacementOrder order)
+        {
+            if (!IsListExist(nativeVideoList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeVideoList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeVideo"} {order} is not exist");
+                return;
+            }
+
+            nativeVideoList[placementIndex].LoadAds();
+        }
+
+        public NativePlatformShowBuilder ShowNativeVideo(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        {
+            if (!IsListExist(nativeVideoList))
+            {
+                return null;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeVideoList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeVideo"} {order} is not exist");
+                return null;
+            }
+
+            var controller = nativeVideoList[placementIndex];
+
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+        }
+
+        public void HideNativeVideo(PlacementOrder order)
+        {
+            if (!IsListExist(nativeVideoList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeVideoList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeVideo"} {order} is not exist");
+                return;
+            }
+
+            nativeVideoList[placementIndex].HideAds();
+        }
+
+        // public void LoadNativePlatform(PlacementOrder order)
+        // {
+        //     if (!IsListExist(nativePlatformList))
+        //     {
+        //         return;
+        //     }
+
+        //     var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+
+        //     if (placementIndex == -1)
+        //     {
+        //         AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
+        //         return;
+        //     }
+
+        //     nativePlatformList[placementIndex].LoadAds();
+        // }
+
+        // public NativePlatformShowBuilder ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        // {
+        //     if (!IsListExist(nativePlatformList))
+        //     {
+        //         return null;
+        //     }
+
+        //     var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+
+        //     if (placementIndex == -1)
+        //     {
+        //         AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
+        //         return null;
+        //     }
+
+        //     var controller = nativePlatformList[placementIndex];
+
+        //     return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+        // }
+
+        // public void HideNativePlatform(PlacementOrder order)
+        // {
+        //     if (!IsListExist(nativePlatformList))
+        //     {
+        //         return;
+        //     }
+
+        //     var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
+
+        //     if (placementIndex == -1)
+        //     {
+        //         AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
+        //         return;
+        //     }
+
+        //     nativePlatformList[placementIndex].HideAds();
+        // }
 
         private bool IsListExist<T>(List<T> list) where T : AdsPlacementBase
         {

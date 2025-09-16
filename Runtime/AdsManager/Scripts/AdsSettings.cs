@@ -118,7 +118,15 @@ namespace TheLegends.Base.Ads
             mrecOpenIds = CreatePlacement("ca-app-pub-3940256099942544/6300978111"),
             nativeIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
             nativeOverlayIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
-            nativePlatformIds = CreatePlacement("ca-app-pub-3940256099942544/1044960115", "ca-app-pub-3940256099942544/2247696110")
+            nativePlatformIds = CreatePlacement("ca-app-pub-3940256099942544/1044960115"),
+            nativeBannerIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
+            nativeInterIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
+            nativeRewardIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
+            nativeMrecIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
+            nativeAppOpenIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
+            nativeInterOpenIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
+            nativeMrecOpenIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110"),
+            nativeVideoIds = CreatePlacement("ca-app-pub-3940256099942544/2247696110")
         };
 
         public AdmobUnitID ADMOB_IOS_Test = new AdmobUnitID
@@ -132,7 +140,15 @@ namespace TheLegends.Base.Ads
             mrecOpenIds = CreatePlacement("ca-app-pub-3940256099942544/2934735716"),
             nativeIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
             nativeOverlayIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
-            nativePlatformIds = CreatePlacement("ca-app-pub-3940256099942544/2521693316", "ca-app-pub-3940256099942544/3986624511")
+            nativePlatformIds = CreatePlacement("ca-app-pub-3940256099942544/2521693316"),
+            nativeBannerIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
+            nativeInterIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
+            nativeRewardIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
+            nativeMrecIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
+            nativeAppOpenIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
+            nativeInterOpenIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
+            nativeMrecOpenIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511"),
+            nativeVideoIds = CreatePlacement("ca-app-pub-3940256099942544/3986624511")
         };
 
         private static List<Placement> CreatePlacement(params string[] adUnitIds)

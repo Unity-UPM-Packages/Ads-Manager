@@ -187,7 +187,7 @@ namespace TheLegends.Base.Ads
             OnNativePlatformClosed();
         }
 
-        private void DelayReloadAd(float time)
+        protected void DelayReloadAd(float time)
         {
             Invoke(nameof(LoadAds), time);
         }
@@ -226,10 +226,6 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             var errorDescription = error?.GetMessage();
             OnAdsLoadFailed(errorDescription);
-            if (Status == AdsEvents.LoadNotAvailable)
-            {
-                DelayReloadAd(30);
-            }
 #endif
         }
 
