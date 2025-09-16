@@ -16,7 +16,7 @@ MonoBehaviour:
   appsFlyerDevKey: Qhno4yJY6KHmZp9uS9DRe4
   appleAppId: 
   bannerPosition: 2
-  fixBannerSmallSize: 0
+  fixBannerSmallSize: 1
   autoReLoadMax: 2
   showIRON: 0
   isIronTest: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
     mrecIds: []
     appOpenIds: []
   showADMOB: 1
-  isAdmobTest: 1
+  isAdmobTest: 0
   isShowAdmobNativeValidator: 0
   ADMOB_Android:
     bannerIds: []
@@ -54,7 +54,7 @@ MonoBehaviour:
     appOpenIds: []
     interOpenIds: []
     mrecOpenIds: []
-    nativeIds: []
+    nativeUnityIds: []
     nativeOverlayIds: []
     nativePlatformIds: []
     nativeBannerIds: []
@@ -73,7 +73,7 @@ MonoBehaviour:
     appOpenIds: []
     interOpenIds: []
     mrecOpenIds: []
-    nativeIds: []
+    nativeUnityIds: []
     nativeOverlayIds: []
     nativePlatformIds: []
     nativeBannerIds: []
@@ -106,7 +106,7 @@ MonoBehaviour:
     mrecOpenIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/6300978111
-    nativeIds:
+    nativeUnityIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/2247696110
     nativeOverlayIds:
@@ -161,7 +161,7 @@ MonoBehaviour:
     mrecOpenIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/2934735716
-    nativeIds:
+    nativeUnityIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/3986624511
     nativeOverlayIds:
