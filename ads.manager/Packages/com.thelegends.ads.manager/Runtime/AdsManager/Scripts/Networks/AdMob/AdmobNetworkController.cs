@@ -46,11 +46,9 @@ namespace TheLegends.Base.Ads
         private List<AdmobNativeMrecOpenController> nativeMrecOpenList = new List<AdmobNativeMrecOpenController>();
         private List<AdmobNativeVideoController> nativeVideoList = new List<AdmobNativeVideoController>();
 
-        // Danh sách các trường ID cần loại trừ khỏi quá trình tự động tạo controller
         private readonly List<string> excludedIdFields = new List<string>
         {
-            "nativeIds" // Không tạo controller cho nativeIds
-            // Thêm các ID khác cần loại trừ ở đây
+            "nativeUnityIds"
         };
 
         public override IEnumerator DoInit()
@@ -75,28 +73,22 @@ namespace TheLegends.Base.Ads
                            typeof(AdsPlacementBase).IsAssignableFrom(f.FieldType.GetGenericArguments()[0]))
                 .ToList();
 
-            // Tạo một ánh xạ từ tên trường trong AdmobUnitID đến trường danh sách controller
             foreach (var unitIdField in unitIdFields)
             {
-                // Chỉ xử lý các trường kiểu List<Placement>
                 if (unitIdField.FieldType == typeof(List<Placement>))
                 {
                     string fieldName = unitIdField.Name;
                     
-                    // Kiểm tra xem trường này có nằm trong danh sách loại trừ không
                     if (excludedIdFields.Contains(fieldName))
                     {
-                        // Bỏ qua trường này
                         continue;
                     }
                     
-                    // Tìm trường danh sách controller tương ứng dựa trên quy ước đặt tên
                     var controllerField = controllerListFields.FirstOrDefault(f => 
                         fieldName.Replace("Ids", "List").Equals(f.Name, StringComparison.OrdinalIgnoreCase));
                     
                     if (controllerField != null)
                     {
-                        // Lấy danh sách Placement từ các AdmobUnitID
                         var iosIds = AdsManager.Instance.SettingsAds.ADMOB_IOS;
                         var androidIds = AdsManager.Instance.SettingsAds.ADMOB_Android;
                         var iosTestIds = AdsManager.Instance.SettingsAds.ADMOB_IOS_Test;
@@ -156,7 +148,6 @@ namespace TheLegends.Base.Ads
                             status = InitiationStatus.Initialized;
 
                             AdsManager.Instance.Log($"{TagLog.ADMOB} " + "Mediations checking status...");
-                            // If you use mediation, you can check the status of each adapter.
                             var adapterStatusMap = initStatus.getAdapterStatusMap();
                             if (adapterStatusMap != null)
                             {
@@ -331,7 +322,7 @@ namespace TheLegends.Base.Ads
                 case AdsType.NativeOverlay:
                     listPlacement = nativeOverlayList.Cast<AdsPlacementBase>().ToList();
                     break;
-                case AdsType.Native:
+                case AdsType.NativeUnity:
                     listPlacement = nativeOverlayList.Cast<AdsPlacementBase>().ToList();
                     break;
                 case AdsType.NativePlatform:
@@ -1121,63 +1112,7 @@ namespace TheLegends.Base.Ads
 
             nativeVideoList[placementIndex].HideAds();
         }
-
-        // public void LoadNativePlatform(PlacementOrder order)
-        // {
-        //     if (!IsListExist(nativePlatformList))
-        //     {
-        //         return;
-        //     }
-
-        //     var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
-
-        //     if (placementIndex == -1)
-        //     {
-        //         AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
-        //         return;
-        //     }
-
-        //     nativePlatformList[placementIndex].LoadAds();
-        // }
-
-        // public NativePlatformShowBuilder ShowNativePlatform(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
-        // {
-        //     if (!IsListExist(nativePlatformList))
-        //     {
-        //         return null;
-        //     }
-
-        //     var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
-
-        //     if (placementIndex == -1)
-        //     {
-        //         AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
-        //         return null;
-        //     }
-
-        //     var controller = nativePlatformList[placementIndex];
-
-        //     return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
-        // }
-
-        // public void HideNativePlatform(PlacementOrder order)
-        // {
-        //     if (!IsListExist(nativePlatformList))
-        //     {
-        //         return;
-        //     }
-
-        //     var placementIndex = GetPlacementIndex((int)order, nativePlatformList.Count);
-
-        //     if (placementIndex == -1)
-        //     {
-        //         AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativePlatform"} {order} is not exist");
-        //         return;
-        //     }
-
-        //     nativePlatformList[placementIndex].HideAds();
-        // }
-
+        
         private bool IsListExist<T>(List<T> list) where T : AdsPlacementBase
         {
             bool isExist = false;

@@ -15,7 +15,7 @@ namespace TheLegends.Base.Ads
         MrecOpen = 6,
         InterOpen = 7,
         NativeOverlay = 8,
-        Native = 9,
+        NativeUnity = 9,
         NativePlatform = 10,
         NativeBanner = 11,
         NativeInter = 12,

@@ -256,7 +256,7 @@ public class DemoManager : MonoBehaviour
 
     public void AAAAA()
     {
-        AdsManager.Instance.GetAdsStatus(AdsType.Native, order);
+        AdsManager.Instance.GetAdsStatus(AdsType.NativeUnity, order);
     }
 
     public void LoadNativeVideoPlatform()
