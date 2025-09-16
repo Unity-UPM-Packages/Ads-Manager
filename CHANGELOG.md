@@ -1,3 +1,15 @@
+## [1.0.57](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.56...v1.0.57) (2025-09-16)
+
+
+### Bug Fixes
+
+* change type Native to NativeUnity ([ac4d75c](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/ac4d75c9875fc09d0c149dc93ddbc43b59674474))
+* custom position mrec ([f3c911c](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/f3c911c22754b79a24a04b0bd85807bd8977091b))
+* Edit AdsSettings ([f3844ac](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/f3844acb8b39b1a55a355d7740a8a765ba2c0a94))
+* re-oder folder structure ([0bbbbf7](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/0bbbbf79607e33df3791eb28556328703c11a358))
+* remove unused methods ([76c965b](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/76c965b6e4eb5155f9173ee7053b8544a80b2f72))
+* split native ids ([41fa960](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/41fa96041b6710c95cac09043abcf3c2944783a8))
+
 ## [1.0.56](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.55...v1.0.56) (2025-09-13)
 
 
