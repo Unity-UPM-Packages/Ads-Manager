@@ -34,8 +34,10 @@ namespace TheLegends.Base.Ads
     {
         public List<Placement> bannerIds = new List<Placement>();
         public List<Placement> interIds = new List<Placement>();
+        public List<Placement> interOpenIds = new List<Placement>();
         public List<Placement> rewardIds = new List<Placement>();
         public List<Placement> mrecIds = new List<Placement>();
+        public List<Placement> mrecOpenIds = new List<Placement>();
         public List<Placement> appOpenIds = new List<Placement>();
     }
 

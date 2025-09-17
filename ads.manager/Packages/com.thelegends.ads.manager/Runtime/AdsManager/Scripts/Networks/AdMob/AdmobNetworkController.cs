@@ -368,7 +368,7 @@ namespace TheLegends.Base.Ads
             return listPlacement[index].Status;
         }
 
-        public void RemoveAds()
+        public override void RemoveAds()
         {
             foreach (var ad in bannerList)
             {

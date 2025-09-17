@@ -168,18 +168,18 @@ namespace TheLegends.Base.Ads
             #region MAX
 
 #if USE_MAX
-            if (AssetDatabase.IsValidFolder("Assets/MaxSDK/AppLovin"))
-            {
-                AppLovinSettings appLovinSettings = Resources.Load<AppLovinSettings>("AppLovinSettings");
-                if (appLovinSettings == null)
-                {
-                    AppLovinSettings asset = CreateInstance<AppLovinSettings>();
-                    Directory.CreateDirectory("Assets/MaxSDK/Resources");
-                    AssetDatabase.CreateAsset(asset, "Assets/MaxSDK/Resources/AppLovinSettings.asset");
-                    appLovinSettings = asset;
-                }
-                appLovinSettings.SdkKey = Instance.maxSdkKey;
-                appLovinSettings.SetAttributionReportEndpoint = true;
+            // if (AssetDatabase.IsValidFolder("Assets/MaxSDK/AppLovin"))
+            // {
+                // AppLovinSettings appLovinSettings = Resources.Load<AppLovinSettings>("AppLovinSettings");
+                // if (appLovinSettings == null)
+                // {
+                //     AppLovinSettings asset = CreateInstance<AppLovinSettings>();
+                //     Directory.CreateDirectory("Assets/MaxSDK/Resources");
+                //     AssetDatabase.CreateAsset(asset, "Assets/MaxSDK/Resources/AppLovinSettings.asset");
+                //     appLovinSettings = asset;
+                // }
+                // appLovinSettings.SdkKey = Instance.maxSdkKey;
+                // appLovinSettings.SetAttributionReportEndpoint = true;
 
                 EditorGUILayout.Separator();
                 EditorGUILayout.Separator();
@@ -187,26 +187,26 @@ namespace TheLegends.Base.Ads
                 EditorGUILayout.Separator();
 
                 EditorGUILayout.LabelField("MAX AppLovin", EditorStyles.boldLabel);
-                Instance.maxSdkKey = EditorGUILayout.TextField("MAX SDK Key", Instance.maxSdkKey);
+                // Instance.maxSdkKey = EditorGUILayout.TextField("MAX SDK Key", Instance.maxSdkKey);
                 Instance.isMaxTest = EditorGUILayout.Toggle("Is Testing", Instance.isMaxTest);
 
-                Instance.maxEnableAdmob = EditorGUILayout.Toggle("Enable Admob", Instance.maxEnableAdmob);
-                if (Instance.maxEnableAdmob)
-                {
-                    Instance.maxAdmobAndroidAppID = EditorGUILayout.TextField("MAX Admob Android AppID", Instance.maxAdmobAndroidAppID);
-                    Instance.maxAdmobIOSAppID = EditorGUILayout.TextField("MAX Admob IOS AppID", Instance.maxAdmobIOSAppID);
-                    appLovinSettings.AdMobAndroidAppId = Instance.maxAdmobAndroidAppID;
-                    appLovinSettings.AdMobIosAppId = Instance.maxAdmobIOSAppID;
-                }
-                else
-                {
-                    Instance.maxAdmobAndroidAppID = string.Empty;
-                    Instance.maxAdmobIOSAppID = string.Empty;
-                    appLovinSettings.AdMobAndroidAppId = string.Empty;
-                    appLovinSettings.AdMobIosAppId = string.Empty;
-                }
+                // Instance.maxEnableAdmob = EditorGUILayout.Toggle("Enable Admob", Instance.maxEnableAdmob);
+                // if (Instance.maxEnableAdmob)
+                // {
+                //     Instance.maxAdmobAndroidAppID = EditorGUILayout.TextField("MAX Admob Android AppID", Instance.maxAdmobAndroidAppID);
+                //     Instance.maxAdmobIOSAppID = EditorGUILayout.TextField("MAX Admob IOS AppID", Instance.maxAdmobIOSAppID);
+                //     appLovinSettings.AdMobAndroidAppId = Instance.maxAdmobAndroidAppID;
+                //     appLovinSettings.AdMobIosAppId = Instance.maxAdmobIOSAppID;
+                // }
+                // else
+                // {
+                //     Instance.maxAdmobAndroidAppID = string.Empty;
+                //     Instance.maxAdmobIOSAppID = string.Empty;
+                //     appLovinSettings.AdMobAndroidAppId = string.Empty;
+                //     appLovinSettings.AdMobIosAppId = string.Empty;
+                // }
 
-                AssetDatabase.SaveAssetIfDirty(appLovinSettings);
+                // AssetDatabase.SaveAssetIfDirty(appLovinSettings);
 
                 EditorGUILayout.Separator();
                 EditorGUILayout.Separator();
@@ -230,7 +230,7 @@ namespace TheLegends.Base.Ads
                 EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("mrecIds"), true);
                 EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("appOpenIds"), true);
 
-            }
+            // }
 #endif
 
             #endregion
