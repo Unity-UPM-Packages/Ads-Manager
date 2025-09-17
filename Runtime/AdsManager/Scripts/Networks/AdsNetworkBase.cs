@@ -35,6 +35,7 @@ namespace TheLegends.Base.Ads
 
 
         public abstract AdsNetworks GetNetworkType();
+        public abstract void RemoveAds();
     }
 }
 

@@ -882,6 +882,27 @@ namespace TheLegends.Base.Ads
             }
 #endif
 
+#if USE_MAX
+            if (value is MaxSdk.AdInfo)
+            {
+                var impressionData = value as MaxSdk.AdInfo;
+
+                if (impressionData != null)
+                {
+                    mediation = MediationNetwork.ApplovinMax;
+                    monetizationNetwork = "applovinmax";
+                    ad_format = adsType.ToString();
+                    ad_unit_name = adsUnitID;
+                    country = "";
+                    revenue = (double) impressionData.Revenue / 1000000f;
+                    currency = MaxSdk.GetSdkConfiguration().CountryCode;
+                }
+
+                Log("ApplovinMax AdInfo: " + impressionData.Revenue + " Revenue: " + revenue + " CurrencyCode: " + currency + " Precision: " + impressionData.RevenuePrecision);
+            }
+#endif
+
+
 #if USE_APPSFLYER
             AppsFlyerManager.Instance.LogImpression(new Dictionary<string, string>()
             {
@@ -960,6 +981,7 @@ namespace TheLegends.Base.Ads
     {
         UMP,
         ADMOB,
+        MAX,
     }
 
     [System.Serializable]
