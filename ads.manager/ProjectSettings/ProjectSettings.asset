@@ -768,8 +768,8 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: USE_FIREBASE;USE_ADMOB;USE_APPSFLYER
-    iPhone: USE_FIREBASE;USE_ADMOB;USE_APPSFLYER
+    Android: USE_FIREBASE;USE_ADMOB;USE_APPSFLYER;USE_MAX
+    iPhone: USE_FIREBASE;USE_ADMOB;USE_APPSFLYER;USE_MAX
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
