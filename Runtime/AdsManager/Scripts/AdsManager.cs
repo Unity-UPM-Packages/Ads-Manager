@@ -145,6 +145,40 @@ namespace TheLegends.Base.Ads
             return adsNetworks.FirstOrDefault(x => x.GetNetworkType() == network);
         }
 
+        private AdsNetworkBase GetNetworkToShow(AdsType adsType, PlacementOrder order)
+        {
+			var primaryNetwork = AdsNetworks.Max;
+
+			var primary = adsNetworks.FirstOrDefault(n => n.GetNetworkType() == primaryNetwork);
+			if (primary != null)
+			{
+				if (primaryNetwork == AdsNetworks.Max)
+				{
+					bool isMrec = adsType == AdsType.Mrec || adsType == AdsType.MrecOpen;
+					if (isMrec)
+					{
+						return primary;
+					}
+					else if (primary.IsAdsReady(adsType, order))
+					{
+						return primary;
+					}
+				}
+				else if (primary.IsAdsReady(adsType, order))
+				{
+					return primary;
+				}
+			}
+
+			var fallback = adsNetworks.FirstOrDefault(n => n.GetNetworkType() != primaryNetwork && n.IsAdsReady(adsType, order));
+			if (fallback != null)
+			{
+				return fallback;
+			}
+
+			throw new Exception("No network is ready");
+        }
+
         public void LoadInterstitial(AdsType interType, PlacementOrder order)
         {
             if (!IsInitialized())

@@ -412,6 +412,57 @@ namespace TheLegends.Base.Ads
 
         }
 
+        public override bool IsAdsReady(AdsType adsType, PlacementOrder order)
+        {
+            int orderIndex = -1;
+            switch (adsType)
+            {
+                case AdsType.Banner:
+                    orderIndex = GetPlacementIndex((int)order, bannerList.Count);
+                    break;
+                case AdsType.Interstitial:
+                    orderIndex = GetPlacementIndex((int)order, interList.Count);
+                    break;
+                case AdsType.InterOpen:
+                    orderIndex = GetPlacementIndex((int)order, interOpenList.Count);
+                    break;
+                case AdsType.Rewarded:
+                    orderIndex = GetPlacementIndex((int)order, rewardList.Count);
+                    break;
+                case AdsType.Mrec:
+                    orderIndex = GetPlacementIndex((int)order, mrecList.Count);
+                    break;
+                case AdsType.MrecOpen:
+                    orderIndex = GetPlacementIndex((int)order, mrecOpenList.Count);
+                    break;
+                case AdsType.AppOpen:
+                    orderIndex = GetPlacementIndex((int)order, appOpenList.Count);
+                    break;
+                default:
+                    return false;
+            }
+            
+            switch (adsType)
+            {
+                case AdsType.Banner:
+                    return bannerList[orderIndex].IsAdsReady();
+                case AdsType.Interstitial:
+                    return interList[orderIndex].IsAdsReady();
+                case AdsType.InterOpen:
+                    return interOpenList[orderIndex].IsAdsReady();
+                case AdsType.Rewarded:
+                    return rewardList[orderIndex].IsAdsReady();
+                case AdsType.Mrec:
+                    return mrecList[orderIndex].IsAdsReady();
+                case AdsType.MrecOpen:
+                    return mrecOpenList[orderIndex].IsAdsReady();
+                case AdsType.AppOpen:
+                    return appOpenList[orderIndex].IsAdsReady();
+                default:
+                    return false;
+            }
+        }
+
         private int GetPlacementIndex(int order, int listCount)
         {
             if (listCount <= 0)
