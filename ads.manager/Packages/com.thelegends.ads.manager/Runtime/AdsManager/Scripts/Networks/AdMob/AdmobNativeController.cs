@@ -109,9 +109,9 @@ namespace TheLegends.Base.Ads
 
             var platform = Application.platform;
             var isIOS = platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.OSXPlayer;
-            var isAdmobTest = AdsManager.Instance.SettingsAds.isAdmobTest;
+            var isTest = AdsManager.Instance.SettingsAds.isTest;
 
-            var list = isAdmobTest
+            var list = isTest
                 ? (isIOS
                     ? AdsManager.Instance.SettingsAds.ADMOB_IOS_Test.nativeUnityIds
                     : AdsManager.Instance.SettingsAds.ADMOB_Android_Test.nativeUnityIds)

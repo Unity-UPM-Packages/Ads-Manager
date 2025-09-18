@@ -104,6 +104,11 @@ namespace TheLegends.Base.Ads
 
             Instance.autoReLoadMax = EditorGUILayout.IntField("Max auto reload if no ads", Instance.autoReLoadMax);
 
+            EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
+
+            Instance.isTest = EditorGUILayout.Toggle("Is Testing", Instance.isTest);
+
             #region IronSource
 
 #if USE_IRON
@@ -188,7 +193,6 @@ namespace TheLegends.Base.Ads
 
                 EditorGUILayout.LabelField("MAX AppLovin", EditorStyles.boldLabel);
                 // Instance.maxSdkKey = EditorGUILayout.TextField("MAX SDK Key", Instance.maxSdkKey);
-                Instance.isMaxTest = EditorGUILayout.Toggle("Is Testing", Instance.isMaxTest);
 
                 // Instance.maxEnableAdmob = EditorGUILayout.Toggle("Enable Admob", Instance.maxEnableAdmob);
                 // if (Instance.maxEnableAdmob)
@@ -245,7 +249,6 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.Separator();
 
             EditorGUILayout.LabelField("Admob", EditorStyles.boldLabel);
-            Instance.isAdmobTest = EditorGUILayout.Toggle("Is Testing", Instance.isAdmobTest);
             Instance.isShowAdmobNativeValidator = EditorGUILayout.Toggle("Show Admob Validator", Instance.isShowAdmobNativeValidator);
 
             EditorGUILayout.Separator();
