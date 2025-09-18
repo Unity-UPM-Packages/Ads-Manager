@@ -51,10 +51,10 @@ namespace TheLegends.Base.Ads
 
         public override IEnumerator DoInit()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             status = InitiationStatus.Initializing;
 
-
-#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
             var platform = Application.platform;
             var isIOS = platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.OSXPlayer;
 
@@ -186,6 +186,8 @@ namespace TheLegends.Base.Ads
 
         private IEnumerator RequestUMP()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (isChecking)
             {
                 AdsManager.Instance.LogError($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " CHECKING");
@@ -251,6 +253,8 @@ namespace TheLegends.Base.Ads
             {
                 yield return null;
             }
+#endif
+            yield break;
         }
 
         private List<Placement> GetAdUnitIds(bool isIOS, bool isTest, List<Placement> iosIds, List<Placement> androidIds, List<Placement> iosTestIds, List<Placement> androidTestIds)
@@ -278,6 +282,8 @@ namespace TheLegends.Base.Ads
 
         public void OpenAdInspector()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             AdsManager.Instance.Log("Opening ad Inspector.");
             MobileAds.OpenAdInspector((AdInspectorError error) =>
             {
@@ -290,10 +296,13 @@ namespace TheLegends.Base.Ads
 
                 AdsManager.Instance.Log("Ad Inspector opened successfully.");
             });
+#endif
         }
 
         public override AdsEvents GetAdsStatus(AdsType type, PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             var listPlacement = new List<AdsPlacementBase>();
 
             switch (type)
@@ -368,10 +377,15 @@ namespace TheLegends.Base.Ads
             }
 
             return listPlacement[index].Status;
+#else
+            return AdsEvents.None;
+#endif
         }
 
         public override void RemoveAds()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             foreach (var ad in bannerList)
             {
                 ad.HideAds();
@@ -412,10 +426,13 @@ namespace TheLegends.Base.Ads
                 ad.HideAds();
             }
 
+#endif
         }
 
         public override bool IsAdsReady(AdsType adsType, PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             int orderIndex = -1;
             switch (adsType)
             {
@@ -463,10 +480,15 @@ namespace TheLegends.Base.Ads
                 default:
                     return false;
             }
+#else
+            return false;
+#endif
         }
 
         private int GetPlacementIndex(int order, int listCount)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (listCount <= 0)
             {
                 return -1;
@@ -478,10 +500,14 @@ namespace TheLegends.Base.Ads
             }
 
             return Mathf.Clamp(order - 1, 0, listCount - 1);
+#else
+            return -1;
+#endif
         }
 
         public override void LoadInterstitial(AdsType interType, PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
             var list = interType == AdsType.InterOpen ? (new List<AdmobInterstitialController>(interOpenList)) : interList;
 
             if (!IsListExist(list))
@@ -498,10 +524,13 @@ namespace TheLegends.Base.Ads
             }
 
             list[placementIndex].LoadAds();
+#endif
         }
 
         public override void ShowInterstitial(AdsType interType, PlacementOrder order, string position, Action OnClose = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             var list = interType == AdsType.InterOpen ? (new List<AdmobInterstitialController>(interOpenList)) : interList;
 
             if (!IsListExist(list))
@@ -518,10 +547,13 @@ namespace TheLegends.Base.Ads
             }
 
             list[placementIndex].ShowAds(position, OnClose);
+#endif
         }
 
         public override void LoadRewarded(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(rewardList))
             {
                 return;
@@ -536,10 +568,13 @@ namespace TheLegends.Base.Ads
             }
 
             rewardList[placementIndex].LoadAds();
+#endif
         }
 
         public override void ShowRewarded(PlacementOrder order, string position, Action OnRewarded = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(rewardList))
             {
                 return;
@@ -554,10 +589,13 @@ namespace TheLegends.Base.Ads
             }
 
             rewardList[placementIndex].ShowAds(position, OnRewarded);
+#endif
         }
 
         public override void LoadAppOpen(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(appOpenList))
             {
                 return;
@@ -572,10 +610,13 @@ namespace TheLegends.Base.Ads
             }
 
             appOpenList[placementIndex].LoadAds();
+#endif
         }
 
         public override void ShowAppOpen(PlacementOrder order, string position)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(appOpenList))
             {
                 return;
@@ -590,10 +631,13 @@ namespace TheLegends.Base.Ads
             }
 
             appOpenList[placementIndex].ShowAds(position);
+#endif
         }
 
         public override void LoadBanner(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(bannerList))
             {
                 return;
@@ -608,10 +652,13 @@ namespace TheLegends.Base.Ads
             }
 
             bannerList[placementIndex].LoadAds();
+#endif
         }
 
         public override void HideBanner(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(bannerList))
             {
                 return;
@@ -626,10 +673,13 @@ namespace TheLegends.Base.Ads
             }
 
             bannerList[placementIndex].HideAds();
+#endif
         }
 
         public override void ShowBanner(PlacementOrder order, string position)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(bannerList))
             {
                 return;
@@ -644,10 +694,13 @@ namespace TheLegends.Base.Ads
             }
 
             bannerList[placementIndex].ShowAds(position);
+#endif
         }
 
         public override void LoadMrec(AdsType mrecType, PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             var list = mrecType == AdsType.MrecOpen ?(new List<AdmobMrecController>(mrecOpenList)) : mrecList;
 
             if (!IsListExist(list))
@@ -664,10 +717,13 @@ namespace TheLegends.Base.Ads
             }
 
             list[placementIndex].LoadAds();
+#endif
         }
 
         public override void ShowMrec(AdsType mrecType, PlacementOrder order, AdsPos mrecPosition, Vector2Int offset, string position)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             var list = mrecType == AdsType.MrecOpen ?(new List<AdmobMrecController>(mrecOpenList)) : mrecList;
 
             if (!IsListExist(list))
@@ -684,10 +740,13 @@ namespace TheLegends.Base.Ads
             }
 
             list[placementIndex].ShowAds(mrecPosition, offset, position);
+#endif
         }
 
         public override void HideMrec(AdsType mrecType, PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             var list = mrecType == AdsType.MrecOpen ?(new List<AdmobMrecController>(mrecOpenList)) : mrecList;
 
             if (!IsListExist(list))
@@ -704,10 +763,13 @@ namespace TheLegends.Base.Ads
             }
 
             list[placementIndex].HideAds();
+#endif
         }
 
         public void LoadNativeOverlay(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeOverlayList))
             {
                 return;
@@ -722,10 +784,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeOverlayList[placementIndex].LoadAds();
+#endif
         }
 
         public void ShowNativeOverlay(PlacementOrder order, NativeTemplateStyle style, AdsPos nativeOverlayposition, Vector2Int size, Vector2Int offset, string position, Action OnShow = null, Action OnClose = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeOverlayList))
             {
                 return;
@@ -740,10 +805,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeOverlayList[placementIndex].ShowAds(style, nativeOverlayposition, size, offset, position, OnShow, OnClose);
+#endif
         }
 
         public void HideNativeOverlay(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeOverlayList))
             {
                 return;
@@ -758,10 +826,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeOverlayList[placementIndex].HideAds();
+#endif
         }
 
         public void LoadNativeBanner(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeBannerList))
             {
                 return;
@@ -776,10 +847,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeBannerList[placementIndex].LoadAds();
+#endif
         }
 
         public NativePlatformShowBuilder ShowNativeBanner(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeBannerList))
             {
                 return null;
@@ -796,10 +870,14 @@ namespace TheLegends.Base.Ads
             var controller = nativeBannerList[placementIndex];
 
             return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+#endif
+            return null;
         }
 
         public void HideNativeBanner(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeBannerList))
             {
                 return;
@@ -814,10 +892,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeBannerList[placementIndex].HideAds();
+#endif
         }
 
         public void LoadNativeInter(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeInterList))
             {
                 return;
@@ -832,10 +913,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeInterList[placementIndex].LoadAds();
+#endif
         }
 
         public NativePlatformShowBuilder ShowNativeInter(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeInterList))
             {
                 return null;
@@ -852,10 +936,14 @@ namespace TheLegends.Base.Ads
             var controller = nativeInterList[placementIndex];
 
             return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+#endif
+            return null;
         }
 
         public void HideNativeInter(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeInterList))
             {
                 return;
@@ -870,10 +958,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeInterList[placementIndex].HideAds();
+#endif
         }
 
         public void LoadNativeReward(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeRewardList))
             {
                 return;
@@ -888,10 +979,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeRewardList[placementIndex].LoadAds();
+#endif
         }
 
         public NativePlatformShowBuilder ShowNativeReward(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeRewardList))
             {
                 return null;
@@ -908,10 +1002,14 @@ namespace TheLegends.Base.Ads
             var controller = nativeRewardList[placementIndex];
 
             return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+#endif
+            return null;
         }
 
         public void HideNativeReward(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeRewardList))
             {
                 return;
@@ -926,10 +1024,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeRewardList[placementIndex].HideAds();
+#endif
         }
 
         public void LoadNativeMrec(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeMrecList))
             {
                 return;
@@ -944,10 +1045,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeMrecList[placementIndex].LoadAds();
+#endif
         }
 
         public NativePlatformShowBuilder ShowNativeMrec(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeMrecList))
             {
                 return null;
@@ -964,10 +1068,14 @@ namespace TheLegends.Base.Ads
             var controller = nativeMrecList[placementIndex];
 
             return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+#endif
+            return null;
         }
 
         public void HideNativeMrec(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeMrecList))
             {
                 return;
@@ -982,10 +1090,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeMrecList[placementIndex].HideAds();
+#endif
         }
 
         public void LoadNativeAppOpen(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeAppOpenList))
             {
                 return;
@@ -1000,10 +1111,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeAppOpenList[placementIndex].LoadAds();
+#endif
         }
 
         public NativePlatformShowBuilder ShowNativeAppOpen(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeAppOpenList))
             {
                 return null;
@@ -1020,10 +1134,14 @@ namespace TheLegends.Base.Ads
             var controller = nativeAppOpenList[placementIndex];
 
             return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+#endif
+            return null;
         }
 
         public void HideNativeAppOpen(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeAppOpenList))
             {
                 return;
@@ -1038,10 +1156,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeAppOpenList[placementIndex].HideAds();
+#endif
         }
 
         public void LoadNativeInterOpen(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeInterOpenList))
             {
                 return;
@@ -1056,10 +1177,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeInterOpenList[placementIndex].LoadAds();
+#endif
         }
 
         public NativePlatformShowBuilder ShowNativeInterOpen(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeInterOpenList))
             {
                 return null;
@@ -1076,10 +1200,14 @@ namespace TheLegends.Base.Ads
             var controller = nativeInterOpenList[placementIndex];
 
             return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+#endif
+            return null;
         }
 
         public void HideNativeInterOpen(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeInterOpenList))
             {
                 return;
@@ -1094,10 +1222,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeInterOpenList[placementIndex].HideAds();
+#endif
         }
 
         public void LoadNativeMrecOpen(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeMrecOpenList))
             {
                 return;
@@ -1112,10 +1243,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeMrecOpenList[placementIndex].LoadAds();
+#endif
         }
 
         public NativePlatformShowBuilder ShowNativeMrecOpen(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeMrecOpenList))
             {
                 return null;
@@ -1132,10 +1266,14 @@ namespace TheLegends.Base.Ads
             var controller = nativeMrecOpenList[placementIndex];
 
             return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+#endif
+            return null;
         }
 
         public void HideNativeMrecOpen(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeMrecOpenList))
             {
                 return;
@@ -1150,10 +1288,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeMrecOpenList[placementIndex].HideAds();
+#endif
         }
 
         public void LoadNativeVideo(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeVideoList))
             {
                 return;
@@ -1168,10 +1309,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeVideoList[placementIndex].LoadAds();
+#endif
         }
 
         public NativePlatformShowBuilder ShowNativeVideo(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeVideoList))
             {
                 return null;
@@ -1188,10 +1332,14 @@ namespace TheLegends.Base.Ads
             var controller = nativeVideoList[placementIndex];
 
             return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+#endif
+            return null;
         }
 
         public void HideNativeVideo(PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             if (!IsListExist(nativeVideoList))
             {
                 return;
@@ -1206,10 +1354,13 @@ namespace TheLegends.Base.Ads
             }
 
             nativeVideoList[placementIndex].HideAds();
+#endif
         }
         
         private bool IsListExist<T>(List<T> list) where T : AdsPlacementBase
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             bool isExist = false;
             isExist = list.Count > 0;
 
@@ -1219,28 +1370,42 @@ namespace TheLegends.Base.Ads
             }
 
             return isExist;
+#else
+            return false;
+#endif
         }
 
         public override void HideAllBanner()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             foreach (var banner in bannerList)
             {
                 banner.HideAds();
             }
+#endif
         }
 
         public override void HideAllMrec()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             foreach (var mrec in mrecList)
             {
                 mrec.HideAds();
             }
+#endif
         }
 
 
         public override AdsNetworks GetNetworkType()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
             return AdsNetworks.Admob;
+#else
+            return AdsNetworks.None;
+#endif
         }
     }
 }
