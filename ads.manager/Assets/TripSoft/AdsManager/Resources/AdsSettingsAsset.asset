@@ -31,13 +31,27 @@ MonoBehaviour:
   maxAdmobAndroidAppID: 
   maxAdmobIOSAppID: 
   MAX_Android:
-    bannerIds: []
-    interIds: []
-    interOpenIds: []
-    rewardIds: []
-    mrecIds: []
-    mrecOpenIds: []
-    appOpenIds: []
+    bannerIds:
+    - stringIDs:
+      - 957d7e82bb12fef9
+    interIds:
+    - stringIDs:
+      - 1f28ec06f9db3c3c
+    interOpenIds:
+    - stringIDs:
+      - 1f28ec06f9db3c3c
+    rewardIds:
+    - stringIDs:
+      - 52bb34aaf8426f58
+    mrecIds:
+    - stringIDs:
+      - aedbae5faee0105a
+    mrecOpenIds:
+    - stringIDs:
+      - aedbae5faee0105a
+    appOpenIds:
+    - stringIDs:
+      - 7320e64330edbcdb
   MAX_iOS:
     bannerIds: []
     interIds: []
