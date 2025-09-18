@@ -8,7 +8,7 @@ namespace TheLegends.Base.Ads
     public abstract class AdsNetworkBase : MonoBehaviour
     {
         private AdsNetworks networkType;
-        public AdsNetworks NetWorkType {get => GetNetworkType();}
+        public AdsNetworks NetWorkType { get => GetNetworkType(); }
         public abstract IEnumerator DoInit();
 
         public abstract void LoadInterstitial(AdsType interType, PlacementOrder order);
@@ -36,6 +36,7 @@ namespace TheLegends.Base.Ads
 
         public abstract AdsNetworks GetNetworkType();
         public abstract void RemoveAds();
+        public abstract bool IsAdsReady(AdsType adsType, PlacementOrder order);
     }
 }
 
