@@ -47,6 +47,7 @@ namespace TheLegends.Base.Ads
             var appOpenIds = GetAdUnitIds(isIOS, AdsManager.Instance.SettingsAds.MAX_iOS.appOpenIds, AdsManager.Instance.SettingsAds.MAX_Android.appOpenIds);
             CreateAdController(appOpenIds, appOpenList);
 
+
             MaxSdkCallbacks.OnSdkInitializedEvent += (sdkConfiguration) =>
             {
                 if (sdkConfiguration.IsSuccessfullyInitialized)
@@ -69,6 +70,7 @@ namespace TheLegends.Base.Ads
             }
 
 #endif
+            yield break;
         }
 
         private List<Placement> GetAdUnitIds(bool isIOS, List<Placement> iosIds, List<Placement> androidIds)

@@ -12,21 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac567c99f46af0429a8490c3f245152, type: 3}
   m_Name: AdsSettingsAsset
   m_EditorClassIdentifier: 
-  _adsNetworks: 0200000004000000ffffffff
+  _adsNetworks: 04000000ffffffff
   appsFlyerDevKey: Qhno4yJY6KHmZp9uS9DRe4
   appleAppId: 
   bannerPosition: 2
   fixBannerSmallSize: 1
   autoReLoadMax: 2
+  isTest: 1
   showIRON: 0
-  isIronTest: 0
   ironAndroidAppKey: 
   ironIOSAppKey: 
   ironEnableAdmob: 0
   ironAdmobAndroidAppID: 
   ironAdmobIOSAppID: 
-  showMAX: 1
-  isMaxTest: 0
+  showMAX: 0
   maxSdkKey: 
   maxEnableAdmob: 0
   maxAdmobAndroidAppID: 
@@ -34,17 +33,20 @@ MonoBehaviour:
   MAX_Android:
     bannerIds: []
     interIds: []
+    interOpenIds: []
     rewardIds: []
     mrecIds: []
+    mrecOpenIds: []
     appOpenIds: []
   MAX_iOS:
     bannerIds: []
     interIds: []
+    interOpenIds: []
     rewardIds: []
     mrecIds: []
+    mrecOpenIds: []
     appOpenIds: []
   showADMOB: 1
-  isAdmobTest: 1
   isShowAdmobNativeValidator: 0
   ADMOB_Android:
     bannerIds: []
