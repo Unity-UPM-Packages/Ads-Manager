@@ -91,11 +91,9 @@ namespace TheLegends.Base.Ads
                 {
                     PlayerPrefs.SetInt("IsCanShowAds", 0);
 
-                    var netWork = (AdmobNetworkController)GetNetwork(DefaultMediation);
-
-                    if (netWork != null)
+                    foreach (var network in adsNetworks)
                     {
-                        netWork.RemoveAds();
+                        network.RemoveAds();
                     }
                 }
 
@@ -186,12 +184,12 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
-
-            if (netWork != null)
+            foreach (var network in adsNetworks)
             {
-                netWork.LoadInterstitial(interType, order);
+                network.LoadInterstitial(interType, order);
             }
+
+            
         }
 
         public void ShowInterstitial(AdsType interType, PlacementOrder order, string position, Action OnClose = null)
@@ -206,7 +204,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
+            var netWork = GetNetworkToShow(interType, order);
 
             if (netWork != null)
             {
@@ -221,11 +219,9 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
-
-            if (netWork != null)
+            foreach (var network in adsNetworks)
             {
-                netWork.LoadRewarded(order);
+                network.LoadRewarded(order);
             }
         }
 
@@ -236,7 +232,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
+            var netWork = GetNetworkToShow(AdsType.Rewarded, order);
 
             if (netWork != null)
             {
@@ -256,12 +252,11 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
-
-            if (netWork != null)
+            foreach (var network in adsNetworks)
             {
-                netWork.LoadAppOpen(order);
+                network.LoadAppOpen(order);
             }
+
         }
 
         public void ShowAppOpen(PlacementOrder order, string position)
@@ -276,7 +271,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
+            var netWork = GetNetworkToShow(AdsType.AppOpen, order);
 
             if (netWork != null)
             {
@@ -293,12 +288,11 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
-
-            if (netWork != null)
+            foreach (var network in adsNetworks)
             {
-                netWork.LoadBanner(order);
+                network.LoadBanner(order);
             }
+
         }
 
         public void ShowBanner(PlacementOrder order, string position)
@@ -308,7 +302,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
+            var netWork = GetNetworkToShow(AdsType.Banner, order);
 
             if (netWork != null)
             {
@@ -323,11 +317,9 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
-
-            if (netWork != null)
+            foreach (var network in adsNetworks)
             {
-                netWork.HideBanner(order);
+                network.HideBanner(order);
             }
         }
 
@@ -338,12 +330,11 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
-
-            if (netWork != null)
+            foreach (var network in adsNetworks)
             {
-                netWork.LoadMrec(mrecType, order);
+                network.LoadMrec(mrecType, order);
             }
+
         }
 
         public void ShowMrec(AdsType mrecType, PlacementOrder order, AdsPos mrecPosition, Vector2Int offset, string position)
@@ -353,7 +344,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
+            var netWork = GetNetworkToShow(AdsType.Mrec, order);
 
             if (netWork != null)
             {
@@ -368,11 +359,9 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetwork(DefaultMediation);
-
-            if (netWork != null)
+            foreach (var network in adsNetworks)
             {
-                netWork.HideMrec(mrecType, order);
+                network.HideMrec(mrecType, order);
             }
         }
 
