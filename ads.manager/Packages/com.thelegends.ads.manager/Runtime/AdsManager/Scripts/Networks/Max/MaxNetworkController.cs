@@ -98,6 +98,7 @@ namespace TheLegends.Base.Ads
 
         public override AdsEvents GetAdsStatus(AdsType type, PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX            
             var listPlacement = new List<AdsPlacementBase>();
 
             switch (type)
@@ -139,10 +140,14 @@ namespace TheLegends.Base.Ads
             }
 
             return listPlacement[index].Status;
+#else
+            return AdsEvents.None;
+#endif
         }
 
         private bool IsListExist<T>(List<T> list) where T : AdsPlacementBase
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             bool isExist = false;
             isExist = list.Count > 0;
 
@@ -152,10 +157,14 @@ namespace TheLegends.Base.Ads
             }
 
             return isExist;
+#else
+            return false;
+#endif
         }
 
         private int GetPlacementIndex(int order, int listCount)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             if (listCount <= 0)
             {
                 return -1;
@@ -167,31 +176,43 @@ namespace TheLegends.Base.Ads
             }
 
             return Mathf.Clamp(order - 1, 0, listCount - 1);
+#else
+            return -1;
+#endif
         }
 
         public override AdsNetworks GetNetworkType()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             return AdsNetworks.Max;
+#else
+            return AdsNetworks.None;
+#endif
         }
 
         public override void HideAllBanner()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             foreach (var banner in bannerList)
             {
                 banner.HideAds();
             }
+#endif
         }
 
         public override void HideAllMrec()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             foreach (var mrec in mrecList)
             {
                 mrec.HideAds();
             }
+#endif
         }
 
         public override void LoadInterstitial(AdsType interType, PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             var list = interType == AdsType.InterOpen ? (new List<MaxInterstitialController>(interOpenList)) : interList;
 
             if (!IsListExist(list))
@@ -208,10 +229,12 @@ namespace TheLegends.Base.Ads
             }
 
             list[placementIndex].LoadAds();
+#endif
         }
 
         public override void ShowInterstitial(AdsType interType, PlacementOrder order, string position, Action OnClose = null)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             var list = interType == AdsType.InterOpen ? (new List<MaxInterstitialController>(interOpenList)) : interList;
 
             if (!IsListExist(list))
@@ -228,60 +251,197 @@ namespace TheLegends.Base.Ads
             }
 
             list[placementIndex].ShowAds(position, OnClose);
+#endif
         }
 
         public override void LoadRewarded(PlacementOrder order)
         {
-            throw new NotImplementedException();
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+            if (!IsListExist(rewardList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, rewardList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.MAX} {"Rewarded"} {order} is not exist");
+                return;
+            }
+
+            rewardList[placementIndex].LoadAds();
+#endif
         }
 
         public override void ShowRewarded(PlacementOrder order, string position, Action OnRewarded = null)
         {
-            throw new NotImplementedException();
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+            if (!IsListExist(rewardList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, rewardList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.MAX} {"Rewarded"} {order} is not exist");
+                return;
+            }
+
+            rewardList[placementIndex].ShowAds(position, OnRewarded);
+#endif
         }
 
         public override void LoadAppOpen(PlacementOrder order)
         {
-            throw new NotImplementedException();
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+            if (!IsListExist(appOpenList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, appOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.MAX} {"AppOpen"} {order} is not exist");
+                return;
+            }
+
+            appOpenList[placementIndex].LoadAds();
+#endif
         }
 
         public override void ShowAppOpen(PlacementOrder order, string position)
         {
-            throw new NotImplementedException();
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+            if (!IsListExist(appOpenList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, appOpenList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.MAX} {"AppOpen"} {order} is not exist");
+                return;
+            }
+
+            appOpenList[placementIndex].ShowAds(position);
+#endif
         }
 
         public override void LoadBanner(PlacementOrder order)
         {
-            throw new NotImplementedException();
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+            if (!IsListExist(bannerList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.MAX} {"Banner"} {order} is not exist");
+                return;
+            }
+
+            bannerList[placementIndex].LoadAds();
+#endif
         }
 
         public override void ShowBanner(PlacementOrder order, string position)
         {
-            throw new NotImplementedException();
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+            if (!IsListExist(bannerList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.MAX} {"Banner"} {order} is not exist");
+                return;
+            }
+
+            bannerList[placementIndex].ShowAds(position);
+#endif
         }
 
         public override void HideBanner(PlacementOrder order)
         {
-            throw new NotImplementedException();
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+            if (!IsListExist(bannerList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, bannerList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.MAX} {"Banner"} {order} is not exist");
+                return;
+            }
+
+            bannerList[placementIndex].HideAds();
+#endif
         }
 
         public override void LoadMrec(AdsType mrecType, PlacementOrder order)
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void ShowMrec(AdsType mrecType, PlacementOrder order, AdsPos mrecPosition, Vector2Int offset, string position)
         {
-            throw new NotImplementedException();
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+            if (!IsListExist(mrecList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, mrecList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.MAX} {"Mrec"} {order} is not exist");
+                return;
+            }
+
+            mrecList[placementIndex].ShowAds(mrecPosition, offset, position);
+#endif
         }
 
         public override void HideMrec(AdsType mrecType, PlacementOrder order)
         {
-            throw new NotImplementedException();
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+            if (!IsListExist(mrecList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, mrecList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.MAX} {"Mrec"} {order} is not exist");
+                return;
+            }
+
+            mrecList[placementIndex].HideAds();
+#endif
         }
 
         public override void RemoveAds()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             foreach (var ad in bannerList)
             {
                 ad.HideAds();
@@ -291,10 +451,12 @@ namespace TheLegends.Base.Ads
             {
                 ad.HideAds();
             }
+#endif
         }
 
         public override bool IsAdsReady(AdsType adsType, PlacementOrder order)
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             int orderIndex = -1;
             switch (adsType)
             {
@@ -342,6 +504,9 @@ namespace TheLegends.Base.Ads
                 default:
                     return false;
             }
+#else
+            return false;
+#endif
         }
 
     }
