@@ -219,8 +219,10 @@ namespace TheLegends.Base.Ads
                 var MAX_Android = serializedObject.FindProperty("MAX_Android");
                 EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("bannerIds"), true);
                 EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("interIds"), true);
+                EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("interOpenIds"), true);
                 EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("rewardIds"), true);
                 EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("mrecIds"), true);
+                EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("mrecOpenIds"), true);
                 EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("appOpenIds"), true);
 
                 EditorGUILayout.Separator();
@@ -230,8 +232,10 @@ namespace TheLegends.Base.Ads
                 var MAX_IOS = serializedObject.FindProperty("MAX_iOS");
                 EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("bannerIds"), true);
                 EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("interIds"), true);
+                EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("interOpenIds"), true);
                 EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("rewardIds"), true);
                 EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("mrecIds"), true);
+                EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("mrecOpenIds"), true);
                 EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("appOpenIds"), true);
 
             // }
