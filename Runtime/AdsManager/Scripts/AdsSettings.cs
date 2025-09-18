@@ -83,10 +83,10 @@ namespace TheLegends.Base.Ads
         public bool fixBannerSmallSize;
 
         public int autoReLoadMax = 2;
+        public bool isTest = false;
 
         [Header("IRON")]
         public bool showIRON;
-        public bool isIronTest = false;
         public string ironAndroidAppKey = string.Empty;
         public string ironIOSAppKey = string.Empty;
         public bool ironEnableAdmob;
@@ -94,7 +94,6 @@ namespace TheLegends.Base.Ads
         public string ironAdmobIOSAppID = string.Empty;
         [Header("MAX")]
         public bool showMAX;
-        public bool isMaxTest = false;
         public string maxSdkKey = string.Empty;
         public bool maxEnableAdmob;
         public string maxAdmobAndroidAppID = string.Empty;
@@ -103,7 +102,6 @@ namespace TheLegends.Base.Ads
         public MaxUnitID MAX_iOS = new MaxUnitID();
         [Header("ADMOB")]
         public bool showADMOB;
-        public bool isAdmobTest = false;
         public bool isShowAdmobNativeValidator = false;
         public AdmobUnitID ADMOB_Android = new AdmobUnitID();
         public AdmobUnitID ADMOB_IOS = new AdmobUnitID();

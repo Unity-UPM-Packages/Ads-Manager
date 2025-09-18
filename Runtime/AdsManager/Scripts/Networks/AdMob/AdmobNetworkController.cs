@@ -58,7 +58,7 @@ namespace TheLegends.Base.Ads
             var platform = Application.platform;
             var isIOS = platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.OSXPlayer;
 
-            var isAdmobTest = AdsManager.Instance.SettingsAds.isAdmobTest;
+            var isTest = AdsManager.Instance.SettingsAds.isTest;
 
             // Lấy tất cả các trường trong AdmobUnitID
             var unitIdFields = typeof(AdmobUnitID).GetFields();
@@ -94,7 +94,7 @@ namespace TheLegends.Base.Ads
                         
                         var placements = GetAdUnitIds(
                             isIOS,
-                            isAdmobTest,
+                            isTest,
                             (List<Placement>)unitIdField.GetValue(iosIds),
                             (List<Placement>)unitIdField.GetValue(androidIds),
                             (List<Placement>)unitIdField.GetValue(iosTestIds),
@@ -114,7 +114,6 @@ namespace TheLegends.Base.Ads
                     }
                 }
             }
-#endif
 
             yield return RequestUMP();
 
@@ -178,6 +177,9 @@ namespace TheLegends.Base.Ads
             {
                 yield return null;
             }
+
+#endif
+            yield break;
         }
 
 
@@ -251,9 +253,9 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        private List<Placement> GetAdUnitIds(bool isIOS, bool isAdmobTest, List<Placement> iosIds, List<Placement> androidIds, List<Placement> iosTestIds, List<Placement> androidTestIds)
+        private List<Placement> GetAdUnitIds(bool isIOS, bool isTest, List<Placement> iosIds, List<Placement> androidIds, List<Placement> iosTestIds, List<Placement> androidTestIds)
         {
-            return isAdmobTest ? (isIOS ? iosTestIds : androidTestIds) : (isIOS ? iosIds : androidIds);
+            return isTest ? (isIOS ? iosTestIds : androidTestIds) : (isIOS ? iosIds : androidIds);
         }
 
         private void CreateAdController<T>(List<Placement> placements, List<T> adList) where T : AdsPlacementBase
