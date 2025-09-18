@@ -20,9 +20,10 @@ namespace TheLegends.Base.Ads
 
         public override IEnumerator DoInit()
         {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+
             status = InitiationStatus.Initializing;
 
-#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             var platform = Application.platform;
             var isIOS = platform == RuntimePlatform.IPhonePlayer || platform == RuntimePlatform.OSXPlayer;
 
