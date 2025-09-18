@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+#if UNITY_IOS
 using UnityEngine.iOS;
+#endif
 
 namespace TheLegends.Base.Ads
 {
@@ -537,13 +539,15 @@ namespace TheLegends.Base.Ads
             catch (Exception)
             {
             }
+            Debug.Log("GetAndroidAdvertiserId: " + advertisingID);
             return advertisingID;
         }
 
+#if UNITY_IOS
         private string GetIOSAdvertiserId()
         {
             return Device.advertisingIdentifier;
         }
-
+#endif
     }
 }
