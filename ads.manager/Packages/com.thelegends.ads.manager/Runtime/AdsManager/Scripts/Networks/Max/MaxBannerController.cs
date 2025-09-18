@@ -98,6 +98,8 @@ namespace TheLegends.Base.Ads
 
         private void OnBannerLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
+            if (adUnitId != adsUnitID) return;
+            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 isReady = true;
@@ -107,6 +109,8 @@ namespace TheLegends.Base.Ads
         
         private void OnBannerLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
         {
+            if (adUnitId != adsUnitID) return;
+            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsLoadFailed(errorInfo.Message);
@@ -115,6 +119,8 @@ namespace TheLegends.Base.Ads
         
         private void OnBannerClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
+            if (adUnitId != adsUnitID) return;
+            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClick();
@@ -123,6 +129,8 @@ namespace TheLegends.Base.Ads
         
         private void OnBannerRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
+            if (adUnitId != adsUnitID) return;
+            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, adInfo);

@@ -86,6 +86,8 @@ namespace TheLegends.Base.Ads
 
         private void OnInterstitialLoadedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
         {
+            if (adUnitId != adsUnitID) return;
+
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsLoadAvailable();
@@ -95,6 +97,8 @@ namespace TheLegends.Base.Ads
 
         private void OnInterstitialLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo adInfo)
         {
+            if (adUnitId != adsUnitID) return;
+            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsLoadFailed(adInfo.Message);
@@ -104,6 +108,8 @@ namespace TheLegends.Base.Ads
 
         private void OnInterstitialDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
+            if (adUnitId != adsUnitID) return;
+            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsShowSuccess();
@@ -112,6 +118,8 @@ namespace TheLegends.Base.Ads
 
         private void OnInterstitialRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo info)
         {
+            if (adUnitId != adsUnitID) return;
+            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, info);
@@ -121,6 +129,8 @@ namespace TheLegends.Base.Ads
 
         private void OnInterstitialClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
+            if (adUnitId != adsUnitID) return;
+            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClick();
@@ -130,6 +140,8 @@ namespace TheLegends.Base.Ads
 
         protected virtual void OnInterstitialHiddenEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
+            if (adUnitId != adsUnitID) return;
+            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 UILoadingController.Show(1f, () =>
@@ -145,6 +157,8 @@ namespace TheLegends.Base.Ads
 
         private void OnInterstitialAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
         {
+            if (adUnitId != adsUnitID) return;
+            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsShowFailed(errorInfo.Message);
