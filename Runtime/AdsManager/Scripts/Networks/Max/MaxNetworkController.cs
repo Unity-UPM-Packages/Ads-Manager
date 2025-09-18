@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.iOS;
 
 namespace TheLegends.Base.Ads
 {
@@ -62,6 +63,17 @@ namespace TheLegends.Base.Ads
                     AdsManager.Instance.Log($"{TagLog.MAX} " + "Max SDK initialization failed");
                 }
             };
+
+            if (AdsManager.Instance.SettingsAds.isTest)
+            {
+                string testDeviceID = "";
+            #if UNITY_ANDROID
+                testDeviceID = GetAndroidAdvertiserId();
+            #elif UNITY_IOS
+                testDeviceID = GetIOSAdvertiserId();
+            #endif
+                MaxSdk.SetTestDeviceAdvertisingIdentifiers(new string[] { testDeviceID });
+            }
 
             MaxSdk.InitializeSdk();
 
@@ -397,7 +409,7 @@ namespace TheLegends.Base.Ads
 
         public override void LoadMrec(AdsType mrecType, PlacementOrder order)
         {
-            
+
         }
 
         public override void ShowMrec(AdsType mrecType, PlacementOrder order, AdsPos mrecPosition, Vector2Int offset, string position)
@@ -508,6 +520,29 @@ namespace TheLegends.Base.Ads
 #else
             return false;
 #endif
+        }
+
+        private string GetAndroidAdvertiserId()
+        {
+            string advertisingID = "";
+            try
+            {
+                AndroidJavaClass up = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                AndroidJavaObject currentActivity = up.GetStatic<AndroidJavaObject>("currentActivity");
+                AndroidJavaClass client = new AndroidJavaClass("com.google.android.gms.ads.identifier.AdvertisingIdClient");
+                AndroidJavaObject adInfo = client.CallStatic<AndroidJavaObject>("getAdvertisingIdInfo", currentActivity);
+
+                advertisingID = adInfo.Call<string>("getId").ToString();
+            }
+            catch (Exception)
+            {
+            }
+            return advertisingID;
+        }
+
+        private string GetIOSAdvertiserId()
+        {
+            return Device.advertisingIdentifier;
         }
 
     }
