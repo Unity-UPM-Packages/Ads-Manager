@@ -139,6 +139,8 @@ namespace TheLegends.Base.Ads
                 case AdsType.InterOpen:
                     listPlacement = interOpenList.Cast<AdsPlacementBase>().ToList();
                     break;
+                default:
+                    return AdsEvents.None;
             }
 
             if (!IsListExist(listPlacement))
