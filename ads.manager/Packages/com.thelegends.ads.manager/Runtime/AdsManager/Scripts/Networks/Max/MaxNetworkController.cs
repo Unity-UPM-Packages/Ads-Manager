@@ -54,16 +54,20 @@ namespace TheLegends.Base.Ads
 
             MaxSdkCallbacks.OnSdkInitializedEvent += (sdkConfiguration) =>
             {
-                if (sdkConfiguration.IsSuccessfullyInitialized)
+                PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
                 {
-                    status = InitiationStatus.Initialized;
-                    AdsManager.Instance.Log($"{TagLog.MAX} " + "Max SDK initialized");
-                }
-                else
-                {
-                    status = InitiationStatus.Failed;
-                    AdsManager.Instance.Log($"{TagLog.MAX} " + "Max SDK initialization failed");
-                }
+                    if (sdkConfiguration.IsSuccessfullyInitialized)
+                    {
+                        status = InitiationStatus.Initialized;
+                        AdsManager.Instance.Log($"{TagLog.MAX} " + "Max SDK initialized");
+                    }
+                    else
+                    {
+                        status = InitiationStatus.Failed;
+                        AdsManager.Instance.Log($"{TagLog.MAX} " + "Max SDK initialization failed");
+                    }
+                });
+                
             };
 
             if (AdsManager.Instance.SettingsAds.isTest)
