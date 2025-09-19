@@ -847,7 +847,7 @@ namespace TheLegends.Base.Ads
 
         private IEnumerator IEShowAppOpen()
         {
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.5f);
             ShowAppOpen(PlacementOrder.One ,"Pause");
         }
 
@@ -868,7 +868,7 @@ namespace TheLegends.Base.Ads
                 { "adUnitID", adsUnitID }
             });
 
-            if ((adsType == AdsType.Interstitial || adsType == AdsType.AppOpen || adsType == AdsType.Rewarded) &&
+            if ((adsType == AdsType.Interstitial || adsType == AdsType.AppOpen || adsType == AdsType.Rewarded || adsType == AdsType.InterOpen) &&
                 (adEvent == AdsEvents.ShowSuccess))
             {
                 lastTimeShowAd = DateTime.Now;
