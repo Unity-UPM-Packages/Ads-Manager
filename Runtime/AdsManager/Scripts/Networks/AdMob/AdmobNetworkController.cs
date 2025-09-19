@@ -361,6 +361,8 @@ namespace TheLegends.Base.Ads
                 case AdsType.NativeVideo:
                     listPlacement = nativeVideoList.Cast<AdsPlacementBase>().ToList();
                     break;
+                default:
+                    return AdsEvents.None;
             }
 
             if (!IsListExist(listPlacement))
