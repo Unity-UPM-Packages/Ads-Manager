@@ -190,8 +190,8 @@ public class DemoManager : MonoBehaviour
         var mrecPos = (AdsPos)MrecPosDropdown.value;
         AdsManager.Instance.ShowMrec(AdsType.Mrec, order, mrecPos, new Vector2Int(0, 0), "Default");
         AdsManager.Instance.ShowNativeMrec(PlacementOrder.One, "Default", "native_mrec", null, null, null)
-        .WithPosition(mrecPos, new Vector2Int(0, 0))
-        .Execute();
+        ?.WithPosition(mrecPos, new Vector2Int(0, 0))
+        ?.Execute();
     }
 
     private void HideMrec()
@@ -282,8 +282,8 @@ public class DemoManager : MonoBehaviour
         {
             AdsManager.Instance.Log("NativeVideoPlatform full screen content closed");
         })
-        .WithCountdown(AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration, AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown, AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay)
-        .Execute();
+        ?.WithCountdown(AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration, AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown, AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay)
+        ?.Execute();
     }
 
     public void HideNativeVideoPlatform()
@@ -310,9 +310,9 @@ public class DemoManager : MonoBehaviour
         {
             AdsManager.Instance.Log("NativeBannerPlatform full screen content closed");
         })
-        .WithAutoReload(AdsManager.Instance.adsConfigs.nativeBannerTimeReload)
-        .WithShowOnLoaded(true)
-        .Execute();
+        ?.WithAutoReload(AdsManager.Instance.adsConfigs.nativeBannerTimeReload)
+        ?.WithShowOnLoaded(true)
+        ?.Execute();
     }
 
     public void HideNativeBannerPlatform()
