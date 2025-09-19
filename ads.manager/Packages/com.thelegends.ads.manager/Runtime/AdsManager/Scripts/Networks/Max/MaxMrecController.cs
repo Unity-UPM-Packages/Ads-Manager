@@ -37,28 +37,6 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        public override void LoadAds()
-        {
-            // #if USE_MAX
-            //             if (!IsCanLoadAds())
-            //             {
-            //                 return;
-            //             }
-
-            //             if (!IsReady)
-            //             {
-            //                 base.LoadAds();
-
-            //                 MaxSdkCallbacks.MRec.OnAdLoadedEvent += OnMRecLoadedEvent;
-            //                 MaxSdkCallbacks.MRec.OnAdLoadFailedEvent += OnMRecLoadFailedEvent;
-            //                 MaxSdkCallbacks.MRec.OnAdClickedEvent += OnMRecClickedEvent;
-            //                 MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent += OnMRecRevenuePaidEvent;
-
-            //                 MaxSdk.LoadMRec(adsUnitID);
-            //             }
-            // #endif
-        }
-
         public override void ShowAds(string showPosition)
         {
             base.ShowAds(showPosition);
@@ -68,12 +46,6 @@ namespace TheLegends.Base.Ads
             {
                 Status = AdsEvents.ShowSuccess;
                 MaxSdk.ShowMRec(adsUnitID);
-            }
-            else
-            {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
-                reloadCount = 0;
-                LoadAds();
             }
 #endif
         }
@@ -86,8 +58,8 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            // if (!IsReady)
-            // {
+            if (!IsReady)
+            {
                 base.LoadAds();
 
                 CreateMRec(position, offset);
@@ -98,7 +70,7 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent += OnMRecRevenuePaidEvent;
 
                 MaxSdk.LoadMRec(adsUnitID);
-            // }
+            }
 #endif
         }
 
@@ -122,7 +94,7 @@ namespace TheLegends.Base.Ads
 
         #region Internal
 
-        private void OnMRecLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        protected void OnMRecLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             if (adUnitId != adsUnitID) return;
             
@@ -134,7 +106,7 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        private void OnMRecLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
+        protected void OnMRecLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
         {
             if (adUnitId != adsUnitID) return;
             
@@ -144,7 +116,7 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        private void OnMRecClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        protected void OnMRecClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             if (adUnitId != adsUnitID) return;
             
@@ -154,7 +126,7 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        private void OnMRecRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        protected void OnMRecRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             if (adUnitId != adsUnitID) return;
             
@@ -194,20 +166,22 @@ namespace TheLegends.Base.Ads
 
             if (IsReady)
             {
+                MaxSdkCallbacks.MRec.OnAdLoadedEvent -= OnMRecLoadedEvent;
+                MaxSdkCallbacks.MRec.OnAdLoadFailedEvent -= OnMRecLoadFailedEvent;
+                MaxSdkCallbacks.MRec.OnAdClickedEvent -= OnMRecClickedEvent;
+                MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent -= OnMRecRevenuePaidEvent;
+
                 MaxSdk.HideBanner(adsUnitID);
+                isReady = false;
                 MRecDestroy();
-                OnAdsClosed();
+                Status = AdsEvents.Close;
+                adsUnitIDIndex = 0;
             }
 #endif
         }
 
         public Vector2Int SetAdCustomPosition(AdsPos position, Vector2Int offset)
         {
-            if (!IsAdsReady())
-            {
-                return Vector2Int.zero;
-            }
-
             var density = MaxSdkUtils.GetScreenDensity();
 
             float adWidth = 300;

@@ -541,7 +541,6 @@ namespace TheLegends.Base.Ads
             catch (Exception)
             {
             }
-            Debug.Log("GetAndroidAdvertiserId: " + advertisingID);
             return advertisingID;
         }
 

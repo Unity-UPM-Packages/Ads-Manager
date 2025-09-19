@@ -26,6 +26,11 @@ namespace TheLegends.Base.Ads
 
             if (IsReady)
             {
+                MaxSdkCallbacks.MRec.OnAdLoadedEvent -= OnMRecLoadedEvent;
+                MaxSdkCallbacks.MRec.OnAdLoadFailedEvent -= OnMRecLoadFailedEvent;
+                MaxSdkCallbacks.MRec.OnAdClickedEvent -= OnMRecClickedEvent;
+                MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent -= OnMRecRevenuePaidEvent;
+                
                 MaxSdk.HideBanner(adsUnitID);
                 MRecDestroy();
             }

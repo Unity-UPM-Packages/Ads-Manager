@@ -84,7 +84,7 @@ namespace TheLegends.Base.Ads
 
         #region Internal
 
-        private void OnInterstitialLoadedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
+        protected void OnInterstitialLoadedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
         {
             if (adUnitId != adsUnitID) return;
 
@@ -95,7 +95,7 @@ namespace TheLegends.Base.Ads
             
         }
 
-        private void OnInterstitialLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo adInfo)
+        protected void OnInterstitialLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo adInfo)
         {
             if (adUnitId != adsUnitID) return;
             
@@ -106,7 +106,7 @@ namespace TheLegends.Base.Ads
             
         }
 
-        private void OnInterstitialDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        protected void OnInterstitialDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             if (adUnitId != adsUnitID) return;
             
@@ -116,7 +116,7 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        private void OnInterstitialRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo info)
+        protected void OnInterstitialRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo info)
         {
             if (adUnitId != adsUnitID) return;
             
@@ -127,7 +127,7 @@ namespace TheLegends.Base.Ads
             
         }
 
-        private void OnInterstitialClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        protected void OnInterstitialClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             if (adUnitId != adsUnitID) return;
             
@@ -149,13 +149,21 @@ namespace TheLegends.Base.Ads
                     OnClose?.Invoke();
                     OnClose = null;
                 });
-                
+
+                MaxSdkCallbacks.Interstitial.OnAdLoadedEvent -= OnInterstitialLoadedEvent;
+                MaxSdkCallbacks.Interstitial.OnAdLoadFailedEvent -= OnInterstitialLoadFailedEvent;
+                MaxSdkCallbacks.Interstitial.OnAdDisplayedEvent -= OnInterstitialDisplayedEvent;
+                MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent -= OnInterstitialRevenuePaidEvent;
+                MaxSdkCallbacks.Interstitial.OnAdClickedEvent -= OnInterstitialClickedEvent;
+                MaxSdkCallbacks.Interstitial.OnAdHiddenEvent -= OnInterstitialHiddenEvent;
+                MaxSdkCallbacks.Interstitial.OnAdDisplayFailedEvent -= OnInterstitialAdFailedToDisplayEvent;
+
                 OnAdsClosed();
             });
             
         }
 
-        private void OnInterstitialAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
+        protected void OnInterstitialAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
         {
             if (adUnitId != adsUnitID) return;
             
