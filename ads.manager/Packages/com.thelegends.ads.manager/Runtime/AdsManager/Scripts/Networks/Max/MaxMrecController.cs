@@ -9,6 +9,7 @@ namespace TheLegends.Base.Ads
     public class MaxMrecController : AdsPlacementBase
     {
         private bool isReady = false;
+        private string showPosition = string.Empty;
         public override AdsNetworks GetAdsNetworks()
         {
 #if USE_MAX
@@ -60,20 +61,21 @@ namespace TheLegends.Base.Ads
 
         public override void ShowAds(string showPosition)
         {
-//             base.ShowAds(showPosition);
-// #if USE_MAX
-//             if (IsReady && IsAvailable)
-//             {
-//                 Status = AdsEvents.ShowSuccess;
-//                 MaxSdk.ShowMRec(adsUnitID);
-//             }
-//             else
-//             {
-//                 AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
-//                 reloadCount = 0;
-//                 LoadAds();
-//             }
-// #endif
+            base.ShowAds(showPosition);
+#if USE_MAX
+            this.showPosition = showPosition;
+            if (IsReady && IsAvailable)
+            {
+                Status = AdsEvents.ShowSuccess;
+                MaxSdk.ShowMRec(adsUnitID);
+            }
+            else
+            {
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+                reloadCount = 0;
+                LoadAds();
+            }
+#endif
         }
 
         private void LoadAds(AdsPos position, Vector2Int offset)
@@ -84,8 +86,8 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (!IsReady)
-            {
+            // if (!IsReady)
+            // {
                 base.LoadAds();
 
                 CreateMRec(position, offset);
@@ -96,7 +98,7 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent += OnMRecRevenuePaidEvent;
 
                 MaxSdk.LoadMRec(adsUnitID);
-            }
+            // }
 #endif
         }
 
@@ -104,7 +106,6 @@ namespace TheLegends.Base.Ads
         {
 #if USE_MAX
             LoadAds(position, offset);
-            ShowAds(showPosition);
 #endif
         }
 
@@ -129,6 +130,7 @@ namespace TheLegends.Base.Ads
             {
                 isReady = true;
                 OnAdsLoadAvailable();
+                ShowAds(showPosition);
             });
         }
 
