@@ -167,7 +167,13 @@ namespace TheLegends.Base.Ads
 
             if (IsReady)
             {
+                MaxSdkCallbacks.Banner.OnAdLoadedEvent -= OnBannerLoadedEvent;
+                MaxSdkCallbacks.Banner.OnAdLoadFailedEvent -= OnBannerLoadFailedEvent;
+                MaxSdkCallbacks.Banner.OnAdClickedEvent -= OnBannerClickedEvent;
+                MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent -= OnBannerRevenuePaidEvent;
+
                 MaxSdk.HideBanner(adsUnitID);
+                isReady = false;
                 BannerDestroy();
                 OnAdsClosed();
             }
