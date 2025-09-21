@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace TheLegends.Base.Ads
 {
     public class MaxAppOpenController : AdsPlacementBase
     {
+        private string _currentLoadRequestId;
+        private string _loadRequestId;
+
         public override AdsNetworks GetAdsNetworks()
         {
 #if USE_MAX
@@ -53,6 +57,9 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.AppOpen.OnAdHiddenEvent += OnAppOpenHiddenEvent;
                 MaxSdkCallbacks.AppOpen.OnAdDisplayFailedEvent += OnAppOpenDisplayFailedEvent;
 
+                _currentLoadRequestId = Guid.NewGuid().ToString();
+                _loadRequestId = _currentLoadRequestId;
+
                 MaxSdk.LoadAppOpenAd(adsUnitID);
             }
 
@@ -80,60 +87,67 @@ namespace TheLegends.Base.Ads
 
         private void OnAppOpenLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
+                if (_loadRequestId != _currentLoadRequestId) return;
+
+                StopHandleTimeout();
+
                 OnAdsLoadAvailable();
             });
         }
 
         private void OnAppOpenLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
+                if (_loadRequestId != _currentLoadRequestId) return;
+
+                StopHandleTimeout();
+
                 OnAdsLoadFailed(errorInfo.Message);
             });
         }
 
         private void OnAppOpenDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 OnAdsShowSuccess();
             });
         }
 
         private void OnAppOpenRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, adInfo);
             });
         }
 
         private void OnAppOpenClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
-        {
-            if (adUnitId != adsUnitID) return;
-            
+        {   
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 OnAdsClick();
             });
         }
 
         private void OnAppOpenHiddenEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
-        {
-            if (adUnitId != adsUnitID) return;
-            
+        {   
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
 
                 MaxSdkCallbacks.AppOpen.OnAdLoadedEvent -= OnAppOpenLoadedEvent;
                 MaxSdkCallbacks.AppOpen.OnAdLoadFailedEvent -= OnAppOpenLoadFailedEvent;
@@ -148,11 +162,11 @@ namespace TheLegends.Base.Ads
         }
 
         private void OnAppOpenDisplayFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
-        {
-            if (adUnitId != adsUnitID) return;
-            
+        { 
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 OnAdsShowFailed(errorInfo.Message);
             });
         }

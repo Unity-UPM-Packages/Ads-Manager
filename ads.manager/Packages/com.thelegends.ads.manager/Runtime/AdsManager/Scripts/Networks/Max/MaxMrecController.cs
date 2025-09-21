@@ -8,6 +8,8 @@ namespace TheLegends.Base.Ads
 {
     public class MaxMrecController : AdsPlacementBase
     {
+        private string _currentLoadRequestId;
+        private string _loadRequestId;
         private bool isReady = false;
         private string showPosition = string.Empty;
         public override AdsNetworks GetAdsNetworks()
@@ -69,6 +71,9 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.MRec.OnAdClickedEvent += OnMRecClickedEvent;
                 MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent += OnMRecRevenuePaidEvent;
 
+                _currentLoadRequestId = Guid.NewGuid().ToString();
+                _loadRequestId = _currentLoadRequestId;
+
                 MaxSdk.LoadMRec(adsUnitID);
             }
 #endif
@@ -96,10 +101,15 @@ namespace TheLegends.Base.Ads
 
         protected void OnMRecLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
+        
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
+                if (_loadRequestId != _currentLoadRequestId) return;
+
+                StopHandleTimeout();
+
                 isReady = true;
                 OnAdsLoadAvailable();
                 ShowAds(showPosition);
@@ -108,30 +118,34 @@ namespace TheLegends.Base.Ads
 
         protected void OnMRecLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
+                if (_loadRequestId != _currentLoadRequestId) return;
+
+                StopHandleTimeout();
+
                 OnAdsLoadFailed(errorInfo.Message);
             });
         }
 
         protected void OnMRecClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 OnAdsClick();
             });
         }
 
         protected void OnMRecRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, adInfo);
             });
         }

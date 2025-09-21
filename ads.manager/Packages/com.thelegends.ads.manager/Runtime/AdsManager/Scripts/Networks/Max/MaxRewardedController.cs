@@ -8,6 +8,8 @@ namespace TheLegends.Base.Ads
 {
     public class MaxRewardedController : AdsPlacementBase
     {
+        private string _currentLoadRequestId;
+        private string _loadRequestId;
         private Action OnRewarded;
 
         public override AdsNetworks GetAdsNetworks()
@@ -59,6 +61,9 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.Rewarded.OnAdDisplayFailedEvent += OnRewardedAdFailedToDisplayEvent;
                 MaxSdkCallbacks.Rewarded.OnAdReceivedRewardEvent += OnAdReceivedRewardEvent;
 
+                _currentLoadRequestId = Guid.NewGuid().ToString();
+                _loadRequestId = _currentLoadRequestId;
+
                 MaxSdk.LoadRewardedAd(adsUnitID);
             }
 #endif
@@ -86,60 +91,67 @@ namespace TheLegends.Base.Ads
 
         private void OnRewardedLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
+                if (_loadRequestId != _currentLoadRequestId) return;
+
+                StopHandleTimeout();
+
                 OnAdsLoadAvailable();
             });
         }
 
         private void OnRewardedDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 OnAdsShowSuccess();
             });
         }
 
         private void OnRewardedRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, adInfo);
             });
         }
 
         private void OnRewardedLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
+                if (_loadRequestId != _currentLoadRequestId) return;
+
+                StopHandleTimeout();
+
                 OnAdsLoadFailed(errorInfo.Message);
             });
         }
 
         private void OnRewardedClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 OnAdsClick();
             });
         }
 
         private void OnRewardedHiddenEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
 
                 MaxSdkCallbacks.Rewarded.OnAdLoadedEvent += OnRewardedLoadedEvent;
                 MaxSdkCallbacks.Rewarded.OnAdLoadFailedEvent += OnRewardedLoadFailedEvent;
@@ -155,21 +167,21 @@ namespace TheLegends.Base.Ads
         }
 
         private void OnRewardedAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
-        {
-            if (adUnitId != adsUnitID) return;
-            
+        { 
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 OnAdsShowFailed(errorInfo.Message);
             });
         }
 
         private void OnAdReceivedRewardEvent(string adUnitId, MaxSdkBase.Reward reward, MaxSdkBase.AdInfo adInfo)
-        {
-            if (adUnitId != adsUnitID) return;
-            
+        { 
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 UILoadingController.Show(1f, () =>
                 {
                     OnRewarded?.Invoke();
