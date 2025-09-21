@@ -796,30 +796,43 @@ namespace TheLegends.Base.Ads
 
         public AdsEvents GetAdsStatus(AdsType adsType, PlacementOrder order)
         {
-
             if (!IsInitialized())
             {
                 return AdsEvents.None;
             }
 
-            AdsEvents bestStatusSoFar = AdsEvents.None;
+            AdsEvents bestStatus = AdsEvents.None;
 
             foreach (var network in adsNetworks)
             {
-                AdsEvents currentNetworkStatus = network.GetAdsStatus(adsType, order);
+                AdsEvents networkStatus = network.GetAdsStatus(adsType, order);
 
-                if (currentNetworkStatus == AdsEvents.LoadAvailable)
+                if (networkStatus == AdsEvents.LoadAvailable)
                 {
                     return AdsEvents.LoadAvailable;
                 }
-                else if (currentNetworkStatus == AdsEvents.LoadNotAvailable)
+
+                switch (networkStatus)
                 {
-                    bestStatusSoFar = AdsEvents.LoadNotAvailable;
+                    case AdsEvents.LoadRequest:
+                        if (bestStatus != AdsEvents.LoadRequest)
+                        {
+                            bestStatus = AdsEvents.LoadRequest;
+                        }
+                        break;
+
+                    case AdsEvents.LoadFail:
+                    case AdsEvents.LoadTimeOut:
+                    case AdsEvents.LoadNotAvailable:
+                        if (bestStatus == AdsEvents.None)
+                        {
+                            bestStatus = networkStatus;
+                        }
+                        break;
                 }
             }
 
-            return bestStatusSoFar;
-
+            return bestStatus;
         }
 
         public IEnumerator WaitAdLoaded(AdsType type, PlacementOrder order)
