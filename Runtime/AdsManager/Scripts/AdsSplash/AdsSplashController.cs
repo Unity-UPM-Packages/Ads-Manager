@@ -249,12 +249,14 @@ namespace TheLegends.Base.Ads
 
             if (AdsManager.Instance.GetAdsStatus(AdsType.NativeInterOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
-                AdsManager.Instance.ShowNativeInter(PlacementOrder.One, "native_inter_open", "native_inter", null, () =>
+                AdsManager.Instance.ShowNativeInterOpen(PlacementOrder.One, "native_inter_open", "native_inter", null, () =>
                 {
                     isShowInter = false;
                 }, null)
                 .WithCountdown(AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration, AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown, AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay)
                 .Execute();
+                
+                isShowInter = true;
             }
             else
             {
