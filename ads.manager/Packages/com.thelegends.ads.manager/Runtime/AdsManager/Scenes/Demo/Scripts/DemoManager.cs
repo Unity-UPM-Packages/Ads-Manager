@@ -189,9 +189,9 @@ public class DemoManager : MonoBehaviour
     {
         var mrecPos = (AdsPos)MrecPosDropdown.value;
         AdsManager.Instance.ShowMrec(AdsType.Mrec, order, mrecPos, new Vector2Int(0, 0), "Default");
-        AdsManager.Instance.ShowNativeMrec(PlacementOrder.One, "Default", "native_mrec", null, null, null)
-        ?.WithPosition(mrecPos, new Vector2Int(0, 0))
-        ?.Execute();
+        // AdsManager.Instance.ShowNativeMrec(PlacementOrder.One, "Default", "native_mrec", null, null, null)
+        // ?.WithPosition(mrecPos, new Vector2Int(0, 0))
+        // ?.Execute();
     }
 
     private void HideMrec()
