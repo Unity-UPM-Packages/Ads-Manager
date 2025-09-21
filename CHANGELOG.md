@@ -1,3 +1,10 @@
+## [1.0.58](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.57...v1.0.58) (2025-09-21)
+
+
+### Bug Fixes
+
+* AdsSplash not show NativeInterOpen ([688d3df](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/688d3df229c2da2592986b1a722547c60ed926b1))
+
 ## [1.0.57](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.56...v1.0.57) (2025-09-16)
 
 
