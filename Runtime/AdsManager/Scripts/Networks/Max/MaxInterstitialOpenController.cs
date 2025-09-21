@@ -17,10 +17,10 @@ namespace TheLegends.Base.Ads
 
         protected override void OnInterstitialHiddenEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            if (adUnitId != adsUnitID) return;
-            
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                if (adUnitId != adsUnitID) return;
+
                 OnClose?.Invoke();
                 OnClose = null;
                 Status = AdsEvents.Close;
