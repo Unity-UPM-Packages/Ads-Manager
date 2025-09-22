@@ -1,3 +1,5 @@
+#if USE_MAX
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -101,7 +103,7 @@ namespace TheLegends.Base.Ads
 
         protected void OnMRecLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-        
+
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 if (adUnitId != adsUnitID) return;
@@ -257,3 +259,5 @@ namespace TheLegends.Base.Ads
         }
     }
 }
+
+#endif

@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+#if USE_MAX
 
 namespace TheLegends.Base.Ads
 {
@@ -36,3 +34,5 @@ namespace TheLegends.Base.Ads
         }
     }
 }
+
+#endif

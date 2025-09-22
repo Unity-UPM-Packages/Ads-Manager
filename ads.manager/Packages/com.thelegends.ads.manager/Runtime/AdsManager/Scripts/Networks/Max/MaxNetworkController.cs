@@ -1,3 +1,5 @@
+#if USE_MAX
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,17 +69,17 @@ namespace TheLegends.Base.Ads
                         AdsManager.Instance.Log($"{TagLog.MAX} " + "Max SDK initialization failed");
                     }
                 });
-                
+
             };
 
             if (AdsManager.Instance.SettingsAds.isTest)
             {
                 string testDeviceID = "";
-            #if UNITY_ANDROID
+#if UNITY_ANDROID
                 testDeviceID = GetAndroidAdvertiserId();
-            #elif UNITY_IOS
+#elif UNITY_IOS
                 testDeviceID = GetIOSAdvertiserId();
-            #endif
+#endif
                 MaxSdk.SetTestDeviceAdvertisingIdentifiers(new string[] { testDeviceID });
             }
 
@@ -556,3 +558,5 @@ namespace TheLegends.Base.Ads
 #endif
     }
 }
+
+#endif

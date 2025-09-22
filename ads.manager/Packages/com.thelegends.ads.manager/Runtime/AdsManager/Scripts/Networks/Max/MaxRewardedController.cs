@@ -1,3 +1,4 @@
+#if USE_MAX
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -192,3 +193,5 @@ namespace TheLegends.Base.Ads
         #endregion
     }
 }
+
+#endif
