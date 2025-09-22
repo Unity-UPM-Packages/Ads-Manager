@@ -1,3 +1,4 @@
+#if USE_ADMOB
 using System;
 using GoogleMobileAds.Api;
 using UnityEngine;
@@ -220,3 +221,5 @@ namespace TheLegends.Base.Ads
         #endregion
     }
 }
+
+#endif

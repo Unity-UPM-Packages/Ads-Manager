@@ -1,5 +1,4 @@
-// File: DummyNativeClient.cs
-// Có thể đặt trong namespace TheLegends.Base.Ads
+#if USE_ADMOB
 namespace TheLegends.Base.Ads
 {
     using System;
@@ -96,3 +95,5 @@ namespace TheLegends.Base.Ads
         public IResponseInfoClient GetResponseInfoClient() => null;
     }
 }
+
+#endif

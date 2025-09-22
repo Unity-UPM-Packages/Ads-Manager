@@ -1,4 +1,4 @@
-
+#if USE_ADMOB
 
 using GoogleMobileAds.Common;
 using UnityEngine;
@@ -23,3 +23,5 @@ namespace TheLegends.Base.Ads
         public override string ToString() => GetMessage();
     }
 }
+
+#endif

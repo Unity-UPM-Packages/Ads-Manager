@@ -1,3 +1,4 @@
+#if USE_ADMOB
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -1412,3 +1413,4 @@ namespace TheLegends.Base.Ads
     }
 }
 
+#endif

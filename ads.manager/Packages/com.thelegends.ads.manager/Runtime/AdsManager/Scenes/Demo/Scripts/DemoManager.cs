@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if USE_ADMOB
 using GoogleMobileAds.Api;
+#endif
 using TheLegends.Base.Ads;
 using TheLegends.Base.AppsFlyer;
 using TheLegends.Base.Firebase;
@@ -41,8 +43,10 @@ public class DemoManager : MonoBehaviour
     public Button adjustLayoutForNativeBannerBtn;
     public Button removeAdsBtn;
 
+#if USE_ADMOB && USE_ADMOB_NATIVE_UNITY
     public AdmobNativeController nativeAdsMrec;
     public AdmobNativeController nativeAdsBanner;
+#endif
 
 
     public Button nativeOverlayCloseBtn;
@@ -182,7 +186,9 @@ public class DemoManager : MonoBehaviour
     private void LoadMrec()
     {
         AdsManager.Instance.LoadMrec(AdsType.Mrec, order);
+#if USE_ADMOB
         AdsManager.Instance.LoadNativeMrec(PlacementOrder.One);
+#endif
     }
 
     private void ShowMrec()
@@ -197,16 +203,21 @@ public class DemoManager : MonoBehaviour
     private void HideMrec()
     {
         AdsManager.Instance.HideMrec(AdsType.Mrec, order);
+#if USE_ADMOB
         AdsManager.Instance.HideNativeMrec(PlacementOrder.One);
+#endif
     }
 
     private void LoadNativeOverlay()
     {
+#if USE_ADMOB
         AdsManager.Instance.LoadNativeOverlay(order);
+#endif
     }
 
     private void ShowNativeOverlay()
     {
+#if USE_ADMOB
         var pos = (AdsPos)MrecPosDropdown.value;
         var deviceScale = MobileAds.Utils.GetDeviceScale();
 
@@ -230,30 +241,39 @@ public class DemoManager : MonoBehaviour
         });
         
         // new Vector2Int(Mathf.RoundToInt(Screen.safeArea.width / deviceScale / 3), Mathf.RoundToInt(Screen.safeArea.height / deviceScale))
+#endif
     }
 
 
     private void HideNativeOverlay()
     {
+#if USE_ADMOB
         AdsManager.Instance.HideNativeOverlay(order);
+#endif
     }
 
     public void LoadNative()
     {
+#if USE_ADMOB && USE_ADMOB_NATIVE_UNITY
         nativeAdsMrec.LoadAds();
         nativeAdsBanner.LoadAds();
+#endif
     }
 
     public void ShowNative()
     {
+#if USE_ADMOB && USE_ADMOB_NATIVE_UNITY
         nativeAdsMrec.ShowAds();
         nativeAdsBanner.ShowAds("Default");
+#endif
     }
 
     public void HideNative()
     {
+#if USE_ADMOB && USE_ADMOB_NATIVE_UNITY
         nativeAdsMrec.HideAds();
         nativeAdsBanner.HideAds();
+#endif
     }
 
     public void AAAAA()
@@ -263,13 +283,16 @@ public class DemoManager : MonoBehaviour
 
     public void LoadNativeVideoPlatform()
     {
+#if USE_ADMOB
         AdsManager.Instance.LoadNativeVideo(PlacementOrder.One);
+#endif
     }
 
 
 
     public void ShowNativeVideoPlatform()
     {
+#if USE_ADMOB
         AdsManager.Instance.ShowNativeVideo(PlacementOrder.One, "Default", "native_template", () =>
         {
             AdsManager.Instance.Log("NativeVideoPlatform show");
@@ -284,22 +307,27 @@ public class DemoManager : MonoBehaviour
         })
         ?.WithCountdown(AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration, AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown, AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay)
         ?.Execute();
+#endif
     }
 
     public void HideNativeVideoPlatform()
     {
-        // AdsManager.Instance.HideNativePlatform(PlacementOrder.One);
+#if USE_ADMOB
         AdsManager.Instance.HideNativeVideo(PlacementOrder.One);
+#endif
     }
 
 
     public void LoadNativeBannerPlatform()
     {
+#if USE_ADMOB
         AdsManager.Instance.LoadNativeBanner(PlacementOrder.One);
+#endif
     }
 
     public void ShowNativeBannerPlatform()
     {
+#if USE_ADMOB
         AdsManager.Instance.ShowNativeBanner(PlacementOrder.One, "Default", "native_banner", () =>
         {
             AdsManager.Instance.Log("NativeBannerPlatform show");
@@ -313,12 +341,14 @@ public class DemoManager : MonoBehaviour
         ?.WithAutoReload(AdsManager.Instance.adsConfigs.nativeBannerTimeReload)
         ?.WithShowOnLoaded(true)
         ?.Execute();
+#endif
     }
 
     public void HideNativeBannerPlatform()
     {
-        // AdsManager.Instance.HideNativePlatform(PlacementOrder.Two);
+#if USE_ADMOB
         AdsManager.Instance.HideNativeBanner(PlacementOrder.One);
+#endif
     }
 
     public void AdjustLayoutForNativeBanner()

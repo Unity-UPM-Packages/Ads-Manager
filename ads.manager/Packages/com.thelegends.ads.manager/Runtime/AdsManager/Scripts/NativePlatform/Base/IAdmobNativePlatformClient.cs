@@ -1,3 +1,4 @@
+#if USE_ADMOB
 using System;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
@@ -36,3 +37,5 @@ namespace TheLegends.Base.Ads
         void WithPosition(int positionX, int positionY);
     }
 }
+
+#endif

@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AppsFlyerSDK;
+#if USE_ADMOB
 using GoogleMobileAds.Api;
+#endif
 using TheLegends.Base.AppsFlyer;
 using TheLegends.Base.Firebase;
 using TheLegends.Base.UI;
@@ -364,6 +366,8 @@ namespace TheLegends.Base.Ads
                 network.HideMrec(mrecType, order);
             }
         }
+
+#if USE_ADMOB
 
         public void LoadNativeOverlay(PlacementOrder order)
         {
@@ -793,6 +797,8 @@ namespace TheLegends.Base.Ads
                 netWork.HideNativeVideo(order);
             }
         }
+
+#endif
 
         public AdsEvents GetAdsStatus(AdsType adsType, PlacementOrder order)
         {

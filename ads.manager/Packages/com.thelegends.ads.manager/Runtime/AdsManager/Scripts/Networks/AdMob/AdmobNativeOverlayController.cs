@@ -1,3 +1,4 @@
+#if USE_ADMOB
 using System;
 using System.Collections;
 using GoogleMobileAds.Api;
@@ -174,9 +175,9 @@ namespace TheLegends.Base.Ads
                 Debug.Log("Rendering Native Overlay ad.");
 
                 // Define a native template style with a custom style.
-                
+
                 var deviceScale = MobileAds.Utils.GetDeviceScale();
-                
+
                 Debug.Log("AAAAAAAAAAAA deviceScale: " + deviceScale);
 
                 //Đéo hiểu sao phải nhân deviceScale mới ra được dp đúng như banner. NativeOverlay lol
@@ -184,12 +185,12 @@ namespace TheLegends.Base.Ads
 
                 //Còn đây là công thức chuẩn tính từ pixel sang dp nhưng lại lệch kích thước vl
                 // var adSizeDp = new AdSize((int)(size.x / deviceScale), (int)(size.y / deviceScale));
-                
+
                 // var adSizeDp = new AdSize(size.x, size.y);
 
                 var safeAreaWidth = Mathf.RoundToInt(Screen.safeArea.width * deviceScale);
                 var safeAreaHeight = Mathf.RoundToInt(Screen.safeArea.height * deviceScale);
-                
+
                 if (adSizeDp.Width > safeAreaWidth)
                 {
                     adSizeDp = new AdSize(safeAreaWidth, adSizeDp.Height);
@@ -200,7 +201,7 @@ namespace TheLegends.Base.Ads
                 }
 
                 _nativeOverlayAd.RenderTemplate(style, new AdSize(adSizeDp.Width, adSizeDp.Height), AdPosition.Center);
-                
+
                 SetAdCustomPosition(position, new Vector2Int(adSizeDp.Width, adSizeDp.Height), offset);
             }
 #endif
@@ -371,3 +372,5 @@ namespace TheLegends.Base.Ads
     }
 
 }
+
+#endif
