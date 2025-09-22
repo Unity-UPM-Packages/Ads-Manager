@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AdsSettingsAsset
   m_EditorClassIdentifier: 
   _adsNetworks: 0200000004000000ffffffff
+  _flagNetWorks: 6
   appsFlyerDevKey: Qhno4yJY6KHmZp9uS9DRe4
   appleAppId: 
   bannerPosition: 2
