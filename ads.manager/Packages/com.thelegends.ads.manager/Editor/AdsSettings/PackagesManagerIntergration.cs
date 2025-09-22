@@ -52,6 +52,26 @@ namespace TheLegends.Base.Ads
 
         public static void SetSymbolEnabled(string defineName, bool enable)
         {
+            // Special handling for USE_ADMOB - when disabled, also disable USE_ADMOB_NATIVE_UNITY
+            if (defineName == "USE_ADMOB" && !enable)
+            {
+                // Disable USE_ADMOB_NATIVE_UNITY when USE_ADMOB is disabled
+                SetSymbolEnabledInternal("USE_ADMOB_NATIVE_UNITY", false);
+                
+                // Reset isUseNativeUnity flag in AdsSettings
+                var adsSettings = AdsSettings.Instance;
+                if (adsSettings != null)
+                {
+                    adsSettings.isUseNativeUnity = false;
+                    EditorUtility.SetDirty(adsSettings);
+                }
+            }
+
+            SetSymbolEnabledInternal(defineName, enable);
+        }
+
+        private static void SetSymbolEnabledInternal(string defineName, bool enable)
+        {
             bool updated = false;
 
             foreach (var group in targetGroups)
@@ -82,7 +102,6 @@ namespace TheLegends.Base.Ads
                 {
                     string definesString = string.Join(";", defines.ToArray());
                     PlayerSettings.SetScriptingDefineSymbolsForGroup(group, definesString);
-
                 }
             }
         }
