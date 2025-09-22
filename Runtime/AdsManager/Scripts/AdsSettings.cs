@@ -103,6 +103,7 @@ namespace TheLegends.Base.Ads
         public MaxUnitID MAX_iOS = new MaxUnitID();
         [Header("ADMOB")]
         public bool showADMOB;
+        public bool isUseNativeUnity = false;
         public bool isShowAdmobNativeValidator = false;
         public AdmobUnitID ADMOB_Android = new AdmobUnitID();
         public AdmobUnitID ADMOB_IOS = new AdmobUnitID();

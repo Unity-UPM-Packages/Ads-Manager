@@ -84,6 +84,11 @@ namespace TheLegends.Base.Ads
                 PackagesManagerIntergration.SetSymbolEnabled("USE_IRON", Instance.showIRON);
                 PackagesManagerIntergration.SetSymbolEnabled("USE_MAX", Instance.showMAX);
                 PackagesManagerIntergration.SetSymbolEnabled("USE_ADMOB", Instance.showADMOB);
+                
+                // Also update USE_ADMOB_NATIVE_UNITY based on current state
+                bool shouldEnableNativeUnity = Instance.showADMOB && Instance.isUseNativeUnity;
+                PackagesManagerIntergration.SetSymbolEnabled("USE_ADMOB_NATIVE_UNITY", shouldEnableNativeUnity);
+                
                 PackagesManagerIntergration.UpdateManifest(Instance.showADMOB, Instance.showMAX);
             }
 
@@ -216,6 +221,7 @@ namespace TheLegends.Base.Ads
 
             EditorGUILayout.LabelField("Admob", EditorStyles.boldLabel);
             Instance.isShowAdmobNativeValidator = EditorGUILayout.Toggle("Show Admob Validator", Instance.isShowAdmobNativeValidator);
+            Instance.isUseNativeUnity = EditorGUILayout.Toggle("Is Use Native Unity", Instance.isUseNativeUnity);
 
             EditorGUILayout.Separator();
             EditorGUILayout.Separator();
