@@ -1,57 +1,42 @@
 {
-    "dependencies": {
-        "com.google.ads.mobile": "9.6.0",
-        "com.hackerzhuli.code": "https://github.com/hackerzhuli/com.hackerzhuli.code.git",
-        "com.pimdewitte.unitymainthreaddispatcher": "https://github.com/PimDeWitte/UnityMainThreadDispatcher.git",
-        "com.thelegends.appsflyer.manager": "1.0.8",
-        "com.thelegends.firebase.manager": "1.0.7",
-        "com.thelegends.unity.ui": "1.0.5",
-        "com.unity.ide.rider": "3.0.36",
-        "com.unity.ide.visualstudio": "2.0.22",
-        "com.unity.mobile.android-logcat": "1.4.5",
-        "com.unity.test-framework": "1.1.33",
-        "com.unity.ugui": "1.0.0",
-        "com.v0lt.editor-attributes": "https://github.com/v0lt13/EditorAttributes.git",
-        "com.unity.modules.androidjni": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
-        "com.unity.modules.physics": "1.0.0",
-        "com.unity.modules.physics2d": "1.0.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.applovin.mediation.ads": "8.4.1"
+  "dependencies": {
+    "com.applovin.mediation.ads": "8.4.1",
+    "com.google.ads.mobile": "9.6.0",
+    "com.hackerzhuli.code": "https://github.com/hackerzhuli/com.hackerzhuli.code.git",
+    "com.pimdewitte.unitymainthreaddispatcher": "https://github.com/PimDeWitte/UnityMainThreadDispatcher.git",
+    "com.thelegends.appsflyer.manager": "1.0.8",
+    "com.thelegends.firebase.manager": "1.0.7",
+    "com.thelegends.unity.ui": "1.0.5",
+    "com.unity.ide.rider": "3.0.36",
+    "com.unity.ide.visualstudio": "2.0.22",
+    "com.unity.mobile.android-logcat": "1.4.5",
+    "com.unity.test-framework": "1.1.33",
+    "com.unity.ugui": "1.0.0",
+    "com.v0lt.editor-attributes": "https://github.com/v0lt13/EditorAttributes.git",
+    "com.unity.modules.androidjni": "1.0.0",
+    "com.unity.modules.audio": "1.0.0",
+    "com.unity.modules.physics": "1.0.0",
+    "com.unity.modules.physics2d": "1.0.0",
+    "com.unity.modules.unitywebrequest": "1.0.0"
+  },
+  "scopedRegistries": [
+    {
+      "name": "TripSoft",
+      "url": "https://verdaccio.thelegends.io.vn",
+      "scopes": [
+        "com.google",
+        "com.thelegends",
+        "com.appsflyer.unity",
+        "com.applovin"
+      ]
     },
-    "scopedRegistries": [
-        {
-            "name": "TripSoft",
-            "url": "https://verdaccio.thelegends.io.vn",
-            "scopes": [
-                "com.google",
-                "com.thelegends",
-                "com.appsflyer.unity"
-            ]
-        },
-        {
-            "name": "OpenUPM",
-            "url": "https://package.openupm.com",
-            "scopes": [
-                "com.annulusgames.lit-motion",
-                "com.baracuda.thread-dispatcher"
-            ]
-        },
-        {
-            "name": "AppLovin MAX Unity",
-            "url": "https://unity.packages.applovin.com/",
-            "scopes": [
-                "com.applovin.mediation.ads",
-                "com.applovin.mediation.adapters",
-                "com.applovin.mediation.dsp"
-            ]
-        },
-        {
-            "name": "package.openupm.com",
-            "url": "https://package.openupm.com",
-            "scopes": [
-                "com.google.external-dependency-manager"
-            ]
-        }
-    ]
+    {
+      "name": "OpenUPM",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.annulusgames.lit-motion",
+        "com.baracuda.thread-dispatcher"
+      ]
+    }
+  ]
 }
