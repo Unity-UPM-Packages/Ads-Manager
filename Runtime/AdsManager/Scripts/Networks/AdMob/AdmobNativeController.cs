@@ -1,3 +1,5 @@
+#if USE_ADMOB && USE_ADMOB_NATIVE_UNITY
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -665,3 +667,5 @@ namespace TheLegends.Base.Ads
         #endregion
     }
 }
+
+#endif

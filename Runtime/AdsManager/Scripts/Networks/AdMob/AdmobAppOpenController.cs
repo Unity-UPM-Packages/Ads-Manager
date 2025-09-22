@@ -1,3 +1,5 @@
+#if USE_ADMOB
+
 using System;
 using GoogleMobileAds.Api;
 using TheLegends.Base.UI;
@@ -195,3 +197,4 @@ namespace TheLegends.Base.Ads
     }
 }
 
+#endif

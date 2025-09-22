@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+#if USE_ADMOB
 namespace TheLegends.Base.Ads
 {
     public class AdmobInterstitialOpenController : AdmobInterstitialController
@@ -24,3 +21,5 @@ namespace TheLegends.Base.Ads
     }
 
 }
+
+#endif

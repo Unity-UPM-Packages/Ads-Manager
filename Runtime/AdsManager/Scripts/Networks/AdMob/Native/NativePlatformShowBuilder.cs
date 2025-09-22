@@ -1,3 +1,5 @@
+#if USE_ADMOB
+
 using System;
 using UnityEngine;
 
@@ -198,3 +200,5 @@ namespace TheLegends.Base.Ads
         #endregion
     }
 }
+
+#endif
