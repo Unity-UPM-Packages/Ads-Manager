@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+#if USE_MAX
 
 namespace TheLegends.Base.Ads
 {
@@ -30,7 +28,7 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.MRec.OnAdLoadFailedEvent -= OnMRecLoadFailedEvent;
                 MaxSdkCallbacks.MRec.OnAdClickedEvent -= OnMRecClickedEvent;
                 MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent -= OnMRecRevenuePaidEvent;
-                
+
                 MaxSdk.HideBanner(adsUnitID);
                 MRecDestroy();
             }
@@ -38,3 +36,5 @@ namespace TheLegends.Base.Ads
         }
     }
 }
+
+#endif
