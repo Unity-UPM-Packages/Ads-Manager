@@ -17,7 +17,6 @@
     "url": "https://github.com/Unity-UPM-Packages"
   },
   "dependencies": {
-    "com.google.ads.mobile": "9.6.0",
     "com.thelegends.firebase.manager": "1.0.7",
     "com.thelegends.appsflyer.manager": "1.0.8",
     "com.thelegends.unity.ui": "1.0.5"

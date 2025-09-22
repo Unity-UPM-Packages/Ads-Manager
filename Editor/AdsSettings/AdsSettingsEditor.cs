@@ -78,19 +78,13 @@ namespace TheLegends.Base.Ads
                 EditorGUILayout.HelpBox("Add Symbols to Player Settings \"USE_ADMOB\"\"", MessageType.Warning);
             }
 
-            // if (GUILayout.Button("INSTALL DEFINE SYMBOLS"))
-            // {
-            //     PackagesManagerIntergration.SetSymbolEnabled("USE_IRON", Instance.showIRON);
-            //     PackagesManagerIntergration.SetSymbolEnabled("USE_MAX", Instance.showMAX);
-            //     PackagesManagerIntergration.SetSymbolEnabled("USE_ADMOB", Instance.showADMOB);
-            // }
-
             if (GUILayout.Button("SAVE"))
             {
                 Save(Instance);
                 PackagesManagerIntergration.SetSymbolEnabled("USE_IRON", Instance.showIRON);
                 PackagesManagerIntergration.SetSymbolEnabled("USE_MAX", Instance.showMAX);
                 PackagesManagerIntergration.SetSymbolEnabled("USE_ADMOB", Instance.showADMOB);
+                PackagesManagerIntergration.UpdateManifest(Instance.showADMOB, Instance.showMAX);
             }
 
             EditorGUILayout.Separator();
@@ -173,72 +167,40 @@ namespace TheLegends.Base.Ads
             #region MAX
 
 #if USE_MAX
-            // if (AssetDatabase.IsValidFolder("Assets/MaxSDK/AppLovin"))
-            // {
-                // AppLovinSettings appLovinSettings = Resources.Load<AppLovinSettings>("AppLovinSettings");
-                // if (appLovinSettings == null)
-                // {
-                //     AppLovinSettings asset = CreateInstance<AppLovinSettings>();
-                //     Directory.CreateDirectory("Assets/MaxSDK/Resources");
-                //     AssetDatabase.CreateAsset(asset, "Assets/MaxSDK/Resources/AppLovinSettings.asset");
-                //     appLovinSettings = asset;
-                // }
-                // appLovinSettings.SdkKey = Instance.maxSdkKey;
-                // appLovinSettings.SetAttributionReportEndpoint = true;
 
-                EditorGUILayout.Separator();
-                EditorGUILayout.Separator();
-                EditorGUILayout.Separator();
-                EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
 
-                EditorGUILayout.LabelField("MAX AppLovin", EditorStyles.boldLabel);
-                // Instance.maxSdkKey = EditorGUILayout.TextField("MAX SDK Key", Instance.maxSdkKey);
+            EditorGUILayout.LabelField("MAX AppLovin", EditorStyles.boldLabel);
 
-                // Instance.maxEnableAdmob = EditorGUILayout.Toggle("Enable Admob", Instance.maxEnableAdmob);
-                // if (Instance.maxEnableAdmob)
-                // {
-                //     Instance.maxAdmobAndroidAppID = EditorGUILayout.TextField("MAX Admob Android AppID", Instance.maxAdmobAndroidAppID);
-                //     Instance.maxAdmobIOSAppID = EditorGUILayout.TextField("MAX Admob IOS AppID", Instance.maxAdmobIOSAppID);
-                //     appLovinSettings.AdMobAndroidAppId = Instance.maxAdmobAndroidAppID;
-                //     appLovinSettings.AdMobIosAppId = Instance.maxAdmobIOSAppID;
-                // }
-                // else
-                // {
-                //     Instance.maxAdmobAndroidAppID = string.Empty;
-                //     Instance.maxAdmobIOSAppID = string.Empty;
-                //     appLovinSettings.AdMobAndroidAppId = string.Empty;
-                //     appLovinSettings.AdMobIosAppId = string.Empty;
-                // }
+            EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
 
-                // AssetDatabase.SaveAssetIfDirty(appLovinSettings);
+            EditorGUILayout.LabelField("ANDROID AD_UNIT_ID");
+            var MAX_Android = serializedObject.FindProperty("MAX_Android");
+            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("bannerIds"), true);
+            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("interIds"), true);
+            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("interOpenIds"), true);
+            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("rewardIds"), true);
+            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("mrecIds"), true);
+            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("mrecOpenIds"), true);
+            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("appOpenIds"), true);
 
-                EditorGUILayout.Separator();
-                EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
 
-                EditorGUILayout.LabelField("ANDROID AD_UNIT_ID");
-                var MAX_Android = serializedObject.FindProperty("MAX_Android");
-                EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("bannerIds"), true);
-                EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("interIds"), true);
-                EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("interOpenIds"), true);
-                EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("rewardIds"), true);
-                EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("mrecIds"), true);
-                EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("mrecOpenIds"), true);
-                EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("appOpenIds"), true);
+            EditorGUILayout.LabelField("IOS AD_UNIT_ID");
+            var MAX_IOS = serializedObject.FindProperty("MAX_iOS");
+            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("bannerIds"), true);
+            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("interIds"), true);
+            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("interOpenIds"), true);
+            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("rewardIds"), true);
+            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("mrecIds"), true);
+            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("mrecOpenIds"), true);
+            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("appOpenIds"), true);
 
-                EditorGUILayout.Separator();
-                EditorGUILayout.Separator();
-
-                EditorGUILayout.LabelField("IOS AD_UNIT_ID");
-                var MAX_IOS = serializedObject.FindProperty("MAX_iOS");
-                EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("bannerIds"), true);
-                EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("interIds"), true);
-                EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("interOpenIds"), true);
-                EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("rewardIds"), true);
-                EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("mrecIds"), true);
-                EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("mrecOpenIds"), true);
-                EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("appOpenIds"), true);
-
-            // }
 #endif
 
             #endregion

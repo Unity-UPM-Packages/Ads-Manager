@@ -33,6 +33,7 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        [SerializeField]
         private AdsNetworks _flagNetWorks;
         public AdsNetworks FlagNetWorks
         {
