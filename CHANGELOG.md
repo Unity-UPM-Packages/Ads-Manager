@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.0...v1.1.1) (2025-09-24)
+
+
+### Bug Fixes
+
+* add constraintlayout dependencies ([df7ec5b](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/df7ec5b7c9bdfac8d515d1392a88a7fa7fd421e2))
+
 # [1.1.0](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.58...v1.1.0) (2025-09-24)
 
 
