@@ -1,3 +1,39 @@
+# [1.1.0](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.58...v1.1.0) (2025-09-24)
+
+
+### Bug Fixes
+
+* add handle timeout for max + refactor ([c28a836](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/c28a83672ba85a124ae601e10f2b04c1ed44947e))
+* add InterOpen to lastTimeShowAd ([77a758a](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/77a758a2069a33ec04b317619c8eab33aa0aab48))
+* Add Max Network to AdsManager prefab ([d5cd7c6](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/d5cd7c6a960b80fe9a72ad3bb178a692992aa9d3))
+* change applovin package registry ([129ab43](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/129ab43cf8c2760c5749da36c251a8fc12d02057))
+* check AdType IsReady ([e275a10](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/e275a101ce747ba83e870a59c4fc333a122d53ca))
+* default return type GetAdsStatus ([eb0b9dd](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/eb0b9dda02e33573dd34d0553843770ba929ace5))
+* Edit AdsSetting isTest ([a5c4e66](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a5c4e66bed8992993ff35764e3976aca85fc6c92))
+* edit GetAdsStatus ([d660ed5](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/d660ed540cc79ea84b3c0d407d02338c82561cd0))
+* Edit Load/Show/Hide Inter, Reward, AppOpen, Banner, Mrec ([3120914](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/312091478a9be3904b38c1aba839e8f64aeb341a))
+* edit Max callback ([d29e6cc](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/d29e6cc50cc6fa4f6b4ca909df7fd1e5a05fcfe6))
+* edit Networks Conditions ([8d07c2a](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/8d07c2ab401e72b45e41503cfb3d76777ceb6703))
+* enable/disable AdMob plugin when USE_ADMOB symbol changes ([c5ad5b6](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/c5ad5b68eb867566febab53a57549abcd5e7a52e))
+* Fix demo null native if only use Max ([9c4184c](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/9c4184cec8d8e53c111226cf9ddd6017fea0f04b))
+* GetAdsStatus for Max Mrec alway LoadAvailable ([03c6246](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/03c62469aaaa49c516659d4ee3af638d2d7ae60b))
+* imnplement AppLovin MAX ([29f323f](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/29f323f158c0b8005f7532e018bdc429b9327aaf))
+* implement Max methods ([f9e6767](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/f9e6767299f8b72896391ebec9a25e28a18de815))
+* improve AdsSettingsEditor ([1c682aa](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/1c682aa9b56dde2acdb7ad3dfff029f4de17bf1a))
+* improve AdsSettingsEditor ([3b49c64](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/3b49c6490b292b05e967e7eeaef21bec77b976a3))
+* improve Max Mrec ([5396f88](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/5396f88ba4e50a5c46673d3e63f9115c01676c4b))
+* max ids ([ad10555](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/ad10555e0dd6e380381226b1097113537d828a3f))
+* Max Mrec not destroy complete ([6f56b25](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/6f56b254c0651bc1edc659108599583a53927fe6))
+* Max Test config ([b7f0976](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/b7f097644bbadeae55ed77ecc38c33283c3a93d0))
+* new GetAdsStatus ([28253d6](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/28253d604324a619c5e0546f7dd4111adbf2a5c4))
+* refactor admob ([631c2d4](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/631c2d4322e6a0dc7407e163776ca074e7e5151b))
+* remove listener on Hide + improve Mrec ([9ef922d](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/9ef922d05ccb09d22f84ea66168dab4a50b8a8e6))
+
+
+### Features
+
+* complete implement AppLovin ([fbd369b](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/fbd369bf5d04920f9ba04cde9c1948bc8b3bee08))
+
 ## [1.0.58](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.0.57...v1.0.58) (2025-09-21)
 
 
