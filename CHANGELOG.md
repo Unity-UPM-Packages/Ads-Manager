@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.1...v1.1.2) (2025-09-24)
+
+
+### Bug Fixes
+
+* downgrade max banner and mrec to 8.1.0 ([3c8908e](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/3c8908e8278b2fca0f14795a2905d0edcdb7061f))
+
 ## [1.1.1](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.0...v1.1.1) (2025-09-24)
 
 
