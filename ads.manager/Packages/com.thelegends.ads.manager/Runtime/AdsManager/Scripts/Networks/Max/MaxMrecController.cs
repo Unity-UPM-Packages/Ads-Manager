@@ -93,9 +93,12 @@ namespace TheLegends.Base.Ads
         private void CreateMRec(AdsPos position, Vector2Int offset)
         {
 #if USE_MAX
+            // var adPosition = SetAdCustomPosition(position, offset);
+            // var adViewConfiguration = new AdViewConfiguration(adPosition.x, adPosition.y);
+            // MaxSdk.CreateMRec(adsUnitID, adViewConfiguration);
+
             var adPosition = SetAdCustomPosition(position, offset);
-            var adViewConfiguration = new AdViewConfiguration(adPosition.x, adPosition.y);
-            MaxSdk.CreateMRec(adsUnitID, adViewConfiguration);
+            MaxSdk.CreateMRec(adsUnitID, adPosition.x, adPosition.y);
 #endif
         }
 
