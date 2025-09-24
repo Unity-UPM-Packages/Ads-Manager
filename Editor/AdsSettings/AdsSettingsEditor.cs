@@ -91,14 +91,6 @@ namespace TheLegends.Base.Ads
                 
                 PackagesManagerIntergration.UpdateManifest(Instance.showADMOB, Instance.showMAX);
                 
-                // Update AdMob native plugin state
-                AdmobPluginManager.UpdateAdmobPlugin();
-            }
-
-            // Separate button for manual AdMob plugin update
-            if (GUILayout.Button("Enable/Disable AdMob Plugin"))
-            {
-                AdmobPluginManager.UpdateAdmobPlugin();
             }
 
             EditorGUILayout.Separator();
