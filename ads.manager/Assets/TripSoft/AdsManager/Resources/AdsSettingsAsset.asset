@@ -62,6 +62,7 @@ MonoBehaviour:
     mrecOpenIds: []
     appOpenIds: []
   showADMOB: 1
+  isUseNativeUnity: 1
   isShowAdmobNativeValidator: 0
   ADMOB_Android:
     bannerIds: []
