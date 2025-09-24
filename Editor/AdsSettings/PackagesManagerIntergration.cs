@@ -225,7 +225,7 @@ namespace TheLegends.Base.Ads
                 
                 // Default versions - only used if package is not already present
                 const string defaultAdmobVersion = "9.6.0";
-                const string defaultMaxVersion = "8.4.1";
+                const string defaultMaxVersion = "8.1.0";
                 
                 // Handle ADMOB dependency
                 if (enableAdmob)
