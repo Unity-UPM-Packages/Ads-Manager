@@ -811,6 +811,12 @@ namespace TheLegends.Base.Ads
 
             foreach (var network in adsNetworks)
             {
+
+                if (network.GetNetworkType() == AdsNetworks.Max && (adsType == AdsType.Mrec || adsType == AdsType.MrecOpen))
+                {
+                    return AdsEvents.LoadAvailable;
+                }
+
                 AdsEvents networkStatus = network.GetAdsStatus(adsType, order);
 
                 if (networkStatus == AdsEvents.LoadAvailable)
