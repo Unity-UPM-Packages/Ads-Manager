@@ -188,10 +188,11 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent -= OnMRecRevenuePaidEvent;
 
                 MaxSdk.HideBanner(adsUnitID);
-                isReady = false;
                 MRecDestroy();
                 Status = AdsEvents.Close;
                 adsUnitIDIndex = 0;
+
+                isReady = false;
             }
 #endif
         }
