@@ -72,15 +72,15 @@ namespace TheLegends.Base.Ads
             // Initialize Firebase with remote config
             yield return InitializeFirebase();
 
+            // Fetch remote data and update configs
+            yield return FetchAndUpdateRemoteConfigs();
+            OnInitFirebaseDone?.Invoke();
+
             // Initialize Ads Manager
             yield return AdsManager.Instance.DoInit();
 
             UILoadingController.SetProgress(0.4f, null);
             yield return new WaitForSeconds(0.5f);
-
-            // Fetch remote data and update configs
-            FetchAndUpdateRemoteConfigs();
-            OnInitFirebaseDone?.Invoke();
 
             // Load ads based on brand selection settings
             if (isUseSelectBrand)
@@ -130,13 +130,20 @@ namespace TheLegends.Base.Ads
             return config;
         }
 
-        private void FetchAndUpdateRemoteConfigs()
+        private IEnumerator FetchAndUpdateRemoteConfigs()
         {
+            bool isFetching = true;
             FirebaseManager.Instance.FetchRemoteData(() =>
             {
                 UpdateCommonConfigs();
                 UpdateBrandSpecificConfigs();
+                isFetching = false;
             }, 0);
+
+            while (isFetching)
+            {
+                yield return null;
+            }
         }
 
         private void UpdateCommonConfigs()
