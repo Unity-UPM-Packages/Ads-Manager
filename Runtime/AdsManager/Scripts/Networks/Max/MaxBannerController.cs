@@ -11,6 +11,7 @@ namespace TheLegends.Base.Ads
     {
         private string _currentLoadRequestId;
         private string _loadRequestId;
+        private float timeAutoReload;
 
         private bool isReady = false;
         public override AdsNetworks GetAdsNetworks()
@@ -38,6 +39,11 @@ namespace TheLegends.Base.Ads
 #else
             return false;
 #endif
+        }
+
+        void Awake()
+        {
+            timeAutoReload = AdsManager.Instance.adsConfigs.adNativeTimeReload;
         }
 
         public override void LoadAds()
@@ -75,6 +81,8 @@ namespace TheLegends.Base.Ads
             {
                 Status = AdsEvents.ShowSuccess;
                 MaxSdk.ShowBanner(adsUnitID);
+                CancelReloadAds();
+                DelayReloadAd(timeAutoReload);
             }
             else
             {
@@ -139,6 +147,11 @@ namespace TheLegends.Base.Ads
                 StopHandleTimeout();
 
                 OnAdsLoadFailed(errorInfo.Message);
+
+                if (Status == AdsEvents.LoadNotAvailable)
+                {
+                    DelayReloadAd(timeAutoReload);
+                }
             });
         }
 
@@ -170,6 +183,7 @@ namespace TheLegends.Base.Ads
                 try
                 {
                     MaxSdk.DestroyBanner(adsUnitID);
+                    CancelReloadAds();
                 }
                 catch (Exception ex)
                 {
@@ -203,6 +217,16 @@ namespace TheLegends.Base.Ads
                 OnAdsClosed();
             }
 #endif
+        }
+
+        private void DelayReloadAd(float time)
+        {
+            Invoke(nameof(LoadAds), time);
+        }
+
+        private void CancelReloadAds()
+        {
+            CancelInvoke(nameof(LoadAds));
         }
     }
 }
