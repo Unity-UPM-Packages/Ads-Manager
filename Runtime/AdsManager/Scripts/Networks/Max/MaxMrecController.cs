@@ -131,6 +131,11 @@ namespace TheLegends.Base.Ads
 
                 StopHandleTimeout();
 
+                MaxSdkCallbacks.MRec.OnAdLoadedEvent -= OnMRecLoadedEvent;
+                MaxSdkCallbacks.MRec.OnAdLoadFailedEvent -= OnMRecLoadFailedEvent;
+                MaxSdkCallbacks.MRec.OnAdClickedEvent -= OnMRecClickedEvent;
+                MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent -= OnMRecRevenuePaidEvent;
+
                 OnAdsLoadFailed(errorInfo.Message);
             });
         }

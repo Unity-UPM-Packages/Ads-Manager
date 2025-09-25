@@ -146,6 +146,11 @@ namespace TheLegends.Base.Ads
 
                 StopHandleTimeout();
 
+                MaxSdkCallbacks.Banner.OnAdLoadedEvent -= OnBannerLoadedEvent;
+                MaxSdkCallbacks.Banner.OnAdLoadFailedEvent -= OnBannerLoadFailedEvent;
+                MaxSdkCallbacks.Banner.OnAdClickedEvent -= OnBannerClickedEvent;
+                MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent -= OnBannerRevenuePaidEvent;
+
                 OnAdsLoadFailed(errorInfo.Message);
 
                 if (Status == AdsEvents.LoadNotAvailable)
