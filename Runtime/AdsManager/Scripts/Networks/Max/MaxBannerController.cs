@@ -111,10 +111,14 @@ namespace TheLegends.Base.Ads
                 ? BannerPosition.TopCenter
                 : BannerPosition.BottomCenter;
 
-            if (AdsManager.Instance.SettingsAds.fixBannerSmallSize)
+            MaxSdk.CreateBanner(adsUnitID, adPosition);
+            MaxSdk.SetBannerBackgroundColor(adsUnitID, Color.black);
+
+            if (!AdsManager.Instance.SettingsAds.fixBannerSmallSize)
             {
-                MaxSdk.CreateBanner(adsUnitID, adPosition);
-                MaxSdk.SetBannerBackgroundColor(adsUnitID, Color.black);
+                var density = MaxSdkUtils.GetScreenDensity();
+                var bannerWidth = Screen.width / density;
+                MaxSdk.SetBannerWidth(adsUnitID, bannerWidth);
             }
 #endif
         }
