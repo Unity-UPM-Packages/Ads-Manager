@@ -106,12 +106,6 @@ namespace TheLegends.Base.Ads
         private InitiationStatus status = InitiationStatus.NotInitialized;
         
 
-
-        public void Init()
-        {
-            StartCoroutine(DoInit());
-        }
-
         public IEnumerator DoInit()
         {
             if (SettingsAds.AdsNetworks == null || SettingsAds.AdsNetworks.Count == 0)
