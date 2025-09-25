@@ -1,3 +1,12 @@
+## [1.1.4](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.3...v1.1.4) (2025-09-25)
+
+
+### Bug Fixes
+
+* change banner width MAX ([63e312d](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/63e312d91231d6b106dc2ecab13c065e802f7dca))
+* edit fetch remote data ([883d4a7](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/883d4a750c92311bc9ed6740731322ebdb604dc3))
+* remove listener on ads load fail MAX ([6f7727b](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/6f7727bafa7d1732779a190124dd420bb1d01d5d))
+
 ## [1.1.3](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.2...v1.1.3) (2025-09-25)
 
 
