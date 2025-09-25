@@ -134,6 +134,15 @@ namespace TheLegends.Base.Ads
 
                 StopHandleTimeout();
 
+                MaxSdkCallbacks.Rewarded.OnAdLoadedEvent -= OnRewardedLoadedEvent;
+                MaxSdkCallbacks.Rewarded.OnAdLoadFailedEvent -= OnRewardedLoadFailedEvent;
+                MaxSdkCallbacks.Rewarded.OnAdDisplayedEvent -= OnRewardedDisplayedEvent;
+                MaxSdkCallbacks.Rewarded.OnAdRevenuePaidEvent -= OnRewardedRevenuePaidEvent;
+                MaxSdkCallbacks.Rewarded.OnAdClickedEvent -= OnRewardedClickedEvent;
+                MaxSdkCallbacks.Rewarded.OnAdHiddenEvent -= OnRewardedHiddenEvent;
+                MaxSdkCallbacks.Rewarded.OnAdDisplayFailedEvent -= OnRewardedAdFailedToDisplayEvent;
+                MaxSdkCallbacks.Rewarded.OnAdReceivedRewardEvent -= OnAdReceivedRewardEvent;
+
                 OnAdsLoadFailed(errorInfo.Message);
             });
         }
@@ -154,14 +163,14 @@ namespace TheLegends.Base.Ads
             {
                 if (adUnitId != adsUnitID) return;
 
-                MaxSdkCallbacks.Rewarded.OnAdLoadedEvent += OnRewardedLoadedEvent;
-                MaxSdkCallbacks.Rewarded.OnAdLoadFailedEvent += OnRewardedLoadFailedEvent;
-                MaxSdkCallbacks.Rewarded.OnAdDisplayedEvent += OnRewardedDisplayedEvent;
-                MaxSdkCallbacks.Rewarded.OnAdRevenuePaidEvent += OnRewardedRevenuePaidEvent;
-                MaxSdkCallbacks.Rewarded.OnAdClickedEvent += OnRewardedClickedEvent;
-                MaxSdkCallbacks.Rewarded.OnAdHiddenEvent += OnRewardedHiddenEvent;
-                MaxSdkCallbacks.Rewarded.OnAdDisplayFailedEvent += OnRewardedAdFailedToDisplayEvent;
-                MaxSdkCallbacks.Rewarded.OnAdReceivedRewardEvent += OnAdReceivedRewardEvent;
+                MaxSdkCallbacks.Rewarded.OnAdLoadedEvent -= OnRewardedLoadedEvent;
+                MaxSdkCallbacks.Rewarded.OnAdLoadFailedEvent -= OnRewardedLoadFailedEvent;
+                MaxSdkCallbacks.Rewarded.OnAdDisplayedEvent -= OnRewardedDisplayedEvent;
+                MaxSdkCallbacks.Rewarded.OnAdRevenuePaidEvent -= OnRewardedRevenuePaidEvent;
+                MaxSdkCallbacks.Rewarded.OnAdClickedEvent -= OnRewardedClickedEvent;
+                MaxSdkCallbacks.Rewarded.OnAdHiddenEvent -= OnRewardedHiddenEvent;
+                MaxSdkCallbacks.Rewarded.OnAdDisplayFailedEvent -= OnRewardedAdFailedToDisplayEvent;
+                MaxSdkCallbacks.Rewarded.OnAdReceivedRewardEvent -= OnAdReceivedRewardEvent;
                 
                 OnAdsClosed();
             });
