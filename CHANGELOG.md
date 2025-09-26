@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.6...v1.1.7) (2025-09-26)
+
+
+### Bug Fixes
+
+* remove Auto Reload Max Banner ([702c03e](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/702c03ee7d800294b1f6315875de11bd869473c3))
+
 ## [1.1.6](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.5...v1.1.6) (2025-09-26)
 
 
