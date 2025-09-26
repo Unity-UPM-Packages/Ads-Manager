@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.4...v1.1.5) (2025-09-26)
+
+
+### Bug Fixes
+
+* edit AdsSplash, Action after show inter ([9228fb1](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/9228fb1005e92804f3ec55f4868a250976e7139f))
+
 ## [1.1.4](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.3...v1.1.4) (2025-09-25)
 
 
