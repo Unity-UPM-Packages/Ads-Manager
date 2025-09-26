@@ -81,8 +81,8 @@ namespace TheLegends.Base.Ads
             {
                 Status = AdsEvents.ShowSuccess;
                 MaxSdk.ShowBanner(adsUnitID);
-                CancelReloadAds();
-                DelayReloadAd(timeAutoReload);
+                // CancelReloadAds();
+                // DelayReloadAd(timeAutoReload);
             }
             else
             {
