@@ -170,7 +170,7 @@ namespace TheLegends.Base.Ads
 				return fallback;
 			}
 
-			throw new Exception("No network is ready");
+            return primary;
         }
 
         public void LoadInterstitial(AdsType interType, PlacementOrder order)
