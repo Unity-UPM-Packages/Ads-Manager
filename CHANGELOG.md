@@ -1,3 +1,10 @@
+## [1.1.10](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.9...v1.1.10) (2025-09-26)
+
+
+### Bug Fixes
+
+* fallback return primary network GetNetworkToShow ([1529af9](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/1529af9357f313e50c3be684fbade64e6dd7ac36))
+
 ## [1.1.9](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.8...v1.1.9) (2025-09-26)
 
 
