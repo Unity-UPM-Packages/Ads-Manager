@@ -95,8 +95,6 @@ namespace TheLegends.Base.Ads
 
             // Complete initialization
             CompleteInitialization();
-
-            CheckCompleteSplash();
         }
 
         private IEnumerator InitializeFirebase()
@@ -232,14 +230,6 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        private void CheckCompleteSplash()
-        {
-            if (!canShowSelectBrand)
-            {
-                CompleteSplash();
-            }
-        }
-
         public void CompleteSplash()
         {
 
@@ -293,6 +283,8 @@ namespace TheLegends.Base.Ads
             if (canShowSelectBrand)
             {
                 ShowBrandScreen();
+            } else {
+                CompleteSplash();
             }
 
             UILoadingController.Hide();
