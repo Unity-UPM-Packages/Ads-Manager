@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.5...v1.1.6) (2025-09-26)
+
+
+### Bug Fixes
+
+* use default cache expiration Fetch Remote Data AdSplash ([23a39b2](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/23a39b2932966665d07ed7e664a05dbc5b8c2e71))
+
 ## [1.1.5](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.4...v1.1.5) (2025-09-26)
 
 
