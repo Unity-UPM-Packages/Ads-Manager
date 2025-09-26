@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.7...v1.1.8) (2025-09-26)
+
+
+### Bug Fixes
+
+* improve max banner ([dd96495](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/dd964958abf8624b6dcca8ba2c6408bdb1c4e5be))
+
 ## [1.1.7](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.6...v1.1.7) (2025-09-26)
 
 
