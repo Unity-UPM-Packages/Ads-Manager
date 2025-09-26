@@ -508,6 +508,11 @@ namespace TheLegends.Base.Ads
                     return false;
             }
 
+            if (orderIndex <= -1)
+            {
+                return false;
+            }
+
             switch (adsType)
             {
                 case AdsType.Banner:

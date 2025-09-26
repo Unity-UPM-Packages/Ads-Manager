@@ -463,6 +463,10 @@ namespace TheLegends.Base.Ads
                 default:
                     return false;
             }
+
+            if (orderIndex <= -1) {
+                return false;
+            }
             
             switch (adsType)
             {
