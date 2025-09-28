@@ -768,8 +768,8 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: USE_FIREBASE;USE_ADMOB;USE_APPSFLYER;USE_MAX
-    iPhone: USE_FIREBASE;USE_ADMOB;USE_APPSFLYER;USE_MAX
+    Android: USE_FIREBASE;USE_APPSFLYER;USE_MAX;USE_ADMOB;USE_ADMOB_NATIVE_UNITY
+    iPhone: USE_FIREBASE;USE_APPSFLYER;USE_MAX;USE_ADMOB;USE_ADMOB_NATIVE_UNITY
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
@@ -842,8 +842,8 @@ PlayerSettings:
       PrivateNetworkClientServer: False
       InternetClientServer: False
       VideosLibrary: False
-      BackgroundMediaPlayback: False
       Objects3D: False
+      InternetClient: False
       RemoteSystem: False
       BlockedChatMessages: False
       PhoneCall: False
@@ -865,9 +865,9 @@ PlayerSettings:
       PointOfService: False
       RecordedCallsFolder: False
       Contacts: False
-      InternetClient: False
       Proximity: False
       CodeGeneration: False
+      BackgroundMediaPlayback: False
       EnterpriseAuthentication: False
   metroTargetDeviceFamilies:
     Desktop: False

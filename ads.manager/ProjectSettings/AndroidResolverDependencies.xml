@@ -2,7 +2,7 @@
   <packages>
     <package>androidx.constraintlayout:constraintlayout:2.1.4</package>
     <package>com.android.installreferrer:installreferrer:2.1</package>
-    <package>com.applovin:applovin-sdk:13.4.0</package>
+    <package>com.applovin:applovin-sdk:13.1.0</package>
     <package>com.appsflyer:af-android-sdk:6.17.0</package>
     <package>com.appsflyer:purchase-connector:2.1.0</package>
     <package>com.appsflyer:unity-wrapper:6.17.0</package>
