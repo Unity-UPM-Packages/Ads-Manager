@@ -14,6 +14,8 @@ namespace TheLegends.Base.Ads
         private float timeAutoReload;
 
         private bool isReady = false;
+        private bool isShowOnLoaded = false;
+        private string showPosition = string.Empty;
         public override AdsNetworks GetAdsNetworks()
         {
 #if USE_MAX
@@ -76,6 +78,8 @@ namespace TheLegends.Base.Ads
         public override void ShowAds(string showPosition)
         {
             base.ShowAds(showPosition);
+            this.showPosition = showPosition;
+            isShowOnLoaded = true;
 #if USE_MAX
             if (IsReady && IsAvailable)
             {
@@ -125,6 +129,15 @@ namespace TheLegends.Base.Ads
 
         #region Internal
 
+        protected override void OnAdsLoadFailed(string message)
+        {
+            base.OnAdsLoadFailed(message);
+            if (Status == AdsEvents.LoadNotAvailable)
+            {
+                DelayReloadAd(timeAutoReload);
+            }
+        }
+
         private void OnBannerLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
@@ -137,8 +150,14 @@ namespace TheLegends.Base.Ads
 
                 isReady = true;
                 OnAdsLoadAvailable();
+
+                if (isShowOnLoaded)
+                {
+                    ShowAds(showPosition);
+                }
             });
         }
+
 
         private void OnBannerLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
         {
@@ -152,15 +171,10 @@ namespace TheLegends.Base.Ads
 
                 OnAdsLoadFailed(errorInfo.Message);
 
-                if (Status == AdsEvents.LoadNotAvailable)
-                {
-                    MaxSdkCallbacks.Banner.OnAdLoadedEvent -= OnBannerLoadedEvent;
-                    MaxSdkCallbacks.Banner.OnAdLoadFailedEvent -= OnBannerLoadFailedEvent;
-                    MaxSdkCallbacks.Banner.OnAdClickedEvent -= OnBannerClickedEvent;
-                    MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent -= OnBannerRevenuePaidEvent;
-                    
-                    DelayReloadAd(timeAutoReload);
-                }
+                MaxSdkCallbacks.Banner.OnAdLoadedEvent -= OnBannerLoadedEvent;
+                MaxSdkCallbacks.Banner.OnAdLoadFailedEvent -= OnBannerLoadFailedEvent;
+                MaxSdkCallbacks.Banner.OnAdClickedEvent -= OnBannerClickedEvent;
+                MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent -= OnBannerRevenuePaidEvent;
             });
         }
 
@@ -222,6 +236,8 @@ namespace TheLegends.Base.Ads
 
                 MaxSdk.HideBanner(adsUnitID);
                 isReady = false;
+                isShowOnLoaded = false;
+                showPosition = string.Empty;
                 BannerDestroy();
                 OnAdsClosed();
             }
