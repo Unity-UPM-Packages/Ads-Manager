@@ -1,3 +1,10 @@
+## [1.1.12](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.11...v1.1.12) (2025-09-29)
+
+
+### Bug Fixes
+
+* add show debug max applovin ([ac7a6c7](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/ac7a6c7f3683b1e8470e34755dba0d7a7c33caee))
+
 ## [1.1.11](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.10...v1.1.11) (2025-09-28)
 
 
