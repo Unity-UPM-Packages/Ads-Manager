@@ -95,10 +95,7 @@ namespace TheLegends.Base.Ads
         public string ironAdmobIOSAppID = string.Empty;
         [Header("MAX")]
         public bool showMAX;
-        public string maxSdkKey = string.Empty;
-        public bool maxEnableAdmob;
-        public string maxAdmobAndroidAppID = string.Empty;
-        public string maxAdmobIOSAppID = string.Empty;
+        public bool isShowMediationDebugger = false;
         public MaxUnitID MAX_Android = new MaxUnitID();
         public MaxUnitID MAX_iOS = new MaxUnitID();
         [Header("ADMOB")]

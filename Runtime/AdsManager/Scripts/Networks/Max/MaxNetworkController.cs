@@ -62,6 +62,11 @@ namespace TheLegends.Base.Ads
                     {
                         status = InitiationStatus.Initialized;
                         AdsManager.Instance.Log($"{TagLog.MAX} " + "Max SDK initialized");
+
+                        if (AdsManager.Instance.SettingsAds.isShowMediationDebugger)
+                        {
+                            MaxSdk.ShowMediationDebugger();
+                        }
                     }
                     else
                     {

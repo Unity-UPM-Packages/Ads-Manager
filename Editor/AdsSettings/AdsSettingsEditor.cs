@@ -182,6 +182,10 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.LabelField("MAX AppLovin", EditorStyles.boldLabel);
 
             EditorGUILayout.Separator();
+
+            Instance.isShowMediationDebugger = EditorGUILayout.Toggle("Is Use Mediation Debugger", Instance.isShowMediationDebugger);
+
+            EditorGUILayout.Separator();
             EditorGUILayout.Separator();
 
             EditorGUILayout.LabelField("ANDROID AD_UNIT_ID");
