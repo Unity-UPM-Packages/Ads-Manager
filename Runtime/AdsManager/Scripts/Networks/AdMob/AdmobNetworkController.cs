@@ -35,7 +35,6 @@ namespace TheLegends.Base.Ads
         private List<AdmobMrecOpenController> mrecOpenList = new List<AdmobMrecOpenController>();
         private List<AdmobInterstitialOpenController> interOpenList = new List<AdmobInterstitialOpenController>();
         private List<AdmobNativeOverlayController> nativeOverlayList = new List<AdmobNativeOverlayController>();
-        private List<AdmobNativePlatformController> nativePlatformList = new List<AdmobNativePlatformController>();
         private List<AdmobNativeBannerController> nativeBannerList = new List<AdmobNativeBannerController>();
         private List<AdmobNativeInterController> nativeInterList = new List<AdmobNativeInterController>();
         private List<AdmobNativeRewardController> nativeRewardList = new List<AdmobNativeRewardController>();
@@ -334,9 +333,6 @@ namespace TheLegends.Base.Ads
                     break;
                 case AdsType.NativeUnity:
                     listPlacement = nativeOverlayList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativePlatform:
-                    listPlacement = nativePlatformList.Cast<AdsPlacementBase>().ToList();
                     break;
                 case AdsType.NativeBanner:
                     listPlacement = nativeBannerList.Cast<AdsPlacementBase>().ToList();
