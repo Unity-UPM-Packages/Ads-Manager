@@ -60,6 +60,11 @@ namespace TheLegends.Base.Ads
         {
             EditorGUI.BeginChangeCheck();
 
+            GUIStyle titleStyle = new GUIStyle(EditorStyles.boldLabel)
+            {
+                normal = { textColor = Color.cyan }
+            };
+
             Instance.FlagNetWorks = (AdsNetworks)EditorGUILayout.EnumFlagsField("Use Mediation", Instance.FlagNetWorks);
 
             // Custom GUI for Primary Network
@@ -155,60 +160,60 @@ namespace TheLegends.Base.Ads
             #region IronSource
 
 #if USE_IRON
-            if (AssetDatabase.IsValidFolder("Assets/LevelPlay/Editor/"))
+            if ((Instance.FlagNetWorks & AdsNetworks.Iron) != 0)
             {
-                IronSourceMediationSettings ironSourceMediationSettings = Resources.Load<IronSourceMediationSettings>(IronSourceConstants.IRONSOURCE_MEDIATION_SETTING_NAME);
-                if (ironSourceMediationSettings == null)
+                if (AssetDatabase.IsValidFolder("Assets/LevelPlay/Editor/"))
                 {
-                    IronSourceMediationSettings asset = CreateInstance<IronSourceMediationSettings>();
-                    Directory.CreateDirectory(IronSourceConstants.IRONSOURCE_RESOURCES_PATH);
-                    AssetDatabase.CreateAsset(asset, IronSourceMediationSettings.IRONSOURCE_SETTINGS_ASSET_PATH);
-                    ironSourceMediationSettings = asset;
+                    IronSourceMediationSettings ironSourceMediationSettings = Resources.Load<IronSourceMediationSettings>(IronSourceConstants.IRONSOURCE_MEDIATION_SETTING_NAME);
+                    if (ironSourceMediationSettings == null)
+                    {
+                        IronSourceMediationSettings asset = CreateInstance<IronSourceMediationSettings>();
+                        Directory.CreateDirectory(IronSourceConstants.IRONSOURCE_RESOURCES_PATH);
+                        AssetDatabase.CreateAsset(asset, IronSourceMediationSettings.IRONSOURCE_SETTINGS_ASSET_PATH);
+                        ironSourceMediationSettings = asset;
+                    }
+                    ironSourceMediationSettings.AndroidAppKey = instance.ironAndroidAppKey;
+                    ironSourceMediationSettings.IOSAppKey = instance.ironIOSAppKey;
+                    ironSourceMediationSettings.AddIronsourceSkadnetworkID = true;
+                    ironSourceMediationSettings.DeclareAD_IDPermission = true;
+                    ironSourceMediationSettings.EnableIronsourceSDKInitAPI = false;
+
+                    IronSourceMediatedNetworkSettings ironSourceMediatedNetworkSettings = Resources.Load<IronSourceMediatedNetworkSettings>(IronSourceConstants.IRONSOURCE_MEDIATED_NETWORK_SETTING_NAME);
+                    if(ironSourceMediatedNetworkSettings == null)
+                    {
+                        IronSourceMediatedNetworkSettings asset = CreateInstance<IronSourceMediatedNetworkSettings>();
+                        Directory.CreateDirectory(IronSourceConstants.IRONSOURCE_RESOURCES_PATH);
+                        AssetDatabase.CreateAsset(asset, IronSourceMediatedNetworkSettings.MEDIATION_SETTINGS_ASSET_PATH);
+                        ironSourceMediatedNetworkSettings = asset;
+                    }
+
+
+                    EditorGUILayout.Separator();
+                    EditorGUILayout.Separator();
+                    EditorGUILayout.LabelField("IronSource", titleStyle);
+                    Instance.ironAndroidAppKey = EditorGUILayout.TextField("IronSource Android AppKey", Instance.ironAndroidAppKey);
+                    Instance.ironIOSAppKey = EditorGUILayout.TextField("IronSource iOS AppKey", Instance.ironIOSAppKey);
+                    Instance.isIronTest = EditorGUILayout.Toggle("Is Testing", Instance.isIronTest);
+
+                    Instance.ironEnableAdmob = EditorGUILayout.Toggle("Enable Admob", Instance.ironEnableAdmob);
+                    ironSourceMediatedNetworkSettings.EnableAdmob = Instance.ironEnableAdmob;
+                    if (Instance.ironEnableAdmob)
+                    {
+                        Instance.ironAdmobAndroidAppID = EditorGUILayout.TextField("IronSource Admob Android AppID", Instance.ironAdmobAndroidAppID);
+                        Instance.ironAdmobIOSAppID = EditorGUILayout.TextField("IronSource IOS AppID", Instance.ironAdmobIOSAppID);
+                        ironSourceMediatedNetworkSettings.AdmobAndroidAppId = Instance.ironAdmobAndroidAppID;
+                        ironSourceMediatedNetworkSettings.AdmobIOSAppId = Instance.ironAdmobIOSAppID;
+                    }
+                    else
+                    {
+                        Instance.ironAdmobAndroidAppID = string.Empty;
+                        Instance.ironAdmobIOSAppID = string.Empty;
+                        ironSourceMediatedNetworkSettings.AdmobAndroidAppId = string.Empty;
+                        ironSourceMediatedNetworkSettings.AdmobIOSAppId = string.Empty;
+                    }
+
+                    AssetDatabase.SaveAssetIfDirty(ironSourceMediationSettings);
                 }
-                ironSourceMediationSettings.AndroidAppKey = instance.ironAndroidAppKey;
-                ironSourceMediationSettings.IOSAppKey = instance.ironIOSAppKey;
-                ironSourceMediationSettings.AddIronsourceSkadnetworkID = true;
-                ironSourceMediationSettings.DeclareAD_IDPermission = true;
-                ironSourceMediationSettings.EnableIronsourceSDKInitAPI = false;
-
-                IronSourceMediatedNetworkSettings ironSourceMediatedNetworkSettings = Resources.Load<IronSourceMediatedNetworkSettings>(IronSourceConstants.IRONSOURCE_MEDIATED_NETWORK_SETTING_NAME);
-                if(ironSourceMediatedNetworkSettings == null)
-                {
-                    IronSourceMediatedNetworkSettings asset = CreateInstance<IronSourceMediatedNetworkSettings>();
-                    Directory.CreateDirectory(IronSourceConstants.IRONSOURCE_RESOURCES_PATH);
-                    AssetDatabase.CreateAsset(asset, IronSourceMediatedNetworkSettings.MEDIATION_SETTINGS_ASSET_PATH);
-                    ironSourceMediatedNetworkSettings = asset;
-                }
-
-
-                EditorGUILayout.Separator();
-                EditorGUILayout.Separator();
-                EditorGUILayout.Separator();
-                EditorGUILayout.Separator();
-
-                EditorGUILayout.LabelField("IronSource", EditorStyles.boldLabel);
-                Instance.ironAndroidAppKey = EditorGUILayout.TextField("IronSource Android AppKey", Instance.ironAndroidAppKey);
-                Instance.ironIOSAppKey = EditorGUILayout.TextField("IronSource iOS AppKey", Instance.ironIOSAppKey);
-                Instance.isIronTest = EditorGUILayout.Toggle("Is Testing", Instance.isIronTest);
-
-                Instance.ironEnableAdmob = EditorGUILayout.Toggle("Enable Admob", Instance.ironEnableAdmob);
-                ironSourceMediatedNetworkSettings.EnableAdmob = Instance.ironEnableAdmob;
-                if (Instance.ironEnableAdmob)
-                {
-                    Instance.ironAdmobAndroidAppID = EditorGUILayout.TextField("IronSource Admob Android AppID", Instance.ironAdmobAndroidAppID);
-                    Instance.ironAdmobIOSAppID = EditorGUILayout.TextField("IronSource IOS AppID", Instance.ironAdmobIOSAppID);
-                    ironSourceMediatedNetworkSettings.AdmobAndroidAppId = Instance.ironAdmobAndroidAppID;
-                    ironSourceMediatedNetworkSettings.AdmobIOSAppId = Instance.ironAdmobIOSAppID;
-                }
-                else
-                {
-                    Instance.ironAdmobAndroidAppID = string.Empty;
-                    Instance.ironAdmobIOSAppID = string.Empty;
-                    ironSourceMediatedNetworkSettings.AdmobAndroidAppId = string.Empty;
-                    ironSourceMediatedNetworkSettings.AdmobIOSAppId = string.Empty;
-                }
-
-                AssetDatabase.SaveAssetIfDirty(ironSourceMediationSettings);
             }
 #endif
             #endregion
@@ -216,44 +221,17 @@ namespace TheLegends.Base.Ads
             #region MAX
 
 #if USE_MAX
-
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-
-            EditorGUILayout.LabelField("MAX AppLovin", EditorStyles.boldLabel);
-
-            EditorGUILayout.Separator();
-
-            Instance.isShowMediationDebugger = EditorGUILayout.Toggle("Is Use Mediation Debugger", Instance.isShowMediationDebugger);
-
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-
-            EditorGUILayout.LabelField("ANDROID AD_UNIT_ID");
-            var MAX_Android = serializedObject.FindProperty("MAX_Android");
-            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("bannerIds"), true);
-            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("interIds"), true);
-            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("interOpenIds"), true);
-            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("rewardIds"), true);
-            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("mrecIds"), true);
-            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("mrecOpenIds"), true);
-            EditorGUILayout.PropertyField(MAX_Android.FindPropertyRelative("appOpenIds"), true);
-
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-
-            EditorGUILayout.LabelField("IOS AD_UNIT_ID");
-            var MAX_IOS = serializedObject.FindProperty("MAX_iOS");
-            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("bannerIds"), true);
-            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("interIds"), true);
-            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("interOpenIds"), true);
-            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("rewardIds"), true);
-            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("mrecIds"), true);
-            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("mrecOpenIds"), true);
-            EditorGUILayout.PropertyField(MAX_IOS.FindPropertyRelative("appOpenIds"), true);
-
+            if ((Instance.FlagNetWorks & AdsNetworks.Max) != 0)
+            {
+                EditorGUILayout.Separator();
+                EditorGUILayout.Separator();
+                EditorGUILayout.LabelField("MAX AppLovin", titleStyle);
+                Instance.isShowMediationDebugger = EditorGUILayout.Toggle("Is Use Mediation Debugger", Instance.isShowMediationDebugger);
+                EditorGUILayout.Separator();
+                
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("MAX_Android"), new GUIContent("Android Unit IDs"), true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("MAX_iOS"), new GUIContent("iOS Unit IDs"), true);
+            }
 #endif
 
             #endregion
@@ -261,60 +239,18 @@ namespace TheLegends.Base.Ads
             #region ADMOB
 
 #if USE_ADMOB
+            if ((Instance.FlagNetWorks & AdsNetworks.Admob) != 0)
+            {
+                EditorGUILayout.Separator();
+                EditorGUILayout.Separator();
+                EditorGUILayout.LabelField("Admob", titleStyle);
+                Instance.isShowAdmobNativeValidator = EditorGUILayout.Toggle("Show Admob Validator", Instance.isShowAdmobNativeValidator);
+                Instance.isUseNativeUnity = EditorGUILayout.Toggle("Is Use Native Unity", Instance.isUseNativeUnity);
+                EditorGUILayout.Separator();
 
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-
-            EditorGUILayout.LabelField("Admob", EditorStyles.boldLabel);
-            Instance.isShowAdmobNativeValidator = EditorGUILayout.Toggle("Show Admob Validator", Instance.isShowAdmobNativeValidator);
-            Instance.isUseNativeUnity = EditorGUILayout.Toggle("Is Use Native Unity", Instance.isUseNativeUnity);
-
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-
-            EditorGUILayout.LabelField("ANDROID AD_UNIT_ID");
-            var ADMOB_Android = serializedObject.FindProperty("ADMOB_Android");
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("bannerIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("interIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("rewardIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("mrecIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("interOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("mrecOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("appOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeUnityIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeOverlayIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeBannerIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeInterIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeRewardIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeMrecIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeAppOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeInterOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeMrecOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_Android.FindPropertyRelative("nativeVideoIds"), true);
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-
-            EditorGUILayout.LabelField("IOS AD_UNIT_ID");
-            var ADMOB_IOS = serializedObject.FindProperty("ADMOB_IOS");
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("bannerIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("interIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("rewardIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("mrecIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("interOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("mrecOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("appOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeUnityIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeOverlayIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeBannerIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeInterIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeRewardIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeMrecIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeAppOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeInterOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeMrecOpenIds"), true);
-            EditorGUILayout.PropertyField(ADMOB_IOS.FindPropertyRelative("nativeVideoIds"), true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("ADMOB_Android"), new GUIContent("Android Unit IDs"), true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("ADMOB_IOS"), new GUIContent("iOS Unit IDs"), true);
+            }
 #endif
 
             #endregion
