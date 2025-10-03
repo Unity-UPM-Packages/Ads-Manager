@@ -141,7 +141,7 @@ namespace TheLegends.Base.Ads
 
         private AdsNetworkBase GetNetworkToShow(AdsType adsType, PlacementOrder order)
         {
-			var primaryNetwork = AdsNetworks.Max;
+			var primaryNetwork = SettingsAds.primaryNetwork;
 
 			var primary = adsNetworks.FirstOrDefault(n => n.GetNetworkType() == primaryNetwork);
 			if (primary != null)

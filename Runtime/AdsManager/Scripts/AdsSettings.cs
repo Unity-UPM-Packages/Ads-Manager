@@ -35,6 +35,7 @@ namespace TheLegends.Base.Ads
 
         [SerializeField]
         private AdsNetworks _flagNetWorks;
+        public AdsNetworks primaryNetwork;
         public AdsNetworks FlagNetWorks
         {
             get => this._flagNetWorks;
