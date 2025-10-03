@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac567c99f46af0429a8490c3f245152, type: 3}
   m_Name: AdsSettingsAsset
   m_EditorClassIdentifier: 
-  _adsNetworks: 0200000004000000ffffffff
-  _flagNetWorks: 6
+  _adsNetworks: 02000000ffffffff
+  _flagNetWorks: 2
+  primaryNetwork: 2
   appsFlyerDevKey: Qhno4yJY6KHmZp9uS9DRe4
   appleAppId: 
   bannerPosition: 2
@@ -27,32 +28,29 @@ MonoBehaviour:
   ironAdmobAndroidAppID: 
   ironAdmobIOSAppID: 
   showMAX: 1
-  maxSdkKey: 
-  maxEnableAdmob: 0
-  maxAdmobAndroidAppID: 
-  maxAdmobIOSAppID: 
+  isShowMediationDebugger: 0
   MAX_Android:
     bannerIds:
     - stringIDs:
-      - 957d7e82bb12fef9
+      - e69d97b93813b4a4
     interIds:
     - stringIDs:
-      - 1f28ec06f9db3c3c
+      - 3f01387bc46b97a9
     interOpenIds:
     - stringIDs:
-      - d3a051682edbab7a
+      - 2db1bfc9a70540ab
     rewardIds:
     - stringIDs:
-      - 52bb34aaf8426f58
+      - ebdd2ec057699872
     mrecIds:
     - stringIDs:
-      - aedbae5faee0105a
+      - e0820b1ebfe19e04
     mrecOpenIds:
     - stringIDs:
-      - 3db47a3345579475
+      - 7ce2af8ead8c9c59
     appOpenIds:
     - stringIDs:
-      - 7320e64330edbcdb
+      - b8ee1a8a714fad55
   MAX_iOS:
     bannerIds: []
     interIds: []
@@ -61,8 +59,8 @@ MonoBehaviour:
     mrecIds: []
     mrecOpenIds: []
     appOpenIds: []
-  showADMOB: 1
-  isUseNativeUnity: 1
+  showADMOB: 0
+  isUseNativeUnity: 0
   isShowAdmobNativeValidator: 0
   ADMOB_Android:
     bannerIds: []

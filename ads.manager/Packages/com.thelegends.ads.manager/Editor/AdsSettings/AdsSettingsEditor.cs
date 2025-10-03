@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -60,6 +61,44 @@ namespace TheLegends.Base.Ads
             EditorGUI.BeginChangeCheck();
 
             Instance.FlagNetWorks = (AdsNetworks)EditorGUILayout.EnumFlagsField("Use Mediation", Instance.FlagNetWorks);
+
+            // Custom GUI for Primary Network
+            var selectedNetworks = new List<AdsNetworks>();
+            foreach (AdsNetworks network in Enum.GetValues(typeof(AdsNetworks)))
+            {
+                if (network == AdsNetworks.None) continue;
+                if ((Instance.FlagNetWorks & network) == network)
+                {
+                    selectedNetworks.Add(network);
+                }
+            }
+
+            if (selectedNetworks.Count > 0)
+            {
+                // Ensure the current primary network is valid
+                if (!selectedNetworks.Contains(Instance.primaryNetwork))
+                {
+                    Instance.primaryNetwork = selectedNetworks[0];
+                }
+
+                var networkNames = selectedNetworks.Select(n => n.ToString()).ToArray();
+                var networkValues = selectedNetworks.Select(n => (int)n).ToArray();
+
+                var selectedIndex = Array.IndexOf(networkValues, (int)Instance.primaryNetwork);
+                
+                var newSelectedIndex = EditorGUILayout.Popup("Primary Network", selectedIndex, networkNames);
+
+                if (newSelectedIndex != selectedIndex)
+                {
+                    Instance.primaryNetwork = (AdsNetworks)networkValues[newSelectedIndex];
+                }
+            }
+            else
+            {
+                Instance.primaryNetwork = AdsNetworks.None;
+            }
+
+
             if ((Instance.FlagNetWorks & AdsNetworks.Iron) != 0 &&
                 !PackagesManagerIntergration.IsSymbolEnabled("USE_IRON"))
             {
