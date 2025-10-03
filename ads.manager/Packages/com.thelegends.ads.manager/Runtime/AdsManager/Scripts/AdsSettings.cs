@@ -172,7 +172,7 @@ namespace TheLegends.Base.Ads
     [System.Serializable]
     public class PreloadSettings
     {
-    [Header("Standard Ads")]
+        [Header("Standard Ads")]
         public bool preloadBanner = true;
         public bool preloadInterstitial = true;
         public bool preloadRewarded = true;
