@@ -1,3 +1,14 @@
+## [1.1.13](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.12...v1.1.13) (2025-10-03)
+
+
+### Bug Fixes
+
+* add feature fetch ads id from google sheet ([b9dc26e](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/b9dc26e63622f0660fc6c9cbbaff89c955e24013))
+* add primary network in AdsSettings ([b943a06](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/b943a06561c75c6294d1947d25b1187fb2f6f7e8))
+* improve AdsSettingsEditor ([cf93e89](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/cf93e89afb743a1905f8f0c2b6b5ebdb921791fd))
+* improve preload ads ([d8f32d6](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/d8f32d6fc17d297f1fd18c383e1f493095fce602))
+* remove native platform ids ([60d182e](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/60d182e222cc9c8c2058c7884ebfbdb0ca677160))
+
 ## [1.1.12](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.11...v1.1.12) (2025-09-29)
 
 
