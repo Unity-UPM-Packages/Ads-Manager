@@ -18,7 +18,6 @@ namespace TheLegends.Base.Ads
         public List<Placement> mrecOpenIds = new List<Placement>();
         public List<Placement> nativeUnityIds = new List<Placement>();
         public List<Placement> nativeOverlayIds = new List<Placement>();
-        public List<Placement> nativePlatformIds = new List<Placement>();
         public List<Placement> nativeBannerIds = new List<Placement>();
         public List<Placement> nativeInterIds = new List<Placement>();
         public List<Placement> nativeRewardIds = new List<Placement>();

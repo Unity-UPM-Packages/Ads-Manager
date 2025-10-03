@@ -21,6 +21,20 @@ MonoBehaviour:
   fixBannerSmallSize: 1
   autoReLoadMax: 2
   isTest: 1
+  preloadSettings:
+    preloadBanner: 1
+    preloadInterstitial: 1
+    preloadRewarded: 1
+    preloadMREC: 1
+    preloadAppOpen: 1
+    nativeAds:
+      preloadNativeBanner: 0
+      preloadNativeOverlay: 0
+      preloadNativeInter: 0
+      preloadNativeReward: 0
+      preloadNativeMrec: 0
+      preloadNativeAppOpen: 0
+      preloadNativeVideo: 0
   showIRON: 0
   ironAndroidAppKey: 
   ironIOSAppKey: 
@@ -72,7 +86,6 @@ MonoBehaviour:
     mrecOpenIds: []
     nativeUnityIds: []
     nativeOverlayIds: []
-    nativePlatformIds: []
     nativeBannerIds: []
     nativeInterIds: []
     nativeRewardIds: []
@@ -91,7 +104,6 @@ MonoBehaviour:
     mrecOpenIds: []
     nativeUnityIds: []
     nativeOverlayIds: []
-    nativePlatformIds: []
     nativeBannerIds: []
     nativeInterIds: []
     nativeRewardIds: []
@@ -128,9 +140,6 @@ MonoBehaviour:
     nativeOverlayIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/2247696110
-    nativePlatformIds:
-    - stringIDs:
-      - ca-app-pub-3940256099942544/1044960115
     nativeBannerIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/2247696110
@@ -183,9 +192,6 @@ MonoBehaviour:
     nativeOverlayIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/3986624511
-    nativePlatformIds:
-    - stringIDs:
-      - ca-app-pub-3940256099942544/2521693316
     nativeBannerIds:
     - stringIDs:
       - ca-app-pub-3940256099942544/3986624511
