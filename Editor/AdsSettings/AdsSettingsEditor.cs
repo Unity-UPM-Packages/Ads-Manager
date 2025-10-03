@@ -148,6 +148,10 @@ namespace TheLegends.Base.Ads
 
             Instance.isTest = EditorGUILayout.Toggle("Is Testing", Instance.isTest);
 
+            EditorGUILayout.Separator();
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("preloadSettings"), true);
+            EditorGUILayout.Separator();
+
             #region IronSource
 
 #if USE_IRON
