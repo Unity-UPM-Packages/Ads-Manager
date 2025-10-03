@@ -87,6 +87,10 @@ namespace TheLegends.Base.Ads
         public int autoReLoadMax = 2;
         public bool isTest = false;
 
+
+        [Header("Preload Settings")]
+        public PreloadSettings preloadSettings = new PreloadSettings();
+
         [Header("IRON")]
         public bool showIRON;
         public string ironAndroidAppKey = string.Empty;
@@ -166,3 +170,29 @@ namespace TheLegends.Base.Ads
 
     }
 }
+
+    [System.Serializable]
+    public class PreloadSettings
+    {
+    [Header("Standard Ads")]
+        public bool preloadBanner = true;
+        public bool preloadInterstitial = true;
+        public bool preloadRewarded = true;
+        public bool preloadMREC = true;
+        public bool preloadAppOpen = true;
+    
+        [Header("Admob Native Ads")]
+        public NativePreloadSettings nativeAds;
+    }
+    
+    [System.Serializable]
+    public struct NativePreloadSettings
+    {
+        public bool preloadNativeBanner;
+        public bool preloadNativeOverlay;
+        public bool preloadNativeInter;
+        public bool preloadNativeReward;
+        public bool preloadNativeMrec;
+        public bool preloadNativeAppOpen;
+        public bool preloadNativeVideo;
+    }

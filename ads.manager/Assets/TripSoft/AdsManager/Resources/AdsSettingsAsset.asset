@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac567c99f46af0429a8490c3f245152, type: 3}
   m_Name: AdsSettingsAsset
   m_EditorClassIdentifier: 
-  _adsNetworks: 02000000ffffffff
-  _flagNetWorks: 2
+  _adsNetworks: 0200000004000000ffffffff
+  _flagNetWorks: 6
   primaryNetwork: 2
   appsFlyerDevKey: Qhno4yJY6KHmZp9uS9DRe4
   appleAppId: 
@@ -59,8 +59,8 @@ MonoBehaviour:
     mrecIds: []
     mrecOpenIds: []
     appOpenIds: []
-  showADMOB: 0
-  isUseNativeUnity: 0
+  showADMOB: 1
+  isUseNativeUnity: 1
   isShowAdmobNativeValidator: 0
   ADMOB_Android:
     bannerIds: []

@@ -320,7 +320,7 @@ namespace TheLegends.Base.Ads
             Debug.Log("LoadScene");
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
-            PreloadAds();
+            StartCoroutine(IEPreloadAds());
 
             // Wait until the asynchronous scene fully loads
             while (!asyncLoad.isDone)
@@ -329,21 +329,78 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        private void PreloadAds()
+        private IEnumerator IEPreloadAds()
         {
-            AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, PlacementOrder.One);
-            AdsManager.Instance.LoadRewarded(PlacementOrder.One);
-            AdsManager.Instance.LoadMrec(AdsType.Mrec, PlacementOrder.One);
-            AdsManager.Instance.LoadAppOpen(PlacementOrder.One);
-            AdsManager.Instance.LoadBanner(PlacementOrder.One);
+            var settings = AdsManager.Instance.SettingsAds.preloadSettings;
+
+            if (settings.preloadBanner)
+            {
+                AdsManager.Instance.LoadBanner(PlacementOrder.One);
+                yield return null;
+            }
+
+            if (settings.preloadInterstitial)
+            {
+                AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, PlacementOrder.One);
+                yield return null;
+            }
+            
+            if (settings.preloadRewarded)
+            {
+                AdsManager.Instance.LoadRewarded(PlacementOrder.One);
+                yield return null;
+            }
+
+            if (settings.preloadMREC)
+            {
+                AdsManager.Instance.LoadMrec(AdsType.Mrec, PlacementOrder.One);
+                yield return null;
+            }
+
+            if (settings.preloadAppOpen)
+            {
+                AdsManager.Instance.LoadAppOpen(PlacementOrder.One);
+                yield return null;
+            }
+
+
+
 #if USE_ADMOB
-            AdsManager.Instance.LoadNativeOverlay(PlacementOrder.One);
-            AdsManager.Instance.LoadNativeBanner(PlacementOrder.One);
-            AdsManager.Instance.LoadNativeInter(PlacementOrder.One);
-            AdsManager.Instance.LoadNativeReward(PlacementOrder.One);
-            AdsManager.Instance.LoadNativeMrec(PlacementOrder.One);
-            AdsManager.Instance.LoadNativeAppOpen(PlacementOrder.One);
-            AdsManager.Instance.LoadNativeVideo(PlacementOrder.One);
+            if (settings.nativeAds.preloadNativeOverlay)
+            {
+                AdsManager.Instance.LoadNativeOverlay(PlacementOrder.One);
+                yield return null;
+            }
+            if (settings.nativeAds.preloadNativeBanner)
+            {
+                AdsManager.Instance.LoadNativeBanner(PlacementOrder.One);
+                yield return null;
+            }
+            if (settings.nativeAds.preloadNativeInter)
+            {
+                AdsManager.Instance.LoadNativeInter(PlacementOrder.One);
+                yield return null;
+            }
+            if (settings.nativeAds.preloadNativeReward)
+            {
+                AdsManager.Instance.LoadNativeReward(PlacementOrder.One);
+                yield return null;
+            }
+            if (settings.nativeAds.preloadNativeMrec)
+            {
+                AdsManager.Instance.LoadNativeMrec(PlacementOrder.One);
+                yield return null;
+            }
+            if (settings.nativeAds.preloadNativeAppOpen)
+            {
+                AdsManager.Instance.LoadNativeAppOpen(PlacementOrder.One);
+                yield return null;
+            }
+            if (settings.nativeAds.preloadNativeVideo)
+            {
+                AdsManager.Instance.LoadNativeVideo(PlacementOrder.One);
+                yield return null;
+            }
 #endif
         }
 
