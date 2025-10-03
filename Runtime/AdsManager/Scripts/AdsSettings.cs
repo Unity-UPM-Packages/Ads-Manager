@@ -81,6 +81,10 @@ namespace TheLegends.Base.Ads
         public string appsFlyerDevKey = "Qhno4yJY6KHmZp9uS9DRe4";
         public string appleAppId = "";
 
+        [Header("Google Sheet Sync")]
+        public string admobSheetUrl;
+        public string maxSheetUrl;
+
         public BannerPos bannerPosition = BannerPos.Bottom;
         public bool fixBannerSmallSize;
 

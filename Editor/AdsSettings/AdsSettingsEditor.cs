@@ -6,6 +6,8 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using UnityEditor.PackageManager;
+using UnityEngine.Networking;
 
 #if USE_ADMOB
 using GoogleMobileAds.Editor;
@@ -157,6 +159,8 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.PropertyField(serializedObject.FindProperty("preloadSettings"), true);
             EditorGUILayout.Separator();
 
+            DrawGoogleSheetSync();
+
             #region IronSource
 
 #if USE_IRON
@@ -267,6 +271,152 @@ namespace TheLegends.Base.Ads
             EditorUtility.SetDirty(target);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+        }
+
+        private void DrawGoogleSheetSync()
+        {
+            EditorGUILayout.BeginVertical(GUI.skin.window);
+            EditorGUILayout.LabelField("Google Sheet Sync", new GUIStyle(EditorStyles.boldLabel) { normal = { textColor = Color.yellow } });
+            EditorGUILayout.Space(5);
+
+            // Admob
+            Instance.admobSheetUrl = EditorGUILayout.TextField("Admob CSV URL", Instance.admobSheetUrl);
+            if (GUILayout.Button("Fetch Admob Data"))
+            {
+                if (!string.IsNullOrEmpty(Instance.admobSheetUrl))
+                {
+                    FetchDataFromGoogleSheet(Instance.admobSheetUrl, "ADMOB");
+                }
+                else
+                {
+                    EditorUtility.DisplayDialog("Error", "Admob Sheet URL is empty.", "OK");
+                }
+            }
+
+            EditorGUILayout.Space(5);
+
+            // MAX
+            Instance.maxSheetUrl = EditorGUILayout.TextField("MAX CSV URL", Instance.maxSheetUrl);
+            if (GUILayout.Button("Fetch MAX Data"))
+            {
+                if (!string.IsNullOrEmpty(Instance.maxSheetUrl))
+                {
+                    FetchDataFromGoogleSheet(Instance.maxSheetUrl, "MAX");
+                }
+                else
+                {
+                    EditorUtility.DisplayDialog("Error", "MAX Sheet URL is empty.", "OK");
+                }
+            }
+
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.Space(10);
+        }
+
+        private void FetchDataFromGoogleSheet(string url, string networkPrefix)
+        {
+            Debug.Log("Fetching data from Google Sheet...");
+            UnityWebRequest www = UnityWebRequest.Get(url);
+            var operation = www.SendWebRequest();
+
+            EditorApplication.update += () =>
+            {
+                if (!operation.isDone)
+                    return;
+
+                if (www.result == UnityWebRequest.Result.Success)
+                {
+                    Debug.Log("Fetch successful!");
+                    ParseAndApplyData(www.downloadHandler.text, networkPrefix);
+                }
+                else
+                {
+                    Debug.LogError("Fetch failed: " + www.error);
+                    EditorUtility.DisplayDialog("Error", "Failed to fetch data from URL. Check console for details.", "OK");
+                }
+                
+                EditorApplication.update = null;
+            };
+        }
+
+        private void ParseAndApplyData(string csvData, string networkPrefix)
+        {
+            if (string.IsNullOrEmpty(csvData)) return;
+
+            var lines = csvData.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            if (lines.Length < 1)
+            {
+                Debug.LogWarning("CSV data is empty.");
+                return;
+            }
+
+            var header = lines[0].Split(',');
+            var dataRows = new List<string[]>();
+            for (int i = 1; i < lines.Length; i++)
+            {
+                dataRows.Add(lines[i].Split(','));
+            }
+
+            var newData = new Dictionary<string, List<string>>();
+            for (int j = 0; j < header.Length; j++)
+            {
+                var columnName = header[j].Trim();
+                if (string.IsNullOrEmpty(columnName)) continue;
+
+                var idsInColumn = new List<string>();
+                for (int i = 0; i < dataRows.Count; i++)
+                {
+                    if (j < dataRows[i].Length)
+                    {
+                        string id = dataRows[i][j].Trim();
+                        if (!string.IsNullOrEmpty(id))
+                        {
+                            idsInColumn.Add(id);
+                        }
+                    }
+                }
+                newData[columnName] = idsInColumn;
+            }
+
+            Action<object, string> applyDataToUnitId = (unitId, platformPrefix) =>
+            {
+                if (unitId == null) return;
+                var fields = unitId.GetType().GetFields().Where(f => f.FieldType == typeof(List<Placement>));
+
+                foreach (var field in fields)
+                {
+                    string adType = field.Name.Replace("Ids", "");
+                    string columnName = $"{platformPrefix}_{adType}";
+
+                    var idList = (List<Placement>)field.GetValue(unitId);
+                    idList.Clear();
+
+                    if (newData.ContainsKey(columnName))
+                    {
+                        foreach (var id in newData[columnName])
+                        {
+                            idList.Add(new Placement { stringIDs = new List<string> { id } });
+                        }
+                    }
+                }
+            };
+
+            if (networkPrefix.Equals("ADMOB", StringComparison.OrdinalIgnoreCase))
+            {
+                applyDataToUnitId(Instance.ADMOB_Android, "Android");
+                applyDataToUnitId(Instance.ADMOB_IOS, "iOS");
+            }
+            else if (networkPrefix.Equals("MAX", StringComparison.OrdinalIgnoreCase))
+            {
+                applyDataToUnitId(Instance.MAX_Android, "Android");
+                applyDataToUnitId(Instance.MAX_iOS, "iOS");
+            }
+
+            Debug.Log($"Successfully applied data for {networkPrefix} from Google Sheet!");
+            EditorUtility.SetDirty(Instance);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            serializedObject.Update();
         }
     }
 }
