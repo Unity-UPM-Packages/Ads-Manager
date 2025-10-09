@@ -6,7 +6,7 @@ namespace TheLegends.Base.Ads
     {
         public override AdsType GetAdsType()
         {
-#if USE_ADMOB
+#if USE_MAX
             return AdsType.MrecOpen;
 #else
             return AdsType.None;

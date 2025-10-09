@@ -430,12 +430,15 @@ namespace TheLegends.Base.Ads
         public override void ShowMrec(AdsType mrecType, PlacementOrder order, AdsPos mrecPosition, Vector2Int offset, string position)
         {
 #if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
-            if (!IsListExist(mrecList))
+
+            var list = mrecType == AdsType.MrecOpen ? (new List<MaxMrecController>(mrecOpenList)) : mrecList;
+
+            if (!IsListExist(list))
             {
                 return;
             }
 
-            var placementIndex = GetPlacementIndex((int)order, mrecList.Count);
+            var placementIndex = GetPlacementIndex((int)order, list.Count);
 
             if (placementIndex == -1)
             {
@@ -443,7 +446,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            mrecList[placementIndex].ShowAds(mrecPosition, offset, position);
+            list[placementIndex].ShowAds(mrecPosition, offset, position);
 #endif
         }
 
