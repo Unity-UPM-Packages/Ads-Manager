@@ -1,3 +1,11 @@
+## [1.1.14](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.13...v1.1.14) (2025-10-09)
+
+
+### Bug Fixes
+
+* fix MrecOpen Max log wrong type ([6bf3486](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/6bf3486f1a331156b7f494bbca6f20841f553582))
+* remove UnitID Property Drawers ([d117a90](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/d117a905b5d94e8534b843b52d0f2302b8ae00ab))
+
 ## [1.1.13](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.12...v1.1.13) (2025-10-03)
 
 
