@@ -453,12 +453,15 @@ namespace TheLegends.Base.Ads
         public override void HideMrec(AdsType mrecType, PlacementOrder order)
         {
 #if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
-            if (!IsListExist(mrecList))
+
+            var list = mrecType == AdsType.MrecOpen ? (new List<MaxMrecController>(mrecOpenList)) : mrecList;
+
+            if (!IsListExist(list))
             {
                 return;
             }
 
-            var placementIndex = GetPlacementIndex((int)order, mrecList.Count);
+            var placementIndex = GetPlacementIndex((int)order, list.Count);
 
             if (placementIndex == -1)
             {
@@ -466,7 +469,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            mrecList[placementIndex].HideAds();
+            list[placementIndex].HideAds();
 #endif
         }
 
