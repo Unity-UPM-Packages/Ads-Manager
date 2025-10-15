@@ -1,3 +1,11 @@
+## [1.1.16](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.15...v1.1.16) (2025-10-15)
+
+
+### Bug Fixes
+
+* add IsAdsControllerExist & fix show mrec open ([0c7ccb6](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/0c7ccb6f4f49bb220c7565576d57de0d2b76257c))
+* not hide max MrecOpen ([33b5981](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/33b5981584a25d86de97de6faed7d7a0895e5f06))
+
 ## [1.1.15](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.14...v1.1.15) (2025-10-15)
 
 
