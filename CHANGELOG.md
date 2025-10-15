@@ -1,3 +1,10 @@
+## [1.1.15](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.14...v1.1.15) (2025-10-15)
+
+
+### Bug Fixes
+
+* Hide Admob Banner OnBannerLoaded by default ([29b5375](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/29b53750bffd7562810defa195b615813b0e7992))
+
 ## [1.1.14](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.13...v1.1.14) (2025-10-09)
 
 
