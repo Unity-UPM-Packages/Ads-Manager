@@ -548,6 +548,43 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
+        public override bool IsAdsControllerExist(AdsType adsType, PlacementOrder order)
+        {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
+            int orderIndex = -1;
+            switch (adsType)
+            {
+                case AdsType.Banner:
+                    orderIndex = GetPlacementIndex((int)order, bannerList.Count);
+                    break;
+                case AdsType.Interstitial:
+                    orderIndex = GetPlacementIndex((int)order, interList.Count);
+                    break;
+                case AdsType.InterOpen:
+                    orderIndex = GetPlacementIndex((int)order, interOpenList.Count);
+                    break;
+                case AdsType.Rewarded:
+                    orderIndex = GetPlacementIndex((int)order, rewardList.Count);
+                    break;
+                case AdsType.Mrec:
+                    orderIndex = GetPlacementIndex((int)order, mrecList.Count);
+                    break;
+                case AdsType.MrecOpen:
+                    orderIndex = GetPlacementIndex((int)order, mrecOpenList.Count);
+                    break;
+                case AdsType.AppOpen:
+                    orderIndex = GetPlacementIndex((int)order, appOpenList.Count);
+                    break;
+                default:
+                    return false;
+            }
+
+            return orderIndex != -1;
+#else
+            return false;
+#endif
+        }
+
         private string GetAndroidAdvertiserId()
         {
             string advertisingID = "";
