@@ -168,13 +168,13 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                _bannerView.Hide();
+
                 if (_loadRequestId != _currentLoadRequestId)
                 {
                     // If the load request ID does not match, this callback is from a previous request
                     return;
                 }
-
-                _bannerView.Hide();
 
                 StopHandleTimeout();
 
