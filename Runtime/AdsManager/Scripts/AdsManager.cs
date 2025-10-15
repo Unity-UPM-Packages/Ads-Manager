@@ -143,28 +143,29 @@ namespace TheLegends.Base.Ads
         {
 			var primaryNetwork = SettingsAds.primaryNetwork;
 
-			var primary = adsNetworks.FirstOrDefault(n => n.GetNetworkType() == primaryNetwork);
+            var primary = adsNetworks.FirstOrDefault(n => n.GetNetworkType() == primaryNetwork);
 			if (primary != null)
-			{
+            {
+                bool isControllerExist = primary.IsAdsControllerExist(adsType, order);
 				if (primaryNetwork == AdsNetworks.Max)
 				{
 					bool isMrec = adsType == AdsType.Mrec || adsType == AdsType.MrecOpen;
-					if (isMrec)
+					if (isMrec && isControllerExist)
 					{
 						return primary;
 					}
-					else if (primary.IsAdsReady(adsType, order))
+					else if (isControllerExist && primary.IsAdsReady(adsType, order))
 					{
 						return primary;
 					}
 				}
-				else if (primary.IsAdsReady(adsType, order))
+				else if (isControllerExist && primary.IsAdsReady(adsType, order))
 				{
 					return primary;
 				}
 			}
 
-			var fallback = adsNetworks.FirstOrDefault(n => n.GetNetworkType() != primaryNetwork && n.IsAdsReady(adsType, order));
+			var fallback = adsNetworks.FirstOrDefault(n => n.GetNetworkType() != primaryNetwork && n.IsAdsControllerExist(adsType, order) && n.IsAdsReady(adsType, order));
 			if (fallback != null)
 			{
 				return fallback;
@@ -340,7 +341,7 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            var netWork = GetNetworkToShow(AdsType.Mrec, order);
+            var netWork = GetNetworkToShow(mrecType, order);
 
             if (netWork != null)
             {
