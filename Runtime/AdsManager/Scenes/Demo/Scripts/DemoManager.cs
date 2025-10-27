@@ -195,7 +195,7 @@ public class DemoManager : MonoBehaviour
     {
         var mrecPos = (AdsPos)MrecPosDropdown.value;
         AdsManager.Instance.ShowMrec(AdsType.Mrec, order, mrecPos, new Vector2Int(0, 0), "Default");
-        // AdsManager.Instance.ShowNativeMrec(PlacementOrder.One, "Default", "native_mrec", null, null, null)
+        // AdsManager.Instance.ShowNativeMrec(PlacementOrder.One, "Default", NativeName.Native_Mrec, null, null, null)
         // ?.WithPosition(mrecPos, new Vector2Int(0, 0))
         // ?.Execute();
     }
@@ -293,7 +293,7 @@ public class DemoManager : MonoBehaviour
     public void ShowNativeVideoPlatform()
     {
 #if USE_ADMOB
-        AdsManager.Instance.ShowNativeVideo(PlacementOrder.One, "Default", "native_template", () =>
+        AdsManager.Instance.ShowNativeVideo(PlacementOrder.One, "Default", NativeName.Native_Video, () =>
         {
             AdsManager.Instance.Log("NativeVideoPlatform show");
             HideNativeBannerPlatform();
@@ -328,7 +328,7 @@ public class DemoManager : MonoBehaviour
     public void ShowNativeBannerPlatform()
     {
 #if USE_ADMOB
-        AdsManager.Instance.ShowNativeBanner(PlacementOrder.One, "Default", "native_banner", () =>
+        AdsManager.Instance.ShowNativeBanner(PlacementOrder.One, "Default", NativeName.Native_Banner, () =>
         {
             AdsManager.Instance.Log("NativeBannerPlatform show");
         }, () =>

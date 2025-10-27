@@ -252,7 +252,7 @@ namespace TheLegends.Base.Ads
             if (AdsManager.Instance.GetAdsStatus(AdsType.NativeInterOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
 #if USE_ADMOB
-                AdsManager.Instance.ShowNativeInterOpen(PlacementOrder.One, "native_inter_open", "native_inter", null, () =>
+                AdsManager.Instance.ShowNativeInterOpen(PlacementOrder.One, "native_inter_open", NativeName.Native_Inter, null, () =>
                 {
                     isShowInter = false;
                 }, null)
@@ -296,7 +296,7 @@ namespace TheLegends.Base.Ads
             if (AdsManager.Instance.GetAdsStatus(AdsType.NativeMrecOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
 #if USE_ADMOB
-                AdsManager.Instance.ShowNativeMrecOpen(PlacementOrder.One, "native_mrec_open", "native_mrec", null, null, null)
+                AdsManager.Instance.ShowNativeMrecOpen(PlacementOrder.One, "native_mrec_open", NativeName.Native_Mrec, null, null, null)
                 .WithPosition(mrecOpenPos, mrecOpenOffset)
                 .Execute();
                 brandScreen.Show();
