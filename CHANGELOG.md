@@ -1,3 +1,11 @@
+## [1.1.17](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.16...v1.1.17) (2025-10-29)
+
+
+### Bug Fixes
+
+* edit native banner layout ([ea46886](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/ea4688614d06c36abf78e32fb52775d20cb57d3e))
+* use const string name for native admob layout ([aee8ac4](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/aee8ac43d613ea04b49f49418a5fef092d40695f))
+
 ## [1.1.16](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.15...v1.1.16) (2025-10-15)
 
 
