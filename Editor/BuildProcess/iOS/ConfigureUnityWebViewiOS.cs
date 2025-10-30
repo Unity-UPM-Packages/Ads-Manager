@@ -3,7 +3,7 @@ using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 using System.IO;
 
-namespace Ads.Manager.Editor
+namespace TheLegends.Base.Ads
 {
     /// <summary>
     /// Post-build processor để configure WKWebView compatibility trong Unity iOS builds.
