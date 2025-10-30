@@ -1,4 +1,4 @@
-#if USE_ADMOB
+#if USE_ADMOB && UNITY_IOS && !UNITY_EDITOR
 
 using System;
 using System.Runtime.InteropServices;
