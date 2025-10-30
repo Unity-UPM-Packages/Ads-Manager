@@ -10,7 +10,7 @@ namespace TheLegends.Base.Ads
 {
     public class DisableBitcodeiOS
     {
-        [PostProcessBuildAttribute(999)]
+        [PostProcessBuildAttribute(997)]
         public static void OnPostprocessBuild(BuildTarget buildTarget, string pathToXcode)
         {
             if (buildTarget == BuildTarget.iOS)

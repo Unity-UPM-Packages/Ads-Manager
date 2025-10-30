@@ -19,7 +19,7 @@ namespace TheLegends.Base.Ads
     {
         private const string XCFRAMEWORK_NAME = "admob_native_unity.xcframework";
         
-        [PostProcessBuildAttribute(997)]
+        [PostProcessBuildAttribute(999)]
         public static void OnPostprocessBuild(BuildTarget buildTarget, string pathToXcode)
         {
             if (buildTarget == BuildTarget.iOS)
