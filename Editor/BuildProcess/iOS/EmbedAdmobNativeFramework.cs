@@ -4,6 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
+using UnityEditor.iOS.Xcode.Extensions;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
@@ -35,17 +36,23 @@ namespace TheLegends.Base.Ads
                 
                 // Get paths
                 string projectPath = PBXProject.GetPBXProjectPath(pathToXcode);
-                string xcframeworkPath = Path.Combine(pathToXcode, "Frameworks", XCFRAMEWORK_NAME);
+                
+                // Unity copies UPM package files with package structure:
+                // Frameworks/com.thelegends.ads.manager/Runtime/Plugins/iOS/admob_native_unity.xcframework
+                string relativePath = Path.Combine("Frameworks", "com.thelegends.ads.manager", "Runtime", "Plugins", "iOS", XCFRAMEWORK_NAME);
+                string xcframeworkPath = Path.Combine(pathToXcode, relativePath);
                 
                 // Check if xcframework exists
                 if (!Directory.Exists(xcframeworkPath))
                 {
                     Debug.LogError($"EmbedAdmobNativeFramework: XCFramework not found at: {xcframeworkPath}");
-                    Debug.LogError("Make sure admob_native_unity.xcframework is placed in Packages/.../Runtime/Plugins/iOS/");
+                    Debug.LogError($"Expected relative path: {relativePath}");
+                    Debug.LogError("Make sure admob_native_unity.xcframework is placed in Packages/com.thelegends.ads.manager/Runtime/Plugins/iOS/");
                     return;
                 }
                 
                 Debug.Log($"EmbedAdmobNativeFramework: Found XCFramework at: {xcframeworkPath}");
+                Debug.Log($"EmbedAdmobNativeFramework: Relative path: {relativePath}");
                 
                 // Load PBX Project
                 PBXProject project = new PBXProject();
@@ -64,11 +71,8 @@ namespace TheLegends.Base.Ads
                 Debug.Log($"EmbedAdmobNativeFramework: Main Target GUID: {mainTargetGuid}");
                 Debug.Log($"EmbedAdmobNativeFramework: Framework Target GUID: {frameworkTargetGuid}");
                 
-                // Add xcframework to project
-                string frameworkPathInProject = "Frameworks/" + XCFRAMEWORK_NAME;
-                
                 // Remove if already exists (to avoid duplicates)
-                string existingFileGuid = project.FindFileGuidByProjectPath(frameworkPathInProject);
+                string existingFileGuid = project.FindFileGuidByProjectPath(relativePath);
                 if (!string.IsNullOrEmpty(existingFileGuid))
                 {
                     Debug.Log("EmbedAdmobNativeFramework: XCFramework already exists, removing old reference...");
@@ -76,7 +80,7 @@ namespace TheLegends.Base.Ads
                 }
                 
                 // Add xcframework file to project
-                string fileGuid = project.AddFile(frameworkPathInProject, frameworkPathInProject, PBXSourceTree.Source);
+                string fileGuid = project.AddFile(relativePath, relativePath, PBXSourceTree.Source);
                 
                 // Add to main target's frameworks build phase
                 project.AddFileToBuild(mainTargetGuid, fileGuid);
@@ -91,12 +95,13 @@ namespace TheLegends.Base.Ads
                     project.AddFileToBuild(frameworkTargetGuid, fileGuid);
                 }
                 
-                // Set framework search paths
-                project.AddBuildProperty(mainTargetGuid, "FRAMEWORK_SEARCH_PATHS", "$(PROJECT_DIR)/Frameworks");
+                // Set framework search paths - add the directory containing the xcframework
+                string frameworkSearchPath = "$(PROJECT_DIR)/" + Path.GetDirectoryName(relativePath).Replace("\\", "/");
+                project.AddBuildProperty(mainTargetGuid, "FRAMEWORK_SEARCH_PATHS", frameworkSearchPath);
                 
                 if (!string.IsNullOrEmpty(frameworkTargetGuid))
                 {
-                    project.AddBuildProperty(frameworkTargetGuid, "FRAMEWORK_SEARCH_PATHS", "$(PROJECT_DIR)/Frameworks");
+                    project.AddBuildProperty(frameworkTargetGuid, "FRAMEWORK_SEARCH_PATHS", frameworkSearchPath);
                 }
                 
                 // Write changes to file
@@ -149,12 +154,12 @@ namespace TheLegends.Base.Ads
             // Last resort: Try getting first target
             try
             {
-                #if UNITY_2021_1_OR_NEWER
+#if UNITY_2021_1_OR_NEWER
                 string guid = project.GetUnityMainTargetGuid();
                 return guid;
-                #else
+#else
                 return project.TargetGuidByName("Unity-iPhone");
-                #endif
+#endif
             }
             catch (Exception ex)
             {
