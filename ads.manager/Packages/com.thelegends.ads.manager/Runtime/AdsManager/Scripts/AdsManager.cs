@@ -946,9 +946,24 @@ namespace TheLegends.Base.Ads
                     ad_format = adsType.ToString();
                     ad_unit_name = adsUnitID;
                     country = "";
-                    revenue = (double) impressionData.Revenue / 1000000f;
+                    revenue = (double)impressionData.Revenue / 1000000f;
                     currency = MaxSdk.GetSdkConfiguration().CountryCode;
                 }
+
+#if USE_FIREBASE
+
+                var impressionParameters = new Dictionary<string, object>
+                {
+                    {"ad_platform", "AppLovin"},
+                    {"ad_source", impressionData.NetworkName},
+                    {"ad_unit_name", impressionData.AdUnitIdentifier},
+                    {"ad_format", impressionData.AdFormat},
+                    {"value", revenue},
+                    {"currency", "USD"}
+                };
+
+                FirebaseManager.Instance.LogEvent("ad_impression", impressionParameters);
+#endif
 
                 Log("ApplovinMax AdInfo: " + impressionData.Revenue + " Revenue: " + revenue + " CurrencyCode: " + currency + " Precision: " + impressionData.RevenuePrecision);
             }
