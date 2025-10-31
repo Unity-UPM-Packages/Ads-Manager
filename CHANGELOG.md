@@ -1,3 +1,10 @@
+## [1.1.18](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.17...v1.1.18) (2025-10-31)
+
+
+### Bug Fixes
+
+* add ad_impression Firebase log fire Applovin ([a76d27b](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a76d27b5289414fbc8a792a412a473d32cf6c8b5))
+
 ## [1.1.17](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.16...v1.1.17) (2025-10-29)
 
 
