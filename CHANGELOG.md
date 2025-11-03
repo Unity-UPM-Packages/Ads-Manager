@@ -1,3 +1,10 @@
+## [1.1.19](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.18...v1.1.19) (2025-11-03)
+
+
+### Bug Fixes
+
+* Add support for native iOS ([0dc9910](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/0dc9910564446d2036c4e7aebc734fd4bc9cd260))
+
 ## [1.1.18](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.17...v1.1.18) (2025-10-31)
 
 
