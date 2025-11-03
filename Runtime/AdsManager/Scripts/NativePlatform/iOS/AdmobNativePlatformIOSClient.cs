@@ -6,6 +6,7 @@ using AOT;
 using UnityEngine;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
+using System.Collections.Generic;
 
 namespace TheLegends.Base.Ads
 {
@@ -27,7 +28,7 @@ namespace TheLegends.Base.Ads
         public event Action OnAdShowedFullScreenContent;
         public event Action OnAdDismissedFullScreenContent;
 
-        private IntPtr _nativeControllerPtr;
+        private IntPtr _nativeControllerPtr = IntPtr.Zero;
 
         // MARK: - DllImport Declarations
 
@@ -82,35 +83,20 @@ namespace TheLegends.Base.Ads
 
         // MARK: - Callback Delegates
 
-        private delegate void VoidCallback();
-        private delegate void ErrorCallback(string errorMessage);
-        private delegate void PaidEventCallback(int precisionType, long valueMicros, string currencyCode);
-        private delegate void VideoMuteCallback(bool isMuted);
+        // Delegate types for native callbacks
+        private delegate void VoidCallback(IntPtr nativeClient);
+        private delegate void ErrorCallback(IntPtr nativeClient, string errorMessage);
+        private delegate void PaidEventCallback(IntPtr nativeClient, int precisionType, long valueMicros, string currencyCode);
+        private delegate void VideoMuteCallback(IntPtr nativeClient, bool isMuted);
 
-        // Static instance để giữ reference tránh GC
-        private static AdmobNativePlatformIOSClient _instance;
+        private static readonly Dictionary<IntPtr, AdmobNativePlatformIOSClient> _instances = new Dictionary<IntPtr, AdmobNativePlatformIOSClient>();
 
         // MARK: - Constructor & Initialization
-
         public AdmobNativePlatformIOSClient()
         {
-            _instance = this;
-        }
-
-        public void Initialize()
-        {
-            Debug.Log("AdmobNativePlatformIOSClient: Initializing...");
-
-            // Create native controller
             _nativeControllerPtr = AdmobNative_Create();
+            _instances[_nativeControllerPtr] = this;
 
-            if (_nativeControllerPtr == IntPtr.Zero)
-            {
-                Debug.LogError("AdmobNativePlatformIOSClient: Failed to create native controller");
-                return;
-            }
-
-            // Register callbacks
             AdmobNative_RegisterCallbacks(
                 _nativeControllerPtr,
                 OnAdLoadedCallback,
@@ -128,8 +114,16 @@ namespace TheLegends.Base.Ads
                 OnAdShowedFullScreenContentCallback,
                 OnAdDismissedFullScreenContentCallback
             );
+        }
 
-            Debug.Log("AdmobNativePlatformIOSClient: Initialized successfully");
+        ~AdmobNativePlatformIOSClient()
+        {
+            DestroyAd();
+        }
+
+        public void Initialize()
+        {
+            // The constructor now handles initialization.
         }
 
         // MARK: - Interface Implementation
@@ -166,7 +160,12 @@ namespace TheLegends.Base.Ads
             }
 
             Debug.Log("AdmobNativePlatformIOSClient: Destroying ad");
-            AdmobNative_DestroyAd(_nativeControllerPtr);
+            AdmobNative_Destroy(_nativeControllerPtr);
+            if (_instances.ContainsKey(_nativeControllerPtr))
+            {
+                _instances.Remove(_nativeControllerPtr);
+            }
+            _nativeControllerPtr = IntPtr.Zero;
         }
 
         public bool IsAdAvailable()
@@ -218,157 +217,201 @@ namespace TheLegends.Base.Ads
         // MARK: - MonoPInvokeCallback Methods (Static callbacks từ native)
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnAdLoadedCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnAdLoadedCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnAdLoaded callback");
-                _instance?.OnAdLoaded?.Invoke(_instance, EventArgs.Empty);
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnAdLoaded callback");
+                    client.OnAdLoaded?.Invoke(client, EventArgs.Empty);
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(ErrorCallback))]
-        private static void OnAdFailedToLoadCallback(string errorMessage)
+        [MonoPInvokeCallback(typeof(ErrorCallback))]
+        private static void OnAdFailedToLoadCallback(IntPtr nativeClient, string errorMessage)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.LogError($"AdmobNativePlatformIOSClient: OnAdFailedToLoad - {errorMessage}");
-
-                var errorClient = new AdmobNativePlatformIOSAdErrorClient(errorMessage);
-                var args = new LoadAdErrorClientEventArgs
+                if (_instances.TryGetValue(nativeClient, out var client))
                 {
-                    LoadAdErrorClient = errorClient
-                };
-
-                _instance?.OnAdFailedToLoad?.Invoke(_instance, args);
+                    Debug.LogError($"AdmobNativePlatformIOSClient: OnAdFailedToLoad - {errorMessage}");
+                    var errorClient = new AdmobNativePlatformIOSAdErrorClient(errorMessage);
+                    var args = new LoadAdErrorClientEventArgs { LoadAdErrorClient = errorClient };
+                    client.OnAdFailedToLoad?.Invoke(client, args);
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnAdShowCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnAdShowCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnAdShow callback");
-                _instance?.OnAdShow?.Invoke();
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnAdShow callback");
+                    client.OnAdShow?.Invoke();
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnAdClosedCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnAdClosedCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnAdClosed callback");
-                _instance?.OnAdClosed?.Invoke();
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnAdClosed callback");
+                    client.OnAdClosed?.Invoke();
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(PaidEventCallback))]
-        private static void OnPaidEventCallback(int precisionType, long valueMicros, string currencyCode)
+        [MonoPInvokeCallback(typeof(PaidEventCallback))]
+        private static void OnPaidEventCallback(IntPtr nativeClient, int precisionType, long valueMicros, string currencyCode)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log($"AdmobNativePlatformIOSClient: OnPaidEvent - {valueMicros} {currencyCode} (precision: {precisionType})");
-
-                var adValue = new AdValue
+                if (_instances.TryGetValue(nativeClient, out var client))
                 {
-                    Precision = (AdValue.PrecisionType)precisionType,
-                    Value = valueMicros,
-                    CurrencyCode = currencyCode
-                };
-
-                _instance?.OnPaidEvent?.Invoke(adValue);
+                    Debug.Log($"AdmobNativePlatformIOSClient: OnPaidEvent - {valueMicros} {currencyCode} (precision: {precisionType})");
+                    var adValue = new AdValue { Precision = (AdValue.PrecisionType)precisionType, Value = valueMicros, CurrencyCode = currencyCode };
+                    client.OnPaidEvent?.Invoke(adValue);
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnAdDidRecordImpressionCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnAdDidRecordImpressionCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnAdDidRecordImpression callback");
-                _instance?.OnAdDidRecordImpression?.Invoke(_instance, EventArgs.Empty);
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnAdDidRecordImpression callback");
+                    client.OnAdDidRecordImpression?.Invoke(client, EventArgs.Empty);
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnAdClickedCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnAdClickedCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnAdClicked callback");
-                _instance?.OnAdClicked?.Invoke();
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnAdClicked callback");
+                    client.OnAdClicked?.Invoke();
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnVideoStartCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnVideoStartCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnVideoStart callback");
-                _instance?.OnVideoStart?.Invoke();
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnVideoStart callback");
+                    client.OnVideoStart?.Invoke();
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnVideoEndCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnVideoEndCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnVideoEnd callback");
-                _instance?.OnVideoEnd?.Invoke();
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnVideoEnd callback");
+                    client.OnVideoEnd?.Invoke();
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VideoMuteCallback))]
-        private static void OnVideoMuteCallback(bool isMuted)
+        [MonoPInvokeCallback(typeof(VideoMuteCallback))]
+        private static void OnVideoMuteCallback(IntPtr nativeClient, bool isMuted)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log($"AdmobNativePlatformIOSClient: OnVideoMute callback - {isMuted}");
-                _instance?.OnVideoMute?.Invoke(_instance, isMuted);
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log($"AdmobNativePlatformIOSClient: OnVideoMute callback - {isMuted}");
+                    client.OnVideoMute?.Invoke(client, isMuted);
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnVideoPlayCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnVideoPlayCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnVideoPlay callback");
-                _instance?.OnVideoPlay?.Invoke();
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnVideoPlay callback");
+                    client.OnVideoPlay?.Invoke();
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnVideoPauseCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnVideoPauseCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnVideoPause callback");
-                _instance?.OnVideoPause?.Invoke();
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnVideoPause callback");
+                    client.OnVideoPause?.Invoke();
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnAdShowedFullScreenContentCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnAdShowedFullScreenContentCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnAdShowedFullScreenContent callback");
-                _instance?.OnAdShowedFullScreenContent?.Invoke();
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnAdShowedFullScreenContent callback");
+                    client.OnAdShowedFullScreenContent?.Invoke();
+                }
             });
         }
 
         [MonoPInvokeCallback(typeof(VoidCallback))]
-        private static void OnAdDismissedFullScreenContentCallback()
+        [MonoPInvokeCallback(typeof(VoidCallback))]
+        private static void OnAdDismissedFullScreenContentCallback(IntPtr nativeClient)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                Debug.Log("AdmobNativePlatformIOSClient: OnAdDismissedFullScreenContent callback");
-                _instance?.OnAdDismissedFullScreenContent?.Invoke();
+                if (_instances.TryGetValue(nativeClient, out var client))
+                {
+                    Debug.Log("AdmobNativePlatformIOSClient: OnAdDismissedFullScreenContent callback");
+                    client.OnAdDismissedFullScreenContent?.Invoke();
+                }
             });
         }
     }
