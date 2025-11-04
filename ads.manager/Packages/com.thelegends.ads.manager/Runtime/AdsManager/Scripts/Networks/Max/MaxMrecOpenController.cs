@@ -16,23 +16,36 @@ namespace TheLegends.Base.Ads
         public override void HideAds()
         {
 #if USE_MAX
-            if (Status != AdsEvents.ShowSuccess && Status != AdsEvents.Click)
+            MaxSdkCallbacks.MRec.OnAdLoadedEvent -= OnMRecLoadedEvent;
+            MaxSdkCallbacks.MRec.OnAdLoadFailedEvent -= OnMRecLoadFailedEvent;
+            MaxSdkCallbacks.MRec.OnAdClickedEvent -= OnMRecClickedEvent;
+            MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent -= OnMRecRevenuePaidEvent;
+
+            MaxSdk.HideBanner(adsUnitID);
+            MRecDestroy();
+
+            Status = AdsEvents.Close;
+            isReady = false;
+
+#endif
+        }
+
+        protected override void OnMRecLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        {     
+            if (Status == AdsEvents.Close)
             {
-                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + " is not showing --> return");
                 return;
             }
+            base.OnMRecLoadedEvent(adUnitId, adInfo);
+        }
 
-            if (IsReady)
+        protected override void OnMRecLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
+        {
+            if (Status == AdsEvents.Close)
             {
-                MaxSdkCallbacks.MRec.OnAdLoadedEvent -= OnMRecLoadedEvent;
-                MaxSdkCallbacks.MRec.OnAdLoadFailedEvent -= OnMRecLoadFailedEvent;
-                MaxSdkCallbacks.MRec.OnAdClickedEvent -= OnMRecClickedEvent;
-                MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent -= OnMRecRevenuePaidEvent;
-
-                MaxSdk.HideBanner(adsUnitID);
-                MRecDestroy();
+                return;
             }
-#endif
+            base.OnMRecLoadFailedEvent(adUnitId, errorInfo);
         }
     }
 }

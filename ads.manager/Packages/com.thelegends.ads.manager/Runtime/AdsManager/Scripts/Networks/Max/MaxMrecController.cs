@@ -12,8 +12,9 @@ namespace TheLegends.Base.Ads
     {
         private string _currentLoadRequestId;
         private string _loadRequestId;
-        private bool isReady = false;
-        private string showPosition = string.Empty;
+        protected bool isReady = false;
+        private Vector2Int adsOffset = Vector2Int.zero;
+        private AdsPos adsPos = AdsPos.Bottom;
         public override AdsNetworks GetAdsNetworks()
         {
 #if USE_MAX
@@ -41,11 +42,19 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
+        public void ShowAds(AdsPos position, Vector2Int offset, string showPosition)
+        {
+#if USE_MAX
+            this.adsOffset = offset;
+            this.adsPos = position;
+            LoadAds();
+#endif
+        }
+
         public override void ShowAds(string showPosition)
         {
             base.ShowAds(showPosition);
 #if USE_MAX
-            this.showPosition = showPosition;
             if (IsReady && IsAvailable)
             {
                 Status = AdsEvents.ShowSuccess;
@@ -54,7 +63,7 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        private void LoadAds(AdsPos position, Vector2Int offset)
+        public override void LoadAds()
         {
 #if USE_MAX
             if (!IsCanLoadAds())
@@ -66,7 +75,7 @@ namespace TheLegends.Base.Ads
             {
                 base.LoadAds();
 
-                CreateMRec(position, offset);
+                CreateMRec(adsPos, adsOffset);
 
                 MaxSdkCallbacks.MRec.OnAdLoadedEvent += OnMRecLoadedEvent;
                 MaxSdkCallbacks.MRec.OnAdLoadFailedEvent += OnMRecLoadFailedEvent;
@@ -81,22 +90,9 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        public void ShowAds(AdsPos position, Vector2Int offset, string showPosition)
-        {
-#if USE_MAX
-            LoadAds(position, offset);
-#endif
-        }
-
-
-
         private void CreateMRec(AdsPos position, Vector2Int offset)
         {
 #if USE_MAX
-            // var adPosition = SetAdCustomPosition(position, offset);
-            // var adViewConfiguration = new AdViewConfiguration(adPosition.x, adPosition.y);
-            // MaxSdk.CreateMRec(adsUnitID, adViewConfiguration);
-
             var adPosition = SetAdCustomPosition(position, offset);
             MaxSdk.CreateMRec(adsUnitID, adPosition.x, adPosition.y);
 #endif
@@ -104,7 +100,7 @@ namespace TheLegends.Base.Ads
 
         #region Internal
 
-        protected void OnMRecLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        protected virtual void OnMRecLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
 
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
@@ -117,11 +113,11 @@ namespace TheLegends.Base.Ads
 
                 isReady = true;
                 OnAdsLoadAvailable();
-                ShowAds(showPosition);
+                ShowAds(position);
             });
         }
 
-        protected void OnMRecLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
+        protected virtual void OnMRecLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
