@@ -1,3 +1,10 @@
+## [1.1.21](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.20...v1.1.21) (2025-11-04)
+
+
+### Bug Fixes
+
+* fix _currentLoadRequestId (AdController still process from previous _currentLoadRequestId ([2539e9b](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/2539e9b3be78a7a9007a843a5375828a11a5c024))
+
 ## [1.1.20](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.19...v1.1.20) (2025-11-04)
 
 
