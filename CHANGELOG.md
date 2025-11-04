@@ -1,3 +1,10 @@
+## [1.1.20](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.19...v1.1.20) (2025-11-04)
+
+
+### Bug Fixes
+
+* improve max mrec, fix not reload/next id, wrong LoadAd ([d032bb6](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/d032bb6053c6f6e82c0612ebf493e2c1d6239afa))
+
 ## [1.1.19](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.18...v1.1.19) (2025-11-03)
 
 
