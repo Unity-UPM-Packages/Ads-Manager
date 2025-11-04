@@ -9,7 +9,6 @@ namespace TheLegends.Base.Ads
     public class AdmobRewardedController : AdsPlacementBase
     {
         private RewardedAd _rewardedAd;
-        private string _currentLoadRequestId;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -75,7 +74,7 @@ namespace TheLegends.Base.Ads
                 RewardedAd.Load(adsUnitID.Trim(), request,
                     (RewardedAd ad, LoadAdError error) =>
                     {
-                        if (loadRequestId != _currentLoadRequestId)
+                        if (loadRequestId != _currentLoadRequestId || Status != AdsEvents.LoadRequest)
                         {
                             // If the load request ID does not match, this callback is from a previous request
                             return;

@@ -10,7 +10,6 @@ namespace TheLegends.Base.Ads
 {
     public class MaxMrecController : AdsPlacementBase
     {
-        private string _currentLoadRequestId;
         private string _loadRequestId;
         protected bool isReady = false;
         private Vector2Int adsOffset = Vector2Int.zero;

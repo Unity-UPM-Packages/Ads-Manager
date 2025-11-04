@@ -9,7 +9,6 @@ namespace TheLegends.Base.Ads
 {
     public class MaxRewardedController : AdsPlacementBase
     {
-        private string _currentLoadRequestId;
         private string _loadRequestId;
         private Action OnRewarded;
 

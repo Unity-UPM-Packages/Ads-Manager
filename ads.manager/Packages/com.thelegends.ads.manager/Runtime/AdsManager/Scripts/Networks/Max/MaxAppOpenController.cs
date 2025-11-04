@@ -9,7 +9,6 @@ namespace TheLegends.Base.Ads
 {
     public class MaxAppOpenController : AdsPlacementBase
     {
-        private string _currentLoadRequestId;
         private string _loadRequestId;
 
         public override AdsNetworks GetAdsNetworks()

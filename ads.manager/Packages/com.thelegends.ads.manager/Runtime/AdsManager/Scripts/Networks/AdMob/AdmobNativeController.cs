@@ -96,7 +96,6 @@ namespace TheLegends.Base.Ads
 
         public Action onClick = null;
 
-        private string _currentLoadRequestId;
         private string _loadRequestId;
 
         protected AdLoader adLoader;
@@ -396,7 +395,7 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                if (_loadRequestId != _currentLoadRequestId)
+                if (_loadRequestId != _currentLoadRequestId || Status != AdsEvents.LoadRequest)
                 {
                     // If the load request ID does not match, this callback is from a previous request
                     return;

@@ -14,6 +14,8 @@ namespace TheLegends.Base.Ads
 
         protected int reloadCount = 0;
 
+        protected string _currentLoadRequestId;
+
         protected AdsEvents status;
         public AdsEvents Status
         {
@@ -152,6 +154,7 @@ namespace TheLegends.Base.Ads
             else
             {
                 Status = AdsEvents.LoadNotAvailable;
+                _currentLoadRequestId = "";
                 reloadCount = 0;
             }
 
