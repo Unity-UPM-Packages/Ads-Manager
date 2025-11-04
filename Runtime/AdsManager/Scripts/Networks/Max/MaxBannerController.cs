@@ -9,7 +9,6 @@ namespace TheLegends.Base.Ads
 {
     public class MaxBannerController : AdsPlacementBase
     {
-        private string _currentLoadRequestId;
         private string _loadRequestId;
         private float timeAutoReload;
 

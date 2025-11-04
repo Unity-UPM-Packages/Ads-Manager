@@ -7,7 +7,6 @@ namespace TheLegends.Base.Ads
     public class AdmobInterstitialController : AdsPlacementBase
     {
         private InterstitialAd _interstitialAd;
-        private string _currentLoadRequestId;
 
         protected Action OnClose;
 
@@ -43,8 +42,7 @@ namespace TheLegends.Base.Ads
                 InterstitialAd.Load(adsUnitID.Trim(), request,
                     (InterstitialAd ad, LoadAdError error) =>
                     {
-
-                        if (loadRequestId != _currentLoadRequestId)
+                        if (loadRequestId != _currentLoadRequestId || Status != AdsEvents.LoadRequest)
                         {
                             // If the load request ID does not match, this callback is from a previous request
                             return;

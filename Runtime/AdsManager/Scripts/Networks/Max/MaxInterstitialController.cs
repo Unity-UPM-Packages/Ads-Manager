@@ -9,7 +9,6 @@ namespace TheLegends.Base.Ads
 {
     public class MaxInterstitialController : AdsPlacementBase
     {
-        private string _currentLoadRequestId;
         private string _loadRequestId;
 
         protected Action OnClose;

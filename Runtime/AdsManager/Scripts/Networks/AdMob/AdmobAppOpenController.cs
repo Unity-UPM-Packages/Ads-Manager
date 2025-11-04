@@ -9,7 +9,6 @@ namespace TheLegends.Base.Ads
     public class AdmobAppOpenController : AdsPlacementBase
     {
         private AppOpenAd _appOpenAd;
-        private string _currentLoadRequestId;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -75,7 +74,7 @@ namespace TheLegends.Base.Ads
                 AppOpenAd.Load(adsUnitID.Trim(), request,
                     (AppOpenAd ad, LoadAdError error) =>
                     {
-                        if (loadRequestId != _currentLoadRequestId)
+                        if (loadRequestId != _currentLoadRequestId || Status != AdsEvents.LoadRequest)
                         {
                             // If the load request ID does not match, this callback is from a previous request
                             return;

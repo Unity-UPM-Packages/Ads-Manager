@@ -10,8 +10,6 @@ namespace TheLegends.Base.Ads
     {
         private NativeOverlayAd _nativeOverlayAd;
 
-        private string _currentLoadRequestId;
-
         private Action OnClose;
 
         public override AdsNetworks GetAdsNetworks()
@@ -77,7 +75,7 @@ namespace TheLegends.Base.Ads
                 NativeOverlayAd.Load(adsUnitID.Trim(), request, options,
                     (NativeOverlayAd ad, LoadAdError error) =>
                     {
-                        if (loadRequestId != _currentLoadRequestId)
+                        if (loadRequestId != _currentLoadRequestId || Status != AdsEvents.LoadRequest)
                         {
                             // If the load request ID does not match, this callback is from a previous request
                             return;
