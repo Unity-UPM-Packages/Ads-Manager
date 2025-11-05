@@ -1,3 +1,10 @@
+## [1.1.22](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.21...v1.1.22) (2025-11-05)
+
+
+### Bug Fixes
+
+* fix banner flicker OnBannerLoaded ([a2e72f4](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a2e72f48cf74ed5a245c85c2a37d4844d48dc651))
+
 ## [1.1.21](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.20...v1.1.21) (2025-11-04)
 
 
