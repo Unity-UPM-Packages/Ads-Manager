@@ -11,6 +11,7 @@ namespace TheLegends.Base.Ads
     {
         private string _loadRequestId;
         private Action OnRewarded;
+        private bool isRewarded = false;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -110,6 +111,7 @@ namespace TheLegends.Base.Ads
                 if (adUnitId != adsUnitID) return;
 
                 OnAdsShowSuccess();
+                AdsManager.Instance.OnFullScreenAdsShow();
             });
         }
 
@@ -170,8 +172,22 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.Rewarded.OnAdHiddenEvent -= OnRewardedHiddenEvent;
                 MaxSdkCallbacks.Rewarded.OnAdDisplayFailedEvent -= OnRewardedAdFailedToDisplayEvent;
                 MaxSdkCallbacks.Rewarded.OnAdReceivedRewardEvent -= OnAdReceivedRewardEvent;
-                
+
+                UILoadingController.Show(1f, () =>
+                {
+                    if (isRewarded)
+                    {
+                        OnRewarded?.Invoke();
+                    }
+                    
+                    isRewarded = false;
+                    
+                    AdsManager.Instance.OnFullScreenAdsClosed();
+                });
+
                 OnAdsClosed();
+
+                
             });
         }
 
@@ -191,10 +207,8 @@ namespace TheLegends.Base.Ads
             {
                 if (adUnitId != adsUnitID) return;
 
-                UILoadingController.Show(1f, () =>
-                {
-                    OnRewarded?.Invoke();
-                });
+                AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + $"{adsUnitID} " + "claimed");
+                isRewarded = true;
             });
         }
 

@@ -58,6 +58,14 @@ namespace TheLegends.Base.Ads
             {
                 OnAdsShowSuccess();
                 MaxSdk.ShowMRec(adsUnitID);
+
+                AdsManager.Instance.RegisterMrecConfig(new MrecShowedConfig
+                {
+                    order = this.Order,
+                    position = position,
+                    adsPos = this.adsPos,
+                    offset = adsOffset,
+                });
             }
 #endif
         }

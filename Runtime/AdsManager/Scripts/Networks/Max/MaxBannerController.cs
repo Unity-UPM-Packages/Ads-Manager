@@ -84,6 +84,12 @@ namespace TheLegends.Base.Ads
             {
                 OnAdsShowSuccess();
                 MaxSdk.ShowBanner(adsUnitID);
+
+                AdsManager.Instance.RegisterBannerConfig(new BannerShowedConfig
+                {
+                    order = this.Order,
+                    position = position,
+                });
             }
             else
             {
@@ -192,7 +198,7 @@ namespace TheLegends.Base.Ads
                 try
                 {
                     MaxSdk.DestroyBanner(adsUnitID);
-                    CancelReloadAds();
+                CancelReloadAds();
                 }
                 catch (Exception ex)
                 {

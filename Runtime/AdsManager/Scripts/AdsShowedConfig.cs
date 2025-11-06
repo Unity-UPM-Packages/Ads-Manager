@@ -16,7 +16,7 @@ namespace TheLegends.Base.Ads
     public class MrecShowedConfig : AdsShowedConfig
     {
         public AdsPos adsPos;
-        public Vector2 offset;
+        public Vector2Int offset;
     }
 
 #if USE_ADMOB
