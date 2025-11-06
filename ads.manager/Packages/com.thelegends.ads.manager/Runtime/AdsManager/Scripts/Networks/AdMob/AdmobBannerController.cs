@@ -187,6 +187,10 @@ namespace TheLegends.Base.Ads
                     return;
                 }
 
+#if UNITY_EDITOR
+                _bannerView.Hide();
+#endif
+
                 StopHandleTimeout();
 
                 OnAdsLoadAvailable();
