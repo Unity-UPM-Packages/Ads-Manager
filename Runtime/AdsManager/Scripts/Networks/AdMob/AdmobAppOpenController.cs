@@ -149,6 +149,7 @@ namespace TheLegends.Base.Ads
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsShowSuccess();
+                AdsManager.Instance.OnFullScreenAdsShow();
             });
         }
 
@@ -179,7 +180,10 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                UILoadingController.Show(1f, null);
+                UILoadingController.Show(1f, () =>
+                {
+                    AdsManager.Instance.OnFullScreenAdsClosed();
+                });
                 OnAdsClosed();
             });
         }

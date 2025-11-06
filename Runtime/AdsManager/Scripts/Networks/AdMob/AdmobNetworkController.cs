@@ -270,12 +270,13 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            foreach (var adId in placements)
+            for (int i = 0; i < placements.Count; i++)
             {
+                var adId = placements[i];
                 var adController = new GameObject().AddComponent<T>();
                 adController.name = typeof(T).Name;
                 adController.transform.parent = this.transform;
-                ((AdsPlacementBase)adController).Init(adId);
+                adController.Init(adId, (PlacementOrder)(i + 1));
                 adList.Add(adController);
             }
         }

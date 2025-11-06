@@ -79,7 +79,8 @@ namespace TheLegends.Base.Ads
         private bool isCanShowAds = true;
         public bool IsCanShowAds
         {
-            get {
+            get
+            {
                 return isCanShowAds = PlayerPrefs.GetInt("IsCanShowAds", 1) == 1;
             }
             set
@@ -102,6 +103,9 @@ namespace TheLegends.Base.Ads
                 OnCanShowAdsChanged?.Invoke(isCanShowAds);
             }
         }
+
+        private List<BannerShowedConfig> bannerShowedConfigs = new List<BannerShowedConfig>();
+        private List<MrecShowedConfig> mrecShowedConfigs = new List<MrecShowedConfig>();
 
         private InitiationStatus status = InitiationStatus.NotInitialized;
         
@@ -134,45 +138,8 @@ namespace TheLegends.Base.Ads
             status = InitiationStatus.Initialized;
         }
 
-        private AdsNetworkBase GetNetwork(AdsNetworks network)
-        {
-            return adsNetworks.FirstOrDefault(x => x.GetNetworkType() == network);
-        }
 
-        private AdsNetworkBase GetNetworkToShow(AdsType adsType, PlacementOrder order)
-        {
-			var primaryNetwork = SettingsAds.primaryNetwork;
-
-            var primary = adsNetworks.FirstOrDefault(n => n.GetNetworkType() == primaryNetwork);
-			if (primary != null)
-            {
-                bool isControllerExist = primary.IsAdsControllerExist(adsType, order);
-				if (primaryNetwork == AdsNetworks.Max)
-				{
-					bool isMrec = adsType == AdsType.Mrec || adsType == AdsType.MrecOpen;
-					if (isMrec && isControllerExist)
-					{
-						return primary;
-					}
-					else if (isControllerExist && primary.IsAdsReady(adsType, order))
-					{
-						return primary;
-					}
-				}
-				else if (isControllerExist && primary.IsAdsReady(adsType, order))
-				{
-					return primary;
-				}
-			}
-
-			var fallback = adsNetworks.FirstOrDefault(n => n.GetNetworkType() != primaryNetwork && n.IsAdsControllerExist(adsType, order) && n.IsAdsReady(adsType, order));
-			if (fallback != null)
-			{
-				return fallback;
-			}
-
-            return primary;
-        }
+        #region Interstitial
 
         public void LoadInterstitial(AdsType interType, PlacementOrder order)
         {
@@ -209,6 +176,10 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        #endregion
+
+        #region Rewarded
+
         public void LoadRewarded(PlacementOrder order)
         {
             if (!IsInitialized())
@@ -242,6 +213,10 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        #endregion
+
+        #region AppOpen
+
         public void LoadAppOpen(PlacementOrder order)
         {
             if (!IsInitialized())
@@ -272,11 +247,13 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.HideAllBanner();
-                netWork.HideAllMrec();
                 netWork.ShowAppOpen(order, position);
             }
         }
+
+        #endregion
+
+        #region Banner
 
         public void LoadBanner(PlacementOrder order)
         {
@@ -318,7 +295,48 @@ namespace TheLegends.Base.Ads
             {
                 network.HideBanner(order);
             }
+
+            var config = bannerShowedConfigs.FirstOrDefault(x => x.order == order);
+            UnregisterBannerConfig(config);
         }
+
+        public void HideAllBanner()
+        {
+            foreach (var network in adsNetworks)
+            {
+                network.HideAllBanner();
+            }
+        }
+
+        public void RegisterBannerConfig(BannerShowedConfig config)
+        {
+            var existedConfig = bannerShowedConfigs.FirstOrDefault(x => x.order == config.order);
+            if (existedConfig != null)
+            {
+                existedConfig = config;
+            }
+            else
+            {
+                bannerShowedConfigs.Add(config);
+            }
+        }
+
+        private void UnregisterBannerConfig(BannerShowedConfig config)
+        {
+            bannerShowedConfigs.RemoveAll(x => x.order == config.order);
+        }
+
+        public void ShowRegisteredBanners()
+        {
+            foreach (var config in bannerShowedConfigs)
+            {
+                ShowBanner(config.order, config.position);
+            }
+        }
+
+        #endregion
+
+        #region Mrec
 
         public void LoadMrec(AdsType mrecType, PlacementOrder order)
         {
@@ -360,9 +378,52 @@ namespace TheLegends.Base.Ads
             {
                 network.HideMrec(mrecType, order);
             }
+
+            var config = mrecShowedConfigs.FirstOrDefault(x => x.order == order);
+            UnregisterMrecConfig(config);
         }
 
+        public void HideAllMrec()
+        {
+            foreach (var network in adsNetworks)
+            {
+                network.HideAllMrec();
+            }
+        }
+
+        public void RegisterMrecConfig(MrecShowedConfig config)
+        {
+            var existedConfig = mrecShowedConfigs.FirstOrDefault(x => x.order == config.order);
+            if (existedConfig != null)
+            {
+                existedConfig = config;
+            }
+            else
+            {
+                mrecShowedConfigs.Add(config);
+            }
+        }
+
+        private void UnregisterMrecConfig(MrecShowedConfig config)
+        {
+            mrecShowedConfigs.RemoveAll(x => x.order == config.order);
+        }
+
+        public void ShowRegisteredMrecs()
+        {
+            foreach (var config in mrecShowedConfigs)
+            {
+                ShowMrec(AdsType.Mrec, config.order, config.adsPos, new Vector2Int((int)config.offset.x, (int)config.offset.y), config.position);
+            }
+        }
+
+        #endregion
+
+
+
 #if USE_ADMOB
+
+        #region NativeOverlay
 
         public void LoadNativeOverlay(PlacementOrder order)
         {
@@ -408,6 +469,10 @@ namespace TheLegends.Base.Ads
                 netWork.HideNativeOverlay(order);
             }
         }
+
+        #endregion
+
+        #region NativeBanner
 
         public void LoadNativeBanner(PlacementOrder order)
         {
@@ -457,6 +522,10 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        #endregion
+
+        #region NativeInter
+
         public void LoadNativeInter(PlacementOrder order)
         {
             if (!IsInitialized())
@@ -504,6 +573,10 @@ namespace TheLegends.Base.Ads
                 netWork.HideNativeInter(order);
             }
         }
+
+        #endregion
+
+        #region NativeReward
 
         public void LoadNativeReward(PlacementOrder order)
         {
@@ -553,6 +626,10 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        #endregion
+
+        #region NativeMrec
+
         public void LoadNativeMrec(PlacementOrder order)
         {
             if (!IsInitialized())
@@ -600,6 +677,10 @@ namespace TheLegends.Base.Ads
                 netWork.HideNativeMrec(order);
             }
         }
+
+        #endregion
+
+        #region NativeAppOpen
 
         public void LoadNativeAppOpen(PlacementOrder order)
         {
@@ -649,6 +730,10 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        #endregion
+
+        #region NativeInterOpen
+
         public void LoadNativeInterOpen(PlacementOrder order)
         {
             if (!IsInitialized())
@@ -696,6 +781,10 @@ namespace TheLegends.Base.Ads
                 netWork.HideNativeInterOpen(order);
             }
         }
+
+        #endregion
+
+        #region NativeMrecOpen
 
         public void LoadNativeMrecOpen(PlacementOrder order)
         {
@@ -745,6 +834,10 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        #endregion
+
+        #region NativeVideo
+
         public void LoadNativeVideo(PlacementOrder order)
         {
             if (!IsInitialized())
@@ -793,7 +886,33 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        #endregion
+
 #endif
+
+
+        #region Common
+
+        public void SetStatus(AdsNetworks AdsNetworks, AdsType adsType, string adsUnitID, string position, AdsEvents adEvent, AdsNetworks networks)
+        {
+            string eventName = $"{AdsNetworks}_{adsType} | {adEvent.ToString()} | {adsUnitID} | {position}";
+            string eventFirebaseName = $"{adsType}_{adEvent.ToString()}";
+            Log(eventName);
+
+            FirebaseManager.Instance.LogEvent(eventFirebaseName, new Dictionary<string, object>()
+            {
+                { "network", networks.ToString() },
+                { "type", adsType.ToString() },
+                { "position", position },
+                { "adUnitID", adsUnitID }
+            });
+
+            if ((adsType == AdsType.Interstitial || adsType == AdsType.AppOpen || adsType == AdsType.Rewarded || adsType == AdsType.InterOpen) &&
+                (adEvent == AdsEvents.ShowSuccess))
+            {
+                lastTimeShowAd = DateTime.Now;
+            }
+        }
 
         public AdsEvents GetAdsStatus(AdsType adsType, PlacementOrder order)
         {
@@ -842,6 +961,46 @@ namespace TheLegends.Base.Ads
             return bestStatus;
         }
 
+        private AdsNetworkBase GetNetwork(AdsNetworks network)
+        {
+            return adsNetworks.FirstOrDefault(x => x.GetNetworkType() == network);
+        }
+
+        private AdsNetworkBase GetNetworkToShow(AdsType adsType, PlacementOrder order)
+        {
+            var primaryNetwork = SettingsAds.primaryNetwork;
+
+            var primary = adsNetworks.FirstOrDefault(n => n.GetNetworkType() == primaryNetwork);
+            if (primary != null)
+            {
+                bool isControllerExist = primary.IsAdsControllerExist(adsType, order);
+                if (primaryNetwork == AdsNetworks.Max)
+                {
+                    bool isMrec = adsType == AdsType.Mrec || adsType == AdsType.MrecOpen;
+                    if (isMrec && isControllerExist)
+                    {
+                        return primary;
+                    }
+                    else if (isControllerExist && primary.IsAdsReady(adsType, order))
+                    {
+                        return primary;
+                    }
+                }
+                else if (isControllerExist && primary.IsAdsReady(adsType, order))
+                {
+                    return primary;
+                }
+            }
+
+            var fallback = adsNetworks.FirstOrDefault(n => n.GetNetworkType() != primaryNetwork && n.IsAdsControllerExist(adsType, order) && n.IsAdsReady(adsType, order));
+            if (fallback != null)
+            {
+                return fallback;
+            }
+
+            return primary;
+        }
+
         public IEnumerator WaitAdLoaded(AdsType type, PlacementOrder order)
         {
             if (GetAdsStatus(type, order) == AdsEvents.None)
@@ -853,6 +1012,18 @@ namespace TheLegends.Base.Ads
             {
                 yield return null;
             }
+        }
+
+        public void OnFullScreenAdsShow()
+        {
+            HideAllBanner();
+            HideAllMrec();
+        }
+        
+        public void OnFullScreenAdsClosed()
+        {
+            ShowRegisteredBanners();
+            ShowRegisteredMrecs();
         }
 
         private void OnApplicationPause(bool isPaused)
@@ -868,31 +1039,7 @@ namespace TheLegends.Base.Ads
         private IEnumerator IEShowAppOpen()
         {
             yield return new WaitForSeconds(0.5f);
-            ShowAppOpen(PlacementOrder.One ,"Pause");
-        }
-
-
-        #region Common
-
-        public void SetStatus(AdsNetworks AdsNetworks, AdsType adsType, string adsUnitID, string position, AdsEvents adEvent, AdsNetworks networks)
-        {
-            string eventName = $"{AdsNetworks}_{adsType} | {adEvent.ToString()} | {adsUnitID} | {position}";
-            string eventFirebaseName =  $"{adsType}_{adEvent.ToString()}";
-            Log(eventName);
-
-            FirebaseManager.Instance.LogEvent(eventFirebaseName, new Dictionary<string, object>()
-            {
-                { "network", networks.ToString() },
-                { "type", adsType.ToString() },
-                { "position", position },
-                { "adUnitID", adsUnitID }
-            });
-
-            if ((adsType == AdsType.Interstitial || adsType == AdsType.AppOpen || adsType == AdsType.Rewarded || adsType == AdsType.InterOpen) &&
-                (adEvent == AdsEvents.ShowSuccess))
-            {
-                lastTimeShowAd = DateTime.Now;
-            }
+            ShowAppOpen(PlacementOrder.One, "Pause");
         }
 
         public void LogImpressionData(AdsNetworks network, AdsType adsType, string adsUnitID, object value)
