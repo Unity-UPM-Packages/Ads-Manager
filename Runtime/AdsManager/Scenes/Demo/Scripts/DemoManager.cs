@@ -133,15 +133,30 @@ public class DemoManager : MonoBehaviour
 
     private void LoadInterstitial()
     {
-        AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, order);
+        // AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, order);
+        AdsManager.Instance.LoadNativeInter(order);
     }
 
     private void ShowInterstitial()
     {
-        AdsManager.Instance.ShowInterstitial(AdsType.Interstitial, order, "Default", () =>
+        // AdsManager.Instance.ShowInterstitial(AdsType.Interstitial, order, "Default", () =>
+        // {
+        //     AdsManager.Instance.Log("Interstitial closed");
+        // });
+        AdsManager.Instance.ShowNativeInter(PlacementOrder.One, "Default", NativeName.Native_Inter, () =>
         {
-            AdsManager.Instance.Log("Interstitial closed");
-        });
+            AdsManager.Instance.Log("NativeInter show");
+            HideNativeBannerPlatform();
+        }, () =>
+        {
+            AdsManager.Instance.Log("NativeInter closed");
+            ShowNativeBannerPlatform();
+        }, () =>
+        {
+            AdsManager.Instance.Log("NativeInter full screen content closed");
+        })
+        ?.WithCountdown(AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration, AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown, AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay)
+        ?.Execute();
     }
 
     private void Loadrewarded()
@@ -170,22 +185,25 @@ public class DemoManager : MonoBehaviour
 
     private void LoadBanner()
     {
-        AdsManager.Instance.LoadBanner(order);
+        // AdsManager.Instance.LoadBanner(order);
+        AdsManager.Instance.LoadNativeBanner(order);
     }
 
     private void ShowBanner()
     {
-        AdsManager.Instance.ShowBanner(order, "Default");
+        // AdsManager.Instance.ShowBanner(order, "Default");
+        ShowNativeBannerPlatform();
     }
 
     private void HideBanner()
     {
-        AdsManager.Instance.HideBanner(order);
+        // AdsManager.Instance.HideBanner(order);
+        HideNativeBannerPlatform();
     }
 
     private void LoadMrec()
     {
-        AdsManager.Instance.LoadMrec(AdsType.Mrec, order);
+        // AdsManager.Instance.LoadMrec(AdsType.Mrec, order);
 #if USE_ADMOB
         AdsManager.Instance.LoadNativeMrec(PlacementOrder.One);
 #endif
@@ -194,15 +212,17 @@ public class DemoManager : MonoBehaviour
     private void ShowMrec()
     {
         var mrecPos = (AdsPos)MrecPosDropdown.value;
-        AdsManager.Instance.ShowMrec(AdsType.Mrec, order, mrecPos, new Vector2Int(0, 0), "Default");
-        // AdsManager.Instance.ShowNativeMrec(PlacementOrder.One, "Default", NativeName.Native_Mrec, null, null, null)
-        // ?.WithPosition(mrecPos, new Vector2Int(0, 0))
-        // ?.Execute();
+        // AdsManager.Instance.ShowMrec(AdsType.Mrec, order, mrecPos, new Vector2Int(0, 0), "Default");
+        AdsManager.Instance.ShowNativeMrec(PlacementOrder.One, "Default", NativeName.Native_Mrec, null, null, null)
+        ?.WithPosition(mrecPos, new Vector2Int(0, 0))
+        ?.WithAutoReload(AdsManager.Instance.adsConfigs.nativeBannerTimeReload)
+        ?.WithShowOnLoaded(true)
+        ?.Execute();
     }
 
     private void HideMrec()
     {
-        AdsManager.Instance.HideMrec(AdsType.Mrec, order);
+        // AdsManager.Instance.HideMrec(AdsType.Mrec, order);
 #if USE_ADMOB
         AdsManager.Instance.HideNativeMrec(PlacementOrder.One);
 #endif

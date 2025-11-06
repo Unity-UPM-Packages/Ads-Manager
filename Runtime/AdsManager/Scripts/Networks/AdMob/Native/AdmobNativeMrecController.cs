@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace TheLegends.Base.Ads
 {
-    public class AdmobNativeMrecController : AdmobNativePlatformController
+    public class AdmobNativeMrecController : AdmobNativeBannerController
     {
         public override AdsType GetAdsType()
         {
@@ -17,6 +17,28 @@ namespace TheLegends.Base.Ads
 #else
             return AdsType.None;
 #endif
+        }
+
+        protected override void OnNativePlatformShow()
+        {
+#if USE_ADMOB
+            OnShow += () => RegisterConfig();
+            base.OnNativePlatformShow();
+#endif
+        }
+
+        protected override void RegisterConfig()
+        {
+            AdsManager.Instance.RegisterNativeMrecConfig(new NativeShowedConfig
+            {
+                order = this.Order,
+                position = position,
+                layoutName = _layoutName,
+                countdown = _storedCountdown,
+                adsPos = _storedPosition,
+                reloadTime = _autoReloadTime,
+                showOnLoaded = _isShowOnLoaded
+            });
         }
     }
 }
