@@ -132,7 +132,7 @@ namespace TheLegends.Base.Ads
 #if UNITY_EDITOR
             if (IsAvailable)
             {
-                Status = AdsEvents.ShowSuccess;
+                OnAdsShowSuccess();
                 OnShow?.Invoke();
             }
             else
@@ -153,7 +153,7 @@ namespace TheLegends.Base.Ads
                 _nativeOverlayAd.OnAdFullScreenContentOpened += OnNativeOverlayShowSuccess;
                 _nativeOverlayAd.Show();
                 OnShow?.Invoke();
-                Status = AdsEvents.ShowSuccess;
+                OnAdsShowSuccess();
             }
             else
             {

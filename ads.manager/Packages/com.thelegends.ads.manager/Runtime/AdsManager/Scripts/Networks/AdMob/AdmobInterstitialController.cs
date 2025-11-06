@@ -103,30 +103,6 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-//         public override void ShowAds(string showPosition)
-//         {
-//             base.ShowAds(showPosition);
-// #if USE_ADMOB
-//             if (IsReady && IsAvailable)
-//             {
-//                 _interstitialAd.OnAdClicked += OnInterClick;
-//                 _interstitialAd.OnAdPaid += OnInterPaid;
-//                 _interstitialAd.OnAdImpressionRecorded += OnInterImpression;
-//                 _interstitialAd.OnAdFullScreenContentClosed += OnInterClosed;
-//                 _interstitialAd.OnAdFullScreenContentFailed += OnInterShowFailed;
-//                 _interstitialAd.OnAdFullScreenContentOpened += OnInterShowSuccess;
-//                 _interstitialAd.Show();
-//             }
-//             else
-//             {
-//                 AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
-//                 reloadCount = 0;
-//                 LoadAds();
-//             }
-// #endif
-
-//         }
-
 
         public override AdsNetworks GetAdsNetworks()
         {
