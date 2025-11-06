@@ -106,8 +106,10 @@ namespace TheLegends.Base.Ads
 
         private List<BannerShowedConfig> bannerShowedConfigs = new List<BannerShowedConfig>();
         private List<MrecShowedConfig> mrecShowedConfigs = new List<MrecShowedConfig>();
+    #if USE_ADMOB
         private List<NativeShowedConfig> nativeBannerShowedConfigs = new List<NativeShowedConfig>();
         private List<NativeShowedConfig> nativeMrecShowedConfigs = new List<NativeShowedConfig>();
+    #endif
 
         private InitiationStatus status = InitiationStatus.NotInitialized;
         
@@ -1110,16 +1112,20 @@ namespace TheLegends.Base.Ads
         {
             HideAllBanner();
             HideAllMrec();
+#if USE_ADMOB
             HideAllNativeBanner();
             HideAllNativeMrec();
+#endif
         }
         
         public void OnFullScreenAdsClosed()
         {
             ShowRegisteredBanners();
             ShowRegisteredMrecs();
+#if USE_ADMOB
             ShowRegisteredNativeBanners();
             ShowRegisteredNativeMrecs();
+#endif
         }
 
         private void OnApplicationPause(bool isPaused)

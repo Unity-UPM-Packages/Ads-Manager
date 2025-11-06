@@ -19,6 +19,7 @@ namespace TheLegends.Base.Ads
         public Vector2 offset;
     }
 
+#if USE_ADMOB
     public class NativeShowedConfig : AdsShowedConfig
     {
         public string layoutName;
@@ -27,4 +28,5 @@ namespace TheLegends.Base.Ads
         public float reloadTime;
         public bool showOnLoaded;
     }
+#endif
 }
