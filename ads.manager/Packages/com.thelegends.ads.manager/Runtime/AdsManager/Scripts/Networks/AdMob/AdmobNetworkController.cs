@@ -1469,6 +1469,28 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
+        public void HideAllNativeBanner()
+        {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
+            foreach (var nativeBanner in nativeBannerList)
+            {
+                nativeBanner.HideAds();
+            }
+#endif
+        }
+
+        public void HideAllNativeMrec()
+        {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
+            foreach (var nativeMrec in nativeMrecList)
+            {
+                nativeMrec.HideAds();
+            }
+#endif
+        }
+
 
         public override AdsNetworks GetNetworkType()
         {

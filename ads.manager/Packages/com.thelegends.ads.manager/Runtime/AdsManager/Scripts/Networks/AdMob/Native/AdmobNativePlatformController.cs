@@ -11,19 +11,19 @@ namespace TheLegends.Base.Ads
     public class AdmobNativePlatformController : AdsPlacementBase
     {
         private AdmobNativePlatform _nativePlatformAd;
-        private string _layoutName;
+        protected string _layoutName;
 
-        private Action OnClose;
-        private Action OnShow;
+        protected Action OnClose;
+        protected Action OnShow;
         private Action OnAdDismissedFullScreenContent;
 
         // Unity-side config storage for persistence (only Countdown needs storage for native)
-        private NativePlatformShowBuilder.CountdownConfig _storedCountdown;
+        protected NativePlatformShowBuilder.CountdownConfig _storedCountdown;
 
         // Unity AutoReload & ShowOnLoaded management (exactly like AdmobNativeController)
-        private float _autoReloadTime = 0f; // Like timeAutoReload in AdmobNativeController
-        private bool _isShowOnLoaded = false; // Like isShowOnLoaded in AdmobNativeController
-        private NativePlatformShowBuilder.PositionConfig _storedPosition;
+        protected float _autoReloadTime = 0f; // Like timeAutoReload in AdmobNativeController
+        protected bool _isShowOnLoaded = false; // Like isShowOnLoaded in AdmobNativeController
+        protected NativePlatformShowBuilder.PositionConfig _storedPosition;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -182,6 +182,10 @@ namespace TheLegends.Base.Ads
 
         public void HideAds()
         {
+            OnShow = null;
+            OnClose = null;
+            OnAdDismissedFullScreenContent = null;
+            
             ClearStoredConfigs();
             NativePlatformDestroy();
             OnNativePlatformClosed();
@@ -334,7 +338,7 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        private void OnNativePlatformClosed()
+        protected virtual void OnNativePlatformClosed()
         {
 #if USE_ADMOB
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
@@ -345,7 +349,7 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        private void OnNativePlatformShow()
+        protected virtual void OnNativePlatformShow()
         {
 #if USE_ADMOB
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>

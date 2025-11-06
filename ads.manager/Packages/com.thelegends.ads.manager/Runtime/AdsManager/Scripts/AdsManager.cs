@@ -106,6 +106,8 @@ namespace TheLegends.Base.Ads
 
         private List<BannerShowedConfig> bannerShowedConfigs = new List<BannerShowedConfig>();
         private List<MrecShowedConfig> mrecShowedConfigs = new List<MrecShowedConfig>();
+        private List<NativeShowedConfig> nativeBannerShowedConfigs = new List<NativeShowedConfig>();
+        private List<NativeShowedConfig> nativeMrecShowedConfigs = new List<NativeShowedConfig>();
 
         private InitiationStatus status = InitiationStatus.NotInitialized;
         
@@ -520,6 +522,47 @@ namespace TheLegends.Base.Ads
             {
                 netWork.HideNativeBanner(order);
             }
+
+            var config = nativeBannerShowedConfigs.FirstOrDefault(x => x.order == order);
+            UnregisterNativeBannerConfig(config);
+        }
+
+        public void HideAllNativeBanner()
+        {
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+            if (netWork != null)
+            {
+                netWork.HideAllNativeBanner();
+            }
+        }
+
+        public void RegisterNativeBannerConfig(NativeShowedConfig config)
+        {
+            var existedConfig = nativeBannerShowedConfigs.FirstOrDefault(x => x.order == config.order);
+            if (existedConfig != null)
+            {
+                existedConfig = config;
+            }
+            else
+            {
+                nativeBannerShowedConfigs.Add(config);
+            }
+        }
+
+        private void UnregisterNativeBannerConfig(NativeShowedConfig config)
+        {
+            nativeBannerShowedConfigs.RemoveAll(x => x.order == config.order);
+        }
+
+        public void ShowRegisteredNativeBanners()
+        {
+            foreach (var config in nativeBannerShowedConfigs)
+            {
+                ShowNativeBanner(config.order, config.position, config.layoutName)
+                ?.WithAutoReload(config.reloadTime)
+                ?.WithShowOnLoaded(config.showOnLoaded)
+                ?.Execute();
+            }
         }
 
         #endregion
@@ -675,6 +718,48 @@ namespace TheLegends.Base.Ads
             if (netWork != null)
             {
                 netWork.HideNativeMrec(order);
+            }
+
+            var config = nativeMrecShowedConfigs.FirstOrDefault(x => x.order == order);
+            UnregisterNativeMrecConfig(config);
+        }
+
+        public void HideAllNativeMrec()
+        {
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+            if (netWork != null)
+            {
+                netWork.HideAllNativeMrec();
+            }
+        }
+
+        public void RegisterNativeMrecConfig(NativeShowedConfig config)
+        {
+            var existedConfig = nativeMrecShowedConfigs.FirstOrDefault(x => x.order == config.order);
+            if (existedConfig != null)
+            {
+                existedConfig = config;
+            }
+            else
+            {
+                nativeMrecShowedConfigs.Add(config);
+            }
+        }
+
+        private void UnregisterNativeMrecConfig(NativeShowedConfig config)
+        {
+            nativeMrecShowedConfigs.RemoveAll(x => x.order == config.order);
+        }
+
+        public void ShowRegisteredNativeMrecs()
+        {
+            foreach (var config in nativeMrecShowedConfigs)
+            {
+                ShowNativeMrec(config.order, config.position, config.layoutName)
+                ?.WithPosition(config.adsPos.AdsPos, config.adsPos.Offset)
+                ?.WithAutoReload(config.reloadTime)
+                ?.WithShowOnLoaded(config.showOnLoaded)
+                ?.Execute(); ;
             }
         }
 
@@ -907,7 +992,14 @@ namespace TheLegends.Base.Ads
                 { "adUnitID", adsUnitID }
             });
 
-            if ((adsType == AdsType.Interstitial || adsType == AdsType.AppOpen || adsType == AdsType.Rewarded || adsType == AdsType.InterOpen) &&
+            if ((adsType == AdsType.Interstitial ||
+                adsType == AdsType.AppOpen ||
+                adsType == AdsType.Rewarded ||
+                adsType == AdsType.InterOpen ||
+                adsType == AdsType.NativeInter ||
+                adsType == AdsType.NativeInterOpen ||
+                adsType == AdsType.NativeReward ||
+                adsType == AdsType.NativeAppOpen) &&
                 (adEvent == AdsEvents.ShowSuccess))
             {
                 lastTimeShowAd = DateTime.Now;
@@ -1018,12 +1110,16 @@ namespace TheLegends.Base.Ads
         {
             HideAllBanner();
             HideAllMrec();
+            HideAllNativeBanner();
+            HideAllNativeMrec();
         }
         
         public void OnFullScreenAdsClosed()
         {
             ShowRegisteredBanners();
             ShowRegisteredMrecs();
+            ShowRegisteredNativeBanners();
+            ShowRegisteredNativeMrecs();
         }
 
         private void OnApplicationPause(bool isPaused)
