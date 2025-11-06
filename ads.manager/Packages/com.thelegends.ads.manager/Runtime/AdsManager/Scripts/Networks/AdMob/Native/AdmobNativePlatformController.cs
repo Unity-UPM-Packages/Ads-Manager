@@ -13,8 +13,6 @@ namespace TheLegends.Base.Ads
         private AdmobNativePlatform _nativePlatformAd;
         private string _layoutName;
 
-        private string _currentLoadRequestId;
-
         private Action OnClose;
         private Action OnShow;
         private Action OnAdDismissedFullScreenContent;

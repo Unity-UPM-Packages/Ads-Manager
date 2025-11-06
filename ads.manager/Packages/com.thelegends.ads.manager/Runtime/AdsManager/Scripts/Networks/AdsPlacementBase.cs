@@ -7,6 +7,7 @@ namespace TheLegends.Base.Ads
         protected Placement placement;
         public Placement Placement { get => placement; set => placement = value; }
 
+        public PlacementOrder Order { get; set; }
         protected int adsUnitIDIndex = 0;
 
         protected string adsUnitID = string.Empty;
@@ -41,9 +42,10 @@ namespace TheLegends.Base.Ads
         public AdsType AdsType { get =>  GetAdsType(); }
 
 
-        public virtual void Init(Placement placement)
+        public virtual void Init(Placement placement, PlacementOrder order)
         {
             this.Placement = placement;
+            this.Order = order;
         }
 
         public abstract AdsNetworks GetAdsNetworks();

@@ -9,6 +9,8 @@ namespace TheLegends.Base.Ads
     {
         protected BannerView _bannerView;
         private string _loadRequestId;
+        private float timeAutoReload;
+        private bool isShowOnLoaded = false;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -35,6 +37,11 @@ namespace TheLegends.Base.Ads
 #else
         return false;
 #endif
+        }
+
+        void Awake()
+        {
+            timeAutoReload = AdsManager.Instance.adsConfigs.adNativeTimeReload;
         }
 
         public override void LoadAds()
@@ -71,19 +78,15 @@ namespace TheLegends.Base.Ads
 
         public override void ShowAds(string showPosition)
         {
-            if (Status == AdsEvents.ShowSuccess)
-            {
-                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "is showing --> return");
-                return;
-            }
-
             base.ShowAds(showPosition);
+            isShowOnLoaded = true;
 #if USE_ADMOB
             if (IsReady && IsAvailable)
             {
                 PreShow();
                 _bannerView.Show();
                 OnAdsShowSuccess();
+                SetShowedConfig();
             }
             else
             {
@@ -92,6 +95,15 @@ namespace TheLegends.Base.Ads
                 LoadAds();
             }
 #endif
+        }
+
+        protected virtual void SetShowedConfig()
+        {
+            AdsManager.Instance.RegisterBannerConfig(new BannerShowedConfig
+            {
+                order = this.Order,
+                position = position,
+            });
         }
 
 
@@ -107,6 +119,7 @@ namespace TheLegends.Base.Ads
             if (IsReady)
             {
                 _bannerView.Hide();
+                isShowOnLoaded = false;
                 BannerDestroy();
                 OnAdsClosed();
             }
@@ -177,6 +190,11 @@ namespace TheLegends.Base.Ads
                 StopHandleTimeout();
 
                 OnAdsLoadAvailable();
+
+                if (isShowOnLoaded)
+                {
+                    ShowAds(position);
+                }
             });
 
         }
@@ -199,6 +217,15 @@ namespace TheLegends.Base.Ads
 
         }
 
+        protected override void OnAdsLoadFailed(string message)
+        {
+            base.OnAdsLoadFailed(message);
+            if (Status == AdsEvents.LoadNotAvailable)
+            {
+                DelayReloadAd(timeAutoReload);
+            }
+        }
+
         protected void BannerDestroy()
         {
 #if USE_ADMOB
@@ -208,6 +235,7 @@ namespace TheLegends.Base.Ads
                 {
                     _bannerView.Destroy();
                     _bannerView = null;
+                    CancelReloadAds();
                 }
                 catch (Exception ex)
                 {
@@ -216,6 +244,18 @@ namespace TheLegends.Base.Ads
             }
 #endif
         }
+
+        private void DelayReloadAd(float time)
+        {
+            Invoke(nameof(LoadAds), time);
+        }
+
+        private void CancelReloadAds()
+        {
+            CancelInvoke(nameof(LoadAds));
+        }
+
+
         #endregion
     }
 }

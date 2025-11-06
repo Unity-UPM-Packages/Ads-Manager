@@ -9,6 +9,7 @@ namespace TheLegends.Base.Ads
     public class AdmobRewardedController : AdsPlacementBase
     {
         private RewardedAd _rewardedAd;
+        private Action OnRewarded;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -124,10 +125,7 @@ namespace TheLegends.Base.Ads
                     if (reward != null)
                     {
                         AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + $"{adsUnitID} " + "claimed");
-                        UILoadingController.Show(1f, () =>
-                        {
-                            OnRewarded?.Invoke();
-                        });
+                        this.OnRewarded = OnRewarded;
                     }
                 });
             }
@@ -171,6 +169,7 @@ namespace TheLegends.Base.Ads
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsShowSuccess();
+                AdsManager.Instance.OnFullScreenAdsShow();
             });
         }
 
@@ -193,6 +192,12 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                UILoadingController.Show(1f, () =>
+                {
+                    OnRewarded?.Invoke();
+                    OnRewarded = null;
+                    AdsManager.Instance.OnFullScreenAdsClosed();
+                });
                 OnAdsClosed();
             });
         }

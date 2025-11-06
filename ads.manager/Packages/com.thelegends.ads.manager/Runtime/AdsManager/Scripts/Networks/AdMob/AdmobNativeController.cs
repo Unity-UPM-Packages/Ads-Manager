@@ -130,7 +130,7 @@ namespace TheLegends.Base.Ads
 
             timeAutoReload = AdsManager.Instance.adsConfigs.adNativeTimeReload;
 
-            Init(placement);
+            Init(placement, _order);
 
             AdsManager.Instance.OnCanShowAdsChanged += OnCanShowAdsChanged;
         }
