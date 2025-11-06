@@ -102,15 +102,11 @@ public class DemoManager : MonoBehaviour
 
         var defaultRemoteConfig = new Dictionary<string, object>
         {
-            // {"testBool" , false },
-            // {"testFloat" , 1.0f },
-            // {"testInt" , 2 },
-            // {"testString" , "test" },
             {"adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete},
             {"adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart},
             {"timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds},
             {"adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight},
-            {"adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload}
+            {"adTimeReload", AdsManager.Instance.adsConfigs.adTimeReload}
         };
 
         yield return FirebaseManager.Instance.DoInit(defaultRemoteConfig);
@@ -125,7 +121,7 @@ public class DemoManager : MonoBehaviour
             AdsManager.Instance.adsConfigs.adInterOnStart = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart);
             AdsManager.Instance.adsConfigs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds);
             AdsManager.Instance.adsConfigs.adNativeBannerHeight = FirebaseManager.Instance.RemoteGetValueFloat("adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight);
-            AdsManager.Instance.adsConfigs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload);
+            AdsManager.Instance.adsConfigs.adTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adTimeReload", AdsManager.Instance.adsConfigs.adTimeReload);
         });
 
         yield return AppsFlyerManager.Instance.DoInit();

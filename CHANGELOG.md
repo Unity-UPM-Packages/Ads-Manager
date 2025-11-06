@@ -1,3 +1,15 @@
+## [1.1.23](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.22...v1.1.23) (2025-11-06)
+
+
+### Bug Fixes
+
+* #if USE_ADMOB ([a4881c4](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a4881c4cc4b71e9ecdfc3cd0315e488f1590bb75))
+* Mrec Show on Unity Editor ([eeca8da](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/eeca8da6228ea20849b1324fe800f583737aee09))
+* Re-Show banner/mrec after fullscreen ads ([44968aa](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/44968aa1582c41cca526798930333691178bfe68))
+* Re-Show banner/mrec after fullscreen ads for Max Applovin ([10f3047](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/10f3047011d4f3e91e4ae5ddf931c2124ffdc539))
+* Re-Show native banner/mrec after fullscreen ads ([34e0e83](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/34e0e83eff9e036987bb581601d8d243c266c6fc))
+* refactor ShowSuccess ([c8d65da](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/c8d65da7cd67ed95515dd012229839cd570504af))
+
 ## [1.1.22](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.21...v1.1.22) (2025-11-05)
 
 
