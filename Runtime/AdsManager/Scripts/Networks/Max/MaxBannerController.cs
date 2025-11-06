@@ -82,10 +82,8 @@ namespace TheLegends.Base.Ads
 #if USE_MAX
             if (IsReady && IsAvailable)
             {
-                Status = AdsEvents.ShowSuccess;
+                OnAdsShowSuccess();
                 MaxSdk.ShowBanner(adsUnitID);
-                // CancelReloadAds();
-                // DelayReloadAd(timeAutoReload);
             }
             else
             {
@@ -99,17 +97,6 @@ namespace TheLegends.Base.Ads
         protected virtual void CreateBanner()
         {
 #if USE_MAX
-            // AdViewPosition adPosition = AdsManager.Instance.SettingsAds.bannerPosition == BannerPos.Top
-            //     ? AdViewPosition.TopCenter
-            //     : AdViewPosition.BottomCenter;
-
-            // if (AdsManager.Instance.SettingsAds.fixBannerSmallSize)
-            // {
-            //     var adViewConfiguration = new AdViewConfiguration(adPosition);
-            //     MaxSdk.CreateBanner(adsUnitID, adViewConfiguration);
-            //     MaxSdk.SetBannerBackgroundColor(adsUnitID, Color.black);
-            // }
-
             BannerPosition adPosition = AdsManager.Instance.SettingsAds.bannerPosition == BannerPos.Top
                 ? BannerPosition.TopCenter
                 : BannerPosition.BottomCenter;

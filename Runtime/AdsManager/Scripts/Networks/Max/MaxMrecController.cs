@@ -56,7 +56,7 @@ namespace TheLegends.Base.Ads
 #if USE_MAX
             if (IsReady && IsAvailable)
             {
-                Status = AdsEvents.ShowSuccess;
+                OnAdsShowSuccess();
                 MaxSdk.ShowMRec(adsUnitID);
             }
 #endif

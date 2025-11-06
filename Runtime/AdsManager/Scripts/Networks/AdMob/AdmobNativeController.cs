@@ -217,7 +217,7 @@ namespace TheLegends.Base.Ads
 #if UNITY_EDITOR
             if (IsAvailable)
             {
-                Status = AdsEvents.ShowSuccess;
+                OnAdsShowSuccess();
                 container.SetActive(true);
                 isCLosedByHide = false;
 
@@ -241,7 +241,7 @@ namespace TheLegends.Base.Ads
             if (IsReady && IsAvailable)
             {
                 _nativeAd.OnPaidEvent += OnAdsPaid;
-                Status = AdsEvents.ShowSuccess;
+                OnAdsShowSuccess();
                 isCLosedByHide = false;
                 FetchData();
                 container.SetActive(true);

@@ -83,7 +83,7 @@ namespace TheLegends.Base.Ads
             {
                 PreShow();
                 _bannerView.Show();
-                Status = AdsEvents.ShowSuccess;
+                OnAdsShowSuccess();
             }
             else
             {
