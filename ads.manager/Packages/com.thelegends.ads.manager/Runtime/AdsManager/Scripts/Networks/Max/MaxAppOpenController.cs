@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TheLegends.Base.UI;
 
 namespace TheLegends.Base.Ads
 {
@@ -129,6 +130,8 @@ namespace TheLegends.Base.Ads
                 if (adUnitId != adsUnitID) return;
 
                 OnAdsShowSuccess();
+
+                AdsManager.Instance.OnFullScreenAdsShow();
             });
         }
 
@@ -166,6 +169,11 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.AppOpen.OnAdClickedEvent -= OnAppOpenClickedEvent;
                 MaxSdkCallbacks.AppOpen.OnAdHiddenEvent -= OnAppOpenHiddenEvent;
                 MaxSdkCallbacks.AppOpen.OnAdDisplayFailedEvent -= OnAppOpenDisplayFailedEvent;
+
+                UILoadingController.Show(1f, () =>
+                {
+                    AdsManager.Instance.OnFullScreenAdsClosed();
+                });
 
                 OnAdsClosed();
             });
