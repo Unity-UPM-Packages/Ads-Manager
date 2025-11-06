@@ -134,7 +134,9 @@ public class DemoManager : MonoBehaviour
     private void LoadInterstitial()
     {
         // AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, order);
+#if USE_ADMOB
         AdsManager.Instance.LoadNativeInter(order);
+#endif
     }
 
     private void ShowInterstitial()
@@ -143,6 +145,7 @@ public class DemoManager : MonoBehaviour
         // {
         //     AdsManager.Instance.Log("Interstitial closed");
         // });
+#if USE_ADMOB
         AdsManager.Instance.ShowNativeInter(PlacementOrder.One, "Default", NativeName.Native_Inter, () =>
         {
             AdsManager.Instance.Log("NativeInter show");
@@ -157,6 +160,7 @@ public class DemoManager : MonoBehaviour
         })
         ?.WithCountdown(AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration, AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown, AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay)
         ?.Execute();
+#endif
     }
 
     private void Loadrewarded()
