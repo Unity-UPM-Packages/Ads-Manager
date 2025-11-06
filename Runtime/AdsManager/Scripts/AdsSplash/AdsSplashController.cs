@@ -111,7 +111,7 @@ namespace TheLegends.Base.Ads
                 {"adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart},
                 {"timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds},
                 {"adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight},
-                {"adNativeTimeReload", AdsManager.Instance.adsConfigs.adNativeTimeReload},
+                {"adTimeReload", AdsManager.Instance.adsConfigs.adTimeReload},
                 {"adLoadTimeOut", AdsManager.Instance.adsConfigs.adLoadTimeOut},
                 {"isUseAdNative", AdsManager.Instance.adsConfigs.isUseAdNative},
                 {"nativeVideoCountdownTimerDuration", AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration},
@@ -151,7 +151,7 @@ namespace TheLegends.Base.Ads
             configs.adInterOnStart = FirebaseManager.Instance.RemoteGetValueBoolean("adInterOnStart", configs.adInterOnStart);
             configs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", configs.timePlayToShowAds);
             configs.adNativeBannerHeight = FirebaseManager.Instance.RemoteGetValueFloat("adNativeBannerHeight", configs.adNativeBannerHeight);
-            configs.adNativeTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adNativeTimeReload", configs.adNativeTimeReload);
+            configs.adTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adTimeReload", configs.adTimeReload);
             configs.adLoadTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adLoadTimeOut", configs.adLoadTimeOut);
             configs.isUseAdNative = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdNative", configs.isUseAdNative);
             configs.nativeVideoCountdownTimerDuration = FirebaseManager.Instance.RemoteGetValueFloat("nativeVideoCountdownTimerDuration", configs.nativeVideoCountdownTimerDuration);

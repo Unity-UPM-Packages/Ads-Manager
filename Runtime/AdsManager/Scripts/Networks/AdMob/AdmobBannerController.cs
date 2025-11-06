@@ -41,7 +41,7 @@ namespace TheLegends.Base.Ads
 
         void Awake()
         {
-            timeAutoReload = AdsManager.Instance.adsConfigs.adNativeTimeReload;
+            timeAutoReload = AdsManager.Instance.adsConfigs.adTimeReload;
         }
 
         public override void LoadAds()

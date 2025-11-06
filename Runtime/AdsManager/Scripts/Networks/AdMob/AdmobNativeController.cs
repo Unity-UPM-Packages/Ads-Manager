@@ -128,7 +128,7 @@ namespace TheLegends.Base.Ads
             var placementIndex = Mathf.Clamp((int)_order - 1, 0, list.Count - 1);
             placement = list[placementIndex];
 
-            timeAutoReload = AdsManager.Instance.adsConfigs.adNativeTimeReload;
+            timeAutoReload = AdsManager.Instance.adsConfigs.adTimeReload;
 
             Init(placement, _order);
 
@@ -418,7 +418,7 @@ namespace TheLegends.Base.Ads
 
             if (Status == AdsEvents.LoadNotAvailable)
             {
-                DelayReloadAd(30);
+                DelayReloadAd(timeAutoReload);
             }
         }
 
