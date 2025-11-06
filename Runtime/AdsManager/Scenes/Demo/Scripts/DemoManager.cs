@@ -185,47 +185,47 @@ public class DemoManager : MonoBehaviour
 
     private void LoadBanner()
     {
-        // AdsManager.Instance.LoadBanner(order);
-        AdsManager.Instance.LoadNativeBanner(order);
+        AdsManager.Instance.LoadBanner(order);
+        // AdsManager.Instance.LoadNativeBanner(order);
     }
 
     private void ShowBanner()
     {
-        // AdsManager.Instance.ShowBanner(order, "Default");
-        ShowNativeBannerPlatform();
+        AdsManager.Instance.ShowBanner(order, "Default");
+        // ShowNativeBannerPlatform();
     }
 
     private void HideBanner()
     {
-        // AdsManager.Instance.HideBanner(order);
-        HideNativeBannerPlatform();
+        AdsManager.Instance.HideBanner(order);
+        // HideNativeBannerPlatform();
     }
 
     private void LoadMrec()
     {
-        // AdsManager.Instance.LoadMrec(AdsType.Mrec, order);
-#if USE_ADMOB
-        AdsManager.Instance.LoadNativeMrec(PlacementOrder.One);
-#endif
+        AdsManager.Instance.LoadMrec(AdsType.Mrec, order);
+// #if USE_ADMOB
+//         AdsManager.Instance.LoadNativeMrec(PlacementOrder.One);
+// #endif
     }
 
     private void ShowMrec()
     {
         var mrecPos = (AdsPos)MrecPosDropdown.value;
-        // AdsManager.Instance.ShowMrec(AdsType.Mrec, order, mrecPos, new Vector2Int(0, 0), "Default");
-        AdsManager.Instance.ShowNativeMrec(PlacementOrder.One, "Default", NativeName.Native_Mrec, null, null, null)
-        ?.WithPosition(mrecPos, new Vector2Int(0, 0))
-        ?.WithAutoReload(AdsManager.Instance.adsConfigs.nativeBannerTimeReload)
-        ?.WithShowOnLoaded(true)
-        ?.Execute();
+        AdsManager.Instance.ShowMrec(AdsType.Mrec, order, mrecPos, new Vector2Int(0, 0), "Default");
+        // AdsManager.Instance.ShowNativeMrec(PlacementOrder.One, "Default", NativeName.Native_Mrec, null, null, null)
+        // ?.WithPosition(mrecPos, new Vector2Int(0, 0))
+        // ?.WithAutoReload(AdsManager.Instance.adsConfigs.nativeBannerTimeReload)
+        // ?.WithShowOnLoaded(true)
+        // ?.Execute();
     }
 
     private void HideMrec()
     {
-        // AdsManager.Instance.HideMrec(AdsType.Mrec, order);
-#if USE_ADMOB
-        AdsManager.Instance.HideNativeMrec(PlacementOrder.One);
-#endif
+        AdsManager.Instance.HideMrec(AdsType.Mrec, order);
+// #if USE_ADMOB
+//         AdsManager.Instance.HideNativeMrec(PlacementOrder.One);
+// #endif
     }
 
     private void LoadNativeOverlay()
