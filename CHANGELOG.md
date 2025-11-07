@@ -1,3 +1,10 @@
+## [1.1.24](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.23...v1.1.24) (2025-11-07)
+
+
+### Bug Fixes
+
+* change DelayReloadAd AdmobNativeBannerController ([cedd57c](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/cedd57c81bc4f54cf7058ce7f057ecbb362178ef))
+
 ## [1.1.23](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.22...v1.1.23) (2025-11-06)
 
 
