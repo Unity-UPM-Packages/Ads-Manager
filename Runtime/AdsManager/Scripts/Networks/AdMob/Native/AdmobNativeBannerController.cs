@@ -25,7 +25,7 @@ namespace TheLegends.Base.Ads
 
             if (Status == AdsEvents.LoadNotAvailable)
             {
-                DelayReloadAd(30);
+                DelayReloadAd(AdsManager.Instance.adsConfigs.adTimeReload);
             }
 #endif
         }
