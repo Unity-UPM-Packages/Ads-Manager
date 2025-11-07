@@ -1,3 +1,10 @@
+## [1.1.25](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.24...v1.1.25) (2025-11-07)
+
+
+### Bug Fixes
+
+* ad_revenue Firebase Event for Max Mediation ([bf08dca](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/bf08dcafe0a4fc9e07df8cc74a2f93c5ad9b6790))
+
 ## [1.1.24](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.23...v1.1.24) (2025-11-07)
 
 
