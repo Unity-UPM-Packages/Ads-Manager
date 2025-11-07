@@ -1195,7 +1195,7 @@ namespace TheLegends.Base.Ads
                     ad_format = adsType.ToString();
                     ad_unit_name = adsUnitID;
                     country = "";
-                    revenue = (double)impressionData.Revenue / 1000000f;
+                    revenue = (double)impressionData.Revenue;
                     currency = MaxSdk.GetSdkConfiguration().CountryCode;
                 }
 
