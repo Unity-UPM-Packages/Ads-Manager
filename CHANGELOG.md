@@ -1,3 +1,11 @@
+## [1.1.26](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.25...v1.1.26) (2025-11-10)
+
+
+### Bug Fixes
+
+* fix issue when first open not have internet connection => Firebase Manager stuck when try fetch remote config ([43a88e9](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/43a88e9584eb164ae0ef88c4a9c52ff0eca29f69))
+* update dependencies version ([3655eab](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/3655eab0b8a80e69439bd6d4870ec0fb0c9c12c3))
+
 ## [1.1.25](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.24...v1.1.25) (2025-11-07)
 
 
