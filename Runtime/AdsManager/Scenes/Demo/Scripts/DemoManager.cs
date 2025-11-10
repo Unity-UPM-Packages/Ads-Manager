@@ -122,7 +122,7 @@ public class DemoManager : MonoBehaviour
             AdsManager.Instance.adsConfigs.timePlayToShowAds = FirebaseManager.Instance.RemoteGetValueFloat("timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds);
             AdsManager.Instance.adsConfigs.adNativeBannerHeight = FirebaseManager.Instance.RemoteGetValueFloat("adNativeBannerHeight", AdsManager.Instance.adsConfigs.adNativeBannerHeight);
             AdsManager.Instance.adsConfigs.adTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("adTimeReload", AdsManager.Instance.adsConfigs.adTimeReload);
-        });
+        }, null);
 
         yield return AppsFlyerManager.Instance.DoInit();
     }
