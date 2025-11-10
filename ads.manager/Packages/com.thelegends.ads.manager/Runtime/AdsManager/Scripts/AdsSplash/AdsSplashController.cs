@@ -136,6 +136,9 @@ namespace TheLegends.Base.Ads
                 UpdateCommonConfigs();
                 UpdateBrandSpecificConfigs();
                 isFetching = false;
+            }, () =>
+            {
+                isFetching = false;
             });
 
             while (isFetching)
