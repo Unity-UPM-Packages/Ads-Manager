@@ -18,7 +18,7 @@ namespace TheLegends.Base.Ads
         public abstract void ShowRewarded(PlacementOrder order, string position, Action OnRewarded = null);
 
         public abstract void LoadAppOpen(PlacementOrder order);
-        public abstract void ShowAppOpen(PlacementOrder order, string position);
+        public abstract void ShowAppOpen(PlacementOrder order, string position, Action OnClose = null);
 
         public abstract void LoadBanner(PlacementOrder order);
         public abstract void ShowBanner(PlacementOrder order, string position);

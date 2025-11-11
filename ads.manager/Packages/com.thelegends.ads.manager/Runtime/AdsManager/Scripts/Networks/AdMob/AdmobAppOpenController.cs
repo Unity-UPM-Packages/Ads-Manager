@@ -9,6 +9,7 @@ namespace TheLegends.Base.Ads
     public class AdmobAppOpenController : AdsPlacementBase
     {
         private AppOpenAd _appOpenAd;
+        protected Action OnClose;
 
         public override AdsNetworks GetAdsNetworks()
         {
@@ -110,8 +111,9 @@ namespace TheLegends.Base.Ads
         }
 
 
-        public override void ShowAds(string showPosition)
+        public void ShowAds(string showPosition, Action OnClose = null)
         {
+            this.OnClose = OnClose;
             base.ShowAds(showPosition);
 #if USE_ADMOB
             if (IsReady && IsAvailable)
@@ -182,6 +184,8 @@ namespace TheLegends.Base.Ads
             {
                 UILoadingController.Show(1f, () =>
                 {
+                    OnClose?.Invoke();
+                    OnClose = null;
                     AdsManager.Instance.OnFullScreenAdsClosed();
                 });
                 OnAdsClosed();

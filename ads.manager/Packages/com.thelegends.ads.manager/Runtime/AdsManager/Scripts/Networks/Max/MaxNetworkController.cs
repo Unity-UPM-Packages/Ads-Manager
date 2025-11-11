@@ -343,7 +343,7 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        public override void ShowAppOpen(PlacementOrder order, string position)
+        public override void ShowAppOpen(PlacementOrder order, string position, Action OnClose = null)
         {
 #if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
             if (!IsListExist(appOpenList))
