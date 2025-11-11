@@ -235,7 +235,7 @@ namespace TheLegends.Base.Ads
 
         }
 
-        public void ShowAppOpen(PlacementOrder order, string position)
+        public void ShowAppOpen(PlacementOrder order, string position, Action OnClose = null)
         {
             if (!IsInitialized() || GetAdsStatus(AdsType.AppOpen, order) != AdsEvents.LoadAvailable)
             {
@@ -251,7 +251,7 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                netWork.ShowAppOpen(order, position);
+                netWork.ShowAppOpen(order, position, OnClose);
             }
         }
 
@@ -1303,6 +1303,9 @@ namespace TheLegends.Base.Ads
     [System.Serializable]
     public class AdsConfigs
     {
+        public bool isUseAdInterOpen = true;
+        public bool isUseAdMrecOpen = true;
+        public bool isUseAdAppOpenOpen = true;
         public bool adInterOnComplete = true;
         public bool adInterOnStart = true;
         public float timePlayToShowAds = 20f;
