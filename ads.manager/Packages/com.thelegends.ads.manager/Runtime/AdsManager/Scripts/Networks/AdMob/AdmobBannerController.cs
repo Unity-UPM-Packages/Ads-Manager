@@ -220,7 +220,7 @@ namespace TheLegends.Base.Ads
         protected override void OnAdsLoadFailed(string message)
         {
             base.OnAdsLoadFailed(message);
-            if (Status == AdsEvents.LoadNotAvailable)
+            if (Status == AdsEvents.LoadNotAvailable && AdsType.Equals(AdsType.Banner))
             {
                 DelayReloadAd(timeAutoReload);
             }
