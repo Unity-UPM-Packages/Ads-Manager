@@ -47,13 +47,7 @@ namespace TheLegends.Base.Ads
 
         protected override void SetShowedConfig()
         {
-            AdsManager.Instance.RegisterMrecConfig(new MrecShowedConfig()
-            {
-                order = this.Order,
-                position = position,
-                adsPos = this.mrecPosition,
-                offset = this.offset,
-            });
+
         }
 
 
