@@ -1,3 +1,10 @@
+## [1.1.28](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.27...v1.1.28) (2025-11-12)
+
+
+### Bug Fixes
+
+* fix Mrec Admob ([73c1a71](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/73c1a716205160a70e087e63b1c0fb73dc90d255))
+
 ## [1.1.27](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.26...v1.1.27) (2025-11-12)
 
 
