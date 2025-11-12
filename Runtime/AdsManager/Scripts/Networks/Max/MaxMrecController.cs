@@ -10,7 +10,6 @@ namespace TheLegends.Base.Ads
 {
     public class MaxMrecController : AdsPlacementBase
     {
-        private string _loadRequestId;
         protected bool isReady = false;
         private Vector2Int adsOffset = Vector2Int.zero;
         private AdsPos adsPos = AdsPos.Bottom;
@@ -88,9 +87,6 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.MRec.OnAdLoadFailedEvent += OnMRecLoadFailedEvent;
                 MaxSdkCallbacks.MRec.OnAdClickedEvent += OnMRecClickedEvent;
                 MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent += OnMRecRevenuePaidEvent;
-
-                _currentLoadRequestId = Guid.NewGuid().ToString();
-                _loadRequestId = _currentLoadRequestId;
 
                 MaxSdk.LoadMRec(adsUnitID);
             }
