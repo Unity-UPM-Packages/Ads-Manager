@@ -29,16 +29,7 @@ namespace TheLegends.Base.Ads
 
         protected override void RegisterConfig()
         {
-            AdsManager.Instance.RegisterNativeMrecConfig(new NativeShowedConfig
-            {
-                order = this.Order,
-                position = position,
-                layoutName = _layoutName,
-                countdown = _storedCountdown,
-                adsPos = _storedPosition,
-                reloadTime = _autoReloadTime,
-                showOnLoaded = _isShowOnLoaded
-            });
+
         }
     }
 }

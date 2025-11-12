@@ -105,10 +105,8 @@ namespace TheLegends.Base.Ads
         }
 
         private List<BannerShowedConfig> bannerShowedConfigs = new List<BannerShowedConfig>();
-        private List<MrecShowedConfig> mrecShowedConfigs = new List<MrecShowedConfig>();
     #if USE_ADMOB
         private List<NativeShowedConfig> nativeBannerShowedConfigs = new List<NativeShowedConfig>();
-        private List<NativeShowedConfig> nativeMrecShowedConfigs = new List<NativeShowedConfig>();
     #endif
 
         private InitiationStatus status = InitiationStatus.NotInitialized;
@@ -382,9 +380,6 @@ namespace TheLegends.Base.Ads
             {
                 network.HideMrec(mrecType, order);
             }
-
-            var config = mrecShowedConfigs.FirstOrDefault(x => x.order == order);
-            UnregisterMrecConfig(config);
         }
 
         public void HideAllMrec()
@@ -392,32 +387,6 @@ namespace TheLegends.Base.Ads
             foreach (var network in adsNetworks)
             {
                 network.HideAllMrec();
-            }
-        }
-
-        public void RegisterMrecConfig(MrecShowedConfig config)
-        {
-            var existedConfig = mrecShowedConfigs.FirstOrDefault(x => x.order == config.order);
-            if (existedConfig != null)
-            {
-                existedConfig = config;
-            }
-            else
-            {
-                mrecShowedConfigs.Add(config);
-            }
-        }
-
-        private void UnregisterMrecConfig(MrecShowedConfig config)
-        {
-            mrecShowedConfigs.RemoveAll(x => x.order == config.order);
-        }
-
-        public void ShowRegisteredMrecs()
-        {
-            foreach (var config in mrecShowedConfigs)
-            {
-                ShowMrec(AdsType.Mrec, config.order, config.adsPos, new Vector2Int((int)config.offset.x, (int)config.offset.y), config.position);
             }
         }
 
@@ -721,9 +690,6 @@ namespace TheLegends.Base.Ads
             {
                 netWork.HideNativeMrec(order);
             }
-
-            var config = nativeMrecShowedConfigs.FirstOrDefault(x => x.order == order);
-            UnregisterNativeMrecConfig(config);
         }
 
         public void HideAllNativeMrec()
@@ -735,35 +701,6 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public void RegisterNativeMrecConfig(NativeShowedConfig config)
-        {
-            var existedConfig = nativeMrecShowedConfigs.FirstOrDefault(x => x.order == config.order);
-            if (existedConfig != null)
-            {
-                existedConfig = config;
-            }
-            else
-            {
-                nativeMrecShowedConfigs.Add(config);
-            }
-        }
-
-        private void UnregisterNativeMrecConfig(NativeShowedConfig config)
-        {
-            nativeMrecShowedConfigs.RemoveAll(x => x.order == config.order);
-        }
-
-        public void ShowRegisteredNativeMrecs()
-        {
-            foreach (var config in nativeMrecShowedConfigs)
-            {
-                ShowNativeMrec(config.order, config.position, config.layoutName)
-                ?.WithPosition(config.adsPos.AdsPos, config.adsPos.Offset)
-                ?.WithAutoReload(config.reloadTime)
-                ?.WithShowOnLoaded(config.showOnLoaded)
-                ?.Execute(); ;
-            }
-        }
 
         #endregion
 
@@ -1121,10 +1058,8 @@ namespace TheLegends.Base.Ads
         public void OnFullScreenAdsClosed()
         {
             ShowRegisteredBanners();
-            ShowRegisteredMrecs();
 #if USE_ADMOB
             ShowRegisteredNativeBanners();
-            ShowRegisteredNativeMrecs();
 #endif
         }
 
