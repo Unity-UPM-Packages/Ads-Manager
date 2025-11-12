@@ -15,8 +15,6 @@ namespace TheLegends.Base.Ads
         public override void HideAds()
         {
 #if USE_ADMOB
-            CancelReloadAds();
-
             if (Status != AdsEvents.ShowSuccess && Status != AdsEvents.Click)
             {
                 AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + " is not showing --> return");
@@ -24,10 +22,10 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (_bannerView != null)
+            if (_mrecView != null)
             {
-                _bannerView.Hide();
-                BannerDestroy();
+                _mrecView.Hide();
+                MRecDestroy();
                 Status = AdsEvents.Close;
             }
 #endif
