@@ -1,13 +1,26 @@
 #if USE_ADMOB
+using System;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
 {
-    public class AdmobMrecController : AdmobBannerController
+    public class AdmobMrecController : AdsPlacementBase
     {
+        protected BannerView _mrecView;
         private Vector2Int offset = new Vector2Int(0, 0);
         private AdsPos mrecPosition = AdsPos.None;
+
+        private bool isShowing = false;
+        public override AdsNetworks GetAdsNetworks()
+        {
+#if USE_ADMOB
+            return AdsNetworks.Admob;
+#else
+        return AdsNetworks.None;
+#endif
+        }
+
         public override AdsType GetAdsType()
         {
 #if USE_ADMOB
@@ -17,39 +30,90 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        protected override void CreateBanner()
+        public override bool IsAdsReady()
         {
 #if USE_ADMOB
-            _bannerView = new BannerView(adsUnitID.Trim(), AdSize.MediumRectangle, AdPosition.Center);
+            return _mrecView != null;
+#else
+        return false;
 #endif
         }
+
+        public override void LoadAds()
+        {
+#if USE_ADMOB
+            if (!IsCanLoadAds())
+            {
+                return;
+            }
+
+            MRecDestroy();
+
+            if (!IsReady)
+            {
+                CreateMRec();
+                _mrecView.Hide();
+
+                _mrecView.OnAdClicked += OnMRecClick;
+                _mrecView.OnAdPaid += OnMRecPaid;
+                _mrecView.OnAdImpressionRecorded += OnMRecImpression;
+                _mrecView.OnBannerAdLoadFailed += OnMRecLoadFailed;
+                _mrecView.OnBannerAdLoaded += OnMRecLoaded;
+
+                base.LoadAds();
+                AdRequest request = new AdRequest();
+
+                _mrecView.LoadAd(request);
+            }
+#endif
+        }
+
+        public override void ShowAds(string showPosition)
+        {
+            base.ShowAds(showPosition);
+#if USE_ADMOB
+            if (IsReady && IsAvailable)
+            {
+                PreShow();
+                _mrecView.Show();
+                OnAdsShowSuccess();
+                isShowing = true;
+            }
+            else
+            {
+                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+                reloadCount = 0;
+                LoadAds();
+            }
+#endif
+        }
+
+        public virtual void HideAds()
+        {
+#if USE_ADMOB
+            if (Status != AdsEvents.ShowSuccess && Status != AdsEvents.Click)
+            {
+                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + " is not showing --> return");
+                return;
+            }
+
+            if (IsReady)
+            {
+                _mrecView.Hide();
+                MRecDestroy();
+                OnAdsClosed();
+                isShowing = false;
+            }
+#endif
+        }
+
 
         public void ShowAds(AdsPos position, Vector2Int offset, string showPosition)
         {
             this.offset = offset;
             this.mrecPosition = position;
-            base.ShowAds(showPosition);
-
+            ShowAds(showPosition);
         }
-
-        protected override void PreShow()
-        {
-#if UNITY_EDITOR
-            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                SetAdCustomPosition(mrecPosition, offset);
-            });
-#else
-            SetAdCustomPosition(mrecPosition, offset);
-#endif
-
-        }
-
-        protected override void SetShowedConfig()
-        {
-
-        }
-
 
         public void SetAdCustomPosition(AdsPos position, Vector2Int offset)
         {
@@ -60,8 +124,8 @@ namespace TheLegends.Base.Ads
 
             var deviceScale = MobileAds.Utils.GetDeviceScale();
 
-            float adWidth = _bannerView.GetWidthInPixels() / deviceScale;
-            float adHeight = _bannerView.GetHeightInPixels() / deviceScale;
+            float adWidth = _mrecView.GetWidthInPixels() / deviceScale;
+            float adHeight = _mrecView.GetHeightInPixels() / deviceScale;
 
             Debug.Log("AAAAA " + "adWidthMrec: " + adWidth + " adHeightMrec: " + adHeight);
 
@@ -116,8 +180,120 @@ namespace TheLegends.Base.Ads
             }
 
 
-            _bannerView.SetPosition(newPos.x, newPos.y);
+            _mrecView.SetPosition(newPos.x, newPos.y);
         }
+
+        #region Internal
+
+        private void PreShow()
+        {
+#if UNITY_EDITOR
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                SetAdCustomPosition(mrecPosition, offset);
+            });
+#else
+            SetAdCustomPosition(mrecPosition, offset);
+#endif
+
+        }
+
+        private void CreateMRec()
+        {
+#if USE_ADMOB
+            _mrecView = new BannerView(adsUnitID.Trim(), AdSize.MediumRectangle, AdPosition.Center);
+#endif
+        }
+
+        private void OnMRecClick()
+        {
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                OnAdsClick();
+            });
+        }
+
+        private void OnMRecPaid(AdValue value)
+        {
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+            });
+        }
+
+        private void OnMRecImpression()
+        {
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                OnImpression();
+            });
+        }
+
+        public void OnMRecLoaded()
+        {
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                if (_loadRequestId != _currentLoadRequestId)
+                {
+                    // If the load request ID does not match, this callback is from a previous request
+                    return;
+                }
+
+#if UNITY_EDITOR
+                _mrecView.Hide();
+#endif
+
+                StopHandleTimeout();
+
+                OnAdsLoadAvailable();
+
+                if (isShowing)
+                {
+                    ShowAds(mrecPosition, offset, position);
+                }
+            });
+
+        }
+
+        private void OnMRecLoadFailed(AdError error)
+        {
+            PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                if (_loadRequestId != _currentLoadRequestId)
+                {
+                    // If the load request ID does not match, this callback is from a previous request
+                    return;
+                }
+
+                StopHandleTimeout();
+
+                var errorDescription = error?.GetMessage();
+                OnAdsLoadFailed(errorDescription);
+            });
+
+        }
+
+        protected void MRecDestroy()
+        {
+#if USE_ADMOB
+            if (IsReady)
+            {
+                try
+                {
+                    _mrecView.Destroy();
+                    _mrecView = null;
+                }
+                catch (Exception ex)
+                {
+                    AdsManager.Instance.LogException(ex);
+                }
+            }
+#endif
+        }
+
+        #endregion
+
+
 
     }
 }
