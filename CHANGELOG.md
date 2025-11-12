@@ -1,3 +1,14 @@
+## [1.1.27](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.26...v1.1.27) (2025-11-12)
+
+
+### Bug Fixes
+
+* Admob: Only reload banner, not mrec ([d429ac6](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/d429ac648b5d5927b93d844188678e7ea39ecf74))
+* disable show mrec after fullscreen ads ([08977a7](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/08977a74f8b69113c586566f9dbe16b023c3ef3f))
+* refactor + improve admob ([cdb9668](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/cdb9668103a1a8df70fa6b4d43153fda5222f0a5))
+* refactor MAX ([c51f1de](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/c51f1de72fdc62e9be4131142b735f23f7e78eeb))
+* remote config interOpen, mrecOpen, AppOpenOpen ([d3d9072](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/d3d9072166abb5d9bc807334be384e2316f8dd57))
+
 ## [1.1.26](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.25...v1.1.26) (2025-11-10)
 
 
