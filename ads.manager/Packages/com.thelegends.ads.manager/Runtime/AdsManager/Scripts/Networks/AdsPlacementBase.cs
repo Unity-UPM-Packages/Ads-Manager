@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
@@ -15,7 +16,9 @@ namespace TheLegends.Base.Ads
 
         protected int reloadCount = 0;
 
-        protected string _currentLoadRequestId;
+        protected string _loadRequestId = "";
+
+        protected string _currentLoadRequestId = "";
 
         protected AdsEvents status;
         public AdsEvents Status
@@ -55,6 +58,10 @@ namespace TheLegends.Base.Ads
         public virtual void LoadAds()
         {
             Status = AdsEvents.LoadRequest;
+
+            _currentLoadRequestId = Guid.NewGuid().ToString();
+            _loadRequestId = _currentLoadRequestId;
+            
             StartHandleTimeout();
         }
 
@@ -125,6 +132,7 @@ namespace TheLegends.Base.Ads
         {
 
             Status = AdsEvents.LoadFail;
+            _currentLoadRequestId = "";
 
             float timeWait = 5f;
 
@@ -156,7 +164,6 @@ namespace TheLegends.Base.Ads
             else
             {
                 Status = AdsEvents.LoadNotAvailable;
-                _currentLoadRequestId = "";
                 reloadCount = 0;
             }
 
@@ -173,6 +180,7 @@ namespace TheLegends.Base.Ads
         protected virtual void OnAdsLoadTimeOut()
         {
             Status = AdsEvents.LoadTimeOut;
+            StopHandleTimeout();
             OnAdsLoadFailed("TimeOut");
         }
 

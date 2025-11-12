@@ -9,7 +9,6 @@ namespace TheLegends.Base.Ads
 {
     public class MaxBannerController : AdsPlacementBase
     {
-        private string _loadRequestId;
         private float timeAutoReload;
 
         private bool isReady = false;
@@ -65,9 +64,6 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.Banner.OnAdLoadFailedEvent += OnBannerLoadFailedEvent;
                 MaxSdkCallbacks.Banner.OnAdClickedEvent += OnBannerClickedEvent;
                 MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent += OnBannerRevenuePaidEvent;
-
-                _currentLoadRequestId = Guid.NewGuid().ToString();
-                _loadRequestId = _currentLoadRequestId;
 
                 MaxSdk.LoadBanner(adsUnitID);
             }

@@ -9,7 +9,6 @@ namespace TheLegends.Base.Ads
 {
     public class MaxRewardedController : AdsPlacementBase
     {
-        private string _loadRequestId;
         private Action OnRewarded;
         private bool isRewarded = false;
 
@@ -61,9 +60,6 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.Rewarded.OnAdHiddenEvent += OnRewardedHiddenEvent;
                 MaxSdkCallbacks.Rewarded.OnAdDisplayFailedEvent += OnRewardedAdFailedToDisplayEvent;
                 MaxSdkCallbacks.Rewarded.OnAdReceivedRewardEvent += OnAdReceivedRewardEvent;
-
-                _currentLoadRequestId = Guid.NewGuid().ToString();
-                _loadRequestId = _currentLoadRequestId;
 
                 MaxSdk.LoadRewardedAd(adsUnitID);
             }

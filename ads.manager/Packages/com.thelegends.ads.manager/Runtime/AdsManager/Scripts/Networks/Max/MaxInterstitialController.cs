@@ -9,8 +9,6 @@ namespace TheLegends.Base.Ads
 {
     public class MaxInterstitialController : AdsPlacementBase
     {
-        private string _loadRequestId;
-
         protected Action OnClose;
 
         public override AdsNetworks GetAdsNetworks()
@@ -59,9 +57,6 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.Interstitial.OnAdClickedEvent += OnInterstitialClickedEvent;
                 MaxSdkCallbacks.Interstitial.OnAdHiddenEvent += OnInterstitialHiddenEvent;
                 MaxSdkCallbacks.Interstitial.OnAdDisplayFailedEvent += OnInterstitialAdFailedToDisplayEvent;
-
-                _currentLoadRequestId = Guid.NewGuid().ToString();
-                _loadRequestId = _currentLoadRequestId;
 
                 MaxSdk.LoadInterstitial(adsUnitID);
             }

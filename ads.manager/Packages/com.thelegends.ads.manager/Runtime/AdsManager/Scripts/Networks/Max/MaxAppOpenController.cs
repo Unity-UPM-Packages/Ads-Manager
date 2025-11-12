@@ -10,7 +10,6 @@ namespace TheLegends.Base.Ads
 {
     public class MaxAppOpenController : AdsPlacementBase
     {
-        private string _loadRequestId;
         protected Action OnClose;
 
         public override AdsNetworks GetAdsNetworks()
@@ -59,9 +58,6 @@ namespace TheLegends.Base.Ads
                 MaxSdkCallbacks.AppOpen.OnAdClickedEvent += OnAppOpenClickedEvent;
                 MaxSdkCallbacks.AppOpen.OnAdHiddenEvent += OnAppOpenHiddenEvent;
                 MaxSdkCallbacks.AppOpen.OnAdDisplayFailedEvent += OnAppOpenDisplayFailedEvent;
-
-                _currentLoadRequestId = Guid.NewGuid().ToString();
-                _loadRequestId = _currentLoadRequestId;
 
                 MaxSdk.LoadAppOpenAd(adsUnitID);
             }
