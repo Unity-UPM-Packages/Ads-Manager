@@ -107,7 +107,7 @@ namespace TheLegends.Base.Ads
             {
                 {"isUseAdInterOpen", AdsManager.Instance.adsConfigs.isUseAdInterOpen},
                 {"isUseAdMrecOpen", AdsManager.Instance.adsConfigs.isUseAdMrecOpen},
-                {"isUseAdAppOpen", AdsManager.Instance.adsConfigs.isUseAdAppOpenOpen},
+                {"isUseAdAppOpenOpen", AdsManager.Instance.adsConfigs.isUseAdAppOpenOpen},
                 {"adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete},
                 {"adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart},
                 {"timePlayToShowAds", AdsManager.Instance.adsConfigs.timePlayToShowAds},
@@ -159,7 +159,7 @@ namespace TheLegends.Base.Ads
             configs.nativeBannerTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("nativeBannerTimeReload", configs.nativeBannerTimeReload);
             configs.isUseAdInterOpen = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdInterOpen", configs.isUseAdInterOpen);
             configs.isUseAdMrecOpen = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdMrecOpen", configs.isUseAdMrecOpen);
-            configs.isUseAdAppOpenOpen = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdAppOpen", configs.isUseAdAppOpenOpen);
+            configs.isUseAdAppOpenOpen = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdAppOpenOpen", configs.isUseAdAppOpenOpen);
         }
 
         private IEnumerator LoadInitialAds()

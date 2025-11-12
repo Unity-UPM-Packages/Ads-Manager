@@ -56,9 +56,6 @@ namespace TheLegends.Base.Ads
 
                 AdRequest request = new AdRequest();
 
-                _currentLoadRequestId = Guid.NewGuid().ToString();
-                string loadRequestId = _currentLoadRequestId;
-
                 var options = new NativeAdOptions
                 {
                     AdChoicesPlacement = AdChoicesPlacement.TopRightCorner,
@@ -75,7 +72,7 @@ namespace TheLegends.Base.Ads
                 NativeOverlayAd.Load(adsUnitID.Trim(), request, options,
                     (NativeOverlayAd ad, LoadAdError error) =>
                     {
-                        if (loadRequestId != _currentLoadRequestId || Status != AdsEvents.LoadRequest)
+                        if (_loadRequestId != _currentLoadRequestId)
                         {
                             // If the load request ID does not match, this callback is from a previous request
                             return;

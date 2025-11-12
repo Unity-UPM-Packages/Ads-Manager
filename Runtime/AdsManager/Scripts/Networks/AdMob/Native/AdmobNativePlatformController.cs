@@ -73,16 +73,13 @@ namespace TheLegends.Base.Ads
 
             AdRequest request = new AdRequest();
 
-            _currentLoadRequestId = Guid.NewGuid().ToString();
-            string loadRequestId = _currentLoadRequestId;
-
             Debug.Log("LoadAds: " + adsUnitID);
 
             AdmobNativePlatform.Load(adsUnitID.Trim(), request, (native, error) =>
             {
                 PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
                 {
-                    if (loadRequestId != _currentLoadRequestId)
+                    if (_loadRequestId != _currentLoadRequestId)
                     {
                         // If the load request ID does not match, this callback is from a previous request
                         return;
