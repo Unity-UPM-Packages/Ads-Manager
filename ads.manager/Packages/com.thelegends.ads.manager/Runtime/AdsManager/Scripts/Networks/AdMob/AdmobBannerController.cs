@@ -8,7 +8,6 @@ namespace TheLegends.Base.Ads
     public class AdmobBannerController : AdsPlacementBase
     {
         protected BannerView _bannerView;
-        private string _loadRequestId;
         private float timeAutoReload;
         private bool isShowOnLoaded = false;
 
@@ -67,9 +66,6 @@ namespace TheLegends.Base.Ads
 
                 base.LoadAds();
                 AdRequest request = new AdRequest();
-
-                _currentLoadRequestId = Guid.NewGuid().ToString();
-                _loadRequestId = _currentLoadRequestId;
 
                 _bannerView.LoadAd(request);
             }
@@ -254,7 +250,7 @@ namespace TheLegends.Base.Ads
             Invoke(nameof(LoadAds), time);
         }
 
-        private void CancelReloadAds()
+        protected void CancelReloadAds()
         {
             CancelInvoke(nameof(LoadAds));
         }

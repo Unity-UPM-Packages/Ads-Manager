@@ -36,13 +36,10 @@ namespace TheLegends.Base.Ads
                 base.LoadAds();
                 AdRequest request = new AdRequest();
 
-                _currentLoadRequestId = Guid.NewGuid().ToString();
-                string loadRequestId = _currentLoadRequestId;
-
                 InterstitialAd.Load(adsUnitID.Trim(), request,
                     (InterstitialAd ad, LoadAdError error) =>
                     {
-                        if (loadRequestId != _currentLoadRequestId || Status != AdsEvents.LoadRequest)
+                        if (_loadRequestId != _currentLoadRequestId)
                         {
                             // If the load request ID does not match, this callback is from a previous request
                             return;

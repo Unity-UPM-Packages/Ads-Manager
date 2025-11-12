@@ -96,8 +96,6 @@ namespace TheLegends.Base.Ads
 
         public Action onClick = null;
 
-        private string _loadRequestId;
-
         protected AdLoader adLoader;
 
 
@@ -395,16 +393,13 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                if (_loadRequestId != _currentLoadRequestId || Status != AdsEvents.LoadRequest)
+                if (_loadRequestId != _currentLoadRequestId)
                 {
                     // If the load request ID does not match, this callback is from a previous request
                     return;
                 }
 
-
                 StopHandleTimeout();
-
-                container.SetActive(isShowOnLoadFailed);
 
                 var errorDescription = error.LoadAdError.GetMessage();
                 OnAdsLoadFailed(errorDescription);
@@ -415,6 +410,7 @@ namespace TheLegends.Base.Ads
         protected override void OnAdsLoadFailed(string message)
         {
             base.OnAdsLoadFailed(message);
+            container.SetActive(isShowOnLoadFailed);
 
             if (Status == AdsEvents.LoadNotAvailable)
             {
