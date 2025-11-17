@@ -1,3 +1,10 @@
+## [1.1.29](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.28...v1.1.29) (2025-11-17)
+
+
+### Bug Fixes
+
+* support for fetching remote data based on the AppsFlyer campaign ID ([87b1917](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/87b1917c65a47a212659cfd77046fec7c42342d8))
+
 ## [1.1.28](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.27...v1.1.28) (2025-11-12)
 
 
