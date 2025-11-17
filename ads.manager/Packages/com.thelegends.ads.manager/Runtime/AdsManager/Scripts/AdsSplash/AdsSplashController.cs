@@ -9,6 +9,7 @@ using TheLegends.Base.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using EditorAttributes;
+using System.Linq;
 
 namespace TheLegends.Base.Ads
 {
@@ -64,11 +65,11 @@ namespace TheLegends.Base.Ads
         {
             UILoadingController.SetProgress(0.2f, null);
 
-            // Initialize AppsFlyer
-            yield return AppsFlyerManager.Instance.DoInit();
-
             // Initialize Firebase with remote config
             yield return InitializeFirebase();
+
+            // Initialize AppsFlyer
+            yield return AppsFlyerManager.Instance.DoInit(OnGetAppsFlyerConversionData);
 
             // Fetch remote data and update configs
             yield return FetchAndUpdateRemoteConfigs();
@@ -93,6 +94,24 @@ namespace TheLegends.Base.Ads
 
             // Complete initialization
             CompleteInitialization();
+        }
+
+        private void OnGetAppsFlyerConversionData(string conversionData)
+        {
+            Dictionary<string, object> conversionDataDictionary = AppsFlyerSDK.AppsFlyer.CallbackStringToDictionary(conversionData);
+
+            var campaign_id = conversionDataDictionary.FirstOrDefault(k => k.Key == "campaign_id").Value as string;
+            if (!string.IsNullOrEmpty(campaign_id))
+            {
+                FirebaseManager.Instance.SetUserProperty("af_campaign_id", campaign_id);
+            } else
+            {
+                if (AdsManager.Instance.SettingsAds.isTest)
+                {
+                    FirebaseManager.Instance.SetUserProperty("af_campaign_id", "campaign_id_test");
+                }
+            }
+            
         }
 
         private IEnumerator InitializeFirebase()
