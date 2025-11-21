@@ -26,6 +26,9 @@ namespace TheLegends.Base.Ads
         
         private List<AdsNetworkBase> adsNetworks = new List<AdsNetworkBase>();
 
+        private readonly WaitForSeconds _initDelay = new WaitForSeconds(0.25f);
+        private readonly WaitForSeconds _showAppOpenDelay = new WaitForSeconds(0.5f);
+
         protected AdsSettings settingsAds = null;
 
         public AdsConfigs adsConfigs;
@@ -134,7 +137,7 @@ namespace TheLegends.Base.Ads
             foreach (var network in adsNetworks)
             {
                 yield return network.DoInit();
-                yield return new WaitForSeconds(0.25f);
+                yield return _initDelay;
             }
 
             status = InitiationStatus.Initialized;
@@ -1075,7 +1078,7 @@ namespace TheLegends.Base.Ads
 
         private IEnumerator IEShowAppOpen()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return _showAppOpenDelay;
             ShowAppOpen(PlacementOrder.One, "Pause");
         }
 

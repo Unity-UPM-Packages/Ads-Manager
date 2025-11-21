@@ -18,6 +18,8 @@ namespace TheLegends.Base.Ads
         [SerializeField]
         private bool isUseSelectBrand = true;
 
+        private readonly WaitForSeconds _loadDelay = new WaitForSeconds(0.5f);
+
         [Space(10)]
         [SerializeField, ShowField(nameof(isUseSelectBrand))]
         private AdsPos mrecOpenPos = AdsPos.CenterLeft;
@@ -79,7 +81,7 @@ namespace TheLegends.Base.Ads
             yield return AdsManager.Instance.DoInit();
 
             UILoadingController.SetProgress(0.4f, null);
-            yield return new WaitForSeconds(0.5f);
+            yield return _loadDelay;
 
             // Load ads based on brand selection settings
             if (isUseSelectBrand)
