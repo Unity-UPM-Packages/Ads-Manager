@@ -140,6 +140,8 @@ namespace TheLegends.Base.Ads
             {
                 case AdsType.InterOpen:
                 case AdsType.MrecOpen:
+                case AdsType.NativeMrecOpen:
+                case AdsType.NativeInterOpen:
                     timeWait = 0.125f;
                     break;
             }
@@ -225,10 +227,6 @@ namespace TheLegends.Base.Ads
         {
             AdsManager.Instance.Log($"{AdsType} " + "ad recorded an impression.");
         }
-
-
-
-
     }
 }
 
