@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "com.thelegends.firebase.manager": "1.0.10",
-    "com.thelegends.appsflyer.manager": "1.0.9",
+    "com.thelegends.appsflyer.manager": "1.0.10",
     "com.thelegends.unity.ui": "1.0.6"
   }
 }
