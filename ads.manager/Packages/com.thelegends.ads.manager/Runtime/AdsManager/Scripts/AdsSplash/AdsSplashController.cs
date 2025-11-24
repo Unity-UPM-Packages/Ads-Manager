@@ -71,7 +71,7 @@ namespace TheLegends.Base.Ads
             yield return InitializeFirebase();
 
             // Initialize AppsFlyer
-            yield return AppsFlyerManager.Instance.DoInit(OnGetAppsFlyerConversionData);
+            yield return InitAppsFlyer();
 
             // Fetch remote data and update configs
             yield return FetchAndUpdateRemoteConfigs();
@@ -98,24 +98,68 @@ namespace TheLegends.Base.Ads
             CompleteInitialization();
         }
 
-        private void OnGetAppsFlyerConversionData(string conversionData)
+        private IEnumerator InitAppsFlyer()
         {
-            Dictionary<string, object> conversionDataDictionary = AppsFlyerSDK.AppsFlyer.CallbackStringToDictionary(conversionData);
-
-            var campaign_id = conversionDataDictionary.FirstOrDefault(k => k.Key == "campaign_id").Value as string;
-            if (!string.IsNullOrEmpty(campaign_id))
+            bool isFetching = true;
+            
+            yield return AppsFlyerManager.Instance.DoInit((conversionData) =>
             {
-                FirebaseManager.Instance.SetUserProperty("af_campaign_id", campaign_id);
-            } else
+                OnGetAppsFlyerConversionData(conversionData);
+                isFetching = false;
+            }, () =>
             {
-                if (AdsManager.Instance.SettingsAds.isTest)
-                {
-                    FirebaseManager.Instance.SetUserProperty("af_campaign_id", "campaign_id_test");
-                }
+                isFetching = false;
+            }); 
+            
+            while (isFetching)
+            {
+                yield return null;
             }
             
         }
 
+        private void OnGetAppsFlyerConversionData(string conversionData)
+        {
+            if (string.IsNullOrEmpty(conversionData))
+            {
+                AdsManager.Instance.Log("AppsFlyer conversion data is null or empty.");
+                return;
+            }
+            
+            Dictionary<string, object> conversionDataDictionary = AppsFlyerSDK.AppsFlyer.CallbackStringToDictionary(conversionData);
+
+            try
+            {
+                var campaign_id = conversionDataDictionary.FirstOrDefault(k => k.Key == "campaign_id").Value as string;
+                
+                if (!string.IsNullOrEmpty(campaign_id))
+                {
+                    FirebaseManager.Instance.SetUserProperty("af_campaign_id", campaign_id);
+                }
+                else
+                {
+                    if (AdsManager.Instance.SettingsAds.isTest)
+                    {
+                        campaign_id = "campaign_id_test";
+                        FirebaseManager.Instance.SetUserProperty("af_campaign_id", "campaign_id_test");
+                    }
+                    else
+                    {
+                        campaign_id = "organic";
+                    }
+                }
+
+                AdsManager.Instance.Log($"AppsFlyer Campaign ID: {campaign_id}");
+                FirebaseManager.Instance.LogEvent("af_campaign_id", new Dictionary<string, object>
+                {
+                    { "campaign_id", campaign_id }
+                });
+            }
+            catch (Exception e)
+            {
+                AdsManager.Instance.LogError("Cannot get AppsFlyer Caimpaign: " + e.Message);
+            }
+        }
         private IEnumerator InitializeFirebase()
         {
             var defaultRemoteConfig = CreateDefaultRemoteConfig();
