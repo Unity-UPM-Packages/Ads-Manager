@@ -1,3 +1,13 @@
+## [1.1.29](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.28...v1.1.29) (2025-11-24)
+
+
+### Bug Fixes
+
+* edit time load NativeMrecOpen + NativeInterOpen ([cce9263](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/cce926360f19100b994b230dd293047fcaf157a0))
+* new AdsSplash ([7f42f05](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/7f42f051c9975c0920f1b61abceda257fddd1480))
+* optimize WaitForSeconds ([b3010da](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/b3010da0a64335ac7ae57d585fd2a641b7a36774))
+* support for fetching remote data based on the AppsFlyer campaign ID ([87b1917](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/87b1917c65a47a212659cfd77046fec7c42342d8))
+
 ## [1.1.28](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.27...v1.1.28) (2025-11-12)
 
 
