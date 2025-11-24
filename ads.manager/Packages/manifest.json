@@ -1,9 +1,8 @@
 {
   "dependencies": {
-    "com.google.ads.mobile": "9.6.0",
     "com.applovin.mediation.ads": "8.1.0",
+    "com.google.ads.mobile": "9.6.0",
     "com.pimdewitte.unitymainthreaddispatcher": "https://github.com/PimDeWitte/UnityMainThreadDispatcher.git",
-    "com.thelegends.appsflyer.manager": "1.0.9",
     "com.thelegends.firebase.manager": "1.0.10",
     "com.thelegends.unity.ui": "1.0.6",
     "com.unity.ide.rider": "3.0.38",
@@ -27,8 +26,8 @@
       "scopes": [
         "com.google",
         "com.thelegends",
-        "com.appsflyer.unity",
-        "com.applovin"
+        "com.applovin",
+        "appsflyer-unity-plugin"
       ]
     },
     {
