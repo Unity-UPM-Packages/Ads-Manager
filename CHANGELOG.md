@@ -1,3 +1,10 @@
+## [1.1.30](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.29...v1.1.30) (2025-11-27)
+
+
+### Bug Fixes
+
+* fix admob native unity not clickable caused by not get correct dimension ([e4983eb](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/e4983eb5284543c0e0883e27ffe5f6c9ccdf6d89))
+
 ## [1.1.29](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.28...v1.1.29) (2025-11-24)
 
 
