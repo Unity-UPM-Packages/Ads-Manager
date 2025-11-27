@@ -241,8 +241,8 @@ namespace TheLegends.Base.Ads
                 _nativeAd.OnPaidEvent += OnAdsPaid;
                 OnAdsShowSuccess();
                 isCLosedByHide = false;
-                FetchData();
                 container.SetActive(true);
+                FetchData();
                 CancelReloadAds();
                 DelayReloadAd(timeAutoReload);
             }
