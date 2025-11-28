@@ -1,3 +1,10 @@
+## [1.1.31](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.30...v1.1.31) (2025-11-28)
+
+
+### Bug Fixes
+
+* update admob native icon size ([fb3f8d1](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/fb3f8d1ab288eb4325d1fcf8bc445c494813c57c))
+
 ## [1.1.30](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.29...v1.1.30) (2025-11-27)
 
 
