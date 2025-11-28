@@ -18,58 +18,49 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (!IsReady)
+            // For InterstitialAd, we should not destroy the old ad before loading a new one.
+            // The ad object is for one-time use. After it's shown, it's automatically invalidated.
+            // We only need to load a new one if the current one is not ready.
+            if (IsReady)
             {
-                if (_interstitialAd != null)
-                {
-                    try
-                    {
-                        _interstitialAd.Destroy();
-                        _interstitialAd = null;
-                    }
-                    catch (Exception ex)
-                    {
-                        AdsManager.Instance.LogException(ex);
-                    }
-                }
-
-                base.LoadAds();
-                AdRequest request = new AdRequest();
-
-                InterstitialAd.Load(adsUnitID.Trim(), request,
-                    (InterstitialAd ad, LoadAdError error) =>
-                    {
-                        if (_loadRequestId != _currentLoadRequestId)
-                        {
-                            // If the load request ID does not match, this callback is from a previous request
-                            return;
-                        }
-
-                        StopHandleTimeout();
-
-                        // if error is not null, the load request failed.
-                        if (error != null)
-                        {
-                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
-                            OnInterLoadFailed(error);
-                            return;
-                        }
-
-                        if (ad == null)
-                        {
-                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
-                            OnInterLoadFailed(error);
-                            return;
-                        }
-
-                        AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
-
-                        _interstitialAd = ad;
-
-                        OnAdsLoadAvailable();
-
-                    });
+                return;
             }
+
+            base.LoadAds();
+            AdRequest request = new AdRequest();
+
+            InterstitialAd.Load(adsUnitID.Trim(), request,
+                (InterstitialAd ad, LoadAdError error) =>
+                {
+                    if (_loadRequestId != _currentLoadRequestId)
+                    {
+                        // If the load request ID does not match, this callback is from a previous request
+                        return;
+                    }
+
+                    StopHandleTimeout();
+
+                    // if error is not null, the load request failed.
+                    if (error != null)
+                    {
+                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
+                        OnInterLoadFailed(error);
+                        return;
+                    }
+
+                    if (ad == null)
+                    {
+                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
+                        OnInterLoadFailed(error);
+                        return;
+                    }
+
+                    AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
+
+                    _interstitialAd = ad;
+
+                    OnAdsLoadAvailable();
+                });
 #else
 
 #endif
@@ -184,11 +175,19 @@ namespace TheLegends.Base.Ads
                 {
                     OnClose?.Invoke();
                     OnClose = null;
+
+                    _interstitialAd.OnAdClicked -= OnInterClick;
+                    _interstitialAd.OnAdPaid -= OnInterPaid;
+                    _interstitialAd.OnAdImpressionRecorded -= OnInterImpression;
+                    _interstitialAd.OnAdFullScreenContentClosed -= OnInterClosed;
+                    _interstitialAd.OnAdFullScreenContentFailed -= OnInterShowFailed;
+                    _interstitialAd.OnAdFullScreenContentOpened -= OnInterShowSuccess;
+
                     AdsManager.Instance.OnFullScreenAdsClosed();
                 });
 
                 OnAdsClosed();
-            });
+                            });
         }
 
         private void OnInterPaid(AdValue value)

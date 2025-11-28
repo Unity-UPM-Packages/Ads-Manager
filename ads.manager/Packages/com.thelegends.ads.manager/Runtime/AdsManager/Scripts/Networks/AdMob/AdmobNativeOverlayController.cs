@@ -352,6 +352,12 @@ namespace TheLegends.Base.Ads
             {
                 try
                 {
+                    _nativeOverlayAd.OnAdClicked -= OnNativeOverlayClick;
+                    _nativeOverlayAd.OnAdPaid -= OnNativeOverlayPaid;
+                    _nativeOverlayAd.OnAdImpressionRecorded -= OnNativeOverlayImpression;
+                    _nativeOverlayAd.OnAdFullScreenContentClosed -= OnNativeOverlayClosed;
+                    _nativeOverlayAd.OnAdFullScreenContentOpened -= OnNativeOverlayShowSuccess;
+
                     _nativeOverlayAd.Destroy();
                     _nativeOverlayAd = null;
                 }

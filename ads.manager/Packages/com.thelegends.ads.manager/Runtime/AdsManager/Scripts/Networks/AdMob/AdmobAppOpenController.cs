@@ -45,67 +45,57 @@ namespace TheLegends.Base.Ads
 
         public override void LoadAds()
         {
-#if true
-            if(!IsCanLoadAds())
+#if USE_ADMOB
+            if (!IsCanLoadAds())
             {
                 return;
             }
 
-            if (!IsReady)
+            if (IsReady)
             {
-                if (_appOpenAd != null)
-                {
-                    try
-                    {
-                        _appOpenAd.Destroy();
-                        _appOpenAd = null;
-                    }
-                    catch (Exception ex)
-                    {
-                        AdsManager.Instance.LogException(ex);
-                    }
-                }
-
-                base.LoadAds();
-                AdRequest request = new AdRequest();
-
-                AppOpenAd.Load(adsUnitID.Trim(), request,
-                    (AppOpenAd ad, LoadAdError error) =>
-                    {
-                        if (_loadRequestId != _currentLoadRequestId)
-                        {
-                            // If the load request ID does not match, this callback is from a previous request
-                            return;
-                        }
-
-                        StopHandleTimeout();
-
-                        // if error is not null, the load request failed.
-                        if(error != null)
-                        {
-                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "failed to load with error : " + error);
-                            OnAppOpenLoadFailed(error);
-                            return;
-                        }
-
-                        if(ad == null)
-                        {
-                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
-                            OnAppOpenLoadFailed(error);
-                            return;
-                        }
-
-                        AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
-
-                        _appOpenAd = ad;
-
-                        OnAdsLoadAvailable();
-
-                    });
+                return;
             }
+
+            base.LoadAds();
+            AdRequest request = new AdRequest();
+
+            AppOpenAd.Load(adsUnitID.Trim(), request,
+                (AppOpenAd ad, LoadAdError error) =>
+                {
+                    if (_loadRequestId != _currentLoadRequestId)
+                    {
+                        // If the load request ID does not match, this callback is from a previous request
+                        return;
+                    }
+
+                    StopHandleTimeout();
+
+                    // if error is not null, the load request failed.
+                    if (error != null)
+                    {
+                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "failed to load with error : " + error);
+                        OnAppOpenLoadFailed(error);
+                        return;
+                    }
+
+                    if (ad == null)
+                    {
+                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
+                        OnAppOpenLoadFailed(error);
+                        return;
+                    }
+
+                    AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
+
+                    _appOpenAd = ad;
+
+                    OnAdsLoadAvailable();
+
+                });
+        }
 #endif
 
-        }
+        
 
 
         public void ShowAds(string showPosition, Action OnClose = null)
@@ -183,6 +173,14 @@ namespace TheLegends.Base.Ads
                 {
                     OnClose?.Invoke();
                     OnClose = null;
+
+                    _appOpenAd.OnAdClicked -= OnAppOpenClick;
+                    _appOpenAd.OnAdPaid -= OnAdsPaid;
+                    _appOpenAd.OnAdImpressionRecorded -= OnAppOpenImpression;
+                    _appOpenAd.OnAdFullScreenContentClosed -= OnAppOpenClosed;
+                    _appOpenAd.OnAdFullScreenContentFailed -= OnAppOpenShowFailed;
+                    _appOpenAd.OnAdFullScreenContentOpened -= OnAppOpenShowSuccess;
+
                     AdsManager.Instance.OnFullScreenAdsClosed();
                 });
                 OnAdsClosed();
