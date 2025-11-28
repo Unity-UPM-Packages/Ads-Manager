@@ -51,59 +51,50 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (!IsReady)
+            if (IsReady)
             {
-                if (_rewardedAd != null)
-                {
-                    try
-                    {
-                        _rewardedAd.Destroy();
-                        _rewardedAd = null;
-                    }
-                    catch (Exception ex)
-                    {
-                        AdsManager.Instance.LogException(ex);
-                    }
-                }
-
-                base.LoadAds();
-                AdRequest request = new AdRequest();
-
-                RewardedAd.Load(adsUnitID.Trim(), request,
-                    (RewardedAd ad, LoadAdError error) =>
-                    {
-                        if (_loadRequestId != _currentLoadRequestId)
-                        {
-                            // If the load request ID does not match, this callback is from a previous request
-                            return;
-                        }
-
-                        StopHandleTimeout();
-
-                        // if error is not null, the load request failed.
-                        if(error != null)
-                        {
-                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
-                            OnRewardedLoadFailed(error);
-                            return;
-                        }
-
-                        if(ad == null)
-                        {
-                            AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
-                            OnRewardedLoadFailed(error);
-                            return;
-                        }
-
-                        AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
-
-                        _rewardedAd = ad;
-
-                        OnAdsLoadAvailable();
-                    });
+                return;
             }
-#endif
+
+
+            base.LoadAds();
+            AdRequest request = new AdRequest();
+
+            RewardedAd.Load(adsUnitID.Trim(), request,
+                (RewardedAd ad, LoadAdError error) =>
+                {
+                    if (_loadRequestId != _currentLoadRequestId)
+                    {
+                        // If the load request ID does not match, this callback is from a previous request
+                        return;
+                    }
+
+                    StopHandleTimeout();
+
+                    // if error is not null, the load request failed.
+                    if (error != null)
+                    {
+                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
+                        OnRewardedLoadFailed(error);
+                        return;
+                    }
+
+                    if (ad == null)
+                    {
+                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
+                        OnRewardedLoadFailed(error);
+                        return;
+                    }
+
+                    AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
+
+                    _rewardedAd = ad;
+
+                    OnAdsLoadAvailable();
+                });
         }
+#endif
+
 
         public void ShowAds(string showPosition, Action OnRewarded = null)
         {
@@ -193,6 +184,14 @@ namespace TheLegends.Base.Ads
                 {
                     OnRewarded?.Invoke();
                     OnRewarded = null;
+
+                    _rewardedAd.OnAdClicked -= OnRewardClick;
+                    _rewardedAd.OnAdPaid -= OnRewardPaid;
+                    _rewardedAd.OnAdImpressionRecorded -= OnRewardImpression;
+                    _rewardedAd.OnAdFullScreenContentClosed -= OnRewardedClosed;
+                    _rewardedAd.OnAdFullScreenContentFailed -= OnRewardedShowFailed;
+                    _rewardedAd.OnAdFullScreenContentOpened -= OnRewardShowSuccess;
+
                     AdsManager.Instance.OnFullScreenAdsClosed();
                 });
                 OnAdsClosed();

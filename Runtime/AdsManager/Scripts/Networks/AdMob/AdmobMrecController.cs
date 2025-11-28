@@ -280,6 +280,12 @@ namespace TheLegends.Base.Ads
             {
                 try
                 {
+                    _mrecView.OnAdClicked -= OnMRecClick;
+                    _mrecView.OnAdPaid -= OnMRecPaid;
+                    _mrecView.OnAdImpressionRecorded -= OnMRecImpression;
+                    _mrecView.OnBannerAdLoadFailed -= OnMRecLoadFailed;
+                    _mrecView.OnBannerAdLoaded -= OnMRecLoaded;
+
                     _mrecView.Destroy();
                     _mrecView = null;
                 }

@@ -233,6 +233,12 @@ namespace TheLegends.Base.Ads
             {
                 try
                 {
+                    _bannerView.OnAdClicked -= OnBannerClick;
+                    _bannerView.OnAdPaid -= OnBannerPaid;
+                    _bannerView.OnAdImpressionRecorded -= OnBannerImpression;
+                    _bannerView.OnBannerAdLoadFailed -= OnBannerLoadFailed;
+                    _bannerView.OnBannerAdLoaded -= OnBannerLoaded;
+
                     _bannerView.Destroy();
                     _bannerView = null;
                     CancelReloadAds();
