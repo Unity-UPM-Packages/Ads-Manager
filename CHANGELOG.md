@@ -1,3 +1,10 @@
+## [1.1.32](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.31...v1.1.32) (2025-12-01)
+
+
+### Bug Fixes
+
+* improve admob event subscription ([9e5fdb3](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/9e5fdb31a6941f0c1bb89cedcca1523076c61167))
+
 ## [1.1.31](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.30...v1.1.31) (2025-11-28)
 
 
