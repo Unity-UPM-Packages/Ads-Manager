@@ -1,3 +1,10 @@
+## [1.1.33](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.32...v1.1.33) (2025-12-01)
+
+
+### Bug Fixes
+
+* edit layout native banner ([931f2e3](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/931f2e39424a849e6fa3e9fb8813e9b0c133b3f2))
+
 ## [1.1.32](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.31...v1.1.32) (2025-12-01)
 
 
