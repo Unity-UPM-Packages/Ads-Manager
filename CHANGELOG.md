@@ -1,3 +1,10 @@
+## [1.1.34](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.33...v1.1.34) (2025-12-04)
+
+
+### Bug Fixes
+
+* change cta btn width native_banner ([66a7392](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/66a739296190315cb9cfa0c790ec90ca14371d7c))
+
 ## [1.1.33](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.32...v1.1.33) (2025-12-01)
 
 
