@@ -52,7 +52,6 @@ namespace TheLegends.Base.Ads
             if (!IsReady)
             {
                 CreateMRec();
-                _mrecView.Hide();
 
                 _mrecView.OnAdClicked += OnMRecClick;
                 _mrecView.OnAdPaid += OnMRecPaid;
@@ -233,6 +232,8 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
+                _mrecView.Hide();
+                
                 if (_loadRequestId != _currentLoadRequestId)
                 {
                     // If the load request ID does not match, this callback is from a previous request
