@@ -185,16 +185,18 @@ namespace TheLegends.Base.Ads
                     OnRewarded?.Invoke();
                     OnRewarded = null;
 
-                    _rewardedAd.OnAdClicked -= OnRewardClick;
-                    _rewardedAd.OnAdPaid -= OnRewardPaid;
-                    _rewardedAd.OnAdImpressionRecorded -= OnRewardImpression;
-                    _rewardedAd.OnAdFullScreenContentClosed -= OnRewardedClosed;
-                    _rewardedAd.OnAdFullScreenContentFailed -= OnRewardedShowFailed;
-                    _rewardedAd.OnAdFullScreenContentOpened -= OnRewardShowSuccess;
-
                     AdsManager.Instance.OnFullScreenAdsClosed();
                 });
+
+                _rewardedAd.OnAdClicked -= OnRewardClick;
+                _rewardedAd.OnAdPaid -= OnRewardPaid;
+                _rewardedAd.OnAdImpressionRecorded -= OnRewardImpression;
+                _rewardedAd.OnAdFullScreenContentClosed -= OnRewardedClosed;
+                _rewardedAd.OnAdFullScreenContentFailed -= OnRewardedShowFailed;
+                _rewardedAd.OnAdFullScreenContentOpened -= OnRewardShowSuccess;
+
                 OnAdsClosed();
+
             });
         }
 

@@ -174,16 +174,18 @@ namespace TheLegends.Base.Ads
                     OnClose?.Invoke();
                     OnClose = null;
 
-                    _appOpenAd.OnAdClicked -= OnAppOpenClick;
-                    _appOpenAd.OnAdPaid -= OnAdsPaid;
-                    _appOpenAd.OnAdImpressionRecorded -= OnAppOpenImpression;
-                    _appOpenAd.OnAdFullScreenContentClosed -= OnAppOpenClosed;
-                    _appOpenAd.OnAdFullScreenContentFailed -= OnAppOpenShowFailed;
-                    _appOpenAd.OnAdFullScreenContentOpened -= OnAppOpenShowSuccess;
-
                     AdsManager.Instance.OnFullScreenAdsClosed();
                 });
+
+                _appOpenAd.OnAdClicked -= OnAppOpenClick;
+                _appOpenAd.OnAdPaid -= OnAdsPaid;
+                _appOpenAd.OnAdImpressionRecorded -= OnAppOpenImpression;
+                _appOpenAd.OnAdFullScreenContentClosed -= OnAppOpenClosed;
+                _appOpenAd.OnAdFullScreenContentFailed -= OnAppOpenShowFailed;
+                _appOpenAd.OnAdFullScreenContentOpened -= OnAppOpenShowSuccess;
+
                 OnAdsClosed();
+
             });
         }
 
