@@ -18,9 +18,6 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            // For InterstitialAd, we should not destroy the old ad before loading a new one.
-            // The ad object is for one-time use. After it's shown, it's automatically invalidated.
-            // We only need to load a new one if the current one is not ready.
             if (IsReady)
             {
                 return;
@@ -176,18 +173,18 @@ namespace TheLegends.Base.Ads
                     OnClose?.Invoke();
                     OnClose = null;
 
-                    _interstitialAd.OnAdClicked -= OnInterClick;
-                    _interstitialAd.OnAdPaid -= OnInterPaid;
-                    _interstitialAd.OnAdImpressionRecorded -= OnInterImpression;
-                    _interstitialAd.OnAdFullScreenContentClosed -= OnInterClosed;
-                    _interstitialAd.OnAdFullScreenContentFailed -= OnInterShowFailed;
-                    _interstitialAd.OnAdFullScreenContentOpened -= OnInterShowSuccess;
-
                     AdsManager.Instance.OnFullScreenAdsClosed();
                 });
 
+                _interstitialAd.OnAdClicked -= OnInterClick;
+                _interstitialAd.OnAdPaid -= OnInterPaid;
+                _interstitialAd.OnAdImpressionRecorded -= OnInterImpression;
+                _interstitialAd.OnAdFullScreenContentClosed -= OnInterClosed;
+                _interstitialAd.OnAdFullScreenContentFailed -= OnInterShowFailed;
+                _interstitialAd.OnAdFullScreenContentOpened -= OnInterShowSuccess;
+
                 OnAdsClosed();
-                            });
+            });
         }
 
         private void OnInterPaid(AdValue value)
