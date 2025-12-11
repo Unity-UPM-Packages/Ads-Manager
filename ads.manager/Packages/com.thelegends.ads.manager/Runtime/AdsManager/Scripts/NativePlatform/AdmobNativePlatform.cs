@@ -65,12 +65,7 @@ namespace TheLegends.Base.Ads
         }
 
         public void Show(string layoutName) => _client?.ShowAd(layoutName);
-        public void Destroy()
-        {
-            if (_client == null) return;
-            UnregisterAdEvents();
-            _client.DestroyAd();
-        }
+        public void Destroy() => _client?.DestroyAd();
         public bool IsAdAvailable() => _client != null && _client.IsAdAvailable();
 
         #region Builder Pattern Support - Forward to Native
@@ -92,55 +87,22 @@ namespace TheLegends.Base.Ads
             return _client.GetResponseInfoClient();
         }
 
-
         private void RegisterAdEvents()
         {
             if (_client == null) return;
-            _client.OnPaidEvent += HandlePaidEvent;
-            _client.OnAdClicked += HandleAdClicked;
-            _client.OnAdDidRecordImpression += HandleAdDidRecordImpression;
-            _client.OnVideoStart += HandleVideoStart;
-            _client.OnVideoEnd += HandleVideoEnd;
-            _client.OnVideoMute += HandleVideoMute;
-            _client.OnVideoPlay += HandleVideoPlay;
-            _client.OnVideoPause += HandleVideoPause;
-            _client.OnAdClosed += HandleAdClosed;
-            _client.OnAdShow += HandleAdShow;
-            _client.OnAdShowedFullScreenContent += HandleAdShowedFullScreenContent;
-            _client.OnAdDismissedFullScreenContent += HandleAdDismissedFullScreenContent;
+            _client.OnPaidEvent += (adValue) => OnAdPaid?.Invoke(adValue);
+            _client.OnAdClicked += () => OnAdClicked?.Invoke();
+            _client.OnAdDidRecordImpression += (sender, args) => OnAdDidRecordImpression?.Invoke(this, args);
+            _client.OnVideoStart += () => OnVideoStart?.Invoke();
+            _client.OnVideoEnd += () => OnVideoEnd?.Invoke();
+            _client.OnVideoMute += (sender, isMuted) => OnVideoMute?.Invoke(this, isMuted);
+            _client.OnVideoPlay += () => OnVideoPlay?.Invoke();
+            _client.OnVideoPause += () => OnVideoPause?.Invoke();
+            _client.OnAdClosed += () => OnAdClosed?.Invoke();
+            _client.OnAdShow += () => OnAdShow?.Invoke();
+            _client.OnAdShowedFullScreenContent += () => OnAdShowedFullScreenContent?.Invoke();
+            _client.OnAdDismissedFullScreenContent += () => OnAdDismissedFullScreenContent?.Invoke();
         }
-
-        private void UnregisterAdEvents()
-        {
-            if (_client == null) return;
-            _client.OnPaidEvent -= HandlePaidEvent;
-            _client.OnAdClicked -= HandleAdClicked;
-            _client.OnAdDidRecordImpression -= HandleAdDidRecordImpression;
-            _client.OnVideoStart -= HandleVideoStart;
-            _client.OnVideoEnd -= HandleVideoEnd;
-            _client.OnVideoMute -= HandleVideoMute;
-            _client.OnVideoPlay -= HandleVideoPlay;
-            _client.OnVideoPause -= HandleVideoPause;
-            _client.OnAdClosed -= HandleAdClosed;
-            _client.OnAdShow -= HandleAdShow;
-            _client.OnAdShowedFullScreenContent -= HandleAdShowedFullScreenContent;
-            _client.OnAdDismissedFullScreenContent -= HandleAdDismissedFullScreenContent;
-        }
-
-
-        private void HandlePaidEvent(AdValue adValue) => OnAdPaid?.Invoke(adValue);
-        private void HandleAdClicked() => OnAdClicked?.Invoke();
-        private void HandleAdDidRecordImpression(object sender, EventArgs args) => OnAdDidRecordImpression?.Invoke(this, args);
-        private void HandleVideoStart() => OnVideoStart?.Invoke();
-        private void HandleVideoEnd() => OnVideoEnd?.Invoke();
-        private void HandleVideoMute(object sender, bool isMuted) => OnVideoMute?.Invoke(this, isMuted);
-        private void HandleVideoPlay() => OnVideoPlay?.Invoke();
-        private void HandleVideoPause() => OnVideoPause?.Invoke();
-        private void HandleAdClosed() => OnAdClosed?.Invoke();
-        private void HandleAdShow() => OnAdShow?.Invoke();
-        private void HandleAdShowedFullScreenContent() => OnAdShowedFullScreenContent?.Invoke();
-        private void HandleAdDismissedFullScreenContent() => OnAdDismissedFullScreenContent?.Invoke();
-
     }
 }
 
