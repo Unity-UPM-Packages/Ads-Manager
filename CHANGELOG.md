@@ -1,3 +1,12 @@
+## [1.1.35](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.34...v1.1.35) (2025-12-11)
+
+
+### Bug Fixes
+
+* edit mrec/banner Load ([a349c06](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/a349c068dc138c4050dd97e53eb209da3eaf6d98))
+* Improve ads closed event ([c8c3587](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/c8c3587050bf7fb0d3de515b23dbeef6d5547f07))
+* improve native ([83d4f21](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/83d4f216c91ad0a97b2dfcc81f0ad8a8bd9371e4))
+
 ## [1.1.34](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.33...v1.1.34) (2025-12-04)
 
 
