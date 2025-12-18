@@ -184,8 +184,13 @@ namespace TheLegends.Base.Ads
                 _appOpenAd.OnAdFullScreenContentFailed -= OnAppOpenShowFailed;
                 _appOpenAd.OnAdFullScreenContentOpened -= OnAppOpenShowSuccess;
 
-                OnAdsClosed();
+                if (_appOpenAd != null)
+                {
+                    _appOpenAd.Destroy();
+                    _appOpenAd = null;
+                }
 
+                OnAdsClosed();
             });
         }
 

@@ -183,6 +183,12 @@ namespace TheLegends.Base.Ads
                 _interstitialAd.OnAdFullScreenContentFailed -= OnInterShowFailed;
                 _interstitialAd.OnAdFullScreenContentOpened -= OnInterShowSuccess;
 
+                if (_interstitialAd != null)
+                {
+                    _interstitialAd.Destroy();
+                    _interstitialAd = null;
+                }
+
                 OnAdsClosed();
             });
         }
