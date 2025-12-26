@@ -14,9 +14,18 @@ namespace TheLegends.Base.Ads
 
         protected override void OnInterClosed()
         {
+#if USE_ADMOB
             OnClose?.Invoke();
             OnClose = null;
             Status = AdsEvents.Close;
+#endif
+        }
+
+        protected override void SetTimeOut()
+        {
+#if USE_ADMOB
+            timeOut = AdsManager.Instance.adsConfigs.adInterOpenTimeOut;
+#endif
         }
     }
 

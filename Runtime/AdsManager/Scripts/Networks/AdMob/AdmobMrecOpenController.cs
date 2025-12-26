@@ -31,6 +31,13 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
+        protected override void SetTimeOut()
+        {
+#if USE_ADMOB
+            timeOut = AdsManager.Instance.adsConfigs.adMrecOpenTimeOut;
+#endif
+        }
+
     }
 }
 

@@ -23,7 +23,7 @@ namespace TheLegends.Base.Ads
         {
             get { return adsCamera; }
         }
-        
+
         private List<AdsNetworkBase> adsNetworks = new List<AdsNetworkBase>();
 
         private readonly WaitForSeconds _initDelay = new WaitForSeconds(0.25f);
@@ -108,12 +108,12 @@ namespace TheLegends.Base.Ads
         }
 
         private List<BannerShowedConfig> bannerShowedConfigs = new List<BannerShowedConfig>();
-    #if USE_ADMOB
+#if USE_ADMOB
         private List<NativeShowedConfig> nativeBannerShowedConfigs = new List<NativeShowedConfig>();
-    #endif
+#endif
 
         private InitiationStatus status = InitiationStatus.NotInitialized;
-        
+
 
         public IEnumerator DoInit()
         {
@@ -124,7 +124,7 @@ namespace TheLegends.Base.Ads
                 yield break;
             }
 
-            if(status == InitiationStatus.Initialized)
+            if (status == InitiationStatus.Initialized)
             {
                 LogError("AdsManager already initialized");
                 yield break;
@@ -158,7 +158,7 @@ namespace TheLegends.Base.Ads
                 network.LoadInterstitial(interType, order);
             }
 
-            
+
         }
 
         public void ShowInterstitial(AdsType interType, PlacementOrder order, string position, Action OnClose = null)
@@ -1057,7 +1057,7 @@ namespace TheLegends.Base.Ads
             HideAllNativeMrec();
 #endif
         }
-        
+
         public void OnFullScreenAdsClosed()
         {
             ShowRegisteredBanners();
@@ -1242,8 +1242,11 @@ namespace TheLegends.Base.Ads
     public class AdsConfigs
     {
         public bool isUseAdInterOpen = true;
+        public float adInterOpenTimeOut = 5f;
         public bool isUseAdMrecOpen = true;
+        public float adMrecOpenTimeOut = 5f;
         public bool isUseAdAppOpenOpen = true;
+        public float adAppOpenOpenTimeOut = 5f;
         public bool adInterOnComplete = true;
         public bool adInterOnStart = true;
         public float timePlayToShowAds = 20f;
