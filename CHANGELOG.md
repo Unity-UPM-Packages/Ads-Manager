@@ -1,3 +1,12 @@
+## [1.1.36](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.35...v1.1.36) (2025-12-26)
+
+
+### Bug Fixes
+
+* improve destroy admob appopen, interstitial and rewarded ([3d89349](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/3d89349638a8919f7faa43717694af4d72520ad6))
+* replace Invoke with Coroutine ([769a944](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/769a944421205a24bbe67c8cb5c85803799e312b))
+* separate timeout for InterOpen & MrecOpen ([60c29cf](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/60c29cf7ce1118ca346986dcd53cc28b84328b44))
+
 ## [1.1.35](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.34...v1.1.35) (2025-12-11)
 
 
