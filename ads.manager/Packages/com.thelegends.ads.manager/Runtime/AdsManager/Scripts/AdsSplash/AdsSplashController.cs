@@ -1,15 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using EditorAttributes;
 using TheLegends.Base.AppsFlyer;
 using TheLegends.Base.Firebase;
-using UnityEngine;
-
 using TheLegends.Base.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine;
 using UnityEngine.Events;
-using EditorAttributes;
-using System.Linq;
+using UnityEngine.SceneManagement;
 
 namespace TheLegends.Base.Ads
 {
@@ -101,7 +100,7 @@ namespace TheLegends.Base.Ads
         private IEnumerator InitAppsFlyer()
         {
             bool isFetching = true;
-            
+
             yield return AppsFlyerManager.Instance.DoInit((conversionData) =>
             {
                 OnGetAppsFlyerConversionData(conversionData);
@@ -109,13 +108,13 @@ namespace TheLegends.Base.Ads
             }, () =>
             {
                 isFetching = false;
-            }); 
-            
+            });
+
             while (isFetching)
             {
                 yield return null;
             }
-            
+
         }
 
         private void OnGetAppsFlyerConversionData(string conversionData)
@@ -125,13 +124,13 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.Log("AppsFlyer conversion data is null or empty.");
                 return;
             }
-            
+
             Dictionary<string, object> conversionDataDictionary = AppsFlyerSDK.AppsFlyer.CallbackStringToDictionary(conversionData);
 
             try
             {
                 var campaign_id = conversionDataDictionary.FirstOrDefault(k => k.Key == "campaign_id").Value as string;
-                
+
                 if (!string.IsNullOrEmpty(campaign_id))
                 {
                     FirebaseManager.Instance.SetUserProperty("af_campaign_id", campaign_id);
@@ -171,7 +170,9 @@ namespace TheLegends.Base.Ads
             var config = new Dictionary<string, object>
             {
                 {"isUseAdInterOpen", AdsManager.Instance.adsConfigs.isUseAdInterOpen},
+                {"adInterOpenTimeOut", AdsManager.Instance.adsConfigs.adInterOpenTimeOut},
                 {"isUseAdMrecOpen", AdsManager.Instance.adsConfigs.isUseAdMrecOpen},
+                {"adMrecOpenTimeOut", AdsManager.Instance.adsConfigs.adMrecOpenTimeOut},
                 {"isUseAdAppOpenOpen", AdsManager.Instance.adsConfigs.isUseAdAppOpenOpen},
                 {"adInterOnComplete", AdsManager.Instance.adsConfigs.adInterOnComplete},
                 {"adInterOnStart", AdsManager.Instance.adsConfigs.adInterOnStart},
@@ -223,7 +224,9 @@ namespace TheLegends.Base.Ads
             configs.nativeVideoCloseClickableDelay = FirebaseManager.Instance.RemoteGetValueFloat("nativeVideoCloseClickableDelay", configs.nativeVideoCloseClickableDelay);
             configs.nativeBannerTimeReload = FirebaseManager.Instance.RemoteGetValueFloat("nativeBannerTimeReload", configs.nativeBannerTimeReload);
             configs.isUseAdInterOpen = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdInterOpen", configs.isUseAdInterOpen);
+            configs.adInterOpenTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adInterOpenTimeOut", configs.adInterOpenTimeOut);
             configs.isUseAdMrecOpen = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdMrecOpen", configs.isUseAdMrecOpen);
+            configs.adMrecOpenTimeOut = FirebaseManager.Instance.RemoteGetValueFloat("adMrecOpenTimeOut", configs.adMrecOpenTimeOut);
             configs.isUseAdAppOpenOpen = FirebaseManager.Instance.RemoteGetValueBoolean("isUseAdAppOpenOpen", configs.isUseAdAppOpenOpen);
         }
 
@@ -267,7 +270,7 @@ namespace TheLegends.Base.Ads
                 }
 
             }
-            
+
             if (AdsManager.Instance.adsConfigs.isUseAdAppOpenOpen
                 && !AdsManager.Instance.adsConfigs.isUseAdInterOpen)
             {
@@ -366,7 +369,9 @@ namespace TheLegends.Base.Ads
             if (canShowSelectBrand && AdsManager.Instance.adsConfigs.isUseAdMrecOpen)
             {
                 ShowBrandScreen();
-            } else {
+            }
+            else
+            {
                 CompleteSplash();
             }
 
@@ -377,7 +382,7 @@ namespace TheLegends.Base.Ads
         private void ShowBrandScreen()
         {
             if (!AdsManager.Instance.adsConfigs.isUseAdMrecOpen) return;
-            
+
             if (AdsManager.Instance.GetAdsStatus(AdsType.NativeMrecOpen, PlacementOrder.One) == AdsEvents.LoadAvailable)
             {
 #if USE_ADMOB
@@ -429,7 +434,7 @@ namespace TheLegends.Base.Ads
                 AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, PlacementOrder.One);
                 yield return null;
             }
-            
+
             if (settings.preloadRewarded)
             {
                 AdsManager.Instance.LoadRewarded(PlacementOrder.One);

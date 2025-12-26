@@ -44,13 +44,19 @@ namespace TheLegends.Base.Ads
 
         public AdsNetworks AdsNetworks { get => GetAdsNetworks(); }
 
-        public AdsType AdsType { get =>  GetAdsType(); }
+        public AdsType AdsType { get => GetAdsType(); }
 
 
         public virtual void Init(Placement placement, PlacementOrder order)
         {
+            SetTimeOut();
             this.Placement = placement;
             this.Order = order;
+        }
+
+        protected virtual void SetTimeOut()
+        {
+            timeOut = AdsManager.Instance.adsConfigs.adLoadTimeOut;
         }
 
         public abstract AdsNetworks GetAdsNetworks();
@@ -60,7 +66,9 @@ namespace TheLegends.Base.Ads
         private Coroutine _reloadAdsCoroutine;
 
         private Coroutine _timeoutCoroutine;
-        
+
+        protected float timeOut = 10f;
+
         private readonly Dictionary<float, WaitForSeconds> _waitDictionary = new Dictionary<float, WaitForSeconds>();
 
         protected WaitForSeconds GetWait(float time)
@@ -84,14 +92,14 @@ namespace TheLegends.Base.Ads
 
             _currentLoadRequestId = Guid.NewGuid().ToString();
             _loadRequestId = _currentLoadRequestId;
-            
+
             StartHandleTimeout();
         }
 
         protected void StartHandleTimeout()
         {
             StopHandleTimeout();
-            _timeoutCoroutine = StartCoroutine(HandleTimeOutCoroutine(AdsManager.Instance.adsConfigs.adLoadTimeOut));
+            _timeoutCoroutine = StartCoroutine(HandleTimeOutCoroutine(timeOut));
         }
 
         protected void StopHandleTimeout()
@@ -259,7 +267,7 @@ namespace TheLegends.Base.Ads
         {
             Status = AdsEvents.Click;
         }
-        
+
         public virtual void OnAdsCancel()
         {
             Status = AdsEvents.Cancel;
