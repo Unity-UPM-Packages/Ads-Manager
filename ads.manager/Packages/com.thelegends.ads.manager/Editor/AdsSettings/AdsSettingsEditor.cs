@@ -131,9 +131,11 @@ namespace TheLegends.Base.Ads
                 PackagesManagerIntergration.SetSymbolEnabled("USE_MAX", Instance.showMAX);
                 PackagesManagerIntergration.SetSymbolEnabled("USE_ADMOB", Instance.showADMOB);
                 
-                // Also update USE_ADMOB_NATIVE_UNITY based on current state
                 bool shouldEnableNativeUnity = Instance.showADMOB && Instance.isUseNativeUnity;
                 PackagesManagerIntergration.SetSymbolEnabled("USE_ADMOB_NATIVE_UNITY", shouldEnableNativeUnity);
+
+                bool shouldEnableHideWhenFullscreen = Instance.showADMOB && Instance.isHideWhenFullscreenShowed;
+                PackagesManagerIntergration.SetSymbolEnabled("HIDE_WHEN_FULLSCREEN_SHOWED", shouldEnableHideWhenFullscreen);
                 
                 PackagesManagerIntergration.UpdateManifest(Instance.showADMOB, Instance.showMAX);
                 
@@ -250,6 +252,7 @@ namespace TheLegends.Base.Ads
                 EditorGUILayout.LabelField("Admob", titleStyle);
                 Instance.isShowAdmobNativeValidator = EditorGUILayout.Toggle("Show Admob Validator", Instance.isShowAdmobNativeValidator);
                 Instance.isUseNativeUnity = EditorGUILayout.Toggle("Is Use Native Unity", Instance.isUseNativeUnity);
+                Instance.isHideWhenFullscreenShowed = EditorGUILayout.Toggle("Hide When Fullscreen Showed", Instance.isHideWhenFullscreenShowed);
                 EditorGUILayout.Separator();
 
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("ADMOB_Android"), new GUIContent("Android Unit IDs"), true);

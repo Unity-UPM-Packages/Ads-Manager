@@ -111,6 +111,7 @@ namespace TheLegends.Base.Ads
         public bool showADMOB;
         public bool isUseNativeUnity = false;
         public bool isShowAdmobNativeValidator = false;
+        public bool isHideWhenFullscreenShowed = false;
         public AdmobUnitID ADMOB_Android = new AdmobUnitID();
         public AdmobUnitID ADMOB_IOS = new AdmobUnitID();
         public AdmobUnitID ADMOB_Android_Test = new AdmobUnitID
