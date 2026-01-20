@@ -1,3 +1,10 @@
+## [1.1.37](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.36...v1.1.37) (2026-01-20)
+
+
+### Bug Fixes
+
+* AdsSetting HIDE_WHEN_FULLSCREEN_SHOWED ([4c8d99f](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/4c8d99fe0e9d409fe142f0b7da5dcfcf5260d873))
+
 ## [1.1.36](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.35...v1.1.36) (2025-12-26)
 
 
