@@ -1050,19 +1050,23 @@ namespace TheLegends.Base.Ads
 
         public void OnFullScreenAdsShow()
         {
+#if HIDE_WHEN_FULLSCREEN_SHOWED
             HideAllBanner();
             HideAllMrec();
 #if USE_ADMOB
             HideAllNativeBanner();
             HideAllNativeMrec();
 #endif
+#endif
         }
 
         public void OnFullScreenAdsClosed()
         {
+#if HIDE_WHEN_FULLSCREEN_SHOWED
             ShowRegisteredBanners();
 #if USE_ADMOB
             ShowRegisteredNativeBanners();
+#endif
 #endif
         }
 

@@ -129,34 +129,34 @@ public class DemoManager : MonoBehaviour
 
     private void LoadInterstitial()
     {
-        // AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, order);
-#if USE_ADMOB
-        AdsManager.Instance.LoadNativeInter(order);
-#endif
+        AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, order);
+// #if USE_ADMOB
+//         AdsManager.Instance.LoadNativeInter(order);
+// #endif
     }
 
     private void ShowInterstitial()
     {
-        // AdsManager.Instance.ShowInterstitial(AdsType.Interstitial, order, "Default", () =>
-        // {
-        //     AdsManager.Instance.Log("Interstitial closed");
-        // });
-#if USE_ADMOB
-        AdsManager.Instance.ShowNativeInter(PlacementOrder.One, "Default", NativeName.Native_Inter, () =>
+        AdsManager.Instance.ShowInterstitial(AdsType.Interstitial, order, "Default", () =>
         {
-            AdsManager.Instance.Log("NativeInter show");
-            HideNativeBannerPlatform();
-        }, () =>
-        {
-            AdsManager.Instance.Log("NativeInter closed");
-            ShowNativeBannerPlatform();
-        }, () =>
-        {
-            AdsManager.Instance.Log("NativeInter full screen content closed");
-        })
-        ?.WithCountdown(AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration, AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown, AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay)
-        ?.Execute();
-#endif
+            AdsManager.Instance.Log("Interstitial closed");
+        });
+// #if USE_ADMOB
+//         AdsManager.Instance.ShowNativeInter(PlacementOrder.One, "Default", NativeName.Native_Inter, () =>
+//         {
+//             AdsManager.Instance.Log("NativeInter show");
+//             HideNativeBannerPlatform();
+//         }, () =>
+//         {
+//             AdsManager.Instance.Log("NativeInter closed");
+//             ShowNativeBannerPlatform();
+//         }, () =>
+//         {
+//             AdsManager.Instance.Log("NativeInter full screen content closed");
+//         })
+//         ?.WithCountdown(AdsManager.Instance.adsConfigs.nativeVideoCountdownTimerDuration, AdsManager.Instance.adsConfigs.nativeVideoDelayBeforeCountdown, AdsManager.Instance.adsConfigs.nativeVideoCloseClickableDelay)
+//         ?.Execute();
+// #endif
     }
 
     private void Loadrewarded()
