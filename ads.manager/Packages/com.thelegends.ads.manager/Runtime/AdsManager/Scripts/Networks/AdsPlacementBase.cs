@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GoogleMobileAds.Api;
+using TheLegends.Base.Databuckets;
 using UnityEngine;
 
 namespace TheLegends.Base.Ads
@@ -21,6 +23,7 @@ namespace TheLegends.Base.Ads
         protected string _loadRequestId = "";
 
         protected string _currentLoadRequestId = "";
+        protected string networkName = "";
 
         protected AdsEvents status;
         public AdsEvents Status
@@ -89,6 +92,8 @@ namespace TheLegends.Base.Ads
             }
 
             Status = AdsEvents.LoadRequest;
+
+            DatabucketsManager.Instance.RecordEvent("start_ad_request");
 
             _currentLoadRequestId = Guid.NewGuid().ToString();
             _loadRequestId = _currentLoadRequestId;
@@ -170,6 +175,15 @@ namespace TheLegends.Base.Ads
         {
             Status = AdsEvents.LoadAvailable;
             reloadCount = 0;
+
+            DatabucketsManager.Instance.RecordEventWithTiming("ad_request", new Dictionary<string, object>
+            {
+                { "ad_format", AdsType.ToString() },
+                { "ad_platform", AdsNetworks.ToString() },
+                { "ad_network", networkName},
+                { "ad_unit_id", adsUnitID },
+                { "is_load", 1 }
+            }, "load_time", "start_ads_request");
         }
 
         public bool IsAdsAvailable()
@@ -182,6 +196,15 @@ namespace TheLegends.Base.Ads
 
             Status = AdsEvents.LoadFail;
             _currentLoadRequestId = "";
+
+            DatabucketsManager.Instance.RecordEventWithTiming("ad_request", new Dictionary<string, object>
+            {
+                { "ad_format", AdsType.ToString() },
+                { "ad_platform", AdsNetworks.ToString() },
+                { "ad_network", "Unavailable"},
+                { "ad_unit_id", adsUnitID },
+                { "is_load", 0 }
+            }, "load_time", "start_ads_request");
 
             float timeWait = 5f;
 
@@ -261,11 +284,38 @@ namespace TheLegends.Base.Ads
             Status = AdsEvents.Close;
             adsUnitIDIndex = 0;
             LoadAds();
+
+            if (AdsType == AdsType.Interstitial 
+            || AdsType == AdsType.InterOpen 
+            || AdsType == AdsType.AppOpen
+            || AdsType == AdsType.NativeInter
+            || AdsType == AdsType.NativeInterOpen
+            || AdsType == AdsType.NativeAppOpen)
+            {
+                DatabucketsManager.Instance.RecordEvent("ad_complete", new Dictionary<string, object>
+                {
+                    { "ad_format", AdsType.ToString() },
+                    { "ad_platform", AdsNetworks.ToString() },
+                    { "ad_network", networkName},
+                    { "ad_unit_id", adsUnitID },
+                    { "placement", position}
+                });
+            }
+
         }
 
         public virtual void OnAdsClick()
         {
             Status = AdsEvents.Click;
+
+            DatabucketsManager.Instance.RecordEvent("ad_click", new Dictionary<string, object>
+            {
+                { "ad_format", AdsType.ToString() },
+                { "ad_platform", AdsNetworks.ToString() },
+                { "ad_network", networkName},
+                { "ad_unit_id", adsUnitID },
+                { "placement", position}
+            });
         }
 
         public virtual void OnAdsCancel()

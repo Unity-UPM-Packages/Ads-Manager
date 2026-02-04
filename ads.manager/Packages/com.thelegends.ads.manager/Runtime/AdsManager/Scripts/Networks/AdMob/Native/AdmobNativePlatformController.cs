@@ -102,7 +102,10 @@ namespace TheLegends.Base.Ads
                         return;
                     }
 
-                    AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + new ResponseInfo(native.GetResponseInfo()));
+                    var responseInfo = native.GetResponseInfo();
+                    networkName = responseInfo.GetMediationAdapterClassName();
+
+                    AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + responseInfo);
 
                     if (_nativePlatformAd != null)
                     {
@@ -275,7 +278,7 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, adValue);
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, networkName, position, adValue);
             });
 #endif
         }

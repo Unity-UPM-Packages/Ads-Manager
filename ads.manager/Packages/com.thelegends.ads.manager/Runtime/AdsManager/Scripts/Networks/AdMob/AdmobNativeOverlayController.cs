@@ -95,6 +95,8 @@ namespace TheLegends.Base.Ads
                             return;
                         }
 
+                        networkName = ad.GetResponseInfo().GetMediationAdapterClassName();
+
                         AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
 
                         _nativeOverlayAd = ad;
@@ -315,7 +317,7 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, networkName, position, value);
             });
         }
 

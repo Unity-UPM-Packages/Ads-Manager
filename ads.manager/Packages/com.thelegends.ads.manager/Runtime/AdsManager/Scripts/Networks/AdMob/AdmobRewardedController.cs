@@ -1,7 +1,9 @@
 #if USE_ADMOB
 
 using System;
+using System.Collections.Generic;
 using GoogleMobileAds.Api;
+using TheLegends.Base.Databuckets;
 using TheLegends.Base.UI;
 
 namespace TheLegends.Base.Ads
@@ -85,6 +87,8 @@ namespace TheLegends.Base.Ads
                         OnRewardedLoadFailed(error);
                         return;
                     }
+
+                    networkName = ad.GetResponseInfo().GetMediationAdapterClassName();
 
                     AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
 
@@ -185,6 +189,16 @@ namespace TheLegends.Base.Ads
                     OnRewarded?.Invoke();
                     OnRewarded = null;
 
+                    DatabucketsManager.Instance.RecordEvent("ad_complete", new Dictionary<string, object>
+                    {
+                        { "ad_format", AdsType.ToString() },
+                        { "ad_platform", AdsNetworks.ToString() },
+                        { "ad_network", networkName},
+                        { "ad_unit_id", adsUnitID },
+                        { "end_type", "done"},
+                        { "placement", position}
+                    });
+
                     AdsManager.Instance.OnFullScreenAdsClosed();
                 });
 
@@ -209,7 +223,7 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, networkName, adsUnitID, position, value);
             });
         }
 

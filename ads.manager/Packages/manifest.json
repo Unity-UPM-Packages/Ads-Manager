@@ -16,7 +16,8 @@
     "com.unity.modules.audio": "1.0.0",
     "com.unity.modules.physics": "1.0.0",
     "com.unity.modules.physics2d": "1.0.0",
-    "com.unity.modules.unitywebrequest": "1.0.0"
+    "com.unity.modules.unitywebrequest": "1.0.0",
+    "com.thelegends.databuckets.manager": "1.0.0-preview.6"
   },
   "scopedRegistries": [
     {
@@ -26,7 +27,8 @@
         "com.google",
         "com.thelegends",
         "com.applovin",
-        "appsflyer-unity-plugin"
+        "appsflyer-unity-plugin",
+        "com.bfun"
       ]
     },
     {
