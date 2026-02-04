@@ -102,7 +102,7 @@ namespace TheLegends.Base.Ads
                         return;
                     }
 
-                    AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + native.GetResponseInfo());
+                    AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + new ResponseInfo(native.GetResponseInfo()));
 
                     if (_nativePlatformAd != null)
                     {

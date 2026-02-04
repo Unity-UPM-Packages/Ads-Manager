@@ -1,7 +1,7 @@
 #if USE_ADMOB
+using System.Collections.Generic;
 using GoogleMobileAds.Common;
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace TheLegends.Base.Ads
 {
@@ -42,8 +42,35 @@ namespace TheLegends.Base.Ads
             var responseInfo = GetResponseInfoJavaObject();
             return responseInfo?.Call<string>("toString");
         }
-        public IAdapterResponseInfoClient GetLoadedAdapterResponseInfo() => null;
-        public List<IAdapterResponseInfoClient> GetAdapterResponses() => new List<IAdapterResponseInfoClient>();
+        public IAdapterResponseInfoClient GetLoadedAdapterResponseInfo()
+        {
+            var responseInfo = GetResponseInfoJavaObject();
+            AndroidJavaObject loadedAdapterJO = responseInfo?.Call<AndroidJavaObject>("getLoadedAdapterResponseInfo");
+            return loadedAdapterJO != null ? new NativeAdapterResponseInfoAndroidClient(loadedAdapterJO) : null;
+        }
+
+        public List<IAdapterResponseInfoClient> GetAdapterResponses()
+        {
+            var responseInfo = GetResponseInfoJavaObject();
+            var adapterResponses = new List<IAdapterResponseInfoClient>();
+
+            if (responseInfo == null) return adapterResponses;
+
+            AndroidJavaObject responseList = responseInfo.Call<AndroidJavaObject>("getAdapterResponses");
+            if (responseList == null) return adapterResponses;
+
+            int size = responseList.Call<int>("size");
+            for (int i = 0; i < size; i++)
+            {
+                AndroidJavaObject adapterResponseJO = responseList.Call<AndroidJavaObject>("get", i);
+                if (adapterResponseJO != null)
+                {
+                    adapterResponses.Add(new NativeAdapterResponseInfoAndroidClient(adapterResponseJO));
+                }
+            }
+
+            return adapterResponses;
+        }
 
         public Dictionary<string, string> GetResponseExtras()
         {
@@ -62,7 +89,7 @@ namespace TheLegends.Base.Ads
 
             return ConvertBundleToDictionary(bundle);
         }
-        
+
         private Dictionary<string, string> ConvertBundleToDictionary(AndroidJavaObject bundle)
         {
             var dictionary = new Dictionary<string, string>();
@@ -74,7 +101,7 @@ namespace TheLegends.Base.Ads
             {
                 string keyString = key.Call<string>("toString");
                 string valueString = bundle.Call<string>("getString", keyString);
-                
+
                 if (valueString != null)
                 {
                     dictionary[keyString] = valueString;
