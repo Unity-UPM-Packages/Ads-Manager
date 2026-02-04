@@ -160,7 +160,7 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, value);
+                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, networkName, position, value);
             });
         }
 
@@ -191,6 +191,8 @@ namespace TheLegends.Base.Ads
                 StopHandleTimeout();
 
                 OnAdsLoadAvailable();
+
+                networkName = _bannerView.GetResponseInfo().GetMediationAdapterClassName();
 
                 AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + _bannerView.GetResponseInfo());
 
