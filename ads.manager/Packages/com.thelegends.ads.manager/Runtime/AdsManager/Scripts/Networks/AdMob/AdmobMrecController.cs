@@ -248,6 +248,8 @@ namespace TheLegends.Base.Ads
 
                 OnAdsLoadAvailable();
 
+                AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + _mrecView.GetResponseInfo());
+
                 if (isShowing)
                 {
                     ShowAds(mrecPosition, offset, position);

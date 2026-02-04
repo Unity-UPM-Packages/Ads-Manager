@@ -192,6 +192,8 @@ namespace TheLegends.Base.Ads
 
                 OnAdsLoadAvailable();
 
+                AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + _bannerView.GetResponseInfo());
+
                 if (isShowOnLoaded)
                 {
                     ShowAds(position);

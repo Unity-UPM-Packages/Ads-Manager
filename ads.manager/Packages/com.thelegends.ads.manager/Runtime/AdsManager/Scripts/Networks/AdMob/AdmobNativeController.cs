@@ -364,6 +364,8 @@ namespace TheLegends.Base.Ads
 
                 OnAdsLoadAvailable();
 
+                AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + _nativeAd.GetResponseInfo());
+
                 if (args != null)
                 {
                     _nativeAd = args.nativeAd;

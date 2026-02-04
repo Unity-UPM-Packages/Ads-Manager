@@ -25,6 +25,15 @@ namespace TheLegends.Base.Ads
         [DllImport("__Internal")]
         private static extern IntPtr AdmobNative_GetMediationAdapterClassName(IntPtr handle);
 
+        [DllImport("__Internal")]
+        private static extern IntPtr AdmobNative_GetLoadedAdapterResponse(IntPtr handle);
+
+        [DllImport("__Internal")]
+        private static extern int AdmobNative_GetAdapterResponsesCount(IntPtr handle);
+
+        [DllImport("__Internal")]
+        private static extern IntPtr AdmobNative_GetAdapterResponseAt(IntPtr handle, int index);
+
         // MARK: - Constructor
 
         public NativeResponseInfoIOSClient(IntPtr controllerHandle)
@@ -80,16 +89,28 @@ namespace TheLegends.Base.Ads
 
         public IAdapterResponseInfoClient GetLoadedAdapterResponseInfo()
         {
-            // iOS: Không implement chi tiết adapter response info
-            // Trả về null như Android
-            return null;
+            if (_controllerHandle == IntPtr.Zero) return null;
+
+            IntPtr adapterPtr = AdmobNative_GetLoadedAdapterResponse(_controllerHandle);
+            return adapterPtr != IntPtr.Zero ? new NativeAdapterResponseInfoIOSClient(adapterPtr) : null;
         }
 
         public System.Collections.Generic.List<IAdapterResponseInfoClient> GetAdapterResponses()
         {
-            // iOS: Không implement chi tiết adapter responses
-            // Trả về empty list như Android
-            return new System.Collections.Generic.List<IAdapterResponseInfoClient>();
+            var adapterResponses = new System.Collections.Generic.List<IAdapterResponseInfoClient>();
+            if (_controllerHandle == IntPtr.Zero) return adapterResponses;
+
+            int count = AdmobNative_GetAdapterResponsesCount(_controllerHandle);
+            for (int i = 0; i < count; i++)
+            {
+                IntPtr adapterPtr = AdmobNative_GetAdapterResponseAt(_controllerHandle, i);
+                if (adapterPtr != IntPtr.Zero)
+                {
+                    adapterResponses.Add(new NativeAdapterResponseInfoIOSClient(adapterPtr));
+                }
+            }
+
+            return adapterResponses;
         }
 
         public System.Collections.Generic.Dictionary<string, string> GetResponseExtras()
