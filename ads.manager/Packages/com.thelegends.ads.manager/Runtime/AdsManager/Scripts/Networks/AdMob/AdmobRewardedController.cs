@@ -223,7 +223,7 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                AdsManager.Instance.LogImpressionData(AdsMediation, AdsType, networkName, adsUnitID, position, value);
+                AdsManager.Instance.LogImpressionData(AdsMediation, AdsType, adsUnitID, networkName, position, value);
             });
         }
 
