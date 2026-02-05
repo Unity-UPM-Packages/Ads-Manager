@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,6 +45,7 @@ namespace TheLegends.Base.Ads
 
         public AdsType AdsType { get => GetAdsType(); }
 
+        protected float timeOut = 10f;
 
         public virtual void Init(Placement placement, PlacementOrder order)
         {
@@ -63,31 +63,8 @@ namespace TheLegends.Base.Ads
 
         public abstract AdsType GetAdsType();
 
-        private Coroutine _reloadAdsCoroutine;
-
-        private Coroutine _timeoutCoroutine;
-
-        protected float timeOut = 10f;
-
-        private readonly Dictionary<float, WaitForSeconds> _waitDictionary = new Dictionary<float, WaitForSeconds>();
-
-        protected WaitForSeconds GetWait(float time)
-        {
-            if (_waitDictionary.TryGetValue(time, out var wait)) return wait;
-
-            wait = new WaitForSeconds(time);
-            _waitDictionary[time] = wait;
-            return wait;
-        }
-
         public virtual void LoadAds()
         {
-            if (_reloadAdsCoroutine != null)
-            {
-                StopCoroutine(_reloadAdsCoroutine);
-                _reloadAdsCoroutine = null;
-            }
-
             Status = AdsEvents.LoadRequest;
 
             _currentLoadRequestId = Guid.NewGuid().ToString();
@@ -98,30 +75,12 @@ namespace TheLegends.Base.Ads
 
         protected void StartHandleTimeout()
         {
-            StopHandleTimeout();
-            _timeoutCoroutine = StartCoroutine(HandleTimeOutCoroutine(timeOut));
+            Invoke(nameof(HandleTimeOut), AdsManager.Instance.adsConfigs.adLoadTimeOut);
         }
 
         protected void StopHandleTimeout()
         {
-            if (_timeoutCoroutine != null)
-            {
-                StopCoroutine(_timeoutCoroutine);
-                _timeoutCoroutine = null;
-            }
-        }
-
-        protected IEnumerator HandleTimeOutCoroutine(float time)
-        {
-            yield return GetWait(time);
-            HandleTimeOut();
-        }
-
-        protected IEnumerator ReloadAdsCoroutine(float time)
-        {
-            yield return GetWait(time);
-            _reloadAdsCoroutine = null;
-            LoadAds();
+            CancelInvoke(nameof(HandleTimeOut));
         }
 
         protected bool IsCanLoadAds()
@@ -132,7 +91,7 @@ namespace TheLegends.Base.Ads
                 return false;
             }
 
-            if (_reloadAdsCoroutine != null)
+            if (IsInvoking(nameof(LoadAds)))
             {
                 AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is scheduled loading --> return");
                 return false;
@@ -210,8 +169,7 @@ namespace TheLegends.Base.Ads
             {
                 adsUnitIDIndex++;
                 reloadCount++;
-                if (_reloadAdsCoroutine != null) StopCoroutine(_reloadAdsCoroutine);
-                _reloadAdsCoroutine = StartCoroutine(ReloadAdsCoroutine(timeWait * reloadCount));
+                Invoke(nameof(LoadAds), timeWait * reloadCount);
             }
             else
             {
