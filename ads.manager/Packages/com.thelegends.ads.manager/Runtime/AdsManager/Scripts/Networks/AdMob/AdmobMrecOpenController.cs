@@ -17,7 +17,7 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             if (Status != AdsEvents.ShowSuccess && Status != AdsEvents.Click)
             {
-                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + " is not showing --> return");
+                AdsManager.Instance.LogError($"{AdsMediation}_{AdsType} " + " is not showing --> return");
 
                 return;
             }

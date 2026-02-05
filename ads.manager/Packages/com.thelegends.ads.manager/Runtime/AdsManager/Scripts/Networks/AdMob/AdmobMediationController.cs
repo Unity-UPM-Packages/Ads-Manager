@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace TheLegends.Base.Ads
 {
-    public class AdmobNetworkController : AdsNetworkBase
+    public class AdmobMediationController : AdsMediationBase
     {
         private bool isChecking = false;
         private InitiationStatus status = InitiationStatus.NotInitialized;
@@ -104,7 +104,7 @@ namespace TheLegends.Base.Ads
                         var controllerList = controllerField.GetValue(this);
                         
                         var controllerType = controllerField.FieldType.GetGenericArguments()[0];
-                        var methodInfo = typeof(AdmobNetworkController).GetMethod("CreateAdController", BindingFlags.NonPublic | BindingFlags.Instance);
+                        var methodInfo = typeof(AdmobMediationController).GetMethod("CreateAdController", BindingFlags.NonPublic | BindingFlags.Instance);
                         var genericMethod = methodInfo.MakeGenericMethod(controllerType);
                         genericMethod.Invoke(this, new object[] { placements, controllerList });
                     }
@@ -1492,13 +1492,13 @@ namespace TheLegends.Base.Ads
         }
 
 
-        public override AdsNetworks GetNetworkType()
+        public override AdsMediation GetMediationType()
         {
 #if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
 
-            return AdsNetworks.Admob;
+            return AdsMediation.Admob;
 #else
-            return AdsNetworks.None;
+            return AdsMediations.None;
 #endif
         }
     }

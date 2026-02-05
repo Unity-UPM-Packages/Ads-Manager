@@ -15,8 +15,8 @@ namespace TheLegends.Base.Ads
         public const string FileExtension = ".asset";
 
         [SerializeField]
-        private List<AdsNetworks> _adsNetworks = new List<AdsNetworks>();
-        public List<AdsNetworks> AdsNetworks => this._adsNetworks;
+        private List<AdsMediation> _adsMediations = new List<AdsMediation>();
+        public List<AdsMediation> AdsMediations => this._adsMediations;
 
         private static AdsSettings _instance;
         public static AdsSettings Instance
@@ -34,42 +34,42 @@ namespace TheLegends.Base.Ads
         }
 
         [SerializeField]
-        private AdsNetworks _flagNetWorks;
-        public AdsNetworks primaryNetwork;
-        public AdsNetworks FlagNetWorks
+        private AdsMediation _flagMediations;
+        public AdsMediation primaryMediation;
+        public AdsMediation FlagMediations
         {
-            get => this._flagNetWorks;
+            get => this._flagMediations;
 
             set
             {
-                if(this._flagNetWorks == value)
+                if(this._flagMediations == value)
                 {
                     return;
                 }
 
-                _flagNetWorks = value;
+                _flagMediations = value;
 
-                _adsNetworks.Clear();
+                _adsMediations.Clear();
 
-                var networksList = Enum.GetValues(typeof(AdsNetworks)).Cast<AdsNetworks>().ToList();
+                var mediationsList = Enum.GetValues(typeof(AdsMediation)).Cast<AdsMediation>().ToList();
 
-                foreach (var network in networksList)
+                foreach (var mediation in mediationsList)
                 {
-                    if ((_flagNetWorks & network) != 0)
+                    if ((_flagMediations & mediation) != 0)
                     {
-                        _adsNetworks.Add(network);
+                        _adsMediations.Add(mediation);
                     }
 
-                    switch (network)
+                    switch (mediation)
                     {
-                        case Ads.AdsNetworks.Iron:
-                            showIRON = (_flagNetWorks & network) != 0;
+                        case Ads.AdsMediation.Iron:
+                            showIRON = (_flagMediations & mediation) != 0;
                             break;
-                        case Ads.AdsNetworks.Max:
-                            showMAX = (_flagNetWorks & network) != 0;
+                        case Ads.AdsMediation.Max:
+                            showMAX = (_flagMediations & mediation) != 0;
                             break;
-                        case Ads.AdsNetworks.Admob:
-                            showADMOB = (_flagNetWorks & network) != 0;
+                        case Ads.AdsMediation.Admob:
+                            showADMOB = (_flagMediations & mediation) != 0;
                             break;
                     }
                 }

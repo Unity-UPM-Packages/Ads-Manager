@@ -6,7 +6,7 @@ using UnityEngine;
 namespace TheLegends.Base.Ads
 {
     [Serializable] [Flags]
-    public enum AdsNetworks
+    public enum AdsMediation
     {
         None = -1,
         Iron = 1,

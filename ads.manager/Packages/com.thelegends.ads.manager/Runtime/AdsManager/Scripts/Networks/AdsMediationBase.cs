@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace TheLegends.Base.Ads
 {
-    public abstract class AdsNetworkBase : MonoBehaviour
+    public abstract class AdsMediationBase : MonoBehaviour
     {
-        private AdsNetworks networkType;
-        public AdsNetworks NetWorkType { get => GetNetworkType(); }
+        private AdsMediation mediationType;
+        public AdsMediation MediationType { get => GetMediationType(); }
         public abstract IEnumerator DoInit();
 
         public abstract void LoadInterstitial(AdsType interType, PlacementOrder order);
@@ -34,7 +34,7 @@ namespace TheLegends.Base.Ads
         public abstract AdsEvents GetAdsStatus(AdsType adsType, PlacementOrder order);
 
 
-        public abstract AdsNetworks GetNetworkType();
+        public abstract AdsMediation GetMediationType();
         public abstract void RemoveAds();
         public abstract bool IsAdsReady(AdsType adsType, PlacementOrder order);
         public abstract bool IsAdsControllerExist(AdsType adsType, PlacementOrder order);

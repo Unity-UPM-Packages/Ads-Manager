@@ -67,58 +67,56 @@ namespace TheLegends.Base.Ads
                 normal = { textColor = Color.cyan }
             };
 
-            Instance.FlagNetWorks = (AdsNetworks)EditorGUILayout.EnumFlagsField("Use Mediation", Instance.FlagNetWorks);
+            Instance.FlagMediations = (AdsMediation)EditorGUILayout.EnumFlagsField("Use Mediation", Instance.FlagMediations);
 
-            // Custom GUI for Primary Network
-            var selectedNetworks = new List<AdsNetworks>();
-            foreach (AdsNetworks network in Enum.GetValues(typeof(AdsNetworks)))
+            var selectedMediations = new List<AdsMediation>();
+            foreach (AdsMediation mediation in Enum.GetValues(typeof(AdsMediation)))
             {
-                if (network == AdsNetworks.None) continue;
-                if ((Instance.FlagNetWorks & network) == network)
+                if (mediation == AdsMediation.None) continue;
+                if ((Instance.FlagMediations & mediation) == mediation)
                 {
-                    selectedNetworks.Add(network);
+                    selectedMediations.Add(mediation);
                 }
             }
 
-            if (selectedNetworks.Count > 0)
+            if (selectedMediations.Count > 0)
             {
-                // Ensure the current primary network is valid
-                if (!selectedNetworks.Contains(Instance.primaryNetwork))
+                if (!selectedMediations.Contains(Instance.primaryMediation))
                 {
-                    Instance.primaryNetwork = selectedNetworks[0];
+                    Instance.primaryMediation = selectedMediations[0];
                 }
 
-                var networkNames = selectedNetworks.Select(n => n.ToString()).ToArray();
-                var networkValues = selectedNetworks.Select(n => (int)n).ToArray();
+                var mediationNames = selectedMediations.Select(n => n.ToString()).ToArray();
+                var mediationValues = selectedMediations.Select(n => (int)n).ToArray();
 
-                var selectedIndex = Array.IndexOf(networkValues, (int)Instance.primaryNetwork);
+                var selectedIndex = Array.IndexOf(mediationValues, (int)Instance.primaryMediation);
                 
-                var newSelectedIndex = EditorGUILayout.Popup("Primary Network", selectedIndex, networkNames);
+                var newSelectedIndex = EditorGUILayout.Popup("Primary Mediation", selectedIndex, mediationNames);
 
                 if (newSelectedIndex != selectedIndex)
                 {
-                    Instance.primaryNetwork = (AdsNetworks)networkValues[newSelectedIndex];
+                    Instance.primaryMediation = (AdsMediation)mediationValues[newSelectedIndex];
                 }
             }
             else
             {
-                Instance.primaryNetwork = AdsNetworks.None;
+                Instance.primaryMediation = AdsMediation.None;
             }
 
 
-            if ((Instance.FlagNetWorks & AdsNetworks.Iron) != 0 &&
+            if ((Instance.FlagMediations & AdsMediation.Iron) != 0 &&
                 !PackagesManagerIntergration.IsSymbolEnabled("USE_IRON"))
             {
                 EditorGUILayout.HelpBox("Add Symbols to Player Settings \"USE_IRON\"", MessageType.Warning);
             }
 
-            if ((Instance.FlagNetWorks & AdsNetworks.Max) != 0 &&
+            if ((Instance.FlagMediations & AdsMediation.Max) != 0 &&
                 !PackagesManagerIntergration.IsSymbolEnabled("USE_MAX"))
             {
                 EditorGUILayout.HelpBox("Add Symbols to Player Settings \"USE_MAX\"", MessageType.Warning);
             }
 
-            if ((Instance.FlagNetWorks & AdsNetworks.Admob) != 0 &&
+            if ((Instance.FlagMediations & AdsMediation.Admob) != 0 &&
                 !PackagesManagerIntergration.IsSymbolEnabled("USE_ADMOB"))
             {
                 EditorGUILayout.HelpBox("Add Symbols to Player Settings \"USE_ADMOB\"\"", MessageType.Warning);
@@ -163,71 +161,10 @@ namespace TheLegends.Base.Ads
 
             DrawGoogleSheetSync();
 
-            #region IronSource
-
-#if USE_IRON
-            if ((Instance.FlagNetWorks & AdsNetworks.Iron) != 0)
-            {
-                if (AssetDatabase.IsValidFolder("Assets/LevelPlay/Editor/"))
-                {
-                    IronSourceMediationSettings ironSourceMediationSettings = Resources.Load<IronSourceMediationSettings>(IronSourceConstants.IRONSOURCE_MEDIATION_SETTING_NAME);
-                    if (ironSourceMediationSettings == null)
-                    {
-                        IronSourceMediationSettings asset = CreateInstance<IronSourceMediationSettings>();
-                        Directory.CreateDirectory(IronSourceConstants.IRONSOURCE_RESOURCES_PATH);
-                        AssetDatabase.CreateAsset(asset, IronSourceMediationSettings.IRONSOURCE_SETTINGS_ASSET_PATH);
-                        ironSourceMediationSettings = asset;
-                    }
-                    ironSourceMediationSettings.AndroidAppKey = instance.ironAndroidAppKey;
-                    ironSourceMediationSettings.IOSAppKey = instance.ironIOSAppKey;
-                    ironSourceMediationSettings.AddIronsourceSkadnetworkID = true;
-                    ironSourceMediationSettings.DeclareAD_IDPermission = true;
-                    ironSourceMediationSettings.EnableIronsourceSDKInitAPI = false;
-
-                    IronSourceMediatedNetworkSettings ironSourceMediatedNetworkSettings = Resources.Load<IronSourceMediatedNetworkSettings>(IronSourceConstants.IRONSOURCE_MEDIATED_NETWORK_SETTING_NAME);
-                    if(ironSourceMediatedNetworkSettings == null)
-                    {
-                        IronSourceMediatedNetworkSettings asset = CreateInstance<IronSourceMediatedNetworkSettings>();
-                        Directory.CreateDirectory(IronSourceConstants.IRONSOURCE_RESOURCES_PATH);
-                        AssetDatabase.CreateAsset(asset, IronSourceMediatedNetworkSettings.MEDIATION_SETTINGS_ASSET_PATH);
-                        ironSourceMediatedNetworkSettings = asset;
-                    }
-
-
-                    EditorGUILayout.Separator();
-                    EditorGUILayout.Separator();
-                    EditorGUILayout.LabelField("IronSource", titleStyle);
-                    Instance.ironAndroidAppKey = EditorGUILayout.TextField("IronSource Android AppKey", Instance.ironAndroidAppKey);
-                    Instance.ironIOSAppKey = EditorGUILayout.TextField("IronSource iOS AppKey", Instance.ironIOSAppKey);
-                    Instance.isIronTest = EditorGUILayout.Toggle("Is Testing", Instance.isIronTest);
-
-                    Instance.ironEnableAdmob = EditorGUILayout.Toggle("Enable Admob", Instance.ironEnableAdmob);
-                    ironSourceMediatedNetworkSettings.EnableAdmob = Instance.ironEnableAdmob;
-                    if (Instance.ironEnableAdmob)
-                    {
-                        Instance.ironAdmobAndroidAppID = EditorGUILayout.TextField("IronSource Admob Android AppID", Instance.ironAdmobAndroidAppID);
-                        Instance.ironAdmobIOSAppID = EditorGUILayout.TextField("IronSource IOS AppID", Instance.ironAdmobIOSAppID);
-                        ironSourceMediatedNetworkSettings.AdmobAndroidAppId = Instance.ironAdmobAndroidAppID;
-                        ironSourceMediatedNetworkSettings.AdmobIOSAppId = Instance.ironAdmobIOSAppID;
-                    }
-                    else
-                    {
-                        Instance.ironAdmobAndroidAppID = string.Empty;
-                        Instance.ironAdmobIOSAppID = string.Empty;
-                        ironSourceMediatedNetworkSettings.AdmobAndroidAppId = string.Empty;
-                        ironSourceMediatedNetworkSettings.AdmobIOSAppId = string.Empty;
-                    }
-
-                    AssetDatabase.SaveAssetIfDirty(ironSourceMediationSettings);
-                }
-            }
-#endif
-            #endregion
-
             #region MAX
 
 #if USE_MAX
-            if ((Instance.FlagNetWorks & AdsNetworks.Max) != 0)
+            if ((Instance.FlagMediations & AdsMediation.Max) != 0)
             {
                 EditorGUILayout.Separator();
                 EditorGUILayout.Separator();
@@ -245,7 +182,7 @@ namespace TheLegends.Base.Ads
             #region ADMOB
 
 #if USE_ADMOB
-            if ((Instance.FlagNetWorks & AdsNetworks.Admob) != 0)
+            if ((Instance.FlagMediations & AdsMediation.Admob) != 0)
             {
                 EditorGUILayout.Separator();
                 EditorGUILayout.Separator();
@@ -316,7 +253,7 @@ namespace TheLegends.Base.Ads
             EditorGUILayout.Space(10);
         }
 
-        private void FetchDataFromGoogleSheet(string url, string networkPrefix)
+        private void FetchDataFromGoogleSheet(string url, string mediationPrefix)
         {
             Debug.Log("Fetching data from Google Sheet...");
             UnityWebRequest www = UnityWebRequest.Get(url);
@@ -330,7 +267,7 @@ namespace TheLegends.Base.Ads
                 if (www.result == UnityWebRequest.Result.Success)
                 {
                     Debug.Log("Fetch successful!");
-                    ParseAndApplyData(www.downloadHandler.text, networkPrefix);
+                    ParseAndApplyData(www.downloadHandler.text, mediationPrefix);
                 }
                 else
                 {
@@ -342,7 +279,7 @@ namespace TheLegends.Base.Ads
             };
         }
 
-        private void ParseAndApplyData(string csvData, string networkPrefix)
+        private void ParseAndApplyData(string csvData, string mediationPrefix)
         {
             if (string.IsNullOrEmpty(csvData)) return;
 
@@ -404,18 +341,18 @@ namespace TheLegends.Base.Ads
                 }
             };
 
-            if (networkPrefix.Equals("ADMOB", StringComparison.OrdinalIgnoreCase))
+            if (mediationPrefix.Equals("ADMOB", StringComparison.OrdinalIgnoreCase))
             {
                 applyDataToUnitId(Instance.ADMOB_Android, "Android");
                 applyDataToUnitId(Instance.ADMOB_IOS, "iOS");
             }
-            else if (networkPrefix.Equals("MAX", StringComparison.OrdinalIgnoreCase))
+            else if (mediationPrefix.Equals("MAX", StringComparison.OrdinalIgnoreCase))
             {
                 applyDataToUnitId(Instance.MAX_Android, "Android");
                 applyDataToUnitId(Instance.MAX_iOS, "iOS");
             }
 
-            Debug.Log($"Successfully applied data for {networkPrefix} from Google Sheet!");
+            Debug.Log($"Successfully applied data for {mediationPrefix} from Google Sheet!");
             EditorUtility.SetDirty(Instance);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();

@@ -34,7 +34,7 @@ namespace TheLegends.Base.Ads
                 if (status != value)
                 {
                     status = value;
-                    AdsManager.Instance.SetStatus(AdsNetworks, AdsType, adsUnitID, position, value, AdsNetworks);
+                    AdsManager.Instance.SetStatus(AdsMediation, AdsType, adsUnitID, position, value);
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace TheLegends.Base.Ads
 
         public bool IsAvailable { get => IsAdsAvailable(); }
 
-        public AdsNetworks AdsNetworks { get => GetAdsNetworks(); }
+        public AdsMediation AdsMediation { get => GetAdsMediation(); }
 
         public AdsType AdsType { get => GetAdsType(); }
 
@@ -62,7 +62,7 @@ namespace TheLegends.Base.Ads
             timeOut = AdsManager.Instance.adsConfigs.adLoadTimeOut;
         }
 
-        public abstract AdsNetworks GetAdsNetworks();
+        public abstract AdsMediation GetAdsMediation();
 
         public abstract AdsType GetAdsType();
 
@@ -133,25 +133,25 @@ namespace TheLegends.Base.Ads
         {
             if (!AdsManager.Instance.IsCanShowAds && AdsType != AdsType.Rewarded)
             {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not can show ads --> return");
+                AdsManager.Instance.LogWarning($"{AdsMediation}_{AdsType} " + "is not can show ads --> return");
                 return false;
             }
 
             if (_reloadAdsCoroutine != null)
             {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is scheduled loading --> return");
+                AdsManager.Instance.LogWarning($"{AdsMediation}_{AdsType} " + "is scheduled loading --> return");
                 return false;
             }
 
             if (Status == AdsEvents.LoadRequest)
             {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is loading --> return");
+                AdsManager.Instance.LogWarning($"{AdsMediation}_{AdsType} " + "is loading --> return");
                 return false;
             }
 
             if (IsAvailable)
             {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is available --> return");
+                AdsManager.Instance.LogWarning($"{AdsMediation}_{AdsType} " + "is available --> return");
                 return false;
             }
 
@@ -159,12 +159,12 @@ namespace TheLegends.Base.Ads
             {
                 adsUnitIDIndex %= placement.stringIDs.Count;
                 adsUnitID = placement.stringIDs[adsUnitIDIndex];
-                AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "Startting LoadAds " + adsUnitID);
+                AdsManager.Instance.Log($"{AdsMediation}_{AdsType} " + "Startting LoadAds " + adsUnitID);
             }
 
             if (string.IsNullOrEmpty(adsUnitID))
             {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "UnitId NULL or Empty --> return");
+                AdsManager.Instance.LogWarning($"{AdsMediation}_{AdsType} " + "UnitId NULL or Empty --> return");
                 return false;
             }
 
@@ -179,7 +179,7 @@ namespace TheLegends.Base.Ads
             DatabucketsManager.Instance.RecordEventWithTiming("ad_request", new Dictionary<string, object>
             {
                 { "ad_format", AdsType.ToString() },
-                { "ad_platform", AdsNetworks.ToString() },
+                { "ad_platform", AdsMediation.ToString() },
                 { "ad_network", networkName},
                 { "ad_unit_id", adsUnitID },
                 { "is_load", 1 }
@@ -200,7 +200,7 @@ namespace TheLegends.Base.Ads
             DatabucketsManager.Instance.RecordEventWithTiming("ad_request", new Dictionary<string, object>
             {
                 { "ad_format", AdsType.ToString() },
-                { "ad_platform", AdsNetworks.ToString() },
+                { "ad_platform", AdsMediation.ToString() },
                 { "ad_network", "Unavailable"},
                 { "ad_unit_id", adsUnitID },
                 { "is_load", 0 }
@@ -226,7 +226,7 @@ namespace TheLegends.Base.Ads
             }
 
 
-            AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " +
+            AdsManager.Instance.LogError($"{AdsMediation.ToString()}_{AdsType.ToString()} " +
                                          "OnAdsLoadFailed " + adsUnitID + " Error: " + message + extendString);
 
             if (reloadCount < AdsManager.Instance.SettingsAds.autoReLoadMax)
@@ -274,7 +274,7 @@ namespace TheLegends.Base.Ads
         {
             Status = AdsEvents.ShowFail;
 
-            AdsManager.Instance.LogError($"{AdsNetworks.ToString()}_{AdsType.ToString()} " + "OnAdsShowFailed " +
+            AdsManager.Instance.LogError($"{AdsMediation.ToString()}_{AdsType.ToString()} " + "OnAdsShowFailed " +
                                          adsUnitID + " Error: " + message);
         }
 
@@ -295,7 +295,7 @@ namespace TheLegends.Base.Ads
                 DatabucketsManager.Instance.RecordEvent("ad_complete", new Dictionary<string, object>
                 {
                     { "ad_format", AdsType.ToString() },
-                    { "ad_platform", AdsNetworks.ToString() },
+                    { "ad_platform", AdsMediation.ToString() },
                     { "ad_network", networkName},
                     { "ad_unit_id", adsUnitID },
                     { "placement", position}
@@ -311,7 +311,7 @@ namespace TheLegends.Base.Ads
             DatabucketsManager.Instance.RecordEvent("ad_click", new Dictionary<string, object>
             {
                 { "ad_format", AdsType.ToString() },
-                { "ad_platform", AdsNetworks.ToString() },
+                { "ad_platform", AdsMediation.ToString() },
                 { "ad_network", networkName},
                 { "ad_unit_id", adsUnitID },
                 { "placement", position}

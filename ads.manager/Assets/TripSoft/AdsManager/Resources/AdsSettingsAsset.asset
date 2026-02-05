@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac567c99f46af0429a8490c3f245152, type: 3}
   m_Name: AdsSettingsAsset
   m_EditorClassIdentifier: 
-  _adsNetworks: 04000000ffffffff
-  _flagNetWorks: 4
-  primaryNetwork: 4
+  _adsMediations: 04000000ffffffff
+  _flagMediations: 4
+  primaryMediation: 4
   appsFlyerDevKey: Qhno4yJY6KHmZp9uS9DRe4
   appleAppId: 
   admobSheetUrl: 

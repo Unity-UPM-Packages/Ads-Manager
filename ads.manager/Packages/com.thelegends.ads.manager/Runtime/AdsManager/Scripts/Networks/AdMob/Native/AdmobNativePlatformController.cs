@@ -25,12 +25,12 @@ namespace TheLegends.Base.Ads
         protected bool _isShowOnLoaded = false; // Like isShowOnLoaded in AdmobNativeController
         protected NativePlatformShowBuilder.PositionConfig _storedPosition;
 
-        public override AdsNetworks GetAdsNetworks()
+        public override AdsMediation GetAdsMediation()
         {
 #if USE_ADMOB
-            return AdsNetworks.Admob;
+            return AdsMediation.Admob;
 #else
-            return AdsNetworks.None;
+            return AdsMediation.None;
 #endif
         }
 
@@ -90,14 +90,14 @@ namespace TheLegends.Base.Ads
                     // if error is not null, the load request failed.
                     if (error != null)
                     {
-                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
+                        AdsManager.Instance.LogError($"{AdsMediation}_{AdsType} " + "ad failed to load with error : " + error);
                         OnNativePlatformLoadFailed(error);
                         return;
                     }
 
                     if (native == null)
                     {
-                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
+                        AdsManager.Instance.LogError($"{AdsMediation}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
                         OnNativePlatformLoadFailed(error);
                         return;
                     }
@@ -105,7 +105,7 @@ namespace TheLegends.Base.Ads
                     var responseInfo = native.GetResponseInfo();
                     networkName = responseInfo.GetMediationAdapterClassName();
 
-                    AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + responseInfo);
+                    AdsManager.Instance.Log($"{AdsMediation}_{AdsType} " + "ad loaded with response : " + responseInfo);
 
                     if (_nativePlatformAd != null)
                     {
@@ -138,7 +138,7 @@ namespace TheLegends.Base.Ads
 
             if (Status == AdsEvents.ShowSuccess)
             {
-                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "is showing --> return");
+                AdsManager.Instance.LogError($"{AdsMediation}_{AdsType} " + "is showing --> return");
                 return;
             }
 
@@ -173,7 +173,7 @@ namespace TheLegends.Base.Ads
             }
             else
             {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+                AdsManager.Instance.LogWarning($"{AdsMediation}_{AdsType} " + "is not ready --> Load Ads");
                 reloadCount = 0;
                 LoadAds();
             }
@@ -278,7 +278,7 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, networkName, position, adValue);
+                AdsManager.Instance.LogImpressionData(AdsMediation, AdsType, adsUnitID, networkName, position, adValue);
             });
 #endif
         }
@@ -306,35 +306,35 @@ namespace TheLegends.Base.Ads
         private void OnVideoStart()
         {
 #if USE_ADMOB
-            AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} Video started");
+            AdsManager.Instance.Log($"{AdsMediation}_{AdsType} Video started");
 #endif
         }
 
         private void OnVideoEnd()
         {
 #if USE_ADMOB
-            AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} Video ended");
+            AdsManager.Instance.Log($"{AdsMediation}_{AdsType} Video ended");
 #endif
         }
 
         private void OnVideoMute(object sender, bool isMuted)
         {
 #if USE_ADMOB
-            AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} Video mute state: {isMuted}");
+            AdsManager.Instance.Log($"{AdsMediation}_{AdsType} Video mute state: {isMuted}");
 #endif
         }
 
         private void OnVideoPlay()
         {
 #if USE_ADMOB
-            AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} Video playing");
+            AdsManager.Instance.Log($"{AdsMediation}_{AdsType} Video playing");
 #endif
         }
 
         private void OnVideoPause()
         {
 #if USE_ADMOB
-            AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} Video paused");
+            AdsManager.Instance.Log($"{AdsMediation}_{AdsType} Video paused");
 #endif
         }
 
@@ -404,7 +404,7 @@ namespace TheLegends.Base.Ads
             if (_isShowOnLoaded) configsInfo.Add($"ShowOnLoaded({_isShowOnLoaded})");
             if (_storedPosition != null) configsInfo.Add($"Position({_storedPosition})");
 
-            Debug.Log($"[{AdsNetworks}_{AdsType}] Stored configs: [{string.Join(", ", configsInfo)}]");
+            Debug.Log($"[{AdsMediation}_{AdsType}] Stored configs: [{string.Join(", ", configsInfo)}]");
         }
 
 
