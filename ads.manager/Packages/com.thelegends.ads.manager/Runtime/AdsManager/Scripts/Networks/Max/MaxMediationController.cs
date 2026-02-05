@@ -11,7 +11,7 @@ using UnityEngine.iOS;
 
 namespace TheLegends.Base.Ads
 {
-    public class MaxNetworkController : AdsNetworkBase
+    public class MaxMediationController : AdsMediationBase
     {
         private InitiationStatus status = InitiationStatus.NotInitialized;
 
@@ -210,12 +210,12 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        public override AdsNetworks GetNetworkType()
+        public override AdsMediation GetMediationType()
         {
 #if (UNITY_ANDROID || UNITY_IOS) && USE_MAX
-            return AdsNetworks.Max;
+            return AdsMediation.Max;
 #else
-            return AdsNetworks.None;
+            return AdsMediation.None;
 #endif
         }
 

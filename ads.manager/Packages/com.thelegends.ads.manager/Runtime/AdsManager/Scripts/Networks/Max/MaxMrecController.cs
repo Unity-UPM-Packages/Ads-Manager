@@ -13,12 +13,12 @@ namespace TheLegends.Base.Ads
         protected bool isReady = false;
         private Vector2Int adsOffset = Vector2Int.zero;
         private AdsPos adsPos = AdsPos.Bottom;
-        public override AdsNetworks GetAdsNetworks()
+        public override AdsMediation GetAdsMediation()
         {
 #if USE_MAX
-            return AdsNetworks.Max;
+            return AdsMediation.Max;
 #else
-            return AdsNetworks.None;
+            return AdsMediation.None;
 #endif
         }
 
@@ -147,7 +147,7 @@ namespace TheLegends.Base.Ads
             {
                 if (adUnitId != adsUnitID) return;
 
-                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, adInfo);
+                AdsManager.Instance.LogImpressionData(AdsMediation, AdsType, adsUnitID, adInfo);
             });
         }
 
@@ -175,7 +175,7 @@ namespace TheLegends.Base.Ads
 #if USE_MAX
             if (Status != AdsEvents.ShowSuccess && Status != AdsEvents.Click)
             {
-                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + " is not showing --> return");
+                AdsManager.Instance.LogError($"{AdsMediation}_{AdsType} " + " is not showing --> return");
                 return;
             }
 

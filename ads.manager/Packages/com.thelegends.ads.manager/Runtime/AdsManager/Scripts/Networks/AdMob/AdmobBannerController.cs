@@ -11,12 +11,12 @@ namespace TheLegends.Base.Ads
         private float timeAutoReload;
         private bool isShowOnLoaded = false;
 
-        public override AdsNetworks GetAdsNetworks()
+        public override AdsMediation GetAdsMediation()
         {
 #if USE_ADMOB
-            return AdsNetworks.Admob;
+            return AdsMediation.Admob;
 #else
-        return AdsNetworks.None;
+            return AdsMediation.None;
 #endif
         }
 
@@ -85,7 +85,7 @@ namespace TheLegends.Base.Ads
             }
             else
             {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+                AdsManager.Instance.LogWarning($"{AdsMediation}_{AdsType} " + "is not ready --> Load Ads");
                 reloadCount = 0;
                 LoadAds();
             }
@@ -107,7 +107,7 @@ namespace TheLegends.Base.Ads
 #if USE_ADMOB
             if (Status != AdsEvents.ShowSuccess && Status != AdsEvents.Click)
             {
-                AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + " is not showing --> return");
+                AdsManager.Instance.LogError($"{AdsMediation}_{AdsType} " + " is not showing --> return");
                 return;
             }
 
@@ -160,7 +160,7 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, adsUnitID, networkName, position, value);
+                AdsManager.Instance.LogImpressionData(AdsMediation, AdsType, adsUnitID, networkName, position, value);
             });
         }
 
@@ -194,7 +194,7 @@ namespace TheLegends.Base.Ads
 
                 networkName = _bannerView.GetResponseInfo().GetMediationAdapterClassName();
 
-                AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + _bannerView.GetResponseInfo());
+                AdsManager.Instance.Log($"{AdsMediation}_{AdsType} " + "ad loaded with response : " + _bannerView.GetResponseInfo());
 
                 if (isShowOnLoaded)
                 {

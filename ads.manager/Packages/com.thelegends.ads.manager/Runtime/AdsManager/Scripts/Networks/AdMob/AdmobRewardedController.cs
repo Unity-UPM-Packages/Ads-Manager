@@ -13,12 +13,12 @@ namespace TheLegends.Base.Ads
         private RewardedAd _rewardedAd;
         private Action OnRewarded;
 
-        public override AdsNetworks GetAdsNetworks()
+        public override AdsMediation GetAdsMediation()
         {
 #if USE_ADMOB
-            return AdsNetworks.Admob;
+            return AdsMediation.Admob;
 #else
-            return AdsNetworks.None;
+            return AdsMediation.None;
 #endif
         }
 
@@ -76,21 +76,21 @@ namespace TheLegends.Base.Ads
                     // if error is not null, the load request failed.
                     if (error != null)
                     {
-                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "ad failed to load with error : " + error);
+                        AdsManager.Instance.LogError($"{AdsMediation}_{AdsType} " + "ad failed to load with error : " + error);
                         OnRewardedLoadFailed(error);
                         return;
                     }
 
                     if (ad == null)
                     {
-                        AdsManager.Instance.LogError($"{AdsNetworks}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
+                        AdsManager.Instance.LogError($"{AdsMediation}_{AdsType} " + "Unexpected error: load event fired with null ad and null error.");
                         OnRewardedLoadFailed(error);
                         return;
                     }
 
                     networkName = ad.GetResponseInfo().GetMediationAdapterClassName();
 
-                    AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
+                    AdsManager.Instance.Log($"{AdsMediation}_{AdsType} " + "ad loaded with response : " + ad.GetResponseInfo());
 
                     _rewardedAd = ad;
 
@@ -116,14 +116,14 @@ namespace TheLegends.Base.Ads
                 {
                     if (reward != null)
                     {
-                        AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + $"{adsUnitID} " + "claimed");
+                        AdsManager.Instance.Log($"{AdsMediation}_{AdsType} " + $"{adsUnitID} " + "claimed");
                         this.OnRewarded = OnRewarded;
                     }
                 });
             }
             else
             {
-                AdsManager.Instance.LogWarning($"{AdsNetworks}_{AdsType} " + "is not ready --> Load Ads");
+                AdsManager.Instance.LogWarning($"{AdsMediation}_{AdsType} " + "is not ready --> Load Ads");
                 reloadCount = 0;
                 LoadAds();
             }
@@ -192,7 +192,7 @@ namespace TheLegends.Base.Ads
                     DatabucketsManager.Instance.RecordEvent("ad_complete", new Dictionary<string, object>
                     {
                         { "ad_format", AdsType.ToString() },
-                        { "ad_platform", AdsNetworks.ToString() },
+                        { "ad_platform", AdsMediation.ToString() },
                         { "ad_network", networkName},
                         { "ad_unit_id", adsUnitID },
                         { "end_type", "done"},
@@ -223,7 +223,7 @@ namespace TheLegends.Base.Ads
         {
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                AdsManager.Instance.LogImpressionData(AdsNetworks, AdsType, networkName, adsUnitID, position, value);
+                AdsManager.Instance.LogImpressionData(AdsMediation, AdsType, networkName, adsUnitID, position, value);
             });
         }
 
