@@ -161,7 +161,11 @@ namespace TheLegends.Base.Ads
             }
             catch (Exception e)
             {
+#if UNITY_EDITOR
+                AdsManager.Instance.LogWarning("Cannot get AppsFlyer Caimpaign: Not work on Unity Editor.");
+#else
                 AdsManager.Instance.LogError("Cannot get AppsFlyer Caimpaign: " + e.Message);
+#endif
             }
         }
         private IEnumerator InitializeFirebase()
@@ -239,18 +243,30 @@ namespace TheLegends.Base.Ads
         {
             DatabucketsManager.Instance.Init();
             
-            var ua_network = conversionDataDictionary.FirstOrDefault(k => k.Key == "media_source").Value as string;
-            var ua_campaign = conversionDataDictionary.FirstOrDefault(k => k.Key == "campaign").Value as string;
-            var ua_adgroup = conversionDataDictionary.FirstOrDefault(k => k.Key == "adgroup").Value as string;
-            var ua_creative = conversionDataDictionary.FirstOrDefault(k => k.Key == "adset").Value as string;
-
-            DatabucketsManager.Instance.SetCommonProperties(new Dictionary<string, object>
+            try
             {
-                { "ua_network", ua_network ?? "Unavailable" },
-                { "ua_campaign", ua_campaign ?? "Unavailable" },
-                { "ua_adgroup", ua_adgroup ?? "Unavailable" },
-                { "ua_creative", ua_creative ?? "Unavailable" }
-            });
+                var ua_network = conversionDataDictionary.FirstOrDefault(k => k.Key == "media_source").Value as string;
+                var ua_campaign = conversionDataDictionary.FirstOrDefault(k => k.Key == "campaign").Value as string;
+                var ua_adgroup = conversionDataDictionary.FirstOrDefault(k => k.Key == "adgroup").Value as string;
+                var ua_creative = conversionDataDictionary.FirstOrDefault(k => k.Key == "adset").Value as string;
+
+                DatabucketsManager.Instance.SetCommonProperties(new Dictionary<string, object>
+                {
+                    { "ua_network", ua_network ?? "Unavailable" },
+                    { "ua_campaign", ua_campaign ?? "Unavailable" },
+                    { "ua_adgroup", ua_adgroup ?? "Unavailable" },
+                    { "ua_creative", ua_creative ?? "Unavailable" }
+                });
+            }
+            catch (Exception e)
+            {
+#if UNITY_EDITOR
+                AdsManager.Instance.LogWarning("Cannot get AppsFlyer Property: Not work on Unity Editor.");
+#else
+                AdsManager.Instance.LogError("Cannot get AppsFlyer Property: " + e.Message);
+#endif
+            }
+            
 
         }
 
