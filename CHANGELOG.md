@@ -1,3 +1,10 @@
+## [1.1.38](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.37...v1.1.38) (2026-02-06)
+
+
+### Bug Fixes
+
+* add taichi_ad_impression event ([5d226d2](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/5d226d23756ed703fb0fe54b99992e1168a14d8b))
+
 ## [1.1.37](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.36...v1.1.37) (2026-01-20)
 
 
