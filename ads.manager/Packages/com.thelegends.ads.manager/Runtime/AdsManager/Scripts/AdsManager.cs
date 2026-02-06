@@ -1121,7 +1121,22 @@ namespace TheLegends.Base.Ads
                 }
 
                 Log("GoogleMobileAds AdValue: " + impressionData.Value + " Revenue: " + revenue + " CurrencyCode: " + currency + " Precision: " + impressionData.Precision);
+#if USE_FIREBASE
 
+                var impressionParameters = new Dictionary<string, object>
+                {
+                    { "mediation", mediation.ToString() },
+                    { "monetizationNetwork", monetizationNetwork },
+                    { "ad_format", ad_format },
+                    { "ad_unit_name", ad_unit_name },
+                    { "country", country },
+                    { "revenue", revenue.ToString() },
+                    { "currency", currency },
+
+                };
+
+                FirebaseManager.Instance.LogEvent("taichi_ad_impression", impressionParameters);
+#endif
             }
 #endif
 

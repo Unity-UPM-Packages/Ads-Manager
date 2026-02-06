@@ -783,8 +783,8 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: USE_FIREBASE;USE_APPSFLYER;USE_ADMOB;USE_ADMOB_NATIVE_UNITY;USE_MAX
-    iPhone: USE_FIREBASE;USE_APPSFLYER;USE_ADMOB;USE_ADMOB_NATIVE_UNITY;USE_MAX
+    Android: USE_FIREBASE;USE_APPSFLYER;USE_ADMOB;USE_ADMOB_NATIVE_UNITY
+    iPhone: USE_FIREBASE;USE_APPSFLYER;USE_ADMOB;USE_ADMOB_NATIVE_UNITY
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
@@ -848,7 +848,6 @@ PlayerSettings:
   syncCapabilities: 0
   platformCapabilities:
     WindowsStoreApps:
-      EnterpriseAuthentication: False
       OfflineMapsManagement: False
       HumanInterfaceDevice: False
       Location: False
@@ -861,6 +860,7 @@ PlayerSettings:
       InternetClientServer: False
       VideosLibrary: False
       Objects3D: False
+      InternetClient: False
       RemoteSystem: False
       BlockedChatMessages: False
       PhoneCall: False
@@ -882,10 +882,10 @@ PlayerSettings:
       PointOfService: False
       RecordedCallsFolder: False
       Contacts: False
-      InternetClient: False
+      Proximity: False
       CodeGeneration: False
       BackgroundMediaPlayback: False
-      Proximity: False
+      EnterpriseAuthentication: False
   metroTargetDeviceFamilies:
     Desktop: False
     Holographic: False
