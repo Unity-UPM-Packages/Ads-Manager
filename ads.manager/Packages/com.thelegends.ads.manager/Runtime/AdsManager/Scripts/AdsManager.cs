@@ -1194,6 +1194,7 @@ namespace TheLegends.Base.Ads
                 { "ad_network", network},
                 { "ad_unit_id", adsUnitID },
                 { "placement", placement },
+                { "is_show", 1 },
                 { "value", revenue }
             });
 #endif
