@@ -22,6 +22,15 @@ namespace TheLegends.Base.Ads
 
         protected string _currentLoadRequestId = "";
         protected string networkName = "";
+        private DateTime loadStartTime = DateTime.MinValue;
+        private DateTime loadEndTime = DateTime.MinValue;
+        protected float loadTime
+        {
+            get
+            {
+                return (float)(loadEndTime - loadStartTime).TotalSeconds;
+            }
+        }
 
         protected AdsEvents status;
         public AdsEvents Status
@@ -69,7 +78,7 @@ namespace TheLegends.Base.Ads
         {
             Status = AdsEvents.LoadRequest;
 
-            DatabucketsManager.Instance.RecordEvent("start_ad_request");
+            loadStartTime = DateTime.UtcNow;
 
             _currentLoadRequestId = Guid.NewGuid().ToString();
             _loadRequestId = _currentLoadRequestId;
@@ -134,14 +143,17 @@ namespace TheLegends.Base.Ads
             Status = AdsEvents.LoadAvailable;
             reloadCount = 0;
 
-            DatabucketsManager.Instance.RecordEventWithTiming("ad_request", new Dictionary<string, object>
+            loadEndTime = DateTime.UtcNow;
+
+            DatabucketsManager.Instance.RecordEvent("ad_request", new Dictionary<string, object>
             {
                 { "ad_format", AdsType.ToString() },
                 { "ad_platform", AdsMediation.ToString() },
                 { "ad_network", networkName},
                 { "ad_unit_id", adsUnitID },
-                { "is_load", 1 }
-            }, "load_time", "start_ads_request");
+                { "is_load", 1 },
+                { "load_time", loadTime }
+            });
         }
 
         public bool IsAdsAvailable()
@@ -155,14 +167,17 @@ namespace TheLegends.Base.Ads
             Status = AdsEvents.LoadFail;
             _currentLoadRequestId = "";
 
-            DatabucketsManager.Instance.RecordEventWithTiming("ad_request", new Dictionary<string, object>
+            loadEndTime = DateTime.UtcNow;
+
+            DatabucketsManager.Instance.RecordEvent("ad_request", new Dictionary<string, object>
             {
                 { "ad_format", AdsType.ToString() },
                 { "ad_platform", AdsMediation.ToString() },
                 { "ad_network", "Unavailable"},
                 { "ad_unit_id", adsUnitID },
-                { "is_load", 0 }
-            }, "load_time", "start_ads_request");
+                { "is_load", 0 },
+                { "load_time", loadTime }
+            });
 
             float timeWait = 5f;
 
