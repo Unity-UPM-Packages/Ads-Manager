@@ -145,15 +145,15 @@ namespace TheLegends.Base.Ads
 
             loadEndTime = DateTime.UtcNow;
 
-            DatabucketsManager.Instance.RecordEvent("ad_request", new Dictionary<string, object>
-            {
-                { "ad_format", AdsType.ToString() },
-                { "ad_platform", AdsMediation.ToString() },
-                { "ad_network", networkName},
-                { "ad_unit_id", adsUnitID },
-                { "is_load", 1 },
-                { "load_time", loadTime }
-            });
+            // DatabucketsManager.Instance.RecordEvent("ad_request", new Dictionary<string, object>
+            // {
+            //     { "ad_format", AdsType.ToString() },
+            //     { "ad_platform", AdsMediation.ToString() },
+            //     { "ad_network", networkName},
+            //     { "ad_unit_id", adsUnitID },
+            //     { "is_load", 1 },
+            //     { "load_time", loadTime }
+            // });
         }
 
         public bool IsAdsAvailable()
@@ -169,15 +169,15 @@ namespace TheLegends.Base.Ads
 
             loadEndTime = DateTime.UtcNow;
 
-            DatabucketsManager.Instance.RecordEvent("ad_request", new Dictionary<string, object>
-            {
-                { "ad_format", AdsType.ToString() },
-                { "ad_platform", AdsMediation.ToString() },
-                { "ad_network", "Unavailable"},
-                { "ad_unit_id", adsUnitID },
-                { "is_load", 0 },
-                { "load_time", loadTime }
-            });
+            // DatabucketsManager.Instance.RecordEvent("ad_request", new Dictionary<string, object>
+            // {
+            //     { "ad_format", AdsType.ToString() },
+            //     { "ad_platform", AdsMediation.ToString() },
+            //     { "ad_network", "Unavailable"},
+            //     { "ad_unit_id", adsUnitID },
+            //     { "is_load", 0 },
+            //     { "load_time", loadTime }
+            // });
 
             float timeWait = 5f;
 
