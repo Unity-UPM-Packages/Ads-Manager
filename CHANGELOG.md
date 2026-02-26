@@ -1,3 +1,10 @@
+## [1.1.39](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.38...v1.1.39) (2026-02-26)
+
+
+### Bug Fixes
+
+* revert coroutine to invoke ([2b0a456](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/2b0a456edeb3d3d6390a461f0a7c8e17ebe10928))
+
 ## [1.1.38](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.37...v1.1.38) (2026-02-06)
 
 
