@@ -79,6 +79,21 @@ namespace TheLegends.Base.Ads
         {
             Debug.Log("DummyNativeClient: WithPosition " + positionX + "x" + positionY);
         }
+
+        public void updateAdViewSize(int width, int height)
+        {
+            Debug.Log("DummyNativeClient: updateAdViewSize " + width + "x" + height);
+        }
+
+        public float GetWidthInPixels()
+        {
+            return 0f;
+        }
+
+        public float GetHeightInPixels()
+        {
+            return 0f;
+        }
     }
 
     /// <summary>

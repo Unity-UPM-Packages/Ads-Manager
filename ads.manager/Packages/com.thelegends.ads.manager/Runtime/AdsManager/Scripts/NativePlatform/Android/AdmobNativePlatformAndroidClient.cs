@@ -46,8 +46,16 @@ namespace TheLegends.Base.Ads
         }
 
         public void ShowAd(string layoutName) => _kotlinController?.Call("showAd", layoutName);
+
         public void DestroyAd() => _kotlinController?.Call("destroyAd");
+
         public bool IsAdAvailable() => _kotlinController?.Call<bool>("isAdAvailable") ?? false;
+
+        public float GetWidthInPixels() => _kotlinController?.Call<float>("getWidthInPixels") ?? 0f;
+
+        public float GetHeightInPixels() => _kotlinController?.Call<float>("getHeightInPixels") ?? 0f;
+
+        public void updateAdViewSize(int width, int height) => _kotlinController?.Call("updateAdViewSize", width, height);
 
         #region Builder Pattern Support - Direct Native Calls
 

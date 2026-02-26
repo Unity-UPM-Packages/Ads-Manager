@@ -571,6 +571,40 @@ namespace TheLegends.Base.Ads
             }
         }
 
+        public float GetNativeBannerWidth(PlacementOrder order)
+        {
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                return netWork.GetNativeBannerWidth(order);
+            }
+
+            return 0f;
+        }
+
+        public float GetNativeBannerHeight(PlacementOrder order)
+        {
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                return netWork.GetNativeBannerHeight(order);
+            }
+
+            return 0f;
+        }
+
+        public void UpdateNativeBannerViewSize(PlacementOrder order, int width, int height)
+        {
+            var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
+
+            if (netWork != null)
+            {
+                netWork.UpdateNativeBannerViewSize(order, width, height);
+            }
+        }
+
         #endregion
 
         #region NativeInter

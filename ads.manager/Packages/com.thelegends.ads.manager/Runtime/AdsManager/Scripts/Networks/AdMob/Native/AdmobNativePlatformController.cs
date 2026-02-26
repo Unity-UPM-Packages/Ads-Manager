@@ -23,6 +23,8 @@ namespace TheLegends.Base.Ads
         // Unity AutoReload & ShowOnLoaded management (exactly like AdmobNativeController)
         protected float _autoReloadTime = 0f; // Like timeAutoReload in AdmobNativeController
         protected bool _isShowOnLoaded = false; // Like isShowOnLoaded in AdmobNativeController
+        protected int _customViewWidth = -1;
+        protected int _customViewHeight = -1;
         protected NativePlatformShowBuilder.PositionConfig _storedPosition;
 
         public override AdsNetworks GetAdsNetworks()
@@ -162,6 +164,11 @@ namespace TheLegends.Base.Ads
 
                 _nativePlatformAd.Show(layoutName);
 
+                if (_customViewWidth != -1 && _customViewHeight != -1)
+                {
+                    _nativePlatformAd.UpdateAdViewSize(_customViewWidth, _customViewHeight);
+                }
+
                 CancelReloadAds();
                 if (_autoReloadTime > 0)
                 {
@@ -196,6 +203,33 @@ namespace TheLegends.Base.Ads
         private void CancelReloadAds()
         {
             CancelInvoke(nameof(LoadAds));
+        }
+
+        public float GetWidthInPixels()
+        {
+#if USE_ADMOB
+            return _nativePlatformAd?.GetWidthInPixels() ?? 0f;
+#endif
+        }
+
+        public float GetHeightInPixels()
+        {
+#if USE_ADMOB
+            return _nativePlatformAd?.GetHeightInPixels() ?? 0f;
+#endif
+        }
+
+        public void UpdateAdViewSize(int width, int height)
+        {
+            _customViewWidth = width;
+            _customViewHeight = height;
+
+#if USE_ADMOB
+            if (_nativePlatformAd != null && status == AdsEvents.ShowSuccess)
+            {
+                _nativePlatformAd.UpdateAdViewSize(width, height);
+            }   
+#endif
         }
 
         #region Internal
