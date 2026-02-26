@@ -364,6 +364,9 @@ public class DemoManager : MonoBehaviour
         }, () =>
         {
             AdsManager.Instance.Log("NativeBannerPlatform full screen content closed");
+        }, () =>
+        {
+            AdsManager.Instance.Log("NativeBannerPlatform Clicked");
         })
         ?.WithAutoReload(15f)
         ?.WithShowOnLoaded(true)
