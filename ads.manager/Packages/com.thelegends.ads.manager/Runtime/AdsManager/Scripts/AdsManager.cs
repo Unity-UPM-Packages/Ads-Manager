@@ -465,7 +465,7 @@ namespace TheLegends.Base.Ads
             }
         }
 
-        public NativePlatformShowBuilder ShowNativeBanner(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        public NativePlatformShowBuilder ShowNativeBanner(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null, Action OnClick = null)
         {
             if (!IsInitialized())
             {
@@ -477,7 +477,7 @@ namespace TheLegends.Base.Ads
 
             if (netWork != null)
             {
-                return netWork.ShowNativeBanner(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+                return netWork.ShowNativeBanner(order, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent, OnClick);
             }
 
             return null;

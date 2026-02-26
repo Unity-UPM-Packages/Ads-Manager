@@ -15,6 +15,7 @@ namespace TheLegends.Base.Ads
 
         protected Action OnClose;
         protected Action OnShow;
+        protected Action OnClick;
         private Action OnAdDismissedFullScreenContent;
 
         // Unity-side config storage for persistence (only Countdown needs storage for native)
@@ -119,7 +120,7 @@ namespace TheLegends.Base.Ads
 
                     if (_isShowOnLoaded)
                     {
-                        ShowAds(position, _layoutName, OnShow, OnClose); // Use default layout like AdmobNativeController
+                        ShowAds(position, _layoutName, OnShow, OnClose, null, OnClick); // Use default layout like AdmobNativeController
                     }
 
                 });
@@ -128,7 +129,7 @@ namespace TheLegends.Base.Ads
         }
 
 
-        public void ShowAds(string showPosition, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        public void ShowAds(string showPosition, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null, Action OnClick = null)
         {
 
 #if USE_ADMOB
@@ -143,6 +144,7 @@ namespace TheLegends.Base.Ads
 
             this.OnClose = OnClose;
             this.OnShow = OnShow;
+            this.OnClick = OnClick;
             this.OnAdDismissedFullScreenContent = OnAdDismissedFullScreenContent;
             base.ShowAds(showPosition);
 
@@ -188,6 +190,7 @@ namespace TheLegends.Base.Ads
         {
             OnShow = null;
             OnClose = null;
+            OnClick = null;
             OnAdDismissedFullScreenContent = null;
             
             ClearStoredConfigs();
@@ -320,6 +323,7 @@ namespace TheLegends.Base.Ads
             PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 OnAdsClick();
+                OnClick?.Invoke();
             });
 #endif
         }

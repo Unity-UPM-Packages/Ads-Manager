@@ -922,7 +922,7 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
-        public NativePlatformShowBuilder ShowNativeBanner(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null)
+        public NativePlatformShowBuilder ShowNativeBanner(PlacementOrder order, string position, string layoutName, Action OnShow = null, Action OnClose = null, Action OnAdDismissedFullScreenContent = null, Action OnClick = null)
         {
 #if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
 
@@ -941,7 +941,7 @@ namespace TheLegends.Base.Ads
 
             var controller = nativeBannerList[placementIndex];
 
-            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent, OnClick);
 #endif
             return null;
         }
@@ -1070,7 +1070,7 @@ namespace TheLegends.Base.Ads
 
             var controller = nativeInterList[placementIndex];
 
-            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent, null);
 #endif
             return null;
         }
@@ -1136,7 +1136,7 @@ namespace TheLegends.Base.Ads
 
             var controller = nativeRewardList[placementIndex];
 
-            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent, null);
 #endif
             return null;
         }
@@ -1202,7 +1202,7 @@ namespace TheLegends.Base.Ads
 
             var controller = nativeMrecList[placementIndex];
 
-            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent, null);
 #endif
             return null;
         }
@@ -1268,7 +1268,7 @@ namespace TheLegends.Base.Ads
 
             var controller = nativeAppOpenList[placementIndex];
 
-            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent, null);
 #endif
             return null;
         }
@@ -1334,7 +1334,7 @@ namespace TheLegends.Base.Ads
 
             var controller = nativeInterOpenList[placementIndex];
 
-            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent, null);
 #endif
             return null;
         }
@@ -1400,7 +1400,7 @@ namespace TheLegends.Base.Ads
 
             var controller = nativeMrecOpenList[placementIndex];
 
-            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent, null);
 #endif
             return null;
         }
@@ -1466,7 +1466,7 @@ namespace TheLegends.Base.Ads
 
             var controller = nativeVideoList[placementIndex];
 
-            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent);
+            return new NativePlatformShowBuilder(controller, position, layoutName, OnShow, OnClose, OnAdDismissedFullScreenContent, null);
 #endif
             return null;
         }

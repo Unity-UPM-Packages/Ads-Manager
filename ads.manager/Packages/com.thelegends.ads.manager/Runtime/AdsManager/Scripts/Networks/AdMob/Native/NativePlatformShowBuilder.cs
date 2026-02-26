@@ -16,6 +16,7 @@ namespace TheLegends.Base.Ads
         private readonly string _layoutName;
         private readonly Action _onShow;
         private readonly Action _onClose;
+        private readonly Action _onClick;
         private readonly Action _onAdDismissedFullScreenContent;
         private bool _hasExecuted = false;
         
@@ -24,13 +25,14 @@ namespace TheLegends.Base.Ads
         private AutoReloadConfig _autoReloadConfig;
         private ShowOnLoadedConfig _showOnLoadedConfig;
         private PositionConfig _positionConfig;
-        internal NativePlatformShowBuilder(AdmobNativePlatformController controller, string position, string layoutName, Action onShow, Action onClose, Action OnAdDismissedFullScreenContent)
+        internal NativePlatformShowBuilder(AdmobNativePlatformController controller, string position, string layoutName, Action onShow, Action onClose, Action OnAdDismissedFullScreenContent, Action OnClick)
         {
             _controller = controller;
             _position = position;
             _layoutName = layoutName;
             _onShow = onShow;
             _onClose = onClose;
+            _onClick = OnClick;
             _onAdDismissedFullScreenContent = OnAdDismissedFullScreenContent;
             // Store parameters, wait for explicit Execute() call
         }
@@ -127,7 +129,7 @@ namespace TheLegends.Base.Ads
             _controller.StoreConfigs(_countdownConfig, _autoReloadConfig, _showOnLoadedConfig, _positionConfig);
             
             Debug.Log($"[NativePlatformShowBuilder] Executing show with stored configurations");
-            _controller.ShowAds(_position, _layoutName, _onShow, _onClose, _onAdDismissedFullScreenContent);
+            _controller.ShowAds(_position, _layoutName, _onShow, _onClose, _onAdDismissedFullScreenContent, _onClick);
             
             _hasExecuted = true;
         }
