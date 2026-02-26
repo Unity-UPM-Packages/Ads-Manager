@@ -967,6 +967,69 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
+        public float GetNativeBannerWidth(PlacementOrder order)
+        {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
+            if (!IsListExist(nativeBannerList))
+            {
+                return 0f;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeBannerList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeBanner"} {order} is not exist");
+                return 0f;
+            }
+
+            return nativeBannerList[placementIndex].GetWidthInPixels();
+#endif
+        }
+
+        public float GetNativeBannerHeight(PlacementOrder order)
+        {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
+            if (!IsListExist(nativeBannerList))
+            {
+                return 0f;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeBannerList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeBanner"} {order} is not exist");
+                return 0f;
+            }
+
+            return nativeBannerList[placementIndex].GetHeightInPixels();
+#endif
+        }
+
+        public void UpdateNativeBannerViewSize(PlacementOrder order, int width, int height)
+        {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+
+            if (!IsListExist(nativeBannerList))
+            {
+                return;
+            }
+
+            var placementIndex = GetPlacementIndex((int)order, nativeBannerList.Count);
+
+            if (placementIndex == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {"NativeBanner"} {order} is not exist");
+                return;
+            }
+
+            nativeBannerList[placementIndex].UpdateAdViewSize(width, height);
+#endif
+        }
+
         public void LoadNativeInter(PlacementOrder order)
         {
 #if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB

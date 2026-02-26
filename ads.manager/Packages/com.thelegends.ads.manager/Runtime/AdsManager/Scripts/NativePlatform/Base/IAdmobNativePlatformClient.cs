@@ -30,6 +30,10 @@ namespace TheLegends.Base.Ads
         void ShowAd(string layoutName);
         void DestroyAd();
         bool IsAdAvailable();
+        public float GetWidthInPixels();
+        public float GetHeightInPixels();
+        void updateAdViewSize(int width, int height);
+
         IResponseInfoClient GetResponseInfoClient();
 
         // === BUILDER PATTERN SUPPORT ===
