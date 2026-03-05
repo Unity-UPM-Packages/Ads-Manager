@@ -12,6 +12,8 @@ using UnityEngine.UI;
 
 public class DemoManager : MonoBehaviour
 {
+    private readonly WaitForSeconds resetNativeSizeDelay = new WaitForSeconds(1f);
+
     public PlacementOrder order = PlacementOrder.One;
     public Button initBtn;
     public Button loadInterstitialBtn;
@@ -300,10 +302,6 @@ public class DemoManager : MonoBehaviour
 #endif
     }
 
-    public void AAAAA()
-    {
-        AdsManager.Instance.GetAdsStatus(AdsType.NativeUnity, order);
-    }
 
     public void LoadNativeVideoPlatform()
     {
@@ -367,6 +365,7 @@ public class DemoManager : MonoBehaviour
         }, () =>
         {
             AdsManager.Instance.Log("NativeBannerPlatform Clicked");
+            ResetNativeBannerSize();
         })
         ?.WithAutoReload(15f)
         ?.WithShowOnLoaded(true)
@@ -384,26 +383,24 @@ public class DemoManager : MonoBehaviour
     public void ChangeNativeBannerSize()
     {
 #if USE_ADMOB
-        // var deviceScale = MobileAds.Utils.GetDeviceScale();
-        // AdsManager.Instance.UpdateNativeBannerViewSize(PlacementOrder.One, (int)nativeBannerWidth, (int)(120 * deviceScale));
-
         var nativeBannerWidth = AdsManager.Instance.GetNativeBannerWidth(PlacementOrder.One);
         var nativeBannerHeight = AdsManager.Instance.GetNativeBannerHeight(PlacementOrder.One);
-
-        Debug.Log($"Native Banner Size: {nativeBannerWidth} x {nativeBannerHeight}");
-
         AdsManager.Instance.UpdateNativeBannerViewSize(PlacementOrder.One, (int)nativeBannerWidth, 200);
 #endif
     }
 
     public void ResetNativeBannerSize()
     {
+        StartCoroutine(IEResetNativeBannerSize());
+    }
+
+    private IEnumerator IEResetNativeBannerSize()
+    {
+        yield return resetNativeSizeDelay;
         var nativeBannerWidth = AdsManager.Instance.GetNativeBannerWidth(PlacementOrder.One);
         var nativeBannerHeight = AdsManager.Instance.GetNativeBannerHeight(PlacementOrder.One);
-
-        Debug.Log($"Native Banner Size: {nativeBannerWidth} x {nativeBannerHeight}");
-
         AdsManager.Instance.UpdateNativeBannerViewSize(PlacementOrder.One, (int)nativeBannerWidth, (int)nativeBannerHeight);
+        AdsManager.Instance.UpdateNativeBannerViewSize(PlacementOrder.One, -1, -1);
     }
 
     public void AdjustLayoutForNativeBanner()
