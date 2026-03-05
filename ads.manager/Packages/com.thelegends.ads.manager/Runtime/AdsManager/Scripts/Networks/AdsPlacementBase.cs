@@ -145,6 +145,8 @@ namespace TheLegends.Base.Ads
 
             loadEndTime = DateTime.UtcNow;
 
+#if USE_DATABUCKETS
+
             // DatabucketsManager.Instance.RecordEvent("ad_request", new Dictionary<string, object>
             // {
             //     { "ad_format", AdsType.ToString() },
@@ -154,6 +156,7 @@ namespace TheLegends.Base.Ads
             //     { "is_load", 1 },
             //     { "load_time", loadTime }
             // });
+#endif
         }
 
         public bool IsAdsAvailable()
@@ -169,6 +172,7 @@ namespace TheLegends.Base.Ads
 
             loadEndTime = DateTime.UtcNow;
 
+#if USE_DATABUCKETS
             // DatabucketsManager.Instance.RecordEvent("ad_request", new Dictionary<string, object>
             // {
             //     { "ad_format", AdsType.ToString() },
@@ -178,6 +182,7 @@ namespace TheLegends.Base.Ads
             //     { "is_load", 0 },
             //     { "load_time", loadTime }
             // });
+#endif
 
             float timeWait = 5f;
 
@@ -257,6 +262,7 @@ namespace TheLegends.Base.Ads
             adsUnitIDIndex = 0;
             LoadAds();
 
+#if USE_DATABUCKETS
             if (AdsType == AdsType.Interstitial 
             || AdsType == AdsType.InterOpen 
             || AdsType == AdsType.AppOpen
@@ -273,13 +279,14 @@ namespace TheLegends.Base.Ads
                     { "placement", position}
                 });
             }
-
+#endif
         }
 
         public virtual void OnAdsClick()
         {
             Status = AdsEvents.Click;
 
+#if USE_DATABUCKETS
             DatabucketsManager.Instance.RecordEvent("ad_click", new Dictionary<string, object>
             {
                 { "ad_format", AdsType.ToString() },
@@ -288,6 +295,7 @@ namespace TheLegends.Base.Ads
                 { "ad_unit_id", adsUnitID },
                 { "placement", position}
             });
+#endif
         }
 
         public virtual void OnAdsCancel()

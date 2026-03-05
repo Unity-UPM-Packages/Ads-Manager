@@ -78,9 +78,9 @@ namespace TheLegends.Base.Ads
             // Fetch remote data and update configs
             yield return FetchAndUpdateRemoteConfigs();
             OnInitFirebaseDone?.Invoke();
-
+#if USE_DATABUCKETS
             InitDatabuckets();
-
+#endif
             // Initialize Ads Manager
             yield return AdsManager.Instance.DoInit();
 
@@ -241,6 +241,8 @@ namespace TheLegends.Base.Ads
 
         private void InitDatabuckets()
         {
+#if USE_DATABUCKETS
+
             DatabucketsManager.Instance.Init();
             
             try
@@ -267,7 +269,7 @@ namespace TheLegends.Base.Ads
 #endif
             }
             
-
+#endif
         }
 
         private IEnumerator LoadInitialAds()

@@ -189,6 +189,7 @@ namespace TheLegends.Base.Ads
                     OnRewarded?.Invoke();
                     OnRewarded = null;
 
+#if USE_DATABUCKETS
                     DatabucketsManager.Instance.RecordEvent("ad_complete", new Dictionary<string, object>
                     {
                         { "ad_format", AdsType.ToString() },
@@ -198,6 +199,7 @@ namespace TheLegends.Base.Ads
                         { "end_type", "done"},
                         { "placement", position}
                     });
+#endif
 
                     AdsManager.Instance.OnFullScreenAdsClosed();
                 });
@@ -227,7 +229,7 @@ namespace TheLegends.Base.Ads
             });
         }
 
-        #endregion
+#endregion
     }
 }
 
