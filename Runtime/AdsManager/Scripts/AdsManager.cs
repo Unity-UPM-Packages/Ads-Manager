@@ -116,6 +116,12 @@ namespace TheLegends.Base.Ads
 
         private double totalRevenue = 0;
 
+        public double TotalRevenue
+        {
+            get { return totalRevenue; }
+            private set { totalRevenue = value; }
+        }
+
         private int adCount = 0;
         
         Dictionary<string, object> impressionParameters = new Dictionary<string, object>();
@@ -1124,7 +1130,7 @@ namespace TheLegends.Base.Ads
                     revenue = (double)impressionData.Value / 1000000f;
                     currency = impressionData.CurrencyCode;
 
-                    totalRevenue += revenue;
+                    TotalRevenue += revenue;
                 }
 
                 Log("GoogleMobileAds AdValue: " + impressionData.Value + " Revenue: " + revenue + " CurrencyCode: " + currency + " Precision: " + impressionData.Precision);
@@ -1160,7 +1166,7 @@ namespace TheLegends.Base.Ads
                     revenue = (double)impressionData.Revenue;
                     currency = MaxSdk.GetSdkConfiguration().CountryCode;
 
-                    totalRevenue += revenue;
+                    TotalRevenue += revenue;
                 }
 
 #if USE_FIREBASE
@@ -1184,12 +1190,12 @@ namespace TheLegends.Base.Ads
 
 #if USE_FIREBASE
             FirebaseManager.Instance.LogEvent("taichi_ad_impression", impressionParameters);
-            if (totalRevenue >= 0.01)
+            if (TotalRevenue >= 0.01)
             {
                 var taichiParameters = new Dictionary<string, object>
                 {
                     { "ad_count",  adCount},
-                    { "value", totalRevenue},
+                    { "value", TotalRevenue},
                 };
                 FirebaseManager.Instance.LogEvent("standard_ad_revenue_001", taichiParameters);
             }
