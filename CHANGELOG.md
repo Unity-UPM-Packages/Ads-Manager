@@ -1,3 +1,10 @@
+## [1.1.41](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.40...v1.1.41) (2026-03-09)
+
+
+### Bug Fixes
+
+* public TotalRevenue property ([01e2d26](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/01e2d2604389eaa0e956143d48e0d9d9ce664609))
+
 ## [1.1.40](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.39...v1.1.40) (2026-03-09)
 
 
