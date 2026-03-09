@@ -1,3 +1,10 @@
+## [1.1.43](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.42...v1.1.43) (2026-03-09)
+
+
+### Bug Fixes
+
+* fix UMP Consent ([4e9808b](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/4e9808bc8e1d8663399e369865e7d868fd13bdc1))
+
 ## [1.1.42](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.41...v1.1.42) (2026-03-09)
 
 
