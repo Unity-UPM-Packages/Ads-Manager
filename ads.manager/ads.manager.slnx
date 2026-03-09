@@ -1,0 +1,6 @@
+﻿<Solution>
+  <Project Path="com.thelegends.ads.manager.csproj" />
+  <Project Path="com.thelegends.ads.manager.Editor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="com.thelegends.ads.manager.Tests.csproj" />
+</Solution>
