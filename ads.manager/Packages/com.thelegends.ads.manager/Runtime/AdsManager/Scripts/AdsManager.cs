@@ -152,6 +152,8 @@ namespace TheLegends.Base.Ads
             }
 
             status = InitiationStatus.Initialized;
+
+            TotalRevenue = double.Parse(PlayerPrefs.GetString("TotalRevenue", "0"), System.Globalization.CultureInfo.InvariantCulture);
         }
 
 
@@ -1131,6 +1133,7 @@ namespace TheLegends.Base.Ads
                     currency = impressionData.CurrencyCode;
 
                     TotalRevenue += revenue;
+                    PlayerPrefs.SetString("TotalRevenue", TotalRevenue.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 }
 
                 Log("GoogleMobileAds AdValue: " + impressionData.Value + " Revenue: " + revenue + " CurrencyCode: " + currency + " Precision: " + impressionData.Precision);
@@ -1167,6 +1170,7 @@ namespace TheLegends.Base.Ads
                     currency = MaxSdk.GetSdkConfiguration().CountryCode;
 
                     TotalRevenue += revenue;
+                    PlayerPrefs.SetString("TotalRevenue", TotalRevenue.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 }
 
 #if USE_FIREBASE
