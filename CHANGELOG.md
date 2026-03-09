@@ -1,3 +1,10 @@
+## [1.1.40](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.39...v1.1.40) (2026-03-09)
+
+
+### Bug Fixes
+
+* add standard_ad_revenue_001 taichi ([2dcad83](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/2dcad830de21fad5fe7772f67e2e3a123dae89d0))
+
 ## [1.1.39](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.38...v1.1.39) (2026-02-26)
 
 
