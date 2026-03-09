@@ -1,3 +1,10 @@
+## [1.1.42](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.41...v1.1.42) (2026-03-09)
+
+
+### Bug Fixes
+
+* TotalRevenue PlayerPrefs ([249dd6e](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/249dd6e972a7c2210c92e87d0841654b63e24dd6))
+
 ## [1.1.41](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.40...v1.1.41) (2026-03-09)
 
 
