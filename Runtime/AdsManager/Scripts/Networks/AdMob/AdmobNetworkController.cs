@@ -62,12 +62,12 @@ namespace TheLegends.Base.Ads
 
             // Lấy tất cả các trường trong AdmobUnitID
             var unitIdFields = typeof(AdmobUnitID).GetFields();
-            
+
             // Lấy tất cả các trường danh sách controller trong AdmobNetworkController
             var controllerListFields = this.GetType()
                 .GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(f => f.FieldType.IsGenericType && 
-                           f.FieldType.GetGenericTypeDefinition() == typeof(List<>) && 
+                .Where(f => f.FieldType.IsGenericType &&
+                           f.FieldType.GetGenericTypeDefinition() == typeof(List<>) &&
                            typeof(AdsPlacementBase).IsAssignableFrom(f.FieldType.GetGenericArguments()[0]))
                 .ToList();
 
@@ -76,22 +76,22 @@ namespace TheLegends.Base.Ads
                 if (unitIdField.FieldType == typeof(List<Placement>))
                 {
                     string fieldName = unitIdField.Name;
-                    
+
                     if (excludedIdFields.Contains(fieldName))
                     {
                         continue;
                     }
-                    
-                    var controllerField = controllerListFields.FirstOrDefault(f => 
+
+                    var controllerField = controllerListFields.FirstOrDefault(f =>
                         fieldName.Replace("Ids", "List").Equals(f.Name, StringComparison.OrdinalIgnoreCase));
-                    
+
                     if (controllerField != null)
                     {
                         var iosIds = AdsManager.Instance.SettingsAds.ADMOB_IOS;
                         var androidIds = AdsManager.Instance.SettingsAds.ADMOB_Android;
                         var iosTestIds = AdsManager.Instance.SettingsAds.ADMOB_IOS_Test;
                         var androidTestIds = AdsManager.Instance.SettingsAds.ADMOB_Android_Test;
-                        
+
                         var placements = GetAdUnitIds(
                             isIOS,
                             isTest,
@@ -100,9 +100,9 @@ namespace TheLegends.Base.Ads
                             (List<Placement>)unitIdField.GetValue(iosTestIds),
                             (List<Placement>)unitIdField.GetValue(androidTestIds)
                         );
-                        
+
                         var controllerList = controllerField.GetValue(this);
-                        
+
                         var controllerType = controllerField.FieldType.GetGenericArguments()[0];
                         var methodInfo = typeof(AdmobNetworkController).GetMethod("CreateAdController", BindingFlags.NonPublic | BindingFlags.Instance);
                         var genericMethod = methodInfo.MakeGenericMethod(controllerType);
@@ -117,17 +117,15 @@ namespace TheLegends.Base.Ads
 
             yield return RequestUMP();
 
+            MobileAds.SetRequestConfiguration(new RequestConfiguration
+            {
+                TestDeviceIds = testDevicesIDAds
+            });
+
+            MobileAds.SetiOSAppPauseOnBackground(true);
+
             if (ConsentInformation.CanRequestAds())
             {
-                MobileAds.SetRequestConfiguration( new RequestConfiguration
-                {
-                    TestDeviceIds = testDevicesIDAds
-                });
-
-                MobileAds.RaiseAdEventsOnUnityMainThread = true;
-
-                MobileAds.SetiOSAppPauseOnBackground(true);
-
                 MobileAds.Initialize(initStatus =>
                 {
                     PimDeWitte.UnityMainThreadDispatcher.UnityMainThreadDispatcher.Instance().Enqueue(() =>
@@ -194,6 +192,8 @@ namespace TheLegends.Base.Ads
                 yield break;
             }
 
+            isChecking = true;
+
             // Create a ConsentRequestParameters object.
             ConsentRequestParameters request = new ConsentRequestParameters
             {
@@ -222,6 +222,7 @@ namespace TheLegends.Base.Ads
                         // Consent has already been gathered or not required.
                         // Return control back to the user.
                         AdsManager.Instance.Log($"{TagLog.UMP} " + "Update " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " -- Consent has already been gathered or not required");
+                        isChecking = false;
                         return;
                     }
 
@@ -242,14 +243,14 @@ namespace TheLegends.Base.Ads
                             // Form showing succeeded.
                             AdsManager.Instance.Log($"{TagLog.UMP} " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW SUCCESS");
                         }
-                        
+
                         isChecking = false;
                     });
                 });
 
             }));
 
-            while (isChecking && (ConsentInformation.ConsentStatus == ConsentStatus.Required || ConsentInformation.ConsentStatus == ConsentStatus.Unknown))
+            while (isChecking)
             {
                 yield return null;
             }
@@ -464,7 +465,7 @@ namespace TheLegends.Base.Ads
             if (orderIndex <= -1) {
                 return false;
             }
-            
+
             switch (adsType)
             {
                 case AdsType.Banner:
@@ -535,7 +536,7 @@ namespace TheLegends.Base.Ads
                 case AdsType.NativeMrec:
                     orderIndex = GetPlacementIndex((int)order, nativeMrecList.Count);
                     break;
-                case AdsType.NativeAppOpen: 
+                case AdsType.NativeAppOpen:
                     orderIndex = GetPlacementIndex((int)order, nativeAppOpenList.Count);
                     break;
                 case AdsType.NativeInterOpen:
@@ -1428,7 +1429,7 @@ namespace TheLegends.Base.Ads
             nativeVideoList[placementIndex].HideAds();
 #endif
         }
-        
+
         private bool IsListExist<T>(List<T> list) where T : AdsPlacementBase
         {
 #if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
