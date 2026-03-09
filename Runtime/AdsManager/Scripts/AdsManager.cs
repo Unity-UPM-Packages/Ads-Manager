@@ -114,6 +114,11 @@ namespace TheLegends.Base.Ads
 
         private InitiationStatus status = InitiationStatus.NotInitialized;
 
+        private double totalRevenue = 0;
+
+        private int adCount = 0;
+        
+        Dictionary<string, object> impressionParameters = new Dictionary<string, object>();
 
         public IEnumerator DoInit()
         {
@@ -1088,6 +1093,8 @@ namespace TheLegends.Base.Ads
 
         public void LogImpressionData(AdsNetworks network, AdsType adsType, string adsUnitID, object value)
         {
+            adCount++;
+
             string monetizationNetwork = "";
             double revenue = 0;
             string ad_unit_name = "";
@@ -1117,13 +1124,13 @@ namespace TheLegends.Base.Ads
                     revenue = (double)impressionData.Value / 1000000f;
                     currency = impressionData.CurrencyCode;
 
-
+                    totalRevenue += revenue;
                 }
 
                 Log("GoogleMobileAds AdValue: " + impressionData.Value + " Revenue: " + revenue + " CurrencyCode: " + currency + " Precision: " + impressionData.Precision);
 #if USE_FIREBASE
 
-                var impressionParameters = new Dictionary<string, object>
+                impressionParameters = new Dictionary<string, object>
                 {
                     { "mediation", mediation.ToString() },
                     { "monetizationNetwork", monetizationNetwork },
@@ -1134,8 +1141,6 @@ namespace TheLegends.Base.Ads
                     { "currency", currency },
 
                 };
-
-                FirebaseManager.Instance.LogEvent("taichi_ad_impression", impressionParameters);
 #endif
             }
 #endif
@@ -1154,11 +1159,13 @@ namespace TheLegends.Base.Ads
                     country = "";
                     revenue = (double)impressionData.Revenue;
                     currency = MaxSdk.GetSdkConfiguration().CountryCode;
+
+                    totalRevenue += revenue;
                 }
 
 #if USE_FIREBASE
 
-                var impressionParameters = new Dictionary<string, object>
+                impressionParameters = new Dictionary<string, object>
                 {
                     {"ad_platform", "AppLovin"},
                     {"ad_source", impressionData.NetworkName},
@@ -1172,6 +1179,19 @@ namespace TheLegends.Base.Ads
 #endif
 
                 Log("ApplovinMax AdInfo: " + impressionData.Revenue + " Revenue: " + revenue + " CurrencyCode: " + currency + " Precision: " + impressionData.RevenuePrecision);
+            }
+#endif
+
+#if USE_FIREBASE
+            FirebaseManager.Instance.LogEvent("taichi_ad_impression", impressionParameters);
+            if (totalRevenue >= 0.01)
+            {
+                var taichiParameters = new Dictionary<string, object>
+                {
+                    { "ad_count",  adCount},
+                    { "value", totalRevenue},
+                };
+                FirebaseManager.Instance.LogEvent("standard_ad_revenue_001", taichiParameters);
             }
 #endif
 
