@@ -1202,8 +1202,6 @@ namespace TheLegends.Base.Ads
 
 #if USE_FIREBASE
             FirebaseManager.Instance.LogEvent("taichi_ad_impression", impressionParameters);
-
-
 #endif
 
 
@@ -1225,9 +1223,10 @@ namespace TheLegends.Base.Ads
                 { AdRevenueScheme.AD_TYPE, ad_format },
                 { AdRevenueScheme.COUNTRY, country },
             });
+#endif
 
             OnImpressionRecored?.Invoke(network, adsType, revenue);
-#endif
+            
         }
 
         public void Log(string message)
