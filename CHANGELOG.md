@@ -1,3 +1,10 @@
+## [1.1.44](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.43...v1.1.44) (2026-03-10)
+
+
+### Bug Fixes
+
+* improve smt ([8a13ea8](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/8a13ea8e2c0148b696f4f60d808118ff23a93f1d))
+
 ## [1.1.43](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.42...v1.1.43) (2026-03-09)
 
 
