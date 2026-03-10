@@ -1,3 +1,10 @@
+## [1.1.45](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.44...v1.1.45) (2026-03-10)
+
+
+### Bug Fixes
+
+* fix OnImpressionRecored ([70e60f4](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/70e60f441a54191507a093f25ebf553103b2c78f))
+
 ## [1.1.44](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.43...v1.1.44) (2026-03-10)
 
 
