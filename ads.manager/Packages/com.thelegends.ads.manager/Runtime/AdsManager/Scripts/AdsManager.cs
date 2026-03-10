@@ -33,6 +33,8 @@ namespace TheLegends.Base.Ads
 
         public AdsConfigs adsConfigs;
 
+        public Action<AdsNetworks, AdsType, double> OnImpressionRecored;
+
         public AdsSettings SettingsAds
         {
             get
@@ -123,6 +125,12 @@ namespace TheLegends.Base.Ads
         }
 
         private int adCount = 0;
+
+        public int AdCount
+        {
+            get { return adCount; }
+            private set { adCount = value; }
+        }
         
         Dictionary<string, object> impressionParameters = new Dictionary<string, object>();
 
@@ -1101,7 +1109,7 @@ namespace TheLegends.Base.Ads
 
         public void LogImpressionData(AdsNetworks network, AdsType adsType, string adsUnitID, object value)
         {
-            adCount++;
+            AdCount++;
 
             string monetizationNetwork = "";
             double revenue = 0;
@@ -1194,15 +1202,8 @@ namespace TheLegends.Base.Ads
 
 #if USE_FIREBASE
             FirebaseManager.Instance.LogEvent("taichi_ad_impression", impressionParameters);
-            if (TotalRevenue >= 0.01)
-            {
-                var taichiParameters = new Dictionary<string, object>
-                {
-                    { "ad_count",  adCount},
-                    { "value", TotalRevenue},
-                };
-                FirebaseManager.Instance.LogEvent("standard_ad_revenue_001", taichiParameters);
-            }
+
+
 #endif
 
 
@@ -1224,6 +1225,8 @@ namespace TheLegends.Base.Ads
                 { AdRevenueScheme.AD_TYPE, ad_format },
                 { AdRevenueScheme.COUNTRY, country },
             });
+
+            OnImpressionRecored?.Invoke(network, adsType, revenue);
 #endif
         }
 
