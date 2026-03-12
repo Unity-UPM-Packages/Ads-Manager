@@ -344,6 +344,29 @@ namespace TheLegends.Base.Ads
 #endif
         }
 
+        public override int GetAdsIdIndex(AdsType type, PlacementOrder order)
+        {
+            int adsIdIndex = -1;
+
+            var listPlacement = GetPlacementListByType(type);
+
+            
+            if (!IsListExist(listPlacement))
+            {
+                return adsIdIndex;
+            }
+
+            var index = GetPlacementIndex((int)order, listPlacement.Count);
+
+            if (index == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {type} {order} is not exist");
+                return adsIdIndex;
+            }
+
+            return listPlacement[index].AdsUnitIDIndex;
+        }
+
         public override void RemoveAds()
         {
 #if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB

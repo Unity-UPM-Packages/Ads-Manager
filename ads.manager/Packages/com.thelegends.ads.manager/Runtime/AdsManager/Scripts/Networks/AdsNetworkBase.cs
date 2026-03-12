@@ -48,6 +48,7 @@ namespace TheLegends.Base.Ads
             return placementOrders.Count;
         }
 
+        public abstract int GetAdsIdIndex(AdsType adsType, PlacementOrder order);
 
         public abstract AdsNetworks GetNetworkType();
         public abstract void RemoveAds();

@@ -1078,6 +1078,22 @@ namespace TheLegends.Base.Ads
             }
 
             return netWork.GetPlacementInfo(adsType, out placementOrders);
+        public int GetAdsIdIndex(AdsType adsType, PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return -1;
+            }
+
+            foreach (var network in adsNetworks)
+            {
+                if (network.IsAdsControllerExist(adsType, order))
+                {
+                    return network.GetAdsIdIndex(adsType, order);
+                }
+            }
+
+            return -1;
         }
 
         private AdsNetworkBase GetNetwork(AdsNetworks network)
