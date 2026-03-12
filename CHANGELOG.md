@@ -1,3 +1,10 @@
+## [1.1.46](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.45...v1.1.46) (2026-03-12)
+
+
+### Bug Fixes
+
+* reset adsUnitIDIndex LoadNotAvailable ([6674be1](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/6674be11ef1b3cfccb63136416cd0e58274b0f06))
+
 ## [1.1.45](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.44...v1.1.45) (2026-03-10)
 
 
