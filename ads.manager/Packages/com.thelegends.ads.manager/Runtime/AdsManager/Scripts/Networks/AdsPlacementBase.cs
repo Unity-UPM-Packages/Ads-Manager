@@ -174,6 +174,7 @@ namespace TheLegends.Base.Ads
             else
             {
                 Status = AdsEvents.LoadNotAvailable;
+                adsUnitIDIndex = 0;
                 reloadCount = 0;
             }
 
