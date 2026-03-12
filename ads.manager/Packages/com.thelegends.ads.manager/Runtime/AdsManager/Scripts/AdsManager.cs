@@ -1029,6 +1029,24 @@ namespace TheLegends.Base.Ads
             return bestStatus;
         }
 
+        public int GetAdsIdIndex(AdsType adsType, PlacementOrder order)
+        {
+            if (!IsInitialized())
+            {
+                return -1;
+            }
+
+            foreach (var network in adsNetworks)
+            {
+                if (network.IsAdsControllerExist(adsType, order))
+                {
+                    return network.GetAdsIdIndex(adsType, order);
+                }
+            }
+
+            return -1;
+        }
+
         private AdsNetworkBase GetNetwork(AdsNetworks network)
         {
             return adsNetworks.FirstOrDefault(x => x.GetNetworkType() == network);

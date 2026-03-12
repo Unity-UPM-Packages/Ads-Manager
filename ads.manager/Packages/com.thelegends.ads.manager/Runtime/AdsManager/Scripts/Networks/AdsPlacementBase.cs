@@ -12,6 +12,12 @@ namespace TheLegends.Base.Ads
         public PlacementOrder Order { get; set; }
         protected int adsUnitIDIndex = 0;
 
+        public int AdsUnitIDIndex
+        {
+            get { return adsUnitIDIndex; }
+            private set { adsUnitIDIndex = value; }
+        }
+
         protected string adsUnitID = string.Empty;
         protected string position = "default";
 
@@ -111,8 +117,8 @@ namespace TheLegends.Base.Ads
 
             if (placement.stringIDs != null && placement.stringIDs.Count > 0)
             {
-                adsUnitIDIndex %= placement.stringIDs.Count;
-                adsUnitID = placement.stringIDs[adsUnitIDIndex];
+                AdsUnitIDIndex %= placement.stringIDs.Count;
+                adsUnitID = placement.stringIDs[AdsUnitIDIndex];
                 AdsManager.Instance.Log($"{AdsNetworks}_{AdsType} " + "Startting LoadAds " + adsUnitID);
             }
 
@@ -167,7 +173,7 @@ namespace TheLegends.Base.Ads
 
             if (reloadCount < AdsManager.Instance.SettingsAds.autoReLoadMax)
             {
-                adsUnitIDIndex++;
+                AdsUnitIDIndex++;
                 reloadCount++;
                 Invoke(nameof(LoadAds), timeWait * reloadCount);
             }
@@ -217,7 +223,7 @@ namespace TheLegends.Base.Ads
         public virtual void OnAdsClosed()
         {
             Status = AdsEvents.Close;
-            adsUnitIDIndex = 0;
+            AdsUnitIDIndex = 0;
             LoadAds();
         }
 

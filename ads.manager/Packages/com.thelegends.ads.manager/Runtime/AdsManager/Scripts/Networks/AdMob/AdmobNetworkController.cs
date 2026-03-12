@@ -304,64 +304,7 @@ namespace TheLegends.Base.Ads
         {
 #if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
 
-            var listPlacement = new List<AdsPlacementBase>();
-
-            switch (type)
-            {
-                case AdsType.Banner:
-                    listPlacement = bannerList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.Interstitial:
-                    listPlacement = interList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.Rewarded:
-                    listPlacement = rewardList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.Mrec:
-                    listPlacement = mrecList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.AppOpen:
-                    listPlacement = appOpenList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.MrecOpen:
-                    listPlacement = mrecOpenList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.InterOpen:
-                    listPlacement = interOpenList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativeOverlay:
-                    listPlacement = nativeOverlayList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativeUnity:
-                    listPlacement = nativeOverlayList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativeBanner:
-                    listPlacement = nativeBannerList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativeInter:
-                    listPlacement = nativeInterList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativeReward:
-                    listPlacement = nativeRewardList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativeMrec:
-                    listPlacement = nativeMrecList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativeAppOpen:
-                    listPlacement = nativeAppOpenList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativeInterOpen:
-                    listPlacement = nativeInterOpenList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativeMrecOpen:
-                    listPlacement = nativeMrecOpenList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                case AdsType.NativeVideo:
-                    listPlacement = nativeVideoList.Cast<AdsPlacementBase>().ToList();
-                    break;
-                default:
-                    return AdsEvents.None;
-            }
+            var listPlacement = GetPlacementListByType(type);
 
             if (!IsListExist(listPlacement))
             {
@@ -380,6 +323,29 @@ namespace TheLegends.Base.Ads
 #else
             return AdsEvents.None;
 #endif
+        }
+
+        public override int GetAdsIdIndex(AdsType type, PlacementOrder order)
+        {
+            int adsIdIndex = -1;
+
+            var listPlacement = GetPlacementListByType(type);
+
+            
+            if (!IsListExist(listPlacement))
+            {
+                return adsIdIndex;
+            }
+
+            var index = GetPlacementIndex((int)order, listPlacement.Count);
+
+            if (index == -1)
+            {
+                AdsManager.Instance.LogError($"{TagLog.ADMOB} {type} {order} is not exist");
+                return adsIdIndex;
+            }
+
+            return listPlacement[index].AdsUnitIDIndex;
         }
 
         public override void RemoveAds()
@@ -574,6 +540,53 @@ namespace TheLegends.Base.Ads
             return Mathf.Clamp(order - 1, 0, listCount - 1);
 #else
             return -1;
+#endif
+        }
+
+        private List<AdsPlacementBase> GetPlacementListByType(AdsType type)
+        {
+#if (UNITY_ANDROID || UNITY_IOS) && USE_ADMOB
+            switch (type)
+            {
+                case AdsType.Banner:
+                    return bannerList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.Interstitial:
+                    return interList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.Rewarded:
+                    return rewardList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.Mrec:
+                    return mrecList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.AppOpen:
+                    return appOpenList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.MrecOpen:
+                    return mrecOpenList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.InterOpen:
+                    return interOpenList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.NativeOverlay:
+                    return nativeOverlayList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.NativeUnity:
+                    return nativeOverlayList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.NativeBanner:
+                    return nativeBannerList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.NativeInter:
+                    return nativeInterList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.NativeReward:
+                    return nativeRewardList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.NativeMrec:
+                    return nativeMrecList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.NativeAppOpen:
+                    return nativeAppOpenList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.NativeInterOpen:
+                    return nativeInterOpenList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.NativeMrecOpen:
+                    return nativeMrecOpenList.Cast<AdsPlacementBase>().ToList();
+                case AdsType.NativeVideo:
+                    return nativeVideoList.Cast<AdsPlacementBase>().ToList();
+                default:
+                    return null;
+            }
+#else
+            return null;
 #endif
         }
 
