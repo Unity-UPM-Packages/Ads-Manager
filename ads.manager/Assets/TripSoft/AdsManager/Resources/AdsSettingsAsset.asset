@@ -25,7 +25,7 @@ MonoBehaviour:
   isTest: 1
   preloadSettings:
     preloadBanner: 1
-    preloadInterstitial: 1
+    preloadInterstitial: 0
     preloadRewarded: 1
     preloadMREC: 1
     preloadAppOpen: 1

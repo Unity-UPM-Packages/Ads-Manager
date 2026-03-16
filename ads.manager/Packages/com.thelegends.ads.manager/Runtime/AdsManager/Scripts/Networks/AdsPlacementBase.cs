@@ -219,7 +219,52 @@ namespace TheLegends.Base.Ads
         {
             Status = AdsEvents.Close;
             adsUnitIDIndex = 0;
-            LoadAds();
+
+            bool isPreload = false;
+            var settings = AdsManager.Instance.SettingsAds.preloadSettings;
+
+            switch (AdsType)
+            {
+                case AdsType.Banner:
+                    isPreload = settings.preloadBanner;
+                    break;
+                case AdsType.Interstitial:
+                    isPreload = settings.preloadInterstitial;
+                    break;
+                case AdsType.Rewarded:
+                    isPreload = settings.preloadRewarded;
+                    break;
+                case AdsType.Mrec:
+                    isPreload = settings.preloadMREC;
+                    break;
+                case AdsType.AppOpen:
+                    isPreload = settings.preloadAppOpen;
+                    break;
+                case AdsType.NativeBanner:
+                    isPreload = settings.nativeAds.preloadNativeBanner;
+                    break;
+                case AdsType.NativeInter:
+                    isPreload = settings.nativeAds.preloadNativeInter;
+                    break;
+                case AdsType.NativeReward:
+                    isPreload = settings.nativeAds.preloadNativeReward;
+                    break;
+                case AdsType.NativeMrec:
+                    isPreload = settings.nativeAds.preloadNativeMrec;
+                    break;
+                case AdsType.NativeAppOpen:
+                    isPreload = settings.nativeAds.preloadNativeAppOpen;
+                    break;
+                case AdsType.NativeVideo:
+                    isPreload = settings.nativeAds.preloadNativeVideo;
+                    break;
+            }
+
+            if (isPreload)
+            {
+                LoadAds();
+            }
+
         }
 
         public virtual void OnAdsClick()

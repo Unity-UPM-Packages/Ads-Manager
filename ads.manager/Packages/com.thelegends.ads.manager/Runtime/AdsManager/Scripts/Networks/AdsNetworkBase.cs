@@ -33,6 +33,21 @@ namespace TheLegends.Base.Ads
 
         public abstract AdsEvents GetAdsStatus(AdsType adsType, PlacementOrder order);
 
+        public virtual int GetPlacementInfo(AdsType adsType, out List<PlacementOrder> placementOrders)
+        {
+            placementOrders = new List<PlacementOrder>();
+
+            foreach (PlacementOrder order in Enum.GetValues(typeof(PlacementOrder)))
+            {
+                if (IsAdsControllerExist(adsType, order))
+                {
+                    placementOrders.Add(order);
+                }
+            }
+
+            return placementOrders.Count;
+        }
+
 
         public abstract AdsNetworks GetNetworkType();
         public abstract void RemoveAds();

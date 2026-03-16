@@ -103,7 +103,7 @@ namespace TheLegends.Base.Ads
             this.OnClose = OnClose;
             base.ShowAds(showPosition);
 #if USE_ADMOB
-            if (IsReady && IsAvailable)
+            if (IsReady && IsAvailable && AdsManager.Instance.IsTimeToShowAd)
             {
                 _appOpenAd.OnAdClicked += OnAppOpenClick;
                 _appOpenAd.OnAdPaid += OnAdsPaid;

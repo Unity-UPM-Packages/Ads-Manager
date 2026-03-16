@@ -425,73 +425,77 @@ namespace TheLegends.Base.Ads
 
             if (settings.preloadBanner)
             {
-                AdsManager.Instance.LoadBanner(PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.Banner, order => AdsManager.Instance.LoadBanner(order));
             }
 
             if (settings.preloadInterstitial)
             {
-                AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.Interstitial, order => AdsManager.Instance.LoadInterstitial(AdsType.Interstitial, order));
             }
 
             if (settings.preloadRewarded)
             {
-                AdsManager.Instance.LoadRewarded(PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.Rewarded, order => AdsManager.Instance.LoadRewarded(order));
             }
 
             if (settings.preloadMREC)
             {
-                AdsManager.Instance.LoadMrec(AdsType.Mrec, PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.Mrec, order => AdsManager.Instance.LoadMrec(AdsType.Mrec, order));
             }
 
             if (settings.preloadAppOpen)
             {
-                AdsManager.Instance.LoadAppOpen(PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.AppOpen, order => AdsManager.Instance.LoadAppOpen(order));
             }
 
 
 
 #if USE_ADMOB
-            if (settings.nativeAds.preloadNativeOverlay)
+            if (settings.nativeAds != null && settings.nativeAds.preloadNativeOverlay)
             {
-                AdsManager.Instance.LoadNativeOverlay(PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.NativeOverlay, order => AdsManager.Instance.LoadNativeOverlay(order));
             }
-            if (settings.nativeAds.preloadNativeBanner)
+            if (settings.nativeAds != null && settings.nativeAds.preloadNativeBanner)
             {
-                AdsManager.Instance.LoadNativeBanner(PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.NativeBanner, order => AdsManager.Instance.LoadNativeBanner(order));
             }
-            if (settings.nativeAds.preloadNativeInter)
+            if (settings.nativeAds != null && settings.nativeAds.preloadNativeInter)
             {
-                AdsManager.Instance.LoadNativeInter(PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.NativeInter, order => AdsManager.Instance.LoadNativeInter(order));
             }
-            if (settings.nativeAds.preloadNativeReward)
+            if (settings.nativeAds != null && settings.nativeAds.preloadNativeReward)
             {
-                AdsManager.Instance.LoadNativeReward(PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.NativeReward, order => AdsManager.Instance.LoadNativeReward(order));
             }
-            if (settings.nativeAds.preloadNativeMrec)
+            if (settings.nativeAds != null && settings.nativeAds.preloadNativeMrec)
             {
-                AdsManager.Instance.LoadNativeMrec(PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.NativeMrec, order => AdsManager.Instance.LoadNativeMrec(order));
             }
-            if (settings.nativeAds.preloadNativeAppOpen)
+            if (settings.nativeAds != null && settings.nativeAds.preloadNativeAppOpen)
             {
-                AdsManager.Instance.LoadNativeAppOpen(PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.NativeAppOpen, order => AdsManager.Instance.LoadNativeAppOpen(order));
             }
-            if (settings.nativeAds.preloadNativeVideo)
+            if (settings.nativeAds != null && settings.nativeAds.preloadNativeVideo)
             {
-                AdsManager.Instance.LoadNativeVideo(PlacementOrder.One);
-                yield return null;
+                yield return IEPreloadByType(AdsType.NativeVideo, order => AdsManager.Instance.LoadNativeVideo(order));
             }
 #endif
+        }
+
+        private IEnumerator IEPreloadByType(AdsType adsType, Action<PlacementOrder> preloadAction)
+        {
+            AdsManager.Instance.GetPlacementInfo(adsType, out var placementOrders);
+
+            if (placementOrders == null || placementOrders.Count <= 0)
+            {
+                yield break;
+            }
+
+            foreach (var order in placementOrders.Distinct().OrderBy(order => (int)order))
+            {
+                preloadAction?.Invoke(order);
+                yield return null;
+            }
         }
 
 

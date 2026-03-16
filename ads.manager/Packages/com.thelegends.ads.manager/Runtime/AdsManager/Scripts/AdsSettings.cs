@@ -178,24 +178,24 @@ namespace TheLegends.Base.Ads
     public class PreloadSettings
     {
         [Header("Standard Ads")]
-        public bool preloadBanner = true;
-        public bool preloadInterstitial = true;
-        public bool preloadRewarded = true;
-        public bool preloadMREC = true;
-        public bool preloadAppOpen = true;
+        public bool preloadBanner = false;
+        public bool preloadInterstitial = false;
+        public bool preloadRewarded = false;
+        public bool preloadMREC = false;
+        public bool preloadAppOpen = false;
     
         [Header("Admob Native Ads")]
         public NativePreloadSettings nativeAds;
     }
     
     [System.Serializable]
-    public struct NativePreloadSettings
+    public class NativePreloadSettings
     {
-        public bool preloadNativeBanner;
-        public bool preloadNativeOverlay;
-        public bool preloadNativeInter;
-        public bool preloadNativeReward;
-        public bool preloadNativeMrec;
-        public bool preloadNativeAppOpen;
-        public bool preloadNativeVideo;
+        public bool preloadNativeBanner = false;
+        public bool preloadNativeOverlay = false;
+        public bool preloadNativeInter = false;
+        public bool preloadNativeReward = false;
+        public bool preloadNativeMrec = false;
+        public bool preloadNativeAppOpen = false;
+        public bool preloadNativeVideo = false;
     }
