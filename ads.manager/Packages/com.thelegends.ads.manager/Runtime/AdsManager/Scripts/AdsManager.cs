@@ -1069,7 +1069,7 @@ namespace TheLegends.Base.Ads
             {
                 return 0;
             }
-        
+
             var netWork = GetNetwork(SettingsAds.primaryNetwork) ?? adsNetworks.FirstOrDefault();
 
             if (netWork == null)
@@ -1078,6 +1078,8 @@ namespace TheLegends.Base.Ads
             }
 
             return netWork.GetPlacementInfo(adsType, out placementOrders);
+        }
+        
         public int GetAdsIdIndex(AdsType adsType, PlacementOrder order)
         {
             if (!IsInitialized())
