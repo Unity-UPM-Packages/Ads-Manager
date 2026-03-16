@@ -1,3 +1,10 @@
+## [1.1.48](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.47...v1.1.48) (2026-03-16)
+
+
+### Bug Fixes
+
+* improve + fix native ads Load if not available on Show ([4cba66f](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/4cba66f53168923143bf68d951a5b3970f346c51))
+
 ## [1.1.47](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.46...v1.1.47) (2026-03-16)
 
 
