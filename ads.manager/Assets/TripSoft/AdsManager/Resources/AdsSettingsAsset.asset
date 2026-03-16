@@ -24,11 +24,11 @@ MonoBehaviour:
   autoReLoadMax: 2
   isTest: 1
   preloadSettings:
-    preloadBanner: 1
+    preloadBanner: 0
     preloadInterstitial: 0
-    preloadRewarded: 1
-    preloadMREC: 1
-    preloadAppOpen: 1
+    preloadRewarded: 0
+    preloadMREC: 0
+    preloadAppOpen: 0
     nativeAds:
       preloadNativeBanner: 0
       preloadNativeOverlay: 0
