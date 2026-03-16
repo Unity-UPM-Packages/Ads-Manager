@@ -1,3 +1,11 @@
+## [1.1.47](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.46...v1.1.47) (2026-03-16)
+
+
+### Bug Fixes
+
+* change Native_Inter to Native_FullScreen ([f895dbb](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/f895dbbad8478c60ff38d0085ef9bde4907c0b2b))
+* improve preload/non-preload ([65a863b](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/65a863bd543d390a64e566e751da8b447b5dd2aa))
+
 ## [1.1.46](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.45...v1.1.46) (2026-03-12)
 
 
