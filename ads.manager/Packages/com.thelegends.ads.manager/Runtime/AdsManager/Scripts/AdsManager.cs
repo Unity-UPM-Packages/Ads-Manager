@@ -189,14 +189,13 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (GetAdsStatus(interType, order) != AdsEvents.LoadAvailable)
-            {
-                LoadInterstitial(interType, order);
-                return;
-            }
-
             if (!IsTimeToShowAd)
             {
+                if (GetAdsStatus(interType, order) != AdsEvents.LoadAvailable)
+                {
+                    LoadInterstitial(interType, order);
+                }
+
                 return;
             }
 
@@ -270,14 +269,14 @@ namespace TheLegends.Base.Ads
                 return;
             }
 
-            if (GetAdsStatus(AdsType.AppOpen, order) != AdsEvents.LoadAvailable)
-            {
-                LoadAppOpen(order);
-                return;
-            }
 
             if (!IsTimeToShowAd)
             {
+                if (GetAdsStatus(AdsType.AppOpen, order) != AdsEvents.LoadAvailable)
+                {
+                    LoadAppOpen(order);
+                }
+
                 return;
             }
 
@@ -311,12 +310,6 @@ namespace TheLegends.Base.Ads
         {
             if (!IsInitialized())
             {
-                return;
-            }
-
-            if (GetAdsStatus(AdsType.Banner, order) != AdsEvents.LoadAvailable)
-            {
-                LoadBanner(order);
                 return;
             }
 
@@ -400,12 +393,6 @@ namespace TheLegends.Base.Ads
         {
             if (!IsInitialized())
             {
-                return;
-            }
-
-            if (GetAdsStatus(mrecType, order) != AdsEvents.LoadAvailable)
-            {
-                LoadMrec(mrecType, order);
                 return;
             }
 
@@ -518,12 +505,6 @@ namespace TheLegends.Base.Ads
                 return null;
             }
 
-            if (GetAdsStatus(AdsType.NativeBanner, order) != AdsEvents.LoadAvailable)
-            {
-                LoadNativeBanner(order);
-                return null;
-            }
-
             var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
 
             if (netWork != null)
@@ -617,12 +598,6 @@ namespace TheLegends.Base.Ads
                 return null;
             }
 
-            if (GetAdsStatus(AdsType.NativeInter, order) != AdsEvents.LoadAvailable)
-            {
-                LoadNativeInter(order);
-                return null;
-            }
-
             var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
 
             if (netWork != null)
@@ -675,12 +650,6 @@ namespace TheLegends.Base.Ads
                 return null;
             }
 
-            if (GetAdsStatus(AdsType.NativeReward, order) != AdsEvents.LoadAvailable)
-            {
-                LoadNativeReward(order);
-                return null;
-            }
-
             var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
 
             if (netWork != null)
@@ -730,12 +699,6 @@ namespace TheLegends.Base.Ads
             if (!IsInitialized())
             {
                 LogError("AdsManager not initialized");
-                return null;
-            }
-
-            if (GetAdsStatus(AdsType.NativeMrec, order) != AdsEvents.LoadAvailable)
-            {
-                LoadNativeMrec(order);
                 return null;
             }
 
@@ -801,12 +764,6 @@ namespace TheLegends.Base.Ads
                 return null;
             }
 
-            if (GetAdsStatus(AdsType.NativeAppOpen, order) != AdsEvents.LoadAvailable)
-            {
-                LoadNativeAppOpen(order);
-                return null;
-            }
-
             var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
 
             if (netWork != null)
@@ -856,12 +813,6 @@ namespace TheLegends.Base.Ads
             if (!IsInitialized())
             {
                 LogError("AdsManager not initialized");
-                return null;
-            }
-
-            if (GetAdsStatus(AdsType.NativeInterOpen, order) != AdsEvents.LoadAvailable)
-            {
-                LoadNativeInterOpen(order);
                 return null;
             }
 
@@ -917,12 +868,6 @@ namespace TheLegends.Base.Ads
                 return null;
             }
 
-            if (GetAdsStatus(AdsType.NativeMrecOpen, order) != AdsEvents.LoadAvailable)
-            {
-                LoadNativeMrecOpen(order);
-                return null;
-            }
-
             var netWork = (AdmobNetworkController)GetNetwork(AdsNetworks.Admob);
 
             if (netWork != null)
@@ -972,12 +917,6 @@ namespace TheLegends.Base.Ads
             if (!IsInitialized())
             {
                 LogError("AdsManager not initialized");
-                return null;
-            }
-
-            if (GetAdsStatus(AdsType.NativeVideo, order) != AdsEvents.LoadAvailable)
-            {
-                LoadNativeVideo(order);
                 return null;
             }
 
