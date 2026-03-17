@@ -1,3 +1,10 @@
+## [1.1.49](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.48...v1.1.49) (2026-03-17)
+
+
+### Bug Fixes
+
+* improve Load Ads ([6540c20](https://github.com/Unity-UPM-Packages/Ads-Manager/commit/6540c2049ee9feecf1e7693f97cf8f8488b69d0c))
+
 ## [1.1.48](https://github.com/Unity-UPM-Packages/Ads-Manager/compare/v1.1.47...v1.1.48) (2026-03-16)
 
 
